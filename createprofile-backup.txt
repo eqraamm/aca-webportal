@@ -1,0 +1,224 @@
+<form action=" " method ="post">
+                @csrf
+                    <table>
+                     <tr>
+                      <td><label for="profileID">Profile ID</label></td>
+                      <td>: <input type='text' name='ID_Profile' id="ID"></td>
+                     </tr>
+                     <tr>
+                      <td>First Name</td>
+                      <td>: <input type='text' name='first-name' id="FirstName" size="50px"></td>
+                     </tr>
+                     <tr>
+                      <td>Middle Name</td>
+                      <td>: <input type='text' name='Middle-Name' id="MidName" size="50px"></td>
+                     </tr>
+                     <tr>
+                        <td>Last Name</td>
+                        <td>: <input type='text' name='Last-Name' id="LastName" size="50px"></td>
+                       </tr>
+                       <tr>
+                        <td><label for="fullname">Full Name</label></td>
+                        <td>: <input type='text' name='full_Name' id="FullName" size="50px"></td>
+                       </tr>
+                       <tr>
+                        <td><label for="IDtype">ID type</label></td>
+                        <td>: <select name='ID-type' id="Type_ID" style="width: 150px;">
+                            <option value=" "></option>
+                            <option value="KTP">KTP</option>
+                            <option value="PASSPORT">PASSPORT</option>
+                            <option value="SIM">SIM</option>
+                            <option value="KIMS">KIMS</option>
+                            <option value="KITAS">KITAS</option> 
+                            <option value="OTHERS">OTHERS</option>                                    
+                        </td>
+                       </tr>
+                       <td><label for="IDnumber">ID Number / Name</label></td>
+                       <td>: <input type='text' name='ID_Number' id="ID_Number">
+                             <input type='text' name='full-Name' id="full-name" size="40px"></td>
+
+                     <!-- ini tempat checkbox-->
+                    
+                     <tr>
+                      <td><label for="address1">Address 1</label></td>
+                      <td>: <input type='text' name='address1' id="address1" size="50px"></td>
+                     </tr>
+
+                     <tr>
+                      <td>Address 2</td>
+                      <td>: <input type='text' name='address2' id="address2" size="50px"></td>
+                     </tr>
+
+                     <tr>
+                      <td>Address 3</td>
+                      <td>: <input type='text' name='address3' id="address3" size="50px"></td>
+                     </tr>
+                        <tr>
+                        <td><label for="phone">Phone Number</label></td>
+                        <td>: <input type='number' name='Nomor-Telepon' id="nomor_telp"></td> 
+                       </tr>
+
+                       <td>Mobile Phone</td>
+                        <td>: <input type='number' name='Nomor-Telepon' id="nomor_telp"></td> 
+                       </tr>
+
+                       <tr>
+                        <td><label for="email">Email</label></td>
+                        <td>: <input type='text' name='email' id="email"></td>
+                       </tr>
+
+                       <tr>
+                        <td><label for="birthplace">Birth Place</label></td>
+                        <td>:<input type='text' name='birthplace ' id="birthplace">
+                         Birth Date :<input type="date" id="birthdate" name="birthdate" style="width: 182px;">
+                        </td>
+                    </tr>
+
+                     <tr>
+                        <td>Gender</td>
+                        <td>: <select id="gender" name="gender" style="width: 182px;">
+                            <option value=" "> </option>
+                            <option value="Male"> Male </option>
+                            <option value="Female"> Female </option>
+                            <option value="Other"> Other </option>
+                        </select>
+                      </tr>
+                     
+                      <tr>
+                        <td>Religion</td>
+                        <td>: <select id="Religion" name="Religion" style="width: 182px;">
+                            <option value=" "> </option>
+                            <option value="moslem"> MOSLEM </option>
+                            <option value="buddha"> BUDDHA </option>
+                            <option value="hindu"> HINDU </option>
+                            <option value="catholic"> CATHOLIC </option>
+                            <option value="Other"> OTHER </option>
+
+                        </select>
+                      </tr>
+
+                      <tr>
+                        <td>Martial Status</td>
+                        <td>: <select id="Status" name="Status" style="width: 182px;">
+                            <option value=" "> </option>
+                            <option value="moslem"> Single </option>
+                            <option value="buddha"> Married </option>
+                            <option value="hindu"> Life Divorce </option>
+                            <option value="catholic"> Divorce to Death </option>
+                        </select>
+                      </tr>
+
+                      <tr>
+                        <td>Country</td>
+                        <td>: <select id="Status" name="Status" style="width: 182px;">
+                            <option value=" "> </option>
+                            
+                        </select>
+                      </tr>
+                      
+                      <tr>
+                        <td>City</td>
+                        <td>: <input type='text' name='city' id="city"></td>
+                       </tr>
+
+                       <tr>
+                        <td>City</td>
+                        <td>: <input type='text' name='city' id="city"></td>
+                       </tr>
+
+                     <tr>
+                        <td>Solutation</td>
+                        <td>: <select id="Solutation" name="Solutation" style="width: 182px;">
+                            <option value=" "> </option>
+                            <option value="CV">CV</option>
+                            <option value="PT">PT</option>
+                            <option value="PD">PD</option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Miss">Miss</option>
+                            <option value="Tn">Tn</option>
+                            <option value="Ny">Ny</option>
+                            <option value="Nn">Nn</option>
+                        </select>
+                       </tr> 
+                       
+                       <tr>
+                      <td>Tax ID</td>
+                      <td>: <input type='text' name='Tax' id="Tax-id" size="50px"></td>
+                     </tr>
+
+                       <tr>
+                        <td>Bidang Usaha</td>
+                        <td>: <select id="bidang_usaha" name="bidang-usaha" style="width: 182px;">
+                            <option value=" "> </option>
+                        </td>
+                        </select>
+                       </tr>
+                       <tr>
+                        <td>Tipe Profile</td>
+                        <td>: <select id="tipe_Profile" name="tipe profile" style="width: 182px;">
+                            <option value=" "> </option>
+                        </td>
+                        </select>
+                       </tr>
+                       <tr>
+                        <td>rujukan</td>
+                        <td>: <select id="rujukan" name="rujukan" style="width: 182px;">
+                            <option value=" "> </option>
+                        </select>
+                        <input type='text' name=' '>
+                        </td>
+                       </tr>
+                       <tr>
+                        <td>Tipe rujukan</td>
+                        <td>: <select id="tipe_rujukan" name="tipe-rujukan" style="width: 182px;">
+                            <option value=" "> </option>
+                        </td>
+                        </select>
+                       </tr>
+                       <tr>
+                        <td>Kode HS</td>
+                        <td>: <select id="kode_HS" name="kode-HS" style="width: 182px;">
+                            <option value=" "> </option>
+                        </select>
+                         <input type='text' name=' ' id="kode-hs">
+                        </td>
+                       </tr>
+                       <tr>
+                        <td>Tipe BI</td>
+                        <td>: <select id="tipe_BI" name="tipe-BI" style="width: 182px;">
+                            <option value=" "> </option>
+                        </select>
+                        <input type='text' name=' ' id="tipe-BI ">
+                        </td>
+                    </tr>
+
+                    <tr>
+                      <td>Citizen</td>
+                      <td>: <input type='checkbox' name='citizen' id="citizen">Local</td>
+                     </tr>
+
+                     <tr>
+                      <td>Allow For Selection</td>
+                      <td>: <input type='checkbox' name='selection' id="selection"></td>
+                     </tr>
+                     
+                     <tr>
+                      <td>Dump</td>
+                      <td>: <input type='checkbox' name='dump' id="dump"></td>
+                     </tr>
+
+                     <tr>
+                      <td>Restricted</td>
+                      <td>: <input type='checkbox' name='restrict' id="restrict"></td>
+                     </tr>
+                   
+
+                     <tr><align="align-items-center">
+                       <td><input type="reset" value="clear all field"></td>
+                       <td><input type="submit" value="Save" name="save"></td>
+                       </align> 
+                     </tr>
+                     
+                    </table>  
+                   </form>
