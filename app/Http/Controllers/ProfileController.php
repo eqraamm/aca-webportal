@@ -12,7 +12,7 @@ use App\User;
 
 class ProfileController extends Controller
 {
-    public function CreateProfile()
+    public function index()
     {
          // API Country
          $data = array(
@@ -25,14 +25,13 @@ class ProfileController extends Controller
             'ID' => '',
             'OwnerID' => 'aca_mo_1',
         );
-        $responseData = APIMiddleware($data, 'SearchProfile');    
-        
+        $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
 
-        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseData, 'tabname' => 'inquiry')); 
+        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '')); 
     }
 
-    // CRUD 
-    public function detailProfile($id){
+    // drop profile 
+    public function dropProfile($id){
         $data = array(
             'ID' => $id,
             'OwnerID' => 'ACA_MO_1'
@@ -49,16 +48,31 @@ class ProfileController extends Controller
             'OwnerID' => 'aca_mo_1'
         );
 
-        $responseData = APIMiddleware($dataProfile, 'SearchProfile');
-        // dd($responsedrop);
+        $responseSearchProfile = APIMiddleware($dataProfile, 'SearchProfile');
+        
+        $responseCode = $responsedrop['code'];
+        $responseMessage = $responsedrop['message'];
 
-        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseData, 'tabname' => 'inquiry')); 
+        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 'tabname' => 'inquiry', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage)); 
 
     }
     
     // api save profile 
     public function SaveProfile(Request $request)
     {
+        // List data country
+        $data = array(
+            'Country' => ''
+        );
+        $responseCountry = APIMiddleware($data, 'SearchCountry');
+
+         //Data tab inquiry profile
+         $data = array (
+            'ID' => '',
+            'OwnerID' => 'aca_mo_1',
+        );
+        $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
+
         $data = array(
             'ID' => $request->input('ProfileID'),
             'Firstname' => $request->input('FirstName'),
@@ -104,17 +118,13 @@ class ProfileController extends Controller
             'ContactAddress' => $request->input('ConAddress'),
             'ContactPhone' => $request->input('ConPhone')
         );
-
-        $data = array(
-            'ID' => $id,
-            'OwnerID' => 'ACA_MO_1'
-        );
-        $responsedata = APIMiddleware($data, "SearchProfile");
-
-        $response  = APIMiddleware($data, 'SaveProfile'); 
-        return view('profile');
+        $responseSave  = APIMiddleware($data, 'SaveProfile');
+        
+        $responseCode = $responseSave['code'];
+        $responseMessage = $responseSave['message'];
+        
+        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 'tabname' => 'inquiry', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage)); 
         
     }
-
     
 } 

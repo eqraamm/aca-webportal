@@ -22,7 +22,7 @@
   <!-- Toastr -->
   <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body onload="onLoadProfile()" class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
@@ -157,12 +157,6 @@
                               <ul class="nav nav-pills">
                               <li class="nav-item"><a id="tabinquiry" class="{{ empty($tabname) || $tabname == 'inquiry' ? 'nav-link active' : 'nav-link' }}" href="#inquiry" data-toggle="tab">Inquiry</a></li>
                                   <li class="nav-item"><a id="tabprofile" class="{{ empty($tabname) || $tabname == 'profile' ? 'nav-link active' : 'nav-link' }}" href="#profile" data-toggle="tab">Profile</a></li>
-                                  <button type="button" class="btn btn-success toastrDefaultSuccess">
-                  Launch Success Toast
-                </button>
-                <button type="button" class="btn btn-success swalDefaultSuccess">
-                  Launch Success Toast
-                </button>
                               </ul>
                           </div><!-- /.card-header -->
                           <div class="card-body">
@@ -191,14 +185,12 @@
                                                       <td>{{ $datas['ID_No'] }}</td>
                                                       <td>{{ $datas['BirthDate'] }}</td>
                                                       <td>
-                                                          <a href="#" type="button" class="btn btn-outline-primary btn-sm swalDefaultSuccess" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
+                                                          <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
                                                           <a href="" type="button"  method="post" class="btn btn-outline-info btn-sm" >history</a>
                                                           <a href="{{ route('dropProfile', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" >Delete</a>
                                                       </td>
-                                                      
                                                   </tr>
                                               @endforeach
-                                              
                                               </tbody>
                                           </table>
                                       </div>
@@ -599,6 +591,7 @@ function viewDetail(ID){
     document.getElementById("TxtProfileRefID").value = filterarray[0]['RefID'];
     document.getElementById("TxtProfileRefDesc").value = filterarray[0]['RefName'];
     document.getElementById("TxtProfileID").value = filterarray[0]['ID'];
+    document.getElementById("TxtProfileName").value = filterarray[0]['Name'];
     document.getElementById("tabinquiry").className = "nav-link";
     document.getElementById("tabprofile").className = "nav-link active";
     document.getElementById("inquiry").className = "tab-pane";
@@ -606,48 +599,30 @@ function viewDetail(ID){
 }
 </script>
 <script>
+    function onLoadProfile(){
     $(function() {
     var Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
-      timer: 3000
+      timer: 5000
     });
-
-    $('.swalDefaultSuccess').click(function() {
-      Toast.fire({
-        icon: 'success',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultInfo').click(function() {
-      Toast.fire({
-        icon: 'info',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultError').click(function() {
-      Toast.fire({
-        icon: 'error',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultWarning').click(function() {
-      Toast.fire({
-        icon: 'warning',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.swalDefaultQuestion').click(function() {
-      Toast.fire({
-        icon: 'question',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
-    $('.toastrDefaultSuccess').click(function() {
-      toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
-    });
-  });
+        if ('{{ $responseCode }}' == "200"){
+            console.log("success");
+            Toast.fire({
+            icon: 'success',
+            title: '{{$responseMessage}}'
+        })
+        }else if ('{{ $responseCode }}' == "400"){
+            console.log("gagal");
+            Toast.fire({
+            icon: 'error',
+            title: '{{$responseMessage}}'
+        })
+        }
+    })
+}
+    
 </script>
 </body>
 </html>
