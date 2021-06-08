@@ -178,6 +178,7 @@
                                                   </tr>
                                               </thead>
                                               <tbody>
+                                              @if(! empty($data))
                                               @foreach($data['Data'] as $datas)
                                                   <tr>
                                                       <td>{{ $datas['ID'] }}</td>
@@ -188,13 +189,64 @@
                                                       <td>{{ $datas['BirthDate'] }}</td>
                                                       <td>
                                                           <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
-                                                          <a href="" type="button"  method="post" class="btn btn-outline-info btn-sm" >history</a>
+                                                          <a href="" type="button"  method="post" class="btn btn-outline-info btn-sm"  data-toggle="modal" data-target="#modal-history">history</a>
                                                           <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" >Delete</a>
                                                       </td>
                                                   </tr>
                                               @endforeach
+                                              @endif
                                               </tbody>
                                           </table>
+                                          <!-- Modal Sync -->
+                                          <div class="modal fade" id="modal-history">
+                                                            <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                <h4 class="modal-title">History Profile</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                <div class="card-body">
+                                                                  <table id="tblModalSync" class="table table-bordered table-striped col-sm-6">
+                                                                    <thead>
+                                                                         <tr>
+                                                                            <th>Action</th>
+                                                                            <th>Name</th>
+                                                                            <th>Old Value</th>
+                                                                            <th>New Value</th>
+                                                                            <th>Last Operator</th>
+                                                                            <th>Last Update</th>
+                                                                            <th>Last Time</th>
+                                                                         </tr>
+                                                                    </thead>
+                                                                        <tbody>
+                                                                        @if (! empty($dataHistory))
+                                                                        @foreach($dataHistory['Data'] as $datas)
+                                                                            <tr>
+                                                                            <td>{{ $datas['Action'] }}</td>
+                                                                            <td>{{ $datas['ColName'] }}</td>
+                                                                            <td>{{ $datas['ColValueOld'] }}</td>
+                                                                            <td>{{ $datas['ColValueNew'] }}</td>
+                                                                            <td>{{ $datas['Last_Opr'] }}</td>
+                                                                            <td>{{ $datas['Last_Update'] }}</td>
+                                                                            <td>{{ $datas['Last_Time'] }}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        @endforeach
+                                                                        @endif
+                                                                    </table>
+                                                                </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                            </div>
+                                                            <!-- /.modal-dialog -->
+                                                        </div>
+                                                        <!-- /.modal -->
+                                                        <!-- /.Modal Sync -->
                                       </div>
                                   </div>
                                   <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
@@ -209,15 +261,15 @@
                                                                   <input class="form-control" id="TxtProfileRefDesc" type="text">
                                                               </div>
                                                               <div class="col-sm-2">
-                                                              <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Sync</button>
+                                                              <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-lg">Sync</button>
                                                               </div>
                                                           </div>
-                                                                                                                    <!-- modal popup sync -->
-                                                                                                                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-sync" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg" role="document">
+                                                          <!-- Modal Sync -->
+                                                          <div class="modal fade" id="modal-lg">
+                                                            <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                <h5 class="modal-title">Profile Inquiry</h5>
+                                                                <h4 class="modal-title">Profile Inquiry</h4>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -283,37 +335,41 @@
                                                                     <button type="reset" class="btn btn-secondary">Clear All</button>
                                                                      <button type="search" class="btn btn-primary">Search</button>
                                                                 </div>
-
                                                                 <div class="card-body">
-                                                                  <table id="tblModalSync" class="table table-bordered table-striped col-sm-6">
-                                                                    <thead>
-                                                                         <tr>
-                                                                            <th>Profile ID</th>
-                                                                            <th>Name</th>
-                                                                            <th>Email</th>
-                                                                            <th>Mobile</th>
-                                                                            <th>ID Number</th>
-                                                                            <th>Address</th>
-                                                                         </tr>
-                                                                    </thead>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td>Lantang97</td>
-                                                                                <td>Lantang Nirwana</td>
-                                                                                <td>email@lantang.com</td>
-                                                                                <td>564468465</td>
-                                                                                <td>3275111403980004</td>
-                                                                                <td> jalan jalan </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
+                                          <table id="tblModalSync" class="table table-bordered table-striped">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Profile ID</th>
+                                                      <th>Name</th>
+                                                      <th>Email</th>
+                                                      <th>Mobile</th>
+                                                      <th>ID Number</th>
+                                                      <th>Birth Date</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                              @if(! empty($datasync))
+                                              @foreach($datasync['Data'] as $datas)
+                                                  <tr>
+                                                      <td>{{ $datas['ID'] }}</td>
+                                                      <td>{{ $datas['Name'] }}</td>
+                                                      <td>{{ $datas['Email'] }}</td>
+                                                      <td>{{ $datas['Mobile'] }}</td>
+                                                      <td>{{ $datas['ID_No'] }}</td>
+                                                      <td>{{ $datas['BirthDate'] }}</td>
+                                                  </tr>
+                                              @endforeach
+                                              @endif
+                                              </tbody>
+                                          </table>
+                                      </div>
                                                             </div>
-
-
-
+                                                            <!-- /.modal-content -->
                                                             </div>
-                                                            </div>
+                                                            <!-- /.modal-dialog -->
+                                                        </div>
+                                                        <!-- /.modal -->
+                                                        <!-- /.Modal Sync -->
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">First Name</label>
                                                               <div class="col-sm-6">
@@ -959,7 +1015,8 @@ function GetFormattedDate(datestring) {
         "responsive": true,
         "autoWidth": false,
     });
-  });
+  }
+  );
 </script>
 </body>
 </html>
