@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
     <!-- SweetAlert2 -->
   <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
   <!-- Toastr -->
@@ -154,14 +156,14 @@
                   <div class="col-md-12">
                       <div class="card">
                           <div class="card-header p-2">
-                              <ul class="nav nav-pills">
-                              <li class="nav-item"><a id="tabinquiry" class="{{ empty($tabname) || $tabname == 'inquiry' ? 'nav-link active' : 'nav-link' }}" href="#inquiry" data-toggle="tab">Inquiry</a></li>
-                                  <li class="nav-item"><a id="tabprofile" class="{{ empty($tabname) || $tabname == 'profile' ? 'nav-link active' : 'nav-link' }}" href="#profile" data-toggle="tab">Profile</a></li>
+                              <ul class="nav nav-pills mb-3">
+                                <li class="nav-item"><a id="tabinquiry" class="{{ empty($tabname) || $tabname == 'inquiry' ? 'nav-link active' : 'nav-link' }}" href="#inquiry" data-toggle="tab">Inquiry</a></li>
+                                <li class="nav-item"><a id="tabprofile" class="{{ empty($tabname) || $tabname == 'profile' ? 'nav-link active' : 'nav-link' }}" href="#profile" data-toggle="tab">Profile</a></li>
                               </ul>
                           </div><!-- /.card-header -->
                           <div class="card-body">
                               <div class="tab-content">
-                                  <div class="{{ empty($tabname) || $tabname == 'inquiry' ? 'active tab-pane' : 'tab-pane' }}" id="inquiry">
+                                  <div class="{{ empty($tabname) || $tabname == 'inquiry' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="inquiry">
                                       <div class="card-body">
                                           <table id="example1" class="table table-bordered table-striped">
                                               <thead>
@@ -195,7 +197,7 @@
                                           </table>
                                       </div>
                                   </div>
-                                  <div class="{{ empty($tabname) || $tabname == 'profile' ? 'active tab-pane' : 'tab-pane' }}" id="profile">
+                                  <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
                                     <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
                                     @csrf
                                                           <div class="form-group row">
@@ -207,12 +209,12 @@
                                                                   <input class="form-control" id="TxtProfileRefDesc" type="text">
                                                               </div>
                                                               <div class="col-sm-2">
-                                                                  <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Sync</button>
+                                                              <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Sync</button>
                                                               </div>
                                                           </div>
-                                                          <!-- modal popup sync -->
-                                                          <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog" aria-labelledby="modal-sync" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                                                    <!-- modal popup sync -->
+                                                                                                                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-sync" aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                 <h5 class="modal-title">Profile Inquiry</h5>
@@ -228,21 +230,21 @@
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Email</label>
+                                                                    <p class="col-sm-3 col-form-label">Email</p>
                                                                         <div class="col-sm-6">
                                                                             <input class="form-control" id="TxtProfileEmail" name="Email" type="email">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Address</label>
+                                                                    <p class="col-sm-3 col-form-label">Address</p>
                                                                         <div class="col-sm-6">
                                                                              <input class="form-control" id="TxtPAddress_1" name="Address1" type="text">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">City</label>
+                                                                    <p class="col-sm-3 col-form-label">City</p>
                                                                         <div class="col-sm-6">
-                                                                        <input class="form-control" id="TxtCity" name="City" type="text">
+                                                                        <input class="form-control" id="TxtCity" name="City" style="text-transform:uppercase;" type="text">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -252,25 +254,25 @@
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">ID Number</label>
+                                                                    <p class="col-sm-3 col-form-label">ID Number</p>
                                                                         <div class="col-sm-6">
-                                                                             <input class="form-control" id="ID_Number" name="ID_Number" type="text" maxlength="16" required>
+                                                                             <input class="form-control" id="ID_Number" name="ID_Number" type="text" maxlength="16" >
                                                                      </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Mobile Phone</label>
+                                                                    <p class="col-sm-3 col-form-label">Mobile Phone</p>
                                                                          <div class="col-sm-6">
                                                                             <input class="form-control" id="TxtProfileMobile" name="MobilePhone" type="number">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                     <label class="col-sm-3 col-form-label">Tax ID</label>
+                                                                     <p class="col-sm-3 col-form-label">Tax ID</p>
                                                                          <div class="col-sm-6">
                                                                             <input class="form-control" id="TxtTaxID" type="text" name="Tax">
                                                                         </div>
                                                                  </div>
                                                                  <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Birth Date</label>
+                                                                    <p class="col-sm-3 col-form-label">Birth Date</p>
                                                                         <div class="input-group date col-sm-6" id="reservationdate" data-target-input="nearest">
                                                                             <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="TxtBirthDate" name="BirthDate" required />
                                                                                 <div class="input-group-append" data-target="#TxtBirthDate" data-toggle="datetimepicker"></div>
@@ -278,20 +280,40 @@
                                                                 </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="reset" class="btn btn-secondary">Clear All</button>
-                                                                <button type="search" class="btn btn-primary">Search</button>
+                                                                    <button type="reset" class="btn btn-secondary">Clear All</button>
+                                                                     <button type="search" class="btn btn-primary">Search</button>
+                                                                </div>
+
+                                                                <div class="card-body">
+                                                                  <table id="tblModalSync" class="table table-bordered table-striped col-sm-6">
+                                                                    <thead>
+                                                                         <tr>
+                                                                            <th>Profile ID</th>
+                                                                            <th>Name</th>
+                                                                            <th>Email</th>
+                                                                            <th>Mobile</th>
+                                                                            <th>ID Number</th>
+                                                                            <th>Address</th>
+                                                                         </tr>
+                                                                    </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>Lantang97</td>
+                                                                                <td>Lantang Nirwana</td>
+                                                                                <td>email@lantang.com</td>
+                                                                                <td>564468465</td>
+                                                                                <td>3275111403980004</td>
+                                                                                <td> jalan jalan </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
                                                             </div>
-                                                            </div>
-                                                        </div>
 
-                                                          </div>
-                                                          <!-- <div class="form-group row">
-                                                              <label class="col-sm-3 col-form-label">Profile ID</label>
-                                                              <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtProfileID" type="text" name="ProfileID" value="{{ old('ProfileID') }}">
-                                                              </div>
-                                                          </div> -->
+
+
+                                                            </div>
+                                                            </div>
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">First Name</label>
                                                               <div class="col-sm-6">
@@ -707,17 +729,15 @@
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
-<!-- script js parse data in sppa -->
-<script src="{{asset('dist/js/satria.js')}}"></script>
 <!-- Toastr -->
 <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
 <!-- SweetAlert2 -->
 <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
 <script>
-function CGroup_OnChange(CGrou[]){
+function CGroup_OnChange(CGroup){
     var basedata = @json($SCGroup['Data']);
-    const filterarray = basedata.filter(asd => asd.CGROUP == CGrou);
+    const filterarray = basedata.filter(asd => asd.CGROUP == CGroup);
 
     document.getElementById("LstSubComGroup").options.length = 0;
     var listBox = document.getElementById("LstSubComGroup");
@@ -927,6 +947,19 @@ function GetFormattedDate(datestring) {
             }
         })
     }
+</script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+    });
+    $("#tblModalSync").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+    });
+  });
 </script>
 </body>
 </html>
