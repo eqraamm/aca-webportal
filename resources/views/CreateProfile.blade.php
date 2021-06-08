@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Create Profile</title>
+  <title>ACA Insurance | Create Profile</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -58,7 +58,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <img src="{{asset('dist/img/aca.jpg')}}" alt="AdminLTE Logo" class="brand-image img-square elevation-3" style="opacity: .8">
+      <img src="{{asset('dist/img/aca_new.png')}}" alt="AdminLTE Logo" class="brand-image img-square elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">ACA ASURANSI</span>
     </a>
 
@@ -92,7 +92,7 @@
             </a>
           </li>
           <li class="nav-item menu-open">
-            <a href="profile" class="nav-link active">
+            <a href="{{ route('profile')}}" class="nav-link active">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Nasabah
@@ -187,7 +187,7 @@
                                                       <td>
                                                           <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
                                                           <a href="" type="button"  method="post" class="btn btn-outline-info btn-sm" >history</a>
-                                                          <a href="{{ route('dropProfile', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" >Delete</a>
+                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" >Delete</a>
                                                       </td>
                                                   </tr>
                                               @endforeach
@@ -196,7 +196,7 @@
                                       </div>
                                   </div>
                                   <div class="{{ empty($tabname) || $tabname == 'profile' ? 'active tab-pane' : 'tab-pane' }}" id="profile">
-                                    <form class="form-horizontal" action="{{ route('profile') }}" method="post">
+                                    <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
                                     @csrf
                                                           <div class="form-group row">
                                                               <p for="TxtRefNo" class="col-sm-3 col-form-label">Reference Profile</p>
@@ -207,43 +207,125 @@
                                                                   <input class="form-control" id="TxtProfileRefDesc" type="text">
                                                               </div>
                                                               <div class="col-sm-2">
-                                                                  <button type="submit" id="BtnSync" class="btn btn-block btn-outline-primary">Sync</button>
+                                                                  <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Sync</button>
                                                               </div>
                                                           </div>
-                                                          <div class="form-group row">
+                                                          <!-- modal popup sync -->
+                                                          <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog" aria-labelledby="modal-sync" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                <h5 class="modal-title">Profile Inquiry</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Profile ID</label>
+                                                                        <div class="col-sm-6">
+                                                                        <input class="form-control" id="TxtProfileID" type="text" name="ProfileID" required >
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Email</label>
+                                                                        <div class="col-sm-6">
+                                                                            <input class="form-control" id="TxtProfileEmail" name="Email" type="email">
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Address</label>
+                                                                        <div class="col-sm-6">
+                                                                             <input class="form-control" id="TxtPAddress_1" name="Address1" type="text">
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">City</label>
+                                                                        <div class="col-sm-6">
+                                                                        <input class="form-control" id="TxtCity" name="City" type="text">
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <p class="col-sm-3 col-form-label">ZipCode</p>
+                                                                        <div class="col-sm-3">
+                                                                            <input class="form-control" id="TxtProfileZipCode" name="ZipCode" type="text">
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">ID Number</label>
+                                                                        <div class="col-sm-6">
+                                                                             <input class="form-control" id="ID_Number" name="ID_Number" type="text" maxlength="16" required>
+                                                                     </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Mobile Phone</label>
+                                                                         <div class="col-sm-6">
+                                                                            <input class="form-control" id="TxtProfileMobile" name="MobilePhone" type="number">
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                     <label class="col-sm-3 col-form-label">Tax ID</label>
+                                                                         <div class="col-sm-6">
+                                                                            <input class="form-control" id="TxtTaxID" type="text" name="Tax">
+                                                                        </div>
+                                                                 </div>
+                                                                 <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Birth Date</label>
+                                                                        <div class="input-group date col-sm-6" id="reservationdate" data-target-input="nearest">
+                                                                            <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="TxtBirthDate" name="BirthDate" required />
+                                                                                <div class="input-group-append" data-target="#TxtBirthDate" data-toggle="datetimepicker"></div>
+                                                                         </div>
+                                                                </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                <button type="reset" class="btn btn-secondary">Clear All</button>
+                                                                <button type="search" class="btn btn-primary">Search</button>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+
+                                                          </div>
+                                                          <!-- <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Profile ID</label>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtProfileID" type="text" name="ProfileID" required>
+                                                                  <input class="form-control" id="TxtProfileID" type="text" name="ProfileID" value="{{ old('ProfileID') }}">
                                                               </div>
-                                                          </div>
+                                                          </div> -->
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">First Name</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtFirstName" type="text" name='FirstName'required>
+                                                                  <input class="form-control" id="TxtFirstName" type="text" name='FirstName' value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Middle Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtMiddleName" name="MiddleName" type="text">
+                                                                  <input class="form-control" id="TxtMiddleName" name="MiddleName" type="text" value="{{ old('MiddleName') }}" onchange="Construct_ProfileName();">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Last Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtLastName" name="LastName" type="text">
+                                                                  <input class="form-control" id="TxtLastName" name="LastName" type="text" value="{{ old('LastName') }}" onchange="Construct_ProfileName();">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Full Name</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtProfileName" name="Name" type="text">
+                                                                  <input class="form-control" id="TxtProfileName" name="Name" type="text" value="{{ old('Name') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <label class="col-sm-3 col-form-label">ID Type</label>
+                                                              <p class="col-sm-3 col-form-label">Corporate</p>
+                                                              <div class="col-form-label col-sm-2">
+                                                                  <input type="checkbox" class="form-check-inputs" id="CbxCorporateF" name="Corporate" value="{{ old('Corporate') }}" onclick="corporateF_chekcked()">
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label" id="LblIDType">ID Type</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstIDType" name="IDType" required>
+                                                                  <select class="form-control" id="LstIDType" name="IDType" value="{{ old('IDType') }}">
                                                                       <option value="" selected></option>
                                                                       <option value="KIMS">KIMS</option>
                                                                       <option value="KITAS">KITAS</option>
@@ -255,28 +337,28 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <label class="col-sm-3 col-form-label">ID Number</label>
+                                                              <p class="col-sm-3 col-form-label" id="LblID_Number">ID Number</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="ID_Number" name="ID_Number" type="text" required>
+                                                                  <input class="form-control" id="ID_Number" name="ID_Number" type="text" value="{{ old('ID_Number') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <label class="col-sm-3 col-form-label">ID Name</label>
+                                                              <p class="col-sm-3 col-form-label" id="LblID_Name">ID Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="ID_Name" name="ID_Name" type="text" required>
+                                                                  <input class="form-control" id="ID_Name" name="ID_Name" type="text" value="{{ old('ID_Name') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">ID Date</p>
                                                               <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
-                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtIDDate" id="TxtIDDate" name="IDDate" required />
+                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtIDDate" id="TxtIDDate" name="IDDate" value="{{ old('IDDate') }}" required />
                                                                   
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <label class="col-sm-3 col-form-label">Salutation</label>
+                                                              <p class="col-sm-3 col-form-label">ID Salutation</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstSalutation" name="Salutation" required>
+                                                                  <select class="form-control" id="LstSalutation" name="Salutation" value="{{ old('Salutation') }}">
                                                                       <option value="" selected></option>
                                                                       <option value="PD">PD</option>
                                                                       <option value="PT">PT</option>
@@ -293,31 +375,31 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Initial</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtProfileInitial" name="Initial" type="text">
+                                                                  <input class="form-control" id="TxtProfileInitial" name="Initial" type="text" value="{{ old('Initial') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Title</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtTitle" name="Title" type="text">
+                                                                  <input class="form-control" id="TxtTitle" name="Title" type="text" value="{{ old('Title') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Email Address</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtProfileEmail" name="Email" type="email">
+                                                                  <input class="form-control" id="TxtProfileEmail" name="Email" type="email" value="{{ old('Email') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Mobile Phone</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtProfileMobile" name="MobilePhone" type="number">
+                                                                  <input class="form-control" id="TxtProfileMobile" name="MobilePhone" type="number" value="{{ old('MobilePhone') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Phone</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtProfilePhone" name="Phone" type="number">
+                                                                  <input class="form-control" id="TxtProfilePhone" name="Phone" type="number" value="{{ old('Phone') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -329,25 +411,25 @@
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Address 1</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtPAddress_1" name="Address1" type="text">
+                                                                  <input class="form-control" id="TxtPAddress_1" name="Address1" type="text" value="{{ old('Address1') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Address 2</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtPAddress_2" name="Address2" type="text">
+                                                                  <input class="form-control" id="TxtPAddress_2" name="Address2" type="text" value="{{ old('Address2') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Address 3</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtPAddress_3" name="Address3" type="text">
+                                                                  <input class="form-control" id="TxtPAddress_3" name="Address3" type="text" value="{{ old('Address3') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Country / City</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstCountry" name="Country">
+                                                                  <select class="form-control" id="LstCountry" name="Country" value="{{ old('Country') }}">
                                                                       <option value="" selected></option>
                                                                   @foreach ($Country['Data'] as $dataCountry)
                                                                        <option value="{{$dataCountry['Country']}}">{{$dataCountry['Description']}}</option>
@@ -355,19 +437,30 @@
                                                                   </select>
                                                               </div>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtCity" name="City" type="text">
+                                                                  <input class="form-control" id="TxtCity" name="City" type="text" value="{{ old('City') }}">
                                                               </div>
                                                           </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Province</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="LstProvince" name="Province" value="{{ old('Province') }}">
+                                                                      <option value=""></option>
+                                                                      @foreach ($Province['Data'] as $dataProvince)
+                                                                       <option value="{{$dataProvince['PROVINCE']}}">{{$dataProvince['DESCRIPTION']}}</option>
+                                                                  @endforeach
+                                                                  </select>
+                                                              </div>
+                                                            </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">ZipCode</p>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtProfileZipCode" name="ZipCode" type="text">
+                                                                  <input class="form-control" id="TxtProfileZipCode" name="ZipCode" type="text" value="{{ old('ZipCode') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Gender</p>
+                                                              <p class="col-sm-3 col-form-label" id="LblGender">Gender</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstGender" name="Gender">
+                                                                  <select class="form-control" id="LstGender" name="Gender" value="{{ old('Gender') }}">
                                                                       <option value="" selected></option>
                                                                       <option value="F">Female</option>
                                                                       <option value="M">Male</option>
@@ -375,20 +468,20 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <label class="col-sm-3 col-form-label">Birth Place / Birth Date</label>
+                                                          <p class="col-sm-3 col-form-label" id="LblBirthDate">Birth Place / Birth Date</p>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtBirthPlace" name="BirthPlace" type="text">
+                                                                  <input class="form-control" id="TxtBirthPlace" name="BirthPlace" type="text" value="{{ old('BirthPlace') }}">
                                                               </div>
                                                               <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
-                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="TxtBirthDate" name="BirthDate" required />
+                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="TxtBirthDate" name="BirthDate" value="{{ old('BirthDate') }}" required />
                                                                   <div class="input-group-append" data-target="#TxtBirthDate" data-toggle="datetimepicker">
                                                                   </div>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Occupation</p>
+                                                              <p class="col-sm-3 col-form-label">Line of Business</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstOccupation" name="Occupation">
+                                                                  <select class="form-control" id="LstOccupation" name="Occupation" value="{{ old('Occupation') }}">
                                                                       <option value="1" selected>1</option>
                                                                   </select>
                                                               </div>
@@ -396,37 +489,71 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Correspondence Address</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtCAddress" name="CoAddress" type="text">
+                                                                  <input class="form-control" id="TxtCAddress" name="CoAddress" type="text" value="{{ old('CoAddress') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Correspondence Phone</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtCPhone" name="CoPhone" type="number">
+                                                                  <input class="form-control" id="TxtCPhone" name="CoPhone" type="number" value="{{ old('CoPhone') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Correspondence Email</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtCEmail" name="CoEmail"type="email">
+                                                                  <input class="form-control" id="TxtCEmail" name="CoEmail"type="email" value="{{ old('CoEmail') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Corporate</p>
-                                                              <div class="col-form-label col-sm-2">
-                                                                  <input type="checkbox" class="form-check-inputs" id="CbxCorporateF" name="Corporate">
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group row">
-                                                              <label class="col-sm-3 col-form-label">Tax ID</label>
+                                                              <p class="col-sm-3 col-form-label" id="LblTaxID">TaxID</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtTaxID" type="text" name="tax" disabled>
+                                                                  <input class="form-control" id="TxtTaxID" type="text" name="tax" value="{{ old('TxtTaxID') }}">
                                                               </div>
                                                           </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Company Type</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="LstComType" name="CompanyType" value="{{ old('CompanyType') }}">
+                                                                      <option value=""></option>
+                                                                      <option value="BUMN" >BUMN</option>
+                                                                      <option value="BUMD" >BUMD</option>
+                                                                      <option value="CAPTIVE">CAPTIVE</option>
+                                                                      <option value="DIRECT BUSINESS">DIRECT BUSINESS</option>
+                                                                      <option value="GOVERMENT">GOVERMENT</option>
+                                                                      <option value="J.VENTURE">J.VENTURE</option>
+                                                                      <option value="JOINT VENTURE">JOINT VENTURE</option>
+                                                                      <option value="OVERSEAS">OVERSEAS</option>
+                                                                      <option value="SWASTA">SWASTA</option>
+                                                                      <option value="PRIVATE">PRIVATE</option>
+                                                                  </select>
+                                                              </div>
+                                                            </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Company Group</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="LstComGroup" name="CGroup" onchange="CGroup_OnChange(this.value)" value="{{ old('CGroup') }}">>
+                                                                      <option value="" selected></option>
+                                                                    @foreach ($CGroup['Data'] as $dataCGroup)
+                                                                       <option value="{{$dataCGroup['CGROUP']}}">{{$dataCGroup['DESCRIPTION']}}</option>
+                                                                  @endforeach
+                                                                  </select>
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Sub Company Group</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="LstSubComGroup" name="SubCompanyGroup" value="{{ old('SubCompanyGroup') }}">
+                                                                      <option value="" selected></option>
+                                                                      @foreach ($SCGroup['Data'] as $dataSCGroup)
+                                                                       <option value="{{$dataSCGroup['SCGROUP']}}">{{$dataSCGroup['DESCRIPTION']}}</option>
+                                                                  @endforeach
+                                                                  </select>
+                                                              </div>
+                                                            </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Religion</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="religion" name="Religion">
+                                                                  <select class="form-control" id="religion" name="Religion" value="{{ old('Religion') }}"> 
                                                                       <option value="" selected></option>
                                                                       <option value="BUDDHA">BUDDHA</option>
                                                                       <option value="CATHOLIC">CATHOLIC</option>
@@ -440,7 +567,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Income</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstIncome" name="Income">
+                                                                  <select class="form-control" id="LstIncome" name="Income" value="{{ old('Income') }}">
                                                                       <option value="" selected></option>
                                                                       <option value="1-10 juta">1-10 juta</option>
                                                                       <option value="> 10-25 juta">> 10-25 juta</option>
@@ -453,20 +580,20 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Employment</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtEmployment" name="Employment" type="text">
+                                                                  <input class="form-control" id="TxtEmployment" name="Employment" type="text" value="{{ old('Employment') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Citizenship</p>
                                                               <div class="col-form-label col-sm-2">
-                                                                  <input type="checkbox" class="form-check-inputs" name="Citizen" id="CbxWNIF">
+                                                                  <input type="checkbox" class="form-check-inputs" name="Citizen" id="CbxWNIF" value="{{ old('Citizen') }}">
                                                                   <label class="form-check-label" for="exampleCheck2">Local</label>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Marital Status</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstMarital" name="martial">
+                                                                  <select class="form-control" id="LstMarital" name="martial" value="{{ old('martial') }}">
                                                                       <option value="" selected></option>
                                                                       <option value="Single">Single</option>
                                                                       <option value="Married">Married</option>
@@ -478,42 +605,47 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Contact</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtContact" name="Contact" type="text">
+                                                                  <input class="form-control" id="TxtContact" name="Contact" type="text" value="{{ old('Contact') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Contact Address</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtContactAddress" name="ConAddress" type="text">
+                                                                  <input class="form-control" id="TxtContactAddress" name="ConAddress" type="text" value="{{ old('ConAddress') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Contact Phone</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtContactPhone" name="ConPhone" type="text">
+                                                                  <input class="form-control" id="TxtContactPhone" name="ConPhone" type="text" value="{{ old('ConPhone') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Syncronize Profile</p>
                                                               <div class="col-form-label col-sm-2"> 
-                                                                  <input type="checkbox" class="form-check-inputs" id="CbxForceSyncF" name="Sync">
+                                                                  <input type="checkbox" class="form-check-inputs" id="CbxForceSyncF" name="Sync" value="{{ old('Sync') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Dump</p>
                                                               <div class="col-form-label col-sm-2">
-                                                                  <input type="checkbox" class="form-check-inputs" id="CbxDumpF" name="Dump">
+                                                                  <input type="checkbox" class="form-check-inputs" id="CbxDumpF" name="Dump" value="{{ old('Dump') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Restricted</p>
                                                               <div class="col-form-label col-sm-2">
-                                                                  <input type="checkbox" class="form-check-inputs" id="CbxRestrictedF" name="Restricted">
+                                                                  <input type="checkbox" class="form-check-inputs" id="CbxRestrictedF" name="Restricted" value="{{ old('Restricted') }}" disabled>
                                                               </div>
                                                           </div>
-                                                          <div class="row justify-content-center">
-                                                              <button type="submit" id="clickbtn" class="btn btn-block bg-gradient-primary col-5 swalDefaultSuccess">Save</button>
-                                                          </div>    
+                                                          <div class="form-group row justify-content-center">
+                                                            <div class="col-sm-4">
+                                                              <button type="submit" id="clickbtn" class="btn btn-block bg-gradient-primary col-5">Save</button>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                              <button type="reset" id="clearbtn" class="btn btn-block bg-gradient-danger col-5" >Clear</button>
+                                                            </div>
+                                                          </div>  
                                                       </form>
                                   </div>
                               </div>
@@ -583,46 +715,218 @@
 <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
 <script>
+function CGroup_OnChange(CGrou[]){
+    var basedata = @json($SCGroup['Data']);
+    const filterarray = basedata.filter(asd => asd.CGROUP == CGrou);
+
+    document.getElementById("LstSubComGroup").options.length = 0;
+    var listBox = document.getElementById("LstSubComGroup");
+    var option = document.createElement("OPTION");
+    option.value = '';
+    option.innerHTML = '';
+    listBox.appendChild(option);
+    for (i = 0; i < filterarray.length; i++) {
+        var listBox = document.getElementById("LstSubComGroup");
+        var option = document.createElement("OPTION");
+        option.value = filterarray[i].SCGROUP;
+        option.innerHTML = filterarray[i].DESCRIPTION;
+        listBox.appendChild(option);
+    }
+}
+function Construct_ProfileName() {
+    document.getElementById("TxtProfileName").value = document.getElementById("TxtFirstName").value + ((document.getElementById("TxtMiddleName").value == "") ? "": " " + document.getElementById("TxtMiddleName").value) + ((document.getElementById("TxtLastName").value == "") ? "": " " + document.getElementById("TxtLastName").value);
+}
+function corporateF_chekcked(){
+    var cbxCorporate = document.getElementById("CbxCorporateF")
+    if (cbxCorporate.checked == true) {
+        // tidak wajib
+        document.getElementById("LblIDType").style.fontWeight = "normal";
+        document.getElementById("LstIDType").removeAttribute("required");
+        document.getElementById("LblID_Number").style.fontWeight = "normal";
+        document.getElementById("ID_Number").removeAttribute("required");
+        document.getElementById("LblID_Name").style.fontWeight = "normal";
+        document.getElementById("ID_Name").removeAttribute("required");
+        document.getElementById("LblBirthDate").style.fontWeight = "normal";
+        document.getElementById("TxtBirthPlace").removeAttribute("required");
+        document.getElementById("TxtBirthDate").removeAttribute("required");
+
+        // wajib
+        document.getElementById("LblTaxID").style.fontWeight = "bold";
+        document.getElementById("TxtTaxID").setAttribute("required", "");
+    }else{
+        // wajib
+        document.getElementById("LblIDType").style.fontWeight = "bold";
+        document.getElementById("LstIDType").setAttribute("required", "");
+        document.getElementById("LblID_Number").style.fontWeight = "bold";
+        document.getElementById("ID_Number").setAttribute("required", "");
+        document.getElementById("LblID_Name").style.fontWeight = "bold";
+        document.getElementById("ID_Name").setAttribute("required", "");
+        document.getElementById("LblBirthDate").style.fontWeight = "bold";
+        document.getElementById("TxtBirthPlace").setAttribute("required", "");
+        document.getElementById("TxtBirthDate").setAttribute("required", "");
+
+        // tidak wajib
+        document.getElementById("LblTaxID").style.fontWeight = "normal";
+        document.getElementById("TxtTaxID").removeAttribute("required");
+    }
+}
 function viewDetail(ID){
-    var basedata = @json($data['Data']);
-    console.log(basedata);
-    const filterarray = basedata.filter(asd => asd.ID == ID);
-    console.log(filterarray);
-    document.getElementById("TxtProfileRefID").value = filterarray[0]['RefID'];
+  var basedata = @json($data['Data']);
+  console.log(basedata);
+  const filterarray = basedata.filter(asd => asd.ID == ID);
+  console.log(filterarray);
+  document.getElementById("TxtProfileRefID").value = filterarray[0]['RefID'];
+  document.getElementById("TxtProfileRefDesc").value = filterarray[0]['RefName'];
+//   document.getElementById("TxtProfileID").value = filterarray[0]['ID'];
+  document.getElementById("TxtFirstName").value = filterarray[0]['FirstName'];
+  document.getElementById("TxtMiddleName").value = filterarray[0]['MidName'];
+  document.getElementById("TxtLastName").value = filterarray[0]['LastName'];
+  document.getElementById("TxtProfileName").value = filterarray[0]['Name'];
+  document.getElementById("LstIDType").value = filterarray[0]['ID_Type'];
+  document.getElementById("ID_Number").value = filterarray[0]['ID_No'];
+  document.getElementById("ID_Name").value = filterarray[0]['ID_Name'];
+  document.getElementById("TxtIDDate").value = GetFormattedDate(filterarray[0]['ID_Date']);
+  document.getElementById("LstSalutation").value = filterarray[0]['Salutation'];
+  document.getElementById("TxtProfileInitial").value = filterarray[0]['Initial'];
+  document.getElementById("TxtTitle").value = filterarray[0]['Title'];
+  document.getElementById("TxtProfileEmail").value = filterarray[0]['Email'];
+  document.getElementById("TxtProfileMobile").value = filterarray[0]['Mobile'];
+  document.getElementById("TxtProfilePhone").value = filterarray[0]['Phone'];
+  document.getElementById("TxtOwnerID").value = filterarray[0]['OwnerID'];
+  document.getElementById("TxtPAddress_1").value = filterarray[0]['Address_1'];
+  document.getElementById("TxtPAddress_2").value = filterarray[0]['Address_2'];
+  document.getElementById("TxtPAddress_3").value = filterarray[0]['Address_3'];
+  document.getElementById("LstCountry").value = filterarray[0]['Country'];
+  document.getElementById("TxtCity").value = filterarray[0]['City'];
+  document.getElementById("TxtProfileZipCode").value = filterarray[0]['ZipCode'];
+  document.getElementById("LstGender").value = filterarray[0]['Gender'];
+  document.getElementById("TxtBirthPlace").value = filterarray[0]['BirthPlace'];
+  document.getElementById("TxtBirthDate").value = GetFormattedDate(filterarray[0]['BirthDate']);
+  document.getElementById("LstOccupation").value = filterarray[0]['Occupation'];
+//   document.getElementById("TxtCAttention").value = filterarray[0]['Correspondence_Attention'];
+  document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
+  document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
+  document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
+  document.getElementById("CbxCorporateF").value = filterarray[0]['Corporatef']; 
+  document.getElementById("TxtTaxID").value = filterarray[0]['TaxID'];
+  document.getElementById("religion").value = filterarray[0]['Religion'];
+  document.getElementById("LstIncome").value = filterarray[0]['Income'];
+  document.getElementById("TxtEmployment").value = filterarray[0]['Employment'];
+  document.getElementById("CbxWNIF").value = filterarray[0]['WNIF'];
+  document.getElementById("LstMarital").value = filterarray[0]['Martial'];
+  document.getElementById("TxtContact").value = filterarray[0]['Contact'];
+  document.getElementById("TxtContactAddress").value = filterarray[0]['ContactAddress']; 
+  document.getElementById("TxtContactPhone").value = filterarray[0]['ContactPhone'];
+  document.getElementById("LstComType").value = filterarray[0]['CompanyType'];
+  document.getElementById("LstComGroup").value = filterarray[0]['CGroup'];
+  document.getElementById("LstSubComGroup").value = filterarray[0]['SCGroup']; 
+  document.getElementById("LstProvince").value = filterarray[0]['Province'];
+  document.getElementById("CbxForceSyncF").value = filterarray[0]['ForceSyncF'];
+  document.getElementById("CbxDumpF").value = filterarray[0]['Dump'];
+  document.getElementById("CbxRestrictedF").value = filterarray[0]['Restricted']; 
+
+  document.getElementById("tabinquiry").className = "nav-link";
+  document.getElementById("tabprofile").className = "nav-link active";
+  document.getElementById("inquiry").className = "tab-pane";
+  document.getElementById("profile").className = "active tab-pane";
+}
+
+
+function clearAll(ID){
+    document.getElementById("TxtProfileRefID").value = ""
     document.getElementById("TxtProfileRefDesc").value = filterarray[0]['RefName'];
     document.getElementById("TxtProfileID").value = filterarray[0]['ID'];
+    document.getElementById("TxtFirstName").value = filterarray[0]['FirstName'];
+    document.getElementById("TxtMiddleName").value = filterarray[0]['MidName'];
+    document.getElementById("TxtLastName").value = filterarray[0]['LastName'];
     document.getElementById("TxtProfileName").value = filterarray[0]['Name'];
+    document.getElementById("LstIDType").value = filterarray[0]['ID_Type'];
+    document.getElementById("ID_Number").value = filterarray[0]['ID_No'];
+    document.getElementById("ID_Name").value = filterarray[0]['ID_Name'];
+    document.getElementById("TxtIDDate").value = GetFormattedDate(filterarray[0]['ID_Date']);
+    document.getElementById("LstSalutation").value = filterarray[0]['Salutation'];
+    document.getElementById("TxtProfileInitial").value = filterarray[0]['Initial'];
+    document.getElementById("TxtTitle").value = filterarray[0]['Title'];
+    document.getElementById("TxtProfileEmail").value = filterarray[0]['Email'];
+    document.getElementById("TxtProfileMobile").value = filterarray[0]['Mobile'];
+    document.getElementById("TxtProfilePhone").value = filterarray[0]['Phone'];
+    document.getElementById("TxtOwnerID").value = filterarray[0]['OwnerID'];
+    document.getElementById("TxtPAddress_1").value = filterarray[0]['Address_1'];
+    document.getElementById("TxtPAddress_2").value = filterarray[0]['Address_2'];
+    document.getElementById("TxtPAddress_3").value = filterarray[0]['Address_3'];
+    document.getElementById("LstCountry").value = filterarray[0]['Country'];
+    document.getElementById("TxtCity").value = filterarray[0]['City'];
+    document.getElementById("TxtProfileZipCode").value = filterarray[0]['ZipCode'];
+    document.getElementById("LstGender").value = filterarray[0]['Gender'];
+    document.getElementById("TxtBirthPlace").value = filterarray[0]['BirthPlace'];
+    document.getElementById("TxtBirthDate").value = GetFormattedDate(filterarray[0]['BirthDate']);
+    document.getElementById("LstOccupation").value = filterarray[0]['Occupation'];
+    document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
+    document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
+    document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
+    document.getElementById("CbxCorporateF").value = filterarray[0]['Corporatef']; 
+    document.getElementById("TxtTaxID").value = filterarray[0]['TaxID'];
+    document.getElementById("religion").value = filterarray[0]['Religion'];
+    document.getElementById("LstIncome").value = filterarray[0]['Income'];
+    document.getElementById("TxtEmployment").value = filterarray[0]['Employment'];
+    document.getElementById("CbxWNIF").value = filterarray[0]['WNIF'];
+    document.getElementById("LstMarital").value = filterarray[0]['Martial'];
+    document.getElementById("TxtContact").value = filterarray[0]['Contact'];
+    document.getElementById("TxtContactAddress").value = filterarray[0]['ContactAddress']; 
+    document.getElementById("TxtContactPhone").value = filterarray[0]['ContactPhone'];
+    document.getElementById("CbxForceSyncF").value = filterarray[0]['ForceSyncF'];
+    document.getElementById("CbxDumpF").value = filterarray[0]['Dump'];
+    document.getElementById("CbxRestrictedF").value = filterarray[0]['Restricted']; 
+    
     document.getElementById("tabinquiry").className = "nav-link";
     document.getElementById("tabprofile").className = "nav-link active";
     document.getElementById("inquiry").className = "tab-pane";
     document.getElementById("profile").className = "active tab-pane";
 }
+function GetFormattedDate(datestring) {
+    var d = new Date(datestring);
+    var month = d.getMonth()+ 1;
+    if (month < 10){
+        month = '0' + month;
+    }
+    var day = d.getDate();
+    if (day < 10){
+        day = '0' + day;
+    }
+    var year = d.getFullYear();
+    return year + "-" + month + "-" + day;
+   
+}
 </script>
 <script>
     function onLoadProfile(){
-    $(function() {
-    var Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 5000
-    });
-        if ('{{ $responseCode }}' == "200"){
-            console.log("success");
-            Toast.fire({
-            icon: 'success',
-            title: '{{$responseMessage}}'
+        corporateF_chekcked();
+        $(function() {
+            var Toast = Swal.mixin(
+                {
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000
+                }
+            );
+            if ('{{ $responseCode }}' == "200"){
+                Toast.fire(
+                    {
+                        icon: 'success',
+                        title: '{{$responseMessage}}'
+                    }
+                )
+            }else if ('{{ $responseCode }}' == "400"){
+                Toast.fire(
+                    {
+                        icon: 'error',
+                        title: '{{$responseMessage}}'
+                    }
+                )
+            }
         })
-        }else if ('{{ $responseCode }}' == "400"){
-            console.log("gagal");
-            Toast.fire({
-            icon: 'error',
-            title: '{{$responseMessage}}'
-        })
-        }
-    })
-}
-    
+    }
 </script>
 </body>
 </html>

@@ -27,7 +27,27 @@ class ProfileController extends Controller
         );
         $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
 
-        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '')); 
+        // Data province
+        $data = array(
+            'Province' => ''
+        );
+        $responseProvince = APIMiddleware($data, 'SearchProvince');
+
+        // Data CGroup
+        $data = array(
+            'CGroup' => ''
+        );
+        $responseCGroup = APIMiddleware($data, 'SearchCGroup');
+
+         // Data SCGroup
+         $data = array(
+            'SCGroup' => ''
+        );
+        $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
+
+        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
+        'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup, 
+        'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '')); 
     }
 
     // drop profile 
@@ -49,31 +69,39 @@ class ProfileController extends Controller
         );
 
         $responseSearchProfile = APIMiddleware($dataProfile, 'SearchProfile');
+
+        // Data province
+        $data = array(
+            'Province' => ''
+        );
+        $responseProvince = APIMiddleware($data, 'SearchProvince');
+
+        // Data CGroup
+        $data = array(
+            'CGroup' => ''
+        );
+        $responseCGroup = APIMiddleware($data, 'SearchCGroup');
+
+         // Data SCGroup
+         $data = array(
+            'SCGroup' => ''
+        );
+        $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
         
         $responseCode = $responsedrop['code'];
         $responseMessage = $responsedrop['message'];
 
-        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 'tabname' => 'inquiry', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage)); 
+        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
+        'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup,
+        'tabname' => 'inquiry', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage)); 
 
     }
     
     // api save profile 
     public function SaveProfile(Request $request)
     {
-        // List data country
-        $data = array(
-            'Country' => ''
-        );
-        $responseCountry = APIMiddleware($data, 'SearchCountry');
 
-         //Data tab inquiry profile
-         $data = array (
-            'ID' => '',
-            'OwnerID' => 'aca_mo_1',
-        );
-        $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
-
-        $data = array(
+        $dataprofile = array(
             'ID' => $request->input('ProfileID'),
             'Firstname' => $request->input('FirstName'),
             'Midname' => $request->input('MiddleName'),
@@ -106,25 +134,74 @@ class ProfileController extends Controller
 
             'Correspondence_phone' => $request->input('CoPhone'),
             'Correspondence_email' => $request->input('CoEmail'),
-            'Corporate' => $request->input('Corporate'),
+            'CorporateF' => $request->input('Corporate'),
             'TaxID' => $request->input('Tax'),
             'Religion' => $request->input('BirthPlace'),
             'Income' => $request->input('Occupation'),
             'Employment' => $request->input('CoAddress'),
 
             'martial' => $request->input('martial'),
-            'citizenship' => $request->input('Citizen'),
+            'WNIF' => $request->input('Citizen'),
             'Contact' => $request->input('Contact'),
             'ContactAddress' => $request->input('ConAddress'),
             'ContactPhone' => $request->input('ConPhone')
         );
-        $responseSave  = APIMiddleware($data, 'SaveProfile');
+
+        //Data tab inquiry profile
+        $data = array (
+            'ID' => $request->input('ProfileID'),
+            'OwnerID' => 'aca_mo_1',
+        );
+        $searchprofilebyid = APIMiddleware($data, 'SearchProfile');
+
+        if ($searchprofilebyid['code'] == '200'){
+            $responseSave  = APIMiddleware($dataprofile, 'UpdateProfile');
+        }else{
+            $responseSave  = APIMiddleware($dataprofile, 'SaveProfile');
+        }
         
         $responseCode = $responseSave['code'];
         $responseMessage = $responseSave['message'];
+
+        // List data country
+        $data = array(
+            'Country' => ''
+        );
+        $responseCountry = APIMiddleware($data, 'SearchCountry');
+
+         //Data tab inquiry profile
+         $data = array (
+            'ID' => '',
+            'OwnerID' => 'aca_mo_1',
+        );
+        $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
+
+        // Data province
+        $data = array(
+            'Province' => ''
+        );
+        $responseProvince = APIMiddleware($data, 'SearchProvince');
+
+        // Data CGroup
+        $data = array(
+            'CGroup' => ''
+        );
+        $responseCGroup = APIMiddleware($data, 'SearchCGroup');
+
+         // Data SCGroup
+         $data = array(
+            'SCGroup' => ''
+        );
+        $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
         
-        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 'tabname' => 'inquiry', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage)); 
+        // return redirect()->back()->with(array('Country' => $responseCountry, 'data' => $responseSearchProfile, 'tabname' => 'profile', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage))->withInput($request->all);
+
+        session()->flashInput($request->input());
+        
+
+        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
+        'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup,
+        'tabname' => 'profile', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage));
         
     }
-    
 } 
