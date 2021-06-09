@@ -283,56 +283,56 @@
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">Email</p>
                                                                         <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtProfileEmail" name="Email" type="email">
+                                                                            <input class="form-control" id="Email" name="Email" type="email">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">Address</p>
                                                                         <div class="col-sm-6">
-                                                                             <input class="form-control" id="TxtPAddress_1" name="Address1" type="text">
+                                                                             <input class="form-control" id="Address_1" name="Address1" type="text">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">City</p>
                                                                         <div class="col-sm-6">
-                                                                        <input class="form-control" id="TxtCity" name="City" style="text-transform:uppercase;" type="text">
+                                                                        <input class="form-control" id="City" name="City" type="text">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">ZipCode</p>
                                                                         <div class="col-sm-3">
-                                                                            <input class="form-control" id="TxtProfileZipCode" name="ZipCode" type="text">
+                                                                            <input class="form-control" id="ZipCode" name="ZipCode" type="text">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">ID Number</p>
                                                                         <div class="col-sm-6">
-                                                                             <input class="form-control" id="ID_Number" name="ID_Number" type="text" maxlength="16" >
+                                                                             <input class="form-control" id="Id_Number" name="ID_Number" type="text" maxlength="16">
                                                                      </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">Mobile Phone</p>
                                                                          <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtProfileMobile" name="MobilePhone" type="number">
+                                                                            <input class="form-control" id="Mobile" name="MobilePhone" type="number">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                      <p class="col-sm-3 col-form-label">Tax ID</p>
                                                                          <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtTaxID" type="text" name="Tax">
+                                                                            <input class="form-control" id="TaxID" type="text" name="Tax">
                                                                         </div>
                                                                  </div>
                                                                  <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">Birth Date</p>
                                                                         <div class="input-group date col-sm-6" id="reservationdate" data-target-input="nearest">
-                                                                            <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="TxtBirthDate" name="BirthDate" required />
-                                                                                <div class="input-group-append" data-target="#TxtBirthDate" data-toggle="datetimepicker"></div>
+                                                                            <input type="date" class="form-control datetimepicker-input" data-target="#BirthDate" id="BirthDate" name="BirthDate">
+                                                                                <div class="input-group-append" data-target="#BirthDate" data-toggle="datetimepicker"></div>
                                                                          </div>
                                                                 </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="reset" class="btn btn-secondary">Clear All</button>
-                                                                     <button type="search" class="btn btn-primary">Search</button>
+                                                                    <Button style={styles.SearchButton} onPress={() this._onPressButton() } full><Text> Search </Text>
                                                                 </div>
                                                                 <div class="card-body">
                                           <table id="tblModalSync" class="table table-bordered table-striped">
@@ -428,8 +428,17 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">ID Date</p>
                                                               <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
-                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtIDDate" id="TxtIDDate" name="IDDate" value="{{ old('IDDate') }}" required />
-                                                                  
+                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtIDDate" id="TxtIDDate" name="IDDate" value="{{ old('IDDate') }}" required/>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label" id="LblGender">Gender</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="LstGender" name="Gender" value="{{ old('Gender') }}">
+                                                                      <option value="" selected></option>
+                                                                      <option value="F">Female</option>
+                                                                      <option value="M">Male</option>
+                                                                  </select>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -560,16 +569,6 @@
                                                               <p class="col-sm-3 col-form-label">ZipCode</p>
                                                               <div class="col-sm-3">
                                                                   <input class="form-control" id="TxtProfileZipCode" name="ZipCode" type="text" value="{{ old('ZipCode') }}">
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label" id="LblGender">Gender</p>
-                                                              <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstGender" name="Gender" value="{{ old('Gender') }}">
-                                                                      <option value="" selected></option>
-                                                                      <option value="F">Female</option>
-                                                                      <option value="M">Male</option>
-                                                                  </select>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -1047,6 +1046,20 @@ function GetFormattedDate(datestring) {
     });
   }
   );
+</script>
+
+<script>
+_onPressButton() {
+    fetch("http://uat2.care.co.id:9095/aca/WEBAPI2/MiddlewareAPI/SearchHistoryProfile")
+    .then(response => response.json())
+    .then((responseJson)=> {
+      this.setState({
+       loading: false,
+       dataSource: responseJson.data
+      })
+    })
+    .catch(error=>console.log(error))
+  }
 </script>
 </body>
 </html>
