@@ -416,7 +416,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblID_Number">ID Number</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="ID_Number" name="ID_Number" type="text" value="{{ old('ID_Number') }}" required>
+                                                                  <input class="form-control" id="ID_Number" name="ID_Number" maxlength="16" type="text" value="{{ old('ID_Number') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -446,6 +446,20 @@
                                                                       <option value="Tn">Tn</option>
                                                                       <option value="Ny">Ny</option>
                                                                       <option value="Nn">Nn</option>
+                                                                  </select>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Profile Type</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="LstPType" name="PType" value="{{ old('PType') }}">
+                                                                      <option value=""></option>
+                                                                      <option value="Captive">Captive</option>
+                                                                      <option value="Direct Business">Direct Business</option>
+                                                                      <option value="Inward Business">Inward Business</option>
+                                                                      <option value="Outward Business">Outward Business</option>
+                                                                      <option value="Intermediaries">Intermediaries</option>
+                                                                      <option value="Others">Others</option>
                                                                   </select>
                                                               </div>
                                                           </div>
@@ -561,7 +575,7 @@
                                                           <div class="form-group row">
                                                           <p class="col-sm-3 col-form-label" id="LblBirthDate">Birth Place / Birth Date</p>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtBirthPlace" name="BirthPlace" type="text" value="{{ old('BirthPlace') }}">
+                                                                  <input class="form-control" id="TxtBirthPlace" name="BirthPlace" style="text-transform:uppercase" type="text" value="{{ old('BirthPlace') }}">
                                                               </div>
                                                               <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
                                                                   <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="TxtBirthDate" name="BirthDate" value="{{ old('BirthDate') }}" required />
@@ -575,6 +589,12 @@
                                                                   <select class="form-control" id="LstOccupation" name="Occupation" value="{{ old('Occupation') }}">
                                                                       <option value="1" selected>1</option>
                                                                   </select>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Correspondence Attention</p>
+                                                              <div class="col-sm-6">
+                                                                  <input class="form-control" id="TxtCAttention" name="CoAttention" style="text-transform:uppercase" type="text" value="{{ old('CoAttention') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">

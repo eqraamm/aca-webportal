@@ -101,7 +101,7 @@ class ProfileController extends Controller
     public function SaveProfile(Request $request)
     {
 
-        $dataprofile = array(
+        $data = array(
             'ID' => $request->input('ProfileID'),
             'Firstname' => $request->input('FirstName'),
             'Midname' => $request->input('MiddleName'),
@@ -111,7 +111,6 @@ class ProfileController extends Controller
             'ID_Name' =>$request->input('ID_Name'),
             'dateID' => $request->input('IDDate'),
             'Salutation' => $request->input('Salutation'),
-
             'Initial' => $request->input('Initial'),
             'Title' => $request->input('Title'),
             'Email' => $request->input('Email'),
@@ -122,7 +121,6 @@ class ProfileController extends Controller
             'Address_1' => $request->input('Address1'),
             'Address_2' => $request->input('Address2'),
             'Address_3' => $request->input('Address3'),
-
             'Country' => $request->input('Country'),
             'City' => $request->input('City'),
             'ZipCode' => $request->input('ZipCode'),
@@ -130,21 +128,28 @@ class ProfileController extends Controller
             'BirthPlace' => $request->input('BirthPlace'),
             'BirthDate' => $request->input('BirthDate'),
             'Occupation' => $request->input('Occupation'),
+            'Correspondence_Attention' => $request->input('Correspondence_Attention'),
+            'Correspondence_Mobile' => $request->input('Correspondence_Mobile'),
             'Correspondence_Address' => $request->input('CoAddress'),
-
             'Correspondence_phone' => $request->input('CoPhone'),
             'Correspondence_email' => $request->input('CoEmail'),
-            'CorporateF' => $request->input('Corporate'),
+            'Corporate' => $request->input('Corporate'),
             'TaxID' => $request->input('Tax'),
-            'Religion' => $request->input('BirthPlace'),
-            'Income' => $request->input('Occupation'),
-            'Employment' => $request->input('CoAddress'),
-
+            'Religion' => $request->input('Religion'),
+            'Income' => $request->input('Income'),
+            'Employment' => $request->input('Employment'),
             'martial' => $request->input('martial'),
-            'WNIF' => $request->input('Citizen'),
+            'citizenship' => $request->input('Citizen'),
             'Contact' => $request->input('Contact'),
             'ContactAddress' => $request->input('ConAddress'),
-            'ContactPhone' => $request->input('ConPhone')
+            'ContactPhone' => $request->input('ConPhone'),
+            'Province' => $request->input('Province'),
+            'CGroup' => $request->input('CGroup'),
+            'SCGroup' => $request->input('SCGroup'),
+            'ContactTitle' => $request->input('ContactTitle'),
+            'PType' => $request->input('PType'),
+            'CompanyType' => $request->input('CompanyType'),
+           
         );
 
         //Data tab inquiry profile
