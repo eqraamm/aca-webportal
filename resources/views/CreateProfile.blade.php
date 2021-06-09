@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ACA Insurance | Create Profile - satria</title>
+  <title>ACA Insurance | Create Profile</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -372,25 +372,25 @@
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">First Name</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtFirstName" type="text" name='FirstName' value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
+                                                                  <input class="form-control" id="TxtFirstName" type="text" name='FirstName' style="text-transform:uppercase" value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Middle Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtMiddleName" name="MiddleName" type="text" value="{{ old('MiddleName') }}" onchange="Construct_ProfileName();">
+                                                                  <input class="form-control" id="TxtMiddleName" name="MiddleName" type="text"  style="text-transform:uppercase" value="{{ old('MiddleName') }}" onchange="Construct_ProfileName();">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Last Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtLastName" name="LastName" type="text" value="{{ old('LastName') }}" onchange="Construct_ProfileName();">
+                                                                  <input class="form-control" id="TxtLastName" name="LastName" type="text"  style="text-transform:uppercase" value="{{ old('LastName') }}" onchange="Construct_ProfileName();">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Full Name</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtProfileName" name="Name" type="text" value="{{ old('Name') }}" required>
+                                                                  <input class="form-control" id="TxtProfileName" name="Name" type="text"  style="text-transform:uppercase" value="{{ old('Name') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -422,7 +422,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblID_Name">ID Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="ID_Name" name="ID_Name" type="text" value="{{ old('ID_Name') }}" required>
+                                                                  <input class="form-control" id="ID_Name" name="ID_Name" type="text"  style="text-transform:uppercase" value="{{ old('ID_Name') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -514,7 +514,7 @@
                                                                   </select>
                                                               </div>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtCity" name="City" type="text" value="{{ old('City') }}">
+                                                                  <input class="form-control" id="TxtCity" name="City"  style="text-transform:uppercase" type="text" value="{{ old('City') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
