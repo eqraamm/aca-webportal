@@ -189,7 +189,7 @@
                                                       <td>{{ $datas['BirthDate'] }}</td>
                                                       <td>
                                                           <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
-                                                          <a href="" type="button"  method="post" class="btn btn-outline-info btn-sm"  data-toggle="modal" data-target="#modal-history">history</a>
+                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm" >history</a>
                                                           <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" >Delete</a>
                                                       </td>
                                                   </tr>
@@ -197,9 +197,9 @@
                                               @endif
                                               </tbody>
                                           </table>
-                                          <!-- Modal Sync -->
+                                          <!-- Modal History -->
                                           <div class="modal fade" id="modal-history">
-                                                            <div class="modal-dialog modal-lg">
+                                                            <div class="modal-dialog modal-xl">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                 <h4 class="modal-title">History Profile</h4>
@@ -209,7 +209,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                 <div class="card-body">
-                                                                  <table id="tblModalSync" class="table table-bordered table-striped col-sm-6">
+                                                                  <table id="tblModalHistory" class="table table-bordered table-striped">
                                                                     <thead>
                                                                          <tr>
                                                                             <th>Action</th>
@@ -233,9 +233,9 @@
                                                                             <td>{{ $datas['Last_Update'] }}</td>
                                                                             <td>{{ $datas['Last_Time'] }}</td>
                                                                             </tr>
-                                                                        </tbody>
-                                                                        @endforeach
+                                                                            @endforeach
                                                                         @endif
+                                                                        </tbody>
                                                                     </table>
                                                                 </div>
 
@@ -246,7 +246,7 @@
                                                             <!-- /.modal-dialog -->
                                                         </div>
                                                         <!-- /.modal -->
-                                                        <!-- /.Modal Sync -->
+                                                        <!-- /.Modal History -->
                                       </div>
                                   </div>
                                   <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
@@ -763,7 +763,6 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
@@ -976,6 +975,9 @@ function GetFormattedDate(datestring) {
 </script>
 <script>
     function onLoadProfile(){
+        if (! '{{empty($dataHistory)}}'){
+            $("#modal-history").modal('show');
+        }
         corporateF_chekcked();
         $(function() {
             var Toast = Swal.mixin(
@@ -1012,6 +1014,10 @@ function GetFormattedDate(datestring) {
         "autoWidth": false,
     });
     $("#tblModalSync").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+    });
+    $("#tblModalHistory").DataTable({
         "responsive": true,
         "autoWidth": false,
     });

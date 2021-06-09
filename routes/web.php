@@ -29,6 +29,9 @@ Route::get('/profile/drop/{id}', 'ProfileController@dropProfile')->name('profile
 //Save Profile
 Route::post('/profile', 'ProfileController@SaveProfile')->name('profile.save');
 
+//History Profile
+Route::get('/profile/history/{id}', 'ProfileController@historyProfile')->name('profile.history');
+
 Route::get('/test', 'ProfileController@test')->name('test');
 
 

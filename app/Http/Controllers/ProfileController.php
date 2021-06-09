@@ -204,4 +204,48 @@ class ProfileController extends Controller
         'tabname' => 'profile', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage));
         
     }
+    // drop profile 
+    public function historyProfile($id){
+        $data = array(
+            'ID' => $id,
+            'OwnerID' => 'ACA_MO_1'
+        );
+        $responseHistory = APIMiddleware($data, "SearchHistoryProfile");
+
+        $data = array(
+            'Country' => ''
+        );
+        $responseCountry = APIMiddleware($data, 'SearchCountry');
+
+        $dataProfile = array(
+            'ID' => '',
+            'OwnerID' => 'aca_mo_1'
+        );
+
+        $responseSearchProfile = APIMiddleware($dataProfile, 'SearchProfile');
+
+        // Data province
+        $data = array(
+            'Province' => ''
+        );
+        $responseProvince = APIMiddleware($data, 'SearchProvince');
+
+        // Data CGroup
+        $data = array(
+            'CGroup' => ''
+        );
+        $responseCGroup = APIMiddleware($data, 'SearchCGroup');
+
+         // Data SCGroup
+         $data = array(
+            'SCGroup' => ''
+        );
+        $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
+        
+
+        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
+        'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup,
+        'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '', 'dataHistory' => $responseHistory)); 
+
+    }
 } 
