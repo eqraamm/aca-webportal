@@ -969,6 +969,10 @@ function clearAll(ID){
     document.getElementById("TxtContact").value = filterarray[0]['Contact'];
     document.getElementById("TxtContactAddress").value = filterarray[0]['ContactAddress']; 
     document.getElementById("TxtContactPhone").value = filterarray[0]['ContactPhone'];
+    document.getElementById("LstComType").value = filterarray[0]['CompanyType'];
+    document.getElementById("LstComGroup").value = filterarray[0]['CGroup'];
+    document.getElementById("LstSubComGroup").value = filterarray[0]['SCGroup']; 
+    document.getElementById("LstProvince").value = filterarray[0]['Province'];
     document.getElementById("CbxForceSyncF").value = filterarray[0]['ForceSyncF'];
     document.getElementById("CbxDumpF").value = filterarray[0]['Dump'];
     document.getElementById("CbxRestrictedF").value = filterarray[0]['Restricted']; 
