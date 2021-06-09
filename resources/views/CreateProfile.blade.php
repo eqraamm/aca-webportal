@@ -504,6 +504,20 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Religion</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="religion" name="Religion" value="{{ old('Religion') }}"> 
+                                                                      <option value="" selected></option>
+                                                                      <option value="BUDDHA">BUDDHA</option>
+                                                                      <option value="CATHOLIC">CATHOLIC</option>
+                                                                      <option value="CHRISTIAN">CHRISTIAN</option>
+                                                                      <option value="HINDU">HINDU</option>
+                                                                      <option value="MOSLEM">MOSLEM</option>
+                                                                      <option value="OTHERS">OTHERS</option>
+                                                                  </select>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Country / City</p>
                                                               <div class="col-sm-3">
                                                                   <select class="form-control" id="LstCountry" name="Country" value="{{ old('Country') }}">
@@ -627,20 +641,7 @@
                                                                   </select>
                                                               </div>
                                                             </div>
-                                                          <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Religion</p>
-                                                              <div class="col-sm-3">
-                                                                  <select class="form-control" id="religion" name="Religion" value="{{ old('Religion') }}"> 
-                                                                      <option value="" selected></option>
-                                                                      <option value="BUDDHA">BUDDHA</option>
-                                                                      <option value="CATHOLIC">CATHOLIC</option>
-                                                                      <option value="CHRISTIAN">CHRISTIAN</option>
-                                                                      <option value="HINDU">HINDU</option>
-                                                                      <option value="MOSLEM">MOSLEM</option>
-                                                                      <option value="OTHERS">OTHERS</option>
-                                                                  </select>
-                                                              </div>
-                                                          </div>
+                                                         
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Income</p>
                                                               <div class="col-sm-3">
@@ -668,7 +669,7 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Marital Status</p>
+                                                              <p class="col-sm-3 col-form-label">Martial Status</p>
                                                               <div class="col-sm-3">
                                                                   <select class="form-control" id="LstMarital" name="martial" value="{{ old('martial') }}">
                                                                       <option value="" selected></option>
