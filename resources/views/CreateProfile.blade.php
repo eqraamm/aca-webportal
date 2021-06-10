@@ -222,7 +222,7 @@
                                                                          </tr>
                                                                     </thead>
                                                                         <tbody>
-                                                                        @if (! empty($dataHistory))
+                                                                        @if ($responseCodeHistory == '200')
                                                                         @foreach($dataHistory['Data'] as $datas)
                                                                             <tr>
                                                                             <td>{{ $datas['Action'] }}</td>
@@ -247,25 +247,8 @@
                                                         </div>
                                                         <!-- /.modal -->
                                                         <!-- /.Modal History -->
-                                      </div>
-                                  </div>
-                                  <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
-                                    <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
-                                    @csrf
-                                                          <div class="form-group row">
-                                                              <p for="TxtRefNo" class="col-sm-3 col-form-label">Reference Profile</p>
-                                                              <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtProfileRefID" type="text" disabled>
-                                                              </div>
-                                                              <div class="col-sm-4">
-                                                                  <input class="form-control" id="TxtProfileRefDesc" type="text">
-                                                              </div>
-                                                              <div class="col-sm-2">
-                                                              <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-lg">Sync</button>
-                                                              </div>
-                                                          </div>
-                                                          <!-- Modal Sync -->
-                                                          <div class="modal fade" id="modal-lg">
+                                                        <!-- Modal Sync -->
+                                                        <div class="modal fade" id="modal-lg">
                                                             <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -278,56 +261,57 @@
                                                                 <div class="form-group row">
                                                                     <label class="col-sm-3 col-form-label">Profile ID</label>
                                                                         <div class="col-sm-6">
-                                                                        <input class="form-control" id="TxtProfileID" type="text" name="ProfileID" required >
+                                                                        <input class="form-control" id="TxtProfileIDModal" type="text" name="ProfileID" >
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">Email</p>
                                                                         <div class="col-sm-6">
-                                                                            <input class="form-control" id="Email" name="Email" type="email">
+                                                                            <input class="form-control" id="TxtProfileEmailModal" name="Email" type="email">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">Address</p>
                                                                         <div class="col-sm-6">
-                                                                             <input class="form-control" id="Address_1" name="Address1" type="text">
+                                                                             <input class="form-control" id="TxtPAddress_1Modal" name="Address1" type="text">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">City</p>
                                                                         <div class="col-sm-6">
-                                                                        <input class="form-control" id="City" name="City" type="text">
+                                                                        <input class="form-control" id="ModalTxtCity" name="CityModal" style="text-transform:uppercase;" type="text">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">ZipCode</p>
                                                                         <div class="col-sm-3">
-                                                                            <input class="form-control" id="ZipCode" name="ZipCode" type="text" maxlength="10">
+                                                                            <input class="form-control" id="TxtProfileZipCodeModal" name="ZipCode" type="text">
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">ID Number</p>
                                                                         <div class="col-sm-6">
-                                                                             <input class="form-control" id="Id_Number" name="ID_Number" type="text" maxlength="16">
+                                                                             <input class="form-control" id="ID_NumberModal" name="ID_Number" type="text" maxlength="16" >
                                                                      </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">Mobile Phone</p>
                                                                          <div class="col-sm-6">
-                                                                            <input class="form-control" id="Mobile" name="MobilePhone" type="number">
+                                                                            <input class="form-control" id="TxtProfileMobileModal" name="MobilePhone" type="number">
+
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
                                                                      <p class="col-sm-3 col-form-label">Tax ID</p>
                                                                          <div class="col-sm-6">
-                                                                            <input class="form-control" id="TaxID" type="text" name="Tax">
+                                                                            <input class="form-control" id="TxtTaxIDModal" type="text" name="TaxModal">
                                                                         </div>
                                                                  </div>
                                                                  <div class="form-group row">
                                                                     <p class="col-sm-3 col-form-label">Birth Date</p>
                                                                         <div class="input-group date col-sm-6" id="reservationdate" data-target-input="nearest">
-                                                                            <input type="date" class="form-control datetimepicker-input" data-target="#BirthDate" id="BirthDate" name="BirthDate">
-                                                                                <div class="input-group-append" data-target="#BirthDate" data-toggle="datetimepicker"></div>
+                                                                            <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="ModalTxtBirthDate" name="ModalBirthDate" required />
+                                                                                <div class="input-group-append" data-target="#ModalTxtBirthDate" data-toggle="datetimepicker"></div>
                                                                          </div>
                                                                 </div>
                                                                 </div>
@@ -370,6 +354,29 @@
                                                         </div>
                                                         <!-- /.modal -->
                                                         <!-- /.Modal Sync -->
+                                      </div>
+                                  </div>
+                                  <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
+                                    <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
+                                    @csrf
+                                                          <div class="form-group row">
+                                                              <p for="TxtRefNo" class="col-sm-3 col-form-label">Profile ID</p>
+                                                              <div class="col-sm-3">
+                                                                  <input class="form-control" id="TxtProfileRefID" type="text" disabled>
+                                                              </div>
+                                                              <div class="col-sm-4" style="display:none;">
+                                                                  <input class="form-control" id="TxtProfileRefDesc" type="text">
+                                                              </div>
+                                                              <div class="col-sm-2">
+                                                              <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-lg">Sync</button>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row" style="display:none;">
+                                                                <label class="col-sm-3 col-form-label">Profile ID</label>
+                                                                <div class="col-sm-6">
+                                                                    <input class="form-control" id="TxtProfileID" type="text" name="ProfileID" value="{{ old('ProfileID') }}" >
+                                                                </div>
+                                                           </div>
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">First Name</label>
                                                               <div class="col-sm-6">
@@ -397,20 +404,54 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Corporate</p>
                                                               <div class="col-form-label col-sm-2">
-                                                                  <input type="checkbox" class="form-check-inputs" id="CbxCorporateF" name="Corporate" value="{{ old('Corporate') }}" onclick="corporateF_chekcked()">
+                                                                  <input type="checkbox" class="form-check-inputs" id="CbxCorporateF" name="Corporate" value="true" onclick="corporateF_chekcked()" {{ (old('Corporate') == 'true') ? 'checked' : '' }}>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblIDType">ID Type</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstIDType" name="IDType" value="{{ old('IDType') }}">
+                                                                  <select class="form-control" id="LstIDType" name="IDType">
+                                                                      @if (old('IDType') == '')
                                                                       <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+                                                                      
+                                                                      @if (old('IDType') == 'KIMS')
+                                                                      <option value="KIMS" selected>KIMS</option>
+                                                                      @else
                                                                       <option value="KIMS">KIMS</option>
+                                                                      @endif
+
+                                                                      @if (old('IDType') == 'KITAS')
+                                                                      <option value="KITAS" selected>KITAS</option>
+                                                                      else
                                                                       <option value="KITAS">KITAS</option>
+                                                                      @endif
+
+                                                                      @if (old('IDType') == 'KTP')
+                                                                      <option value="KTP" selected>KTP</option>
+                                                                      @else
                                                                       <option value="KTP">KTP</option>
+                                                                      @endif
+
+                                                                      @if (old('IDType') == 'OTHERS')
+                                                                      <option value="OTHERS" selected>OTHERS</option>
+                                                                      @else
                                                                       <option value="OTHERS">OTHERS</option>
+                                                                      @endif
+
+                                                                      @if (old('IDType') == 'PASSPORT')
+                                                                      <option value="PASSPORT" selected>PASSPORT</option>
+                                                                      @else
                                                                       <option value="PASSPORT">PASSPORT</option>
+                                                                      @endif
+
+                                                                      @if (old('IDType') == 'SIM')
+                                                                      <option value="SIM" selected>SIM</option>
+                                                                      @else
                                                                       <option value="SIM">SIM</option>
+                                                                      @endif
                                                                   </select>
                                                               </div>
                                                           </div>
@@ -429,33 +470,72 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">ID Date</p>
                                                               <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
-                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtIDDate" id="TxtIDDate" name="IDDate" value="{{ old('IDDate') }}" required/>
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label" id="LblGender">Gender</p>
-                                                              <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstGender" name="Gender" value="{{ old('Gender') }}">
-                                                                      <option value="" selected></option>
-                                                                      <option value="F">Female</option>
-                                                                      <option value="M">Male</option>
-                                                                  </select>
+                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtIDDate" id="TxtIDDate" name="IDDate" value="{{ old('IDDate') }}" />
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">ID Salutation</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstSalutation" name="Salutation" value="{{ old('Salutation') }}">
+                                                                  <select class="form-control" id="LstSalutation" name="Salutation" >
+                                                                      @if (old('Salutation') == '')
                                                                       <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+
+                                                                      @if (old('Salutation') == 'PD')
+                                                                      <option value="PD" selected>PD</option>
+                                                                      @else
                                                                       <option value="PD">PD</option>
+                                                                      @endif
+
+                                                                      @if (old('Salutation') == 'PT')
+                                                                      <option value="PT" selected>PT</option>
+                                                                      @else
                                                                       <option value="PT">PT</option>
+                                                                      @endif
+
+                                                                      @if (old('Salutation') == 'CV')
+                                                                      <option value="CV" selected>CV</option>
+                                                                      @else
                                                                       <option value="CV">CV</option>
+                                                                      @endif
+
+                                                                      @if (old('Salutation') == 'Mr')
+                                                                      <option value="Mr" selected>Mr</option>
+                                                                      @else
                                                                       <option value="Mr">Mr</option>
+                                                                      @endif
+
+                                                                      @if (old('Salutation') == 'Mrs')
+                                                                      <option value="Mrs" selected>Mrs</option>
+                                                                      @else
                                                                       <option value="Mrs">Mrs</option>
+                                                                      @endif
+
+                                                                      @if (old('Salutation') == 'Miss')
+                                                                      <option value="Miss" selected>Miss</option>
+                                                                      @else
                                                                       <option value="Miss">Miss</option>
+                                                                      @endif
+
+                                                                      @if (old('Salutation') == 'Tn')
+                                                                      <option value="Tn" selected>Tn</option>
+                                                                      @else
                                                                       <option value="Tn">Tn</option>
+                                                                      @endif
+
+                                                                      @if (old('Salutation') == 'Ny')
+                                                                      <option value="Ny" selected>Ny</option>
+                                                                      @else
                                                                       <option value="Ny">Ny</option>
+                                                                      @endif
+
+                                                                      @if (old('Salutation') == 'Nn')
+                                                                      <option value="Nn" selected>Nn</option>
+                                                                      @else
                                                                       <option value="Nn">Nn</option>
+                                                                      @endif
                                                                   </select>
                                                               </div>
                                                           </div>
@@ -544,11 +624,19 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Country / City</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstCountry" name="Country" value="{{ old('Country') }}">
+                                                                  <select class="form-control" id="LstCountry" name="Country">
+                                                                      @if (old('Country') == '')
                                                                       <option value="" selected></option>
-                                                                  @foreach ($Country['Data'] as $dataCountry)
-                                                                       <option value="{{$dataCountry['Country']}}">{{$dataCountry['Description']}}</option>
-                                                                  @endforeach
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+                                                                      @foreach ($Country['Data'] as $dataCountry)
+                                                                      @if (old('Country') == $dataCountry['Country'])
+                                                                      <option value="{{$dataCountry['Country']}}" selected>{{$dataCountry['Description']}}</option>
+                                                                      @else
+                                                                      <option value="{{$dataCountry['Country']}}">{{$dataCountry['Description']}}</option>
+                                                                      @endif
+                                                                      @endforeach
                                                                   </select>
                                                               </div>
                                                               <div class="col-sm-3">
@@ -556,13 +644,69 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Profile Type</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="LstPType" name="PType">
+                                                                      @if (old('PType') == '')
+                                                                      <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+
+                                                                      @if (old('PType') == 'C')
+                                                                      <option value="C" selected>Captive</option>
+                                                                      @else
+                                                                      <option value="C">Captive</option>
+                                                                      @endif
+                                                                      
+                                                                      @if (old('PType') == 'DIRECT BUSINESS')
+                                                                      <option value="D" selected>Direct Business</option>
+                                                                      @else
+                                                                      <option value="D">Direct Business</option>
+                                                                      @endif
+                                                                      
+                                                                      @if (old('PType') == 'I')
+                                                                      <option value="I" selected>Inward Business</option>
+                                                                      @else
+                                                                      <option value="I">Inward Business</option>
+                                                                      @endif
+
+                                                                      @if (old('PType') == 'M')
+                                                                      <option value="M" selected>Intermediaries</option>
+                                                                      @else
+                                                                      <option value="M">Intermediaries</option>
+                                                                      @endif
+
+                                                                      @if (old('PType') == 'O')
+                                                                      <option value="O" selected>Outward Business</option>
+                                                                      @else
+                                                                      <option value="O">Outward Business</option>
+                                                                      @endif
+
+                                                                      @if (old('PType') == 'T')
+                                                                      <option value="T" selected>Others</option>
+                                                                      @else
+                                                                      <option value="T">Others</option>
+                                                                      @endif
+                                                                  </select>
+                                                              </div>
+                                                            </div>
+                                                          <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Province</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstProvince" name="Province" value="{{ old('Province') }}">
+                                                                  <select class="form-control" id="LstProvince" name="Province">
+                                                                      @if (old('Province') == '')
+                                                                      <option value="" selected></option>
+                                                                      @else
                                                                       <option value=""></option>
+                                                                      @endif
                                                                       @foreach ($Province['Data'] as $dataProvince)
-                                                                       <option value="{{$dataProvince['PROVINCE']}}">{{$dataProvince['DESCRIPTION']}}</option>
-                                                                  @endforeach
+                                                                      @if (old('Province') == $dataProvince['PROVINCE'])
+                                                                      <option value="{{$dataProvince['PROVINCE']}}" selected>{{$dataProvince['DESCRIPTION']}}</option>
+                                                                      @else
+                                                                      <option value="{{$dataProvince['PROVINCE']}}">{{$dataProvince['DESCRIPTION']}}</option>
+                                                                      @endif
+                                                                      @endforeach
                                                                   </select>
                                                               </div>
                                                             </div>
@@ -573,12 +717,36 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label" id="LblGender">Gender</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="LstGender" name="Gender">
+                                                                      @if (old('Gender') == '')
+                                                                      <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+
+                                                                      @if (old('Gender') == 'F')
+                                                                      <option value="F" selected>Female</option>
+                                                                      @else
+                                                                      <option value="F">Female</option>
+                                                                      @endif
+
+                                                                      @if (old('Gender') == 'M')
+                                                                      <option value="M" selected>Male</option>
+                                                                      @else
+                                                                      <option value="M">Male</option>
+                                                                      @endif
+                                                                  </select>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
                                                           <p class="col-sm-3 col-form-label" id="LblBirthDate">Birth Place / Birth Date</p>
                                                               <div class="col-sm-3">
                                                                   <input class="form-control" id="TxtBirthPlace" name="BirthPlace" style="text-transform:uppercase" type="text" value="{{ old('BirthPlace') }}">
                                                               </div>
                                                               <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
-                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="TxtBirthDate" name="BirthDate" value="{{ old('BirthDate') }}" required />
+                                                                  <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="TxtBirthDate" name="BirthDate" value="{{ old('BirthDate') }}" />
                                                                   <div class="input-group-append" data-target="#TxtBirthDate" data-toggle="datetimepicker">
                                                                   </div>
                                                               </div>
@@ -587,14 +755,14 @@
                                                               <p class="col-sm-3 col-form-label">Line of Business</p>
                                                               <div class="col-sm-3">
                                                                   <select class="form-control" id="LstOccupation" name="Occupation" value="{{ old('Occupation') }}">
-                                                                      <option value="1" selected>1</option>
+                                                                      <option value="" selected></option>
                                                                   </select>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Correspondence Attention</p>
+                                                              <p class="col-sm-3 col-form-label">Correspondence Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtCAttention" name="CoAttention" style="text-transform:uppercase" type="text" value="{{ old('CoAttention') }}">
+                                                                  <input class="form-control" id="TxtCName" name="CoName" type="text" value="{{ old('CoName') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -618,60 +786,200 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblTaxID">TaxID</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtTaxID" type="text" name="tax" value="{{ old('TxtTaxID') }}">
+                                                                  <input class="form-control" id="TxtTaxID" type="text" name="Tax" value="{{ old('Tax') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Company Type</p>
+                                                              <p class="col-sm-3 col-form-label" id="LblCType">Company Type</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstComType" name="CompanyType" value="{{ old('CompanyType') }}">
+                                                                  <select class="form-control" id="LstComType" name="CompanyType">
+                                                                      @if (old('CompanyType') == '')
+                                                                      <option value="" selected></option>
+                                                                      @else
                                                                       <option value=""></option>
-                                                                      <option value="BUMN" >BUMN</option>
-                                                                      <option value="BUMD" >BUMD</option>
+                                                                      @endif
+
+                                                                      @if (old('CompanyType') == 'BUMN')
+                                                                      <option value="BUMN" selected>BUMN</option>
+                                                                      @else
+                                                                      <option value="BUMN">BUMN</option>
+                                                                      @endif
+
+                                                                      @if (old('CompanyType') == 'CAPTIVE')
+                                                                      <option value="CAPTIVE" selected>CAPTIVE</option>
+                                                                      @else
                                                                       <option value="CAPTIVE">CAPTIVE</option>
+                                                                      @endif
+                                                                      
+                                                                      @if (old('CompanyType') == 'DIRECT BUSINESS')
+                                                                      <option value="DIRECT BUSINESS" selected>DIRECT BUSINESS</option>
+                                                                      @else
                                                                       <option value="DIRECT BUSINESS">DIRECT BUSINESS</option>
+                                                                      @endif
+                                                                      
+                                                                      @if (old('CompanyType') == 'GOVERMENT')
+                                                                      <option value="GOVERMENT" selected>GOVERMENT</option>
+                                                                      @else
                                                                       <option value="GOVERMENT">GOVERMENT</option>
+                                                                      @endif
+
+                                                                      @if (old('CompanyType') == 'J.VENTURE')
+                                                                      <option value="J.VENTURE" selected>J.VENTURE</option>
+                                                                      @else
                                                                       <option value="J.VENTURE">J.VENTURE</option>
+                                                                      @endif
+
+                                                                      @if (old('CompanyType') == 'JOINT VENTURE')
+                                                                      <option value="JOINT VENTURE" selected>JOINT VENTURE</option>
+                                                                      @else
                                                                       <option value="JOINT VENTURE">JOINT VENTURE</option>
+                                                                      @endif
+
+                                                                      @if (old('CompanyType') == 'OVERSEAS')
+                                                                      <option value="OVERSEAS" selected>OVERSEAS</option>
+                                                                      @else
                                                                       <option value="OVERSEAS">OVERSEAS</option>
+                                                                      @endif
+                                                                      
+                                                                      @if (old('CompanyType') == 'SWASTA')
+                                                                      <option value="SWASTA" selected>SWASTA</option>
+                                                                      @else
                                                                       <option value="SWASTA">SWASTA</option>
+                                                                      @endif
+
+                                                                      @if (old('CompanyType') == 'PRIVATE')
+                                                                      <option value="PRIVATE" selected>PRIVATE</option>
+                                                                      @else
                                                                       <option value="PRIVATE">PRIVATE</option>
+                                                                      @endif
                                                                   </select>
                                                               </div>
                                                             </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Company Group</p>
+                                                              <p class="col-sm-3 col-form-label"id="LblCGroup">Company Group</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstComGroup" name="CGroup" onchange="CGroup_OnChange(this.value)" value="{{ old('CGroup') }}">>
+                                                                  <select class="form-control" id="LstComGroup" name="CGroup" onchange="CGroup_OnChange(this.value)">
+                                                                      @if (old('CGroup') == '')
                                                                       <option value="" selected></option>
-                                                                    @foreach ($CGroup['Data'] as $dataCGroup)
-                                                                       <option value="{{$dataCGroup['CGROUP']}}">{{$dataCGroup['DESCRIPTION']}}</option>
-                                                                  @endforeach
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+                                                                      @foreach ($CGroup['Data'] as $dataCGroup)
+                                                                      @if (old('CGroup') == $dataCGroup['CGROUP'])
+                                                                      <option value="{{$dataCGroup['CGROUP']}}" selected>{{$dataCGroup['DESCRIPTION']}}</option>
+                                                                      @else
+                                                                      <option value="{{$dataCGroup['CGROUP']}}">{{$dataCGroup['DESCRIPTION']}}</option>
+                                                                      @endif
+                                                                      @endforeach
                                                                   </select>
                                                               </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Sub Company Group</p>
+                                                              <p class="col-sm-3 col-form-label" id="LblSCGroup">Sub Company Group</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstSubComGroup" name="SubCompanyGroup" value="{{ old('SubCompanyGroup') }}">
+                                                                  <select class="form-control" id="LstSubComGroup" name="SubCompanyGroup">
+                                                                      @if (old('SubCompanyGroup') == '')
                                                                       <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
                                                                       @foreach ($SCGroup['Data'] as $dataSCGroup)
-                                                                       <option value="{{$dataSCGroup['SCGROUP']}}">{{$dataSCGroup['DESCRIPTION']}}</option>
-                                                                  @endforeach
+                                                                      @if (old('SubCompanyGroup') == $dataSCGroup['SCGROUP'])
+                                                                      <option value="{{$dataSCGroup['SCGROUP']}}" selected>{{$dataSCGroup['DESCRIPTION']}}</option>
+                                                                      @else
+                                                                      <option value="{{$dataSCGroup['SCGROUP']}}">{{$dataSCGroup['DESCRIPTION']}}</option>
+                                                                      @endif
+                                                                      @endforeach
                                                                   </select>
                                                               </div>
                                                             </div>
-                                                         
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Religion</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="religion" name="Religion"> 
+                                                                      @if (old('Religion') == '')
+                                                                      <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'BUDDHA')
+                                                                      <option value="BUDDHA" selected>BUDDHA</option>
+                                                                      @else
+                                                                      <option value="BUDDHA">BUDDHA</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'CATHOLIC')
+                                                                      <option value="CATHOLIC" selected>CATHOLIC</option>
+                                                                      @else
+                                                                      <option value="CATHOLIC">CATHOLIC</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'CHRISTIAN')
+                                                                      <option value="CHRISTIAN" selected>CHRISTIAN</option>
+                                                                      @else
+                                                                      <option value="CHRISTIAN">CHRISTIAN</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'HINDU')
+                                                                      <option value="HINDU" selected>HINDU</option>
+                                                                      @else
+                                                                      <option value="HINDU">HINDU</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'MOSLEM')
+                                                                      <option value="MOSLEM" selected>MOSLEM</option>
+                                                                      @else
+                                                                      <option value="MOSLEM">MOSLEM</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'OTHERS')
+                                                                      <option value="OTHERS" selected>OTHERS</option>
+                                                                      @else
+                                                                      <option value="OTHERS">OTHERS</option>
+                                                                      @endif
+                                                                  </select>
+                                                              </div>
+                                                          </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Income</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstIncome" name="Income" value="{{ old('Income') }}">
+                                                                  <select class="form-control" id="LstIncome" name="Income">
+                                                                      @if (old('Income') == '')
                                                                       <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+
+                                                                      @if (old('Income') == '1-10 juta')
+                                                                      <option value="1-10 juta" selected>1-10 juta</option>
+                                                                      @else
                                                                       <option value="1-10 juta">1-10 juta</option>
+                                                                      @endif
+
+                                                                      @if (old('Income') == '> 10-25 juta')
+                                                                      <option value="> 10-25 juta" selected>> 10-25 juta</option>
+                                                                      @else
                                                                       <option value="> 10-25 juta">> 10-25 juta</option>
+                                                                      @endif
+
+                                                                      @if (old('Income') == '> 25-50 juta')
+                                                                      <option value="> 25-50 juta" selected>> 25-50 juta</option>
+                                                                      @else
                                                                       <option value="> 25-50 juta">> 25-50 juta</option>
+                                                                      @endif
+
+                                                                      @if (old('Income') == '> 50-100 juta')
+                                                                      <option value="> 50-100 juta" selected>> 50-100 juta</option>
+                                                                      @else
                                                                       <option value="> 50-100 juta">> 50-100 juta</option>
+                                                                      @endif
+
+                                                                      @if (old('Income') == '> 100 juta')
+                                                                      <option value="> 100 juta" selected>> 100 juta</option>
+                                                                      @else
                                                                       <option value="> 100 juta">> 100 juta</option>
+                                                                      @endif
                                                                   </select>
                                                               </div>
                                                           </div>
@@ -684,19 +992,37 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Citizenship</p>
                                                               <div class="col-form-label col-sm-2">
-                                                                  <input type="checkbox" class="form-check-inputs" name="Citizen" id="CbxWNIF" value="{{ old('Citizen') }}">
+                                                                  <input type="checkbox" class="form-check-inputs" name="Citizen" id="CbxWNIF" value="true" {{ (old('Citizen') == 'true') ? 'checked' : '' }}>
                                                                   <label class="form-check-label" for="exampleCheck2">Local</label>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Martial Status</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstMarital" name="martial" value="{{ old('martial') }}">
+                                                                  <select class="form-control" id="LstMarital" name="Marital" value="{{ old('Marital') }}">
+                                                                      @if (old('Marital') == '')
                                                                       <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+
+                                                                      @if (old('Marital') == 'Single')
+                                                                      <option value="Single" selected>Single</option>
+                                                                      @else
                                                                       <option value="Single">Single</option>
+                                                                      @endif
+
+                                                                      @if (old('Marital') == 'Married')
+                                                                      <option value="Married" selected>Married</option>
+                                                                      @else
                                                                       <option value="Married">Married</option>
-                                                                      <option value="Life Divorce">Life Divorce</option>
+                                                                      @endif
+
+                                                                      @if (old('Marital') == 'Divorce To Death')
+                                                                      <option value="Divorce To Death" selected>Divorce To Death</option>
+                                                                      @else
                                                                       <option value="Divorce To Death">Divorce To Death</option>
+                                                                      @endif
                                                                   </select>
                                                               </div>
                                                           </div>
@@ -721,19 +1047,19 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Syncronize Profile</p>
                                                               <div class="col-form-label col-sm-2"> 
-                                                                  <input type="checkbox" class="form-check-inputs" id="CbxForceSyncF" name="Sync" value="{{ old('Sync') }}">
+                                                                  <input type="checkbox" class="form-check-inputs" id="CbxForceSyncF" name="Sync" value="true" {{ (old('Sync') == 'true') ? 'checked' : '' }}>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Dump</p>
                                                               <div class="col-form-label col-sm-2">
-                                                                  <input type="checkbox" class="form-check-inputs" id="CbxDumpF" name="Dump" value="{{ old('Dump') }}">
+                                                                  <input type="checkbox" class="form-check-inputs" id="CbxDumpF" name="Dump" value="true" {{ (old('Dump') == 'true') ? 'checked' : '' }}>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Restricted</p>
                                                               <div class="col-form-label col-sm-2">
-                                                                  <input type="checkbox" class="form-check-inputs" id="CbxRestrictedF" name="Restricted" value="{{ old('Restricted') }}" disabled>
+                                                                  <input type="checkbox" class="form-check-inputs" id="CbxRestrictedF" name="Restricted" value="true" {{ (old('Restricted') == 'true') ? 'checked' : '' }} disabled>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row justify-content-center">
@@ -876,10 +1202,20 @@ function corporateF_chekcked(){
         document.getElementById("LblBirthDate").style.fontWeight = "normal";
         document.getElementById("TxtBirthPlace").removeAttribute("required");
         document.getElementById("TxtBirthDate").removeAttribute("required");
+        document.getElementById("LblID_Name").style.fontWeight = "normal";
+        document.getElementById("ID_Name").removeAttribute("required");
 
         // wajib
         document.getElementById("LblTaxID").style.fontWeight = "bold";
         document.getElementById("TxtTaxID").setAttribute("required", "");
+        document.getElementById("LblCType").style.fontWeight = "bold";
+        document.getElementById("LstComType").setAttribute("required", "");
+        document.getElementById("LblCGroup").style.fontWeight = "bold";
+        document.getElementById("LstComGroup").setAttribute("required", "");
+        document.getElementById("LblCGroup").style.fontWeight = "bold";
+        document.getElementById("LstComGroup").setAttribute("required", "");
+        document.getElementById("LblSCGroup").style.fontWeight = "bold";
+        document.getElementById("LstSubComGroup").setAttribute("required", "");
     }else{
         // wajib
         document.getElementById("LblIDType").style.fontWeight = "bold";
@@ -895,6 +1231,12 @@ function corporateF_chekcked(){
         // tidak wajib
         document.getElementById("LblTaxID").style.fontWeight = "normal";
         document.getElementById("TxtTaxID").removeAttribute("required");
+        document.getElementById("LblCType").style.fontWeight = "normal";
+        document.getElementById("LstComType").removeAttribute("required");
+        document.getElementById("LblCGroup").style.fontWeight = "normal";
+        document.getElementById("LstComGroup").removeAttribute("required");
+        document.getElementById("LblSCGroup").style.fontWeight = "normal";
+        document.getElementById("LstSubComGroup").removeAttribute("required");
     }
 }
 function viewDetail(ID){
@@ -904,7 +1246,7 @@ function viewDetail(ID){
   console.log(filterarray);
   document.getElementById("TxtProfileRefID").value = filterarray[0]['RefID'];
   document.getElementById("TxtProfileRefDesc").value = filterarray[0]['RefName'];
-//   document.getElementById("TxtProfileID").value = filterarray[0]['ID'];
+  document.getElementById("TxtProfileID").value = filterarray[0]['ID'];
   document.getElementById("TxtFirstName").value = filterarray[0]['FirstName'];
   document.getElementById("TxtMiddleName").value = filterarray[0]['MidName'];
   document.getElementById("TxtLastName").value = filterarray[0]['LastName'];
@@ -934,13 +1276,21 @@ function viewDetail(ID){
   document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
   document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
   document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
-  document.getElementById("CbxCorporateF").value = filterarray[0]['Corporatef']; 
+    if (filterarray[0]['Corporatef'] == true) {
+        document.getElementById("CbxCorporateF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxCorporateF").removeAttribute("checked");
+    }
   document.getElementById("TxtTaxID").value = filterarray[0]['TaxID'];
   document.getElementById("religion").value = filterarray[0]['Religion'];
   document.getElementById("LstIncome").value = filterarray[0]['Income'];
   document.getElementById("TxtEmployment").value = filterarray[0]['Employment'];
-  document.getElementById("CbxWNIF").value = filterarray[0]['WNIF'];
-  document.getElementById("LstMarital").value = filterarray[0]['Martial'];
+  if (filterarray[0]['WNIF'] == true) {
+        document.getElementById("CbxWNIF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxWNIF").removeAttribute("checked");
+    }
+  document.getElementById("LstMarital").value = filterarray[0]['Marital'];
   document.getElementById("TxtContact").value = filterarray[0]['Contact'];
   document.getElementById("TxtContactAddress").value = filterarray[0]['ContactAddress']; 
   document.getElementById("TxtContactPhone").value = filterarray[0]['ContactPhone'];
@@ -948,71 +1298,101 @@ function viewDetail(ID){
   document.getElementById("LstComGroup").value = filterarray[0]['CGroup'];
   document.getElementById("LstSubComGroup").value = filterarray[0]['SCGroup']; 
   document.getElementById("LstProvince").value = filterarray[0]['Province'];
-  document.getElementById("CbxForceSyncF").value = filterarray[0]['ForceSyncF'];
-  document.getElementById("CbxDumpF").value = filterarray[0]['Dump'];
-  document.getElementById("CbxRestrictedF").value = filterarray[0]['Restricted']; 
+    if (filterarray[0]['ForceSyncF'] == true) {
+        document.getElementById("CbxForceSyncF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxForceSyncF").removeAttribute("checked");
+    }
+    if (filterarray[0]['DumpF'] == true) {
+        document.getElementById("CbxDumpF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxDumpF").removeAttribute("checked");
+    }
+    if (filterarray[0]['Restricted'] == true) {
+        document.getElementById("CbxRestrictedF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxRestrictedF").removeAttribute("checked");
+    }
+    document.getElementById("LstPType").value = filterarray[0]['PType'];
+    document.getElementById("TxtCName").value = filterarray[0]['CoName'];
 
   document.getElementById("tabinquiry").className = "nav-link";
   document.getElementById("tabprofile").className = "nav-link active";
   document.getElementById("inquiry").className = "tab-pane";
   document.getElementById("profile").className = "active tab-pane";
 }
-
-
 function clearAll(ID){
-    document.getElementById("TxtProfileRefID").value = ""
-    document.getElementById("TxtProfileRefDesc").value = filterarray[0]['RefName'];
-    document.getElementById("TxtProfileID").value = filterarray[0]['ID'];
-    document.getElementById("TxtFirstName").value = filterarray[0]['FirstName'];
-    document.getElementById("TxtMiddleName").value = filterarray[0]['MidName'];
-    document.getElementById("TxtLastName").value = filterarray[0]['LastName'];
-    document.getElementById("TxtProfileName").value = filterarray[0]['Name'];
-    document.getElementById("LstIDType").value = filterarray[0]['ID_Type'];
-    document.getElementById("ID_Number").value = filterarray[0]['ID_No'];
-    document.getElementById("ID_Name").value = filterarray[0]['ID_Name'];
-    document.getElementById("TxtIDDate").value = GetFormattedDate(filterarray[0]['ID_Date']);
-    document.getElementById("LstSalutation").value = filterarray[0]['Salutation'];
-    document.getElementById("TxtProfileInitial").value = filterarray[0]['Initial'];
-    document.getElementById("TxtTitle").value = filterarray[0]['Title'];
-    document.getElementById("TxtProfileEmail").value = filterarray[0]['Email'];
-    document.getElementById("TxtProfileMobile").value = filterarray[0]['Mobile'];
-    document.getElementById("TxtProfilePhone").value = filterarray[0]['Phone'];
-    document.getElementById("TxtOwnerID").value = filterarray[0]['OwnerID'];
-    document.getElementById("TxtPAddress_1").value = filterarray[0]['Address_1'];
-    document.getElementById("TxtPAddress_2").value = filterarray[0]['Address_2'];
-    document.getElementById("TxtPAddress_3").value = filterarray[0]['Address_3'];
-    document.getElementById("LstCountry").value = filterarray[0]['Country'];
-    document.getElementById("TxtCity").value = filterarray[0]['City'];
-    document.getElementById("TxtProfileZipCode").value = filterarray[0]['ZipCode'];
-    document.getElementById("LstGender").value = filterarray[0]['Gender'];
-    document.getElementById("TxtBirthPlace").value = filterarray[0]['BirthPlace'];
-    document.getElementById("TxtBirthDate").value = GetFormattedDate(filterarray[0]['BirthDate']);
-    document.getElementById("LstOccupation").value = filterarray[0]['Occupation'];
-    document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
-    document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
-    document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
-    document.getElementById("CbxCorporateF").value = filterarray[0]['Corporatef']; 
-    document.getElementById("TxtTaxID").value = filterarray[0]['TaxID'];
-    document.getElementById("religion").value = filterarray[0]['Religion'];
-    document.getElementById("LstIncome").value = filterarray[0]['Income'];
-    document.getElementById("TxtEmployment").value = filterarray[0]['Employment'];
-    document.getElementById("CbxWNIF").value = filterarray[0]['WNIF'];
-    document.getElementById("LstMarital").value = filterarray[0]['Martial'];
-    document.getElementById("TxtContact").value = filterarray[0]['Contact'];
-    document.getElementById("TxtContactAddress").value = filterarray[0]['ContactAddress']; 
-    document.getElementById("TxtContactPhone").value = filterarray[0]['ContactPhone'];
-    document.getElementById("LstComType").value = filterarray[0]['CompanyType'];
-    document.getElementById("LstComGroup").value = filterarray[0]['CGroup'];
-    document.getElementById("LstSubComGroup").value = filterarray[0]['SCGroup']; 
-    document.getElementById("LstProvince").value = filterarray[0]['Province'];
-    document.getElementById("CbxForceSyncF").value = filterarray[0]['ForceSyncF'];
-    document.getElementById("CbxDumpF").value = filterarray[0]['Dump'];
-    document.getElementById("CbxRestrictedF").value = filterarray[0]['Restricted']; 
-    
-    document.getElementById("tabinquiry").className = "nav-link";
-    document.getElementById("tabprofile").className = "nav-link active";
-    document.getElementById("inquiry").className = "tab-pane";
-    document.getElementById("profile").className = "active tab-pane";
+    document.getElementById("TxtProfileRefID").value = "";
+  document.getElementById("TxtProfileRefDesc").value = "";
+  document.getElementById("TxtProfileID").value = "";
+  document.getElementById("TxtFirstName").value = "";
+  document.getElementById("TxtMiddleName").value = "";
+  document.getElementById("TxtLastName").value = "";
+  document.getElementById("TxtProfileName").value = "";
+  document.getElementById("LstIDType").value = "";
+  document.getElementById("ID_Number").value = filterarray[0]['ID_No'];
+  document.getElementById("ID_Name").value = filterarray[0]['ID_Name'];
+  document.getElementById("TxtIDDate").value = GetFormattedDate(filterarray[0]['ID_Date']);
+  document.getElementById("LstSalutation").value = filterarray[0]['Salutation'];
+  document.getElementById("TxtProfileInitial").value = filterarray[0]['Initial'];
+  document.getElementById("TxtTitle").value = filterarray[0]['Title'];
+  document.getElementById("TxtProfileEmail").value = filterarray[0]['Email'];
+  document.getElementById("TxtProfileMobile").value = filterarray[0]['Mobile'];
+  document.getElementById("TxtProfilePhone").value = filterarray[0]['Phone'];
+  document.getElementById("TxtOwnerID").value = filterarray[0]['OwnerID'];
+  document.getElementById("TxtPAddress_1").value = filterarray[0]['Address_1'];
+  document.getElementById("TxtPAddress_2").value = filterarray[0]['Address_2'];
+  document.getElementById("TxtPAddress_3").value = filterarray[0]['Address_3'];
+  document.getElementById("LstCountry").value = filterarray[0]['Country'];
+  document.getElementById("TxtCity").value = filterarray[0]['City'];
+  document.getElementById("TxtProfileZipCode").value = filterarray[0]['ZipCode'];
+  document.getElementById("LstGender").value = filterarray[0]['Gender'];
+  document.getElementById("TxtBirthPlace").value = filterarray[0]['BirthPlace'];
+  document.getElementById("TxtBirthDate").value = GetFormattedDate(filterarray[0]['BirthDate']);
+  document.getElementById("LstOccupation").value = filterarray[0]['Occupation'];
+//   document.getElementById("TxtCAttention").value = filterarray[0]['Correspondence_Attention'];
+  document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
+  document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
+  document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
+    if (filterarray[0]['Corporatef'] == true) {
+        document.getElementById("CbxCorporateF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxCorporateF").removeAttribute("checked");
+    }
+  document.getElementById("TxtTaxID").value = filterarray[0]['TaxID'];
+  document.getElementById("religion").value = filterarray[0]['Religion'];
+  document.getElementById("LstIncome").value = filterarray[0]['Income'];
+  document.getElementById("TxtEmployment").value = filterarray[0]['Employment'];
+  if (filterarray[0]['WNIF'] == true) {
+        document.getElementById("CbxWNIF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxWNIF").removeAttribute("checked");
+    }
+  document.getElementById("LstMarital").value = filterarray[0]['Marital'];
+  document.getElementById("TxtContact").value = filterarray[0]['Contact'];
+  document.getElementById("TxtContactAddress").value = filterarray[0]['ContactAddress']; 
+  document.getElementById("TxtContactPhone").value = filterarray[0]['ContactPhone'];
+  document.getElementById("LstComType").value = filterarray[0]['CompanyType'];
+  document.getElementById("LstComGroup").value = filterarray[0]['CGroup'];
+  document.getElementById("LstSubComGroup").value = filterarray[0]['SCGroup']; 
+  document.getElementById("LstProvince").value = filterarray[0]['Province'];
+    if (filterarray[0]['ForceSyncF'] == true) {
+        document.getElementById("CbxForceSyncF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxForceSyncF").removeAttribute("checked");
+    }
+    if (filterarray[0]['DumpF'] == true) {
+        document.getElementById("CbxDumpF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxDumpF").removeAttribute("checked");
+    }
+    if (filterarray[0]['Restricted'] == true) {
+        document.getElementById("CbxRestrictedF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxRestrictedF").removeAttribute("checked");
+    }
+    document.getElementById("LstPType").value = filterarray[0]['PType'];
+    document.getElementById("TxtCName").value = filterarray[0]['CoName'];
 }
 function GetFormattedDate(datestring) {
     var d = new Date(datestring);
