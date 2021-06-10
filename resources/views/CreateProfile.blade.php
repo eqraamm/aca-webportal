@@ -332,7 +332,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="reset" class="btn btn-secondary">Clear All</button>
-                                                                    <Button style={styles.SearchButton} onPress={() this._onPressButton() } full><Text> Search </Text>
+                                                                    <Button type="button" class="btn btn-primary" id="search" name="search"> search </button>
                                                                 </div>
                                                                 <div class="card-body">
                                           <table id="tblModalSync" class="table table-bordered table-striped">
@@ -1047,19 +1047,25 @@ function GetFormattedDate(datestring) {
   }
   );
 </script>
-
 <script>
-_onPressButton() {
-    fetch("http://uat2.care.co.id:9095/aca/WEBAPI2/MiddlewareAPI/SearchHistoryProfile")
-    .then(response => response.json())
-    .then((responseJson)=> {
-      this.setState({
-       loading: false,
-       dataSource: responseJson.data
-      })
-    })
-    .catch(error=>console.log(error))
-  }
+$('#search').click(function(event) {
+    $("#tblModalSync").empty();//Clear old data before ajax
+    $.ajax({
+        url : 'http://uat2.care.co.id:9095/aca/WEBAPI2/MiddlewareAPI/SearchHistoryProfile',
+        type : 'GET',
+        dataType : 'json',
+        success : function(data) {
+            var table = $("#tblModalSync");
+            $.each(data, function(idx, elem) {
+                table.append("<tr><td>" + elem.user + "</td></tr>");
+            });
+
+        },
+        error : function() {
+            alert('There was an error');
+        }
+    });
+});
 </script>
 </body>
 </html>
