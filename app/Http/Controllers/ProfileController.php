@@ -102,7 +102,6 @@ class ProfileController extends Controller
     // api save profile 
     public function SaveProfile(Request $request)
     {
-
         $dataprofile = array(
             'ID' => ($request->input('ProfileID') == null) ? '' : $request->input('ProfileID'),
             'Firstname' => ($request->input('FirstName') == null) ? '' : $request->input('FirstName'),

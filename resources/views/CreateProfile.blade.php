@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ACA Insurance | Create Profile - satria</title>
+  <title>ACA Insurance | Create Profile</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -297,6 +297,7 @@
                                                                     <p class="col-sm-3 col-form-label">Mobile Phone</p>
                                                                          <div class="col-sm-6">
                                                                             <input class="form-control" id="TxtProfileMobileModal" name="MobilePhone" type="number">
+
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -315,7 +316,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="reset" class="btn btn-secondary">Clear All</button>
-                                                                     <button type="search" class="btn btn-primary">Search</button>
+                                                                    <Button type="button" class="btn btn-primary" id="search" name="search"> search </button>
                                                                 </div>
                                                                 <div class="card-body">
                                           <table id="tblModalSync" class="table table-bordered table-striped">
@@ -378,25 +379,25 @@
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">First Name</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtFirstName" type="text" name='FirstName' value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
+                                                                  <input class="form-control" id="TxtFirstName" type="text" name='FirstName' style="text-transform:uppercase" value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Middle Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtMiddleName" name="MiddleName" type="text" value="{{ old('MiddleName') }}" onchange="Construct_ProfileName();">
+                                                                  <input class="form-control" id="TxtMiddleName" name="MiddleName" type="text"  style="text-transform:uppercase" value="{{ old('MiddleName') }}" onchange="Construct_ProfileName();">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Last Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtLastName" name="LastName" type="text" value="{{ old('LastName') }}" onchange="Construct_ProfileName();">
+                                                                  <input class="form-control" id="TxtLastName" name="LastName" type="text"  style="text-transform:uppercase" value="{{ old('LastName') }}" onchange="Construct_ProfileName();">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Full Name</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtProfileName" name="Name" type="text" value="{{ old('Name') }}" required>
+                                                                  <input class="form-control" id="TxtProfileName" name="Name" type="text"  style="text-transform:uppercase" value="{{ old('Name') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -456,20 +457,19 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblID_Number">ID Number</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="ID_Number" name="ID_Number" type="text" value="{{ old('ID_Number') }}" required>
+                                                                  <input class="form-control" id="ID_Number" name="ID_Number" maxlength="16" type="text" value="{{ old('ID_Number') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblID_Name">ID Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="ID_Name" name="ID_Name" type="text" value="{{ old('ID_Name') }}" required>
+                                                                  <input class="form-control" id="ID_Name" name="ID_Name" type="text"  style="text-transform:uppercase" value="{{ old('ID_Name') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">ID Date</p>
                                                               <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
                                                                   <input type="date" class="form-control datetimepicker-input" data-target="#TxtIDDate" id="TxtIDDate" name="IDDate" value="{{ old('IDDate') }}" />
-                                                                  
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -539,6 +539,20 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Profile Type</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="LstPType" name="PType" value="{{ old('PType') }}">
+                                                                      <option value=""></option>
+                                                                      <option value="Captive">Captive</option>
+                                                                      <option value="Direct Business">Direct Business</option>
+                                                                      <option value="Inward Business">Inward Business</option>
+                                                                      <option value="Outward Business">Outward Business</option>
+                                                                      <option value="Intermediaries">Intermediaries</option>
+                                                                      <option value="Others">Others</option>
+                                                                  </select>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Initial</p>
                                                               <div class="col-sm-6">
                                                                   <input class="form-control" id="TxtProfileInitial" name="Initial" type="text" value="{{ old('Initial') }}">
@@ -593,6 +607,20 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Religion</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="religion" name="Religion" value="{{ old('Religion') }}"> 
+                                                                      <option value="" selected></option>
+                                                                      <option value="BUDDHA">BUDDHA</option>
+                                                                      <option value="CATHOLIC">CATHOLIC</option>
+                                                                      <option value="CHRISTIAN">CHRISTIAN</option>
+                                                                      <option value="HINDU">HINDU</option>
+                                                                      <option value="MOSLEM">MOSLEM</option>
+                                                                      <option value="OTHERS">OTHERS</option>
+                                                                  </select>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Country / City</p>
                                                               <div class="col-sm-3">
                                                                   <select class="form-control" id="LstCountry" name="Country">
@@ -611,7 +639,7 @@
                                                                   </select>
                                                               </div>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtCity" name="City" type="text" value="{{ old('City') }}">
+                                                                  <input class="form-control" id="TxtCity" name="City"  style="text-transform:uppercase" type="text" value="{{ old('City') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -714,7 +742,7 @@
                                                           <div class="form-group row">
                                                           <p class="col-sm-3 col-form-label" id="LblBirthDate">Birth Place / Birth Date</p>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtBirthPlace" name="BirthPlace" type="text" value="{{ old('BirthPlace') }}">
+                                                                  <input class="form-control" id="TxtBirthPlace" name="BirthPlace" style="text-transform:uppercase" type="text" value="{{ old('BirthPlace') }}">
                                                               </div>
                                                               <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
                                                                   <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="TxtBirthDate" name="BirthDate" value="{{ old('BirthDate') }}" />
@@ -968,7 +996,7 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Marital Status</p>
+                                                              <p class="col-sm-3 col-form-label">Martial Status</p>
                                                               <div class="col-sm-3">
                                                                   <select class="form-control" id="LstMarital" name="Marital" value="{{ old('Marital') }}">
                                                                       @if (old('Marital') == '')
@@ -1399,16 +1427,26 @@ function GetFormattedDate(datestring) {
   }
   );
 </script>
-<!-- <script>
-$('#modal-history').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var recipient = button.data('whatever') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.modal-title').text('New message to ' + recipient)
-  modal.find('.modal-body input').val(recipient)
-})
-</script> -->
+<script>
+$('#search').click(function(event) {
+    $("#tblModalSync").empty();//Clear old data before ajax
+    $.ajax({
+        url : 'http://uat2.care.co.id:9095/aca/WEBAPI2/MiddlewareAPI/SearchHistoryProfile',
+        type : 'GET',
+        dataType : 'json',
+        success : function(data) {
+            var table = $("#tblModalSync");
+            $.each(data, function(idx, elem) {
+                table.append("<tr><td>" + elem.user + "</td></tr>");
+            });
+
+        },
+        error : function() {
+            alert('There was an error');
+        }
+    });
+});
+</script>
+>>>>>>> refs/remotes/origin/master
 </body>
 </html>
