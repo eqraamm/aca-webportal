@@ -5,7 +5,7 @@ function APIMiddleware($array_plaintext, $path)
     $privatekey = '89T29UCH8X649K6W';
     $publickey = 'GE8I19241CVO15TB';
     // $url = 'http://uat2.care.co.id:9095/aca/webapi2/middlewareapi/' . $path;
-    $url = 'http://uat2.care.co.id:9095/WebAPI2/API/middlewareapi/' . $path;
+    $url = 'http://uat2.care.co.id:9095/ACA/WebAPI2/middlewareapi/' . $path;
     $data = json_encode($array_plaintext);
 
     //Padding for Triple DES ECB

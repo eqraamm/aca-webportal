@@ -162,47 +162,12 @@
                           </div><!-- /.card-header -->
                           <div class="card-body">
                               <div class="tab-content">
-                                  <div class="{{ empty($tabname) || $tabname == 'inquiry' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="inquiry">
-                                      <div class="card-body">
-                                          <table id="example1" class="table table-bordered table-striped">
-                                              <thead>
-                                                  <tr>
-                                                      <th>Profile ID</th>
-                                                      <th>Name</th>
-                                                      <th>Email</th>
-                                                      <th>Mobile</th>
-                                                      <th>ID Number</th>
-                                                      <th>Birth Date</th>
-                                                      <th>Action</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                              @if(! empty($data))
-                                              @foreach($data['Data'] as $datas)
-                                                  <tr>
-                                                      <td>{{ $datas['ID'] }}</td>
-                                                      <td>{{ $datas['Name'] }}</td>
-                                                      <td>{{ $datas['Email'] }}</td>
-                                                      <td>{{ $datas['Mobile'] }}</td>
-                                                      <td>{{ $datas['ID_No'] }}</td>
-                                                      <td>{{ $datas['BirthDate'] }}</td>
-                                                      <td>
-                                                          <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
-                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm" >history</a>
-                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete" >Delete</a>
-                                                          <!-- <button class="btn btn-default" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete"> -->
-                                                      </td>
-                                                  </tr>
-                                              @endforeach
-                                              @endif
-                                              </tbody>
-                                          </table>
-                                          <!-- Modal History -->
-                                          <div class="modal fade" id="modal-history">
+                                    <!-- Modal History -->
+                                    <div class="modal fade" id="modal-history">
                                                             <div class="modal-dialog modal-xl">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                <h4 class="modal-title">History Profile</h4>
+                                                                <label class="modal-title" id="DelHistory"></label>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -248,7 +213,7 @@
                                                         <!-- /.modal -->
                                                         <!-- /.Modal History -->
                                                         <!-- Modal Sync -->
-                                                        <div class="modal fade" id="modal-lg">
+                                                        <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
                                                             <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -314,7 +279,7 @@
                                                                                 <div class="input-group-append" data-target="#ModalTxtBirthDate" data-toggle="datetimepicker"></div>
                                                                          </div>
                                                                 </div>
-                                                                </div>
+                                                            </div>
                                                                 <div class="modal-footer">
                                                                     <button type="reset" class="btn btn-secondary">Clear All</button>
                                                                     <Button type="button" class="btn btn-primary" id="search" name="search"> search </button>
@@ -347,15 +312,50 @@
                                               </tbody>
                                           </table>
                                       </div>
-                                                            </div>
+                                     </div>
                                                             <!-- /.modal-content -->
-                                                            </div>
+                                 </div>
                                                             <!-- /.modal-dialog -->
-                                                        </div>
+                                </div>
                                                         <!-- /.modal -->
                                                         <!-- /.Modal Sync -->
-                                      </div>
-                                  </div>
+                                  <div class="{{ empty($tabname) || $tabname == 'inquiry' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="inquiry">
+                                      <div class="card-body">
+                                          <table id="example1" class="table table-bordered table-striped">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Profile ID</th>
+                                                      <th>Name</th>
+                                                      <th>Email</th>
+                                                      <th>Mobile</th>
+                                                      <th>ID Number</th>
+                                                      <th>Birth Date</th>
+                                                      <th>Action</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                              @if(! empty($data))
+                                              @foreach($data['Data'] as $datas)
+                                                  <tr>
+                                                      <td>{{ $datas['ID'] }}</td>
+                                                      <td>{{ $datas['Name'] }}</td>
+                                                      <td>{{ $datas['Email'] }}</td>
+                                                      <td>{{ $datas['Mobile'] }}</td>
+                                                      <td>{{ $datas['ID_No'] }}</td>
+                                                      <td>{{ $datas['BirthDate'] }}</td>
+                                                      <td>
+                                                          <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
+                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm" >history</a>
+                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete" >Delete</a>
+                                                          <!-- <button class="btn btn-default" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete"> -->
+                                                      </td>
+                                                  </tr>
+                                              @endforeach
+                                              @endif
+                                              </tbody>
+                                          </table>
+                                         </div>
+                                        </div>
                                   <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
                                     <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
                                     @csrf
@@ -368,7 +368,7 @@
                                                                   <input class="form-control" id="TxtProfileRefDesc" type="text">
                                                               </div>
                                                               <div class="col-sm-2">
-                                                              <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-lg">Sync</button>
+                                                              <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Sync</button>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row" style="display:none;">
@@ -1160,12 +1160,19 @@
 
 <!-- script modal button delete -->
 <script>
+$(document).on("change", ".open-modal-history", function () {
+     var DelHistory= $(this).data('id');
+     $(".modal-title #DelHistory").val( DelHistory );
+    });
+
         $('#confirm-delete').on('show.bs.modal', function(e) {
             $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
             
             $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').att    r('href') + '</strong>');
         });
     </script>
+
+
 
 <script>
 function CGroup_OnChange(CGroup){
@@ -1459,26 +1466,6 @@ function GetFormattedDate(datestring) {
     });
   }
   );
-</script>
-<script>
-$('#search').click(function(event) {
-    $("#tblModalSync").empty();//hapus data lama 
-    $.ajax({
-        url : 'http://uat2.care.co.id:9095/aca/WEBAPI2/MiddlewareAPI/SearchHistoryProfile',
-        type : 'POST',
-        dataType : 'json',
-        success : function(data) {
-            var table = $("#tblModalSync");
-            $.each(data, function(idx, elem) {
-                table.append("<tr><td>" + elem.user + "</td></tr>");
-            });
-
-        },
-        error : function() {
-            alert('There was an error');
-        }
-    });
-});
 </script>
 </body>
 </html>
