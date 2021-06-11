@@ -282,7 +282,7 @@
                                                             </div>
                                                                 <div class="modal-footer">
                                                                     <button type="reset" class="btn btn-secondary">Clear All</button>
-                                                                    <Button type="button" class="btn btn-primary" id="search" name="search"> search </button>
+                                                                    <Button type="button" class="btn btn-primary" id="search" name="search" onclick="_onPressButton()">search</button>
                                                                 </div>
                                                                 <div class="card-body">
                                           <table id="tblModalSync" class="table table-bordered table-striped">
@@ -1088,7 +1088,7 @@
                 </div>
             
                 <div class="modal-body">
-                    <p>You are about to delete one track, this procedure is irreversible.</p>
+                    <p>You are about to delete this ID.</p>
                     <p>Do you want to proceed?</p>
                     <p class="debug-url"></p>
                 </div>
@@ -1170,10 +1170,22 @@ $(document).on("change", ".open-modal-history", function () {
             
             $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').att    r('href') + '</strong>');
         });
+        
     </script>
 
-
-
+<script>
+_onPressButton() {
+    fetch("http://uat2.care.co.id:9095/WEBAPI2/MiddlewareAPI/SearchHistoryProfile")
+    .then(response => response.json())
+    .then((responseJson)=> {
+      this.setState({
+       loading: false,
+       dataSource: responseJson.data
+      })
+    })
+    .catch(error=>console.log(error))
+  }
+</script>
 <script>
 function CGroup_OnChange(CGroup){
     var basedata = @json($SCGroup['Data']);
