@@ -162,8 +162,43 @@
                           </div><!-- /.card-header -->
                           <div class="card-body">
                               <div class="tab-content">
-                                    <!-- Modal History -->
-                                    <div class="modal fade" id="modal-history">
+                                  <div class="{{ empty($tabname) || $tabname == 'inquiry' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="inquiry">
+                                      <div class="card-body">
+                                          <table id="example1" class="table table-bordered table-striped">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Profile ID</th>
+                                                      <th>Name</th>
+                                                      <th>Email</th>
+                                                      <th>Mobile</th>
+                                                      <th>ID Number</th>
+                                                      <th>Birth Date</th>
+                                                      <th>Action</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                              @if(! empty($data))
+                                              @foreach($data['Data'] as $datas)
+                                                  <tr>
+                                                      <td>{{ $datas['ID'] }}</td>
+                                                      <td>{{ $datas['Name'] }}</td>
+                                                      <td>{{ $datas['Email'] }}</td>
+                                                      <td>{{ $datas['Mobile'] }}</td>
+                                                      <td>{{ $datas['ID_No'] }}</td>
+                                                      <td>{{ $datas['BirthDate'] }}</td>
+                                                      <td>
+                                                          <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
+                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm" >history</a>
+                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#confirm-delete" >Delete</a>
+                                                          <!-- <button class="btn btn-default" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete"> -->
+                                                      </td>
+                                                  </tr>
+                                              @endforeach
+                                              @endif
+                                              </tbody>
+                                          </table>
+                                          <!-- Modal History -->
+                                          <div class="modal fade" id="modal-history">
                                                             <div class="modal-dialog modal-xl">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -999,7 +1034,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Martial Status</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstMarital" name="Marital" value="{{ old('Marital') }}">
+                                                                  <select class="form-control" id="LstMarital" name="Marital" >
                                                                       @if (old('Marital') == '')
                                                                       <option value="" selected></option>
                                                                       @else
