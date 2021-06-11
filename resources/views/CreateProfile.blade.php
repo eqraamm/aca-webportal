@@ -189,7 +189,7 @@
                                                       <td>
                                                           <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
                                                           <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm" >history</a>
-                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete" >Delete</a>
+                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#confirm-delete" >Delete</a>
                                                           <!-- <button class="btn btn-default" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete"> -->
                                                       </td>
                                                   </tr>
@@ -999,7 +999,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Martial Status</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstMarital" name="Marital" value="{{ old('Marital') }}">
+                                                                  <select class="form-control" id="LstMarital" name="Marital" >
                                                                       @if (old('Marital') == '')
                                                                       <option value="" selected></option>
                                                                       @else
