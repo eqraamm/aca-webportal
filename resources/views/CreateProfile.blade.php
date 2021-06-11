@@ -1210,15 +1210,15 @@ $(document).on("change", ".open-modal-history", function () {
 
 <script>
 _onPressButton() {
-    fetch("http://uat2.care.co.id:9095/WEBAPI2/MiddlewareAPI/SearchHistoryProfile")
-    .then(response => response.json())
-    .then((responseJson)=> {
-      this.setState({
-       loading: false,
-       dataSource: responseJson.data
-      })
-    })
-    .catch(error=>console.log(error))
+   var xhr = new XMLHttpRequest();
+   var url ="http://uat2.care.co.id:9095/WEBAPI2/MiddlewareAPI/SearchHistoryProfile";
+
+   xhr.onload = function(){
+       document.getElementById("search").innerHtml = "loading..."
+   }
+   xhr.onerror = function () {
+                alert("Gagal mengambil data");
+            };
   }
 </script>
 <script>

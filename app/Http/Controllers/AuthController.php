@@ -49,7 +49,6 @@ class AuthController extends Controller
 
         $response  = APIMiddleware($data, 'Login');
 
-        dd($response);
         
         if ($response['code'] == '200'){
             return redirect()->route('profile');
