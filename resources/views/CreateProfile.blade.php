@@ -112,7 +112,111 @@
                                                         </div>
                                                         <!-- /.modal -->
                                                         <!-- /.Modal History -->
-                                                        
+                                                        <!-- Modal Sync -->
+                                                        <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                <h4 class="modal-title">Profile Inquiry</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Profile ID</label>
+                                                                        <div class="col-sm-6">
+                                                                        <input class="form-control" id="TxtProfileIDModal" type="text" name="ProfileID" >
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <p class="col-sm-3 col-form-label">Email</p>
+                                                                        <div class="col-sm-6">
+                                                                            <input class="form-control" id="TxtProfileEmailModal" name="Email" type="email">
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <p class="col-sm-3 col-form-label">Address</p>
+                                                                        <div class="col-sm-6">
+                                                                             <input class="form-control" id="TxtPAddress_1Modal" name="Address1" type="text">
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <p class="col-sm-3 col-form-label">City</p>
+                                                                        <div class="col-sm-6">
+                                                                        <input class="form-control" id="ModalTxtCity" name="CityModal" style="text-transform:uppercase;" type="text">
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <p class="col-sm-3 col-form-label">ZipCode</p>
+                                                                        <div class="col-sm-3">
+                                                                            <input class="form-control" id="TxtProfileZipCodeModal" name="ZipCode" type="text">
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <p class="col-sm-3 col-form-label">ID Number</p>
+                                                                        <div class="col-sm-6">
+                                                                             <input class="form-control" id="ID_NumberModal" name="ID_Number" type="text" maxlength="16" >
+                                                                     </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <p class="col-sm-3 col-form-label">Mobile Phone</p>
+                                                                         <div class="col-sm-6">
+                                                                            <input class="form-control" id="TxtProfileMobileModal" name="MobilePhone" type="number">
+
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                     <p class="col-sm-3 col-form-label">Tax ID</p>
+                                                                         <div class="col-sm-6">
+                                                                            <input class="form-control" id="TxtTaxIDModal" type="text" name="TaxModal">
+                                                                        </div>
+                                                                 </div>
+                                                                 <div class="form-group row">
+                                                                    <p class="col-sm-3 col-form-label">Birth Date</p>
+                                                                        <div class="input-group date col-sm-6" id="reservationdate" data-target-input="nearest">
+                                                                            <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="ModalTxtBirthDate" name="ModalBirthDate" required />
+                                                                                <div class="input-group-append" data-target="#ModalTxtBirthDate" data-toggle="datetimepicker"></div>
+                                                                         </div>
+                                                                </div>
+                                                            </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="reset" class="btn btn-secondary">Clear All</button>
+                                                                    <Button type="button" class="btn btn-primary" id="search" name="search" onclick="_onPressButton()">search</button>
+                                                                </div>
+                                                                <div class="card-body">
+                                          <table id="tblModalSync" class="table table-bordered table-striped">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Profile ID</th>
+                                                      <th>Name</th>
+                                                      <th>Email</th>
+                                                      <th>Mobile</th>
+                                                      <th>ID Number</th>
+                                                      <th>Birth Date</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                              @if(! empty($datasync))
+                                              @foreach($datasync['Data'] as $datas)
+                                                  <tr>
+                                                      <td>{{ $datas['ID'] }}</td>
+                                                      <td>{{ $datas['Name'] }}</td>
+                                                      <td>{{ $datas['Email'] }}</td>
+                                                      <td>{{ $datas['Mobile'] }}</td>
+                                                      <td>{{ $datas['ID_No'] }}</td>
+                                                      <td>{{ $datas['BirthDate'] }}</td>
+                                                  </tr>
+                                              @endforeach
+                                              @endif
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                     </div>
+                                                            <!-- /.modal-content -->
+                                 </div>
+                                                            <!-- /.modal-dialog -->
+                                </div>
                                                         <!-- /.modal -->
                                         </div>
                                         </div>                <!-- /.Modal Sync -->
@@ -918,8 +1022,19 @@ $(".modal-title #DelHistory").val( DelHistory );
     });
 </script> -->
 
+<script>
+_onPressButton() {
+   var xhr = new XMLHttpRequest();
+   var url ="http://uat2.care.co.id:9095/WEBAPI2/MiddlewareAPI/SearchHistoryProfile";
 
-
+   xhr.onload = function(){
+       document.getElementById("search").innerHtml = "loading..."
+   }
+   xhr.onerror = function () {
+                alert("Gagal mengambil data");
+            };
+  }
+</script>
 <script>
 function CGroup_OnChange(CGroup){
     var basedata = @json($SCGroup['Data']);
