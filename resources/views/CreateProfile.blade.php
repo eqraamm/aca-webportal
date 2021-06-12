@@ -54,7 +54,7 @@
                                                           <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
                                                           <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm" >history</a>
                                                           <!-- <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#confirm-delete" >Delete</a> -->
-                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" id="btnDel" data-toggle="modal" data-target="#confirmation" data-message="You are about to delete profile data, this procedure is irreversible." data-id="{{$datas['ID']}}" data-urlroute="route('profile.drop', ['id' =>$datas['ID']])" >Delete</a>
+                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" id="btnDel" data-toggle="modal" data-target="#confirmation" data-message="You are about to delete profile data, this procedure is irreversible." data-id="{{$datas['ID']}}" data-backdrop="static">Delete</a>
                                                           
                                                       </td>
                                                   </tr>
@@ -405,20 +405,6 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Profile Type</p>
-                                                              <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstPType" name="PType" value="{{ old('PType') }}">
-                                                                      <option value=""></option>
-                                                                      <option value="Captive">Captive</option>
-                                                                      <option value="Direct Business">Direct Business</option>
-                                                                      <option value="Inward Business">Inward Business</option>
-                                                                      <option value="Outward Business">Outward Business</option>
-                                                                      <option value="Intermediaries">Intermediaries</option>
-                                                                      <option value="Others">Others</option>
-                                                                  </select>
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Initial</p>
                                                               <div class="col-sm-6">
                                                                   <input class="form-control" id="TxtProfileInitial" name="Initial" type="text" value="{{ old('Initial') }}">
@@ -470,20 +456,6 @@
                                                               <p class="col-sm-3 col-form-label">Address 3</p>
                                                               <div class="col-sm-6">
                                                                   <input class="form-control" id="TxtPAddress_3" name="Address3" type="text" value="{{ old('Address3') }}">
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Religion</p>
-                                                              <div class="col-sm-3">
-                                                                  <select class="form-control" id="religion" name="Religion" value="{{ old('Religion') }}"> 
-                                                                      <option value="" selected></option>
-                                                                      <option value="BUDDHA">BUDDHA</option>
-                                                                      <option value="CATHOLIC">CATHOLIC</option>
-                                                                      <option value="CHRISTIAN">CHRISTIAN</option>
-                                                                      <option value="HINDU">HINDU</option>
-                                                                      <option value="MOSLEM">MOSLEM</option>
-                                                                      <option value="OTHERS">OTHERS</option>
-                                                                  </select>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -557,9 +529,9 @@
                                                               </div>
                                                             </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Province</p>
+                                                              <label class="col-sm-3 col-form-label">Province</label>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstProvince" name="Province">
+                                                                  <select class="form-control" id="LstProvince" name="Province" required>
                                                                       @if (old('Province') == '')
                                                                       <option value="" selected></option>
                                                                       @else
@@ -932,7 +904,7 @@
                                                               <button type="submit" id="clickbtn" class="btn btn-block bg-gradient-primary col-5">Save</button>
                                                             </div>
                                                             <div class="col-sm-4">
-                                                              <button type="reset" id="clearbtn" class="btn btn-block bg-gradient-danger col-5" >Clear</button>
+                                                              <button type="submit" id="clearbtn" class="btn btn-block bg-gradient-danger col-5" >Clear</button>
                                                             </div>
                                                           </div>  
                                                       </form>
@@ -1023,16 +995,60 @@ $(".modal-title #DelHistory").val( DelHistory );
 </script> -->
 
 <script>
-_onPressButton() {
+// Get all the reset buttons from the dom
+var resetButtons = document.getElementById('clearbtn');
+console.log(resetButtons);
+
+resetButtons.addEventListener('click', resetForm);
+
+// Loop through each reset buttons to bind the click event
+// for(var i=0; i<resetButtons.length; i++){
+//   resetButtons[i].addEventListener('click', resetForm);
+// }
+
+/**
+ * Function to hard reset the inputs of a form.
+ *
+ * @param object event The event object.
+ * @return void
+ */
+function resetForm(event){
+
+  event.preventDefault();
+
+  var form = event.currentTarget.form;
+  var inputs = form.querySelectorAll('input');
+  var selects = form.querySelectorAll('select');
+  console.log(inputs); 
+  console.log(selects); 
+
+  inputs.forEach(function(input, index){
+    if (input.type != 'checkbox'){
+        input.value = null;
+    }else{
+        input.checked = false;
+    }
+    // input.removeAttribute("checked");
+  });
+
+  selects.forEach(function(selects, index){
+    selects.value = null;
+  });
+
+}
+</script>
+
+<script>
+function _onPressButton() {
    var xhr = new XMLHttpRequest();
    var url ="http://uat2.care.co.id:9095/WEBAPI2/MiddlewareAPI/SearchHistoryProfile";
 
    xhr.onload = function(){
-       document.getElementById("search").innerHtml = "loading..."
+       document.getElementById("search").innerHtml = "loading...";
    }
    xhr.onerror = function () {
                 alert("Gagal mengambil data");
-            };
+            }
   }
 </script>
 <script>
@@ -1073,6 +1089,8 @@ function corporateF_chekcked(){
         document.getElementById("TxtBirthDate").removeAttribute("required");
         document.getElementById("LblID_Name").style.fontWeight = "normal";
         document.getElementById("ID_Name").removeAttribute("required");
+        document.getElementById("LblGender").style.fontWeight = "normal";
+        document.getElementById("LstGender").removeAttribute("required");
 
         // wajib
         document.getElementById("LblTaxID").style.fontWeight = "bold";
@@ -1096,6 +1114,8 @@ function corporateF_chekcked(){
         document.getElementById("LblBirthDate").style.fontWeight = "bold";
         document.getElementById("TxtBirthPlace").setAttribute("required", "");
         document.getElementById("TxtBirthDate").setAttribute("required", "");
+        document.getElementById("LblGender").style.fontWeight = "bold";
+        document.getElementById("LstGender").setAttribute("required", "");
 
         // tidak wajib
         document.getElementById("LblTaxID").style.fontWeight = "normal";
@@ -1182,7 +1202,7 @@ function viewDetail(ID){
         document.getElementById("CbxRestrictedF").removeAttribute("checked");
     }
     document.getElementById("LstPType").value = filterarray[0]['PType'];
-    document.getElementById("TxtCName").value = filterarray[0]['CoName'];
+    document.getElementById("TxtCName").value = filterarray[0]['Correspondence_Attention'];
 
   document.getElementById("tabinquiry").className = "nav-link";
   document.getElementById("tabprofile").className = "nav-link active";

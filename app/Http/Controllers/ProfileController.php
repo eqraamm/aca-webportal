@@ -12,9 +12,9 @@ use App\User;
 
 class ProfileController extends Controller
 {
-    public function index()
-    {
-        // dd($request->session()->all());
+    public function index(){
+
+        // dd($users);
          // API Country
          $data = array(
             'Country' => ''
@@ -153,9 +153,12 @@ class ProfileController extends Controller
             'Correspondence_Attention' => ($request->input('CoName') == null) ? '' : $request->input('CoName')
         );
 
-        // dd($dataprofile['ID']);
-
         if ($dataprofile['ID'] == ''){
+            if ($dataprofile['CorporateF'] == 0){
+                $dataprofile['ID'] = $dataprofile['ID_No'];
+            }else{
+                $dataprofile['ID'] = $dataprofile['TaxID'];
+            }
             $responseSave  = APIMiddleware($dataprofile, 'SaveProfile');
         }else{
             $data = array (
