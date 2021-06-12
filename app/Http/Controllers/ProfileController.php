@@ -14,6 +14,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
+        // dd($request->session()->all());
          // API Country
          $data = array(
             'Country' => ''
@@ -254,7 +255,6 @@ class ProfileController extends Controller
             'SCGroup' => ''
         );
         $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
-        
 
         return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
         'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup,

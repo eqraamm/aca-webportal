@@ -1,143 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ACA Insurance | Create Profile</title>
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-  <link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-  <link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
-    <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
-  <!-- Toastr -->
-  <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
-</head>
-<body onload="onLoadProfile()" class="hold-transition sidebar-mini layout-fixed">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-    </ul>
-    <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Activity Log</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="login">Logout</a>
-                    </div>
-                </li>
-            </ul>
-  </nav>
+@extends('layout/main')
+@section('title','ACA INSURANCE | Profile')
 
-  
-    <!-- Right navbar links -->
-    <!-- Navbar Search -->
-    <!-- Messages Dropdown Menu -->
-<!-- /.navbar -->
-      
-
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-      <img src="{{asset('dist/img/aca_new.png')}}" alt="AdminLTE Logo" class="brand-image img-square elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">ACA ASURANSI</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar" >
-      <!-- Sidebar user (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{asset('dist/img/user.png')}}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">ACA_MO_1</a>
-        </div>
-      </div>
-
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-      </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="dashboard" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item menu-open">
-            <a href="{{ route('profile')}}" class="nav-link active">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Nasabah
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="sppa" class="nav-link ">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                SPPA
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="Inquiry" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
-              <p>
-                Inquiry SPPA
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="survey" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
-              <p>
-                Survey
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="report" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Report
-              </p>
-            </a>
-          </li>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-
+@section('maincontent')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -180,7 +44,7 @@
                                               @if(! empty($data))
                                               @foreach($data['Data'] as $datas)
                                                   <tr>
-                                                      <td>{{ $datas['ID'] }}</td>
+                                                      <td>{{ $datas['RefID'] }}</td>
                                                       <td>{{ $datas['Name'] }}</td>
                                                       <td>{{ $datas['Email'] }}</td>
                                                       <td>{{ $datas['Mobile'] }}</td>
@@ -189,8 +53,9 @@
                                                       <td>
                                                           <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
                                                           <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm" >history</a>
-                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#confirm-delete" >Delete</a>
-                                                          <!-- <button class="btn btn-default" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete"> -->
+                                                          <!-- <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#confirm-delete" >Delete</a> -->
+                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" id="btnDel" data-toggle="modal" data-target="#confirmation" data-message="You are about to delete profile data, this procedure is irreversible." data-id="{{$datas['ID']}}" data-urlroute="route('profile.drop', ['id' =>$datas['ID']])" >Delete</a>
+                                                          
                                                       </td>
                                                   </tr>
                                               @endforeach
@@ -247,150 +112,11 @@
                                                         </div>
                                                         <!-- /.modal -->
                                                         <!-- /.Modal History -->
-                                                        <!-- Modal Sync -->
-                                                        <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
-                                                            <div class="modal-dialog modal-lg">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                <h4 class="modal-title">Profile Inquiry</h4>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Profile ID</label>
-                                                                        <div class="col-sm-6">
-                                                                        <input class="form-control" id="TxtProfileIDModal" type="text" name="ProfileID" >
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">Email</p>
-                                                                        <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtProfileEmailModal" name="Email" type="email">
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">Address</p>
-                                                                        <div class="col-sm-6">
-                                                                             <input class="form-control" id="TxtPAddress_1Modal" name="Address1" type="text">
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">City</p>
-                                                                        <div class="col-sm-6">
-                                                                        <input class="form-control" id="ModalTxtCity" name="CityModal" style="text-transform:uppercase;" type="text">
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">ZipCode</p>
-                                                                        <div class="col-sm-3">
-                                                                            <input class="form-control" id="TxtProfileZipCodeModal" name="ZipCode" type="text">
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">ID Number</p>
-                                                                        <div class="col-sm-6">
-                                                                             <input class="form-control" id="ID_NumberModal" name="ID_Number" type="text" maxlength="16" >
-                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">Mobile Phone</p>
-                                                                         <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtProfileMobileModal" name="MobilePhone" type="number">
-
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                     <p class="col-sm-3 col-form-label">Tax ID</p>
-                                                                         <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtTaxIDModal" type="text" name="TaxModal">
-                                                                        </div>
-                                                                 </div>
-                                                                 <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">Birth Date</p>
-                                                                        <div class="input-group date col-sm-6" id="reservationdate" data-target-input="nearest">
-                                                                            <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="ModalTxtBirthDate" name="ModalBirthDate" required />
-                                                                                <div class="input-group-append" data-target="#ModalTxtBirthDate" data-toggle="datetimepicker"></div>
-                                                                         </div>
-                                                                </div>
-                                                            </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="reset" class="btn btn-secondary">Clear All</button>
-                                                                    <Button type="button" class="btn btn-primary" id="search" name="search"> search </button>
-                                                                </div>
-                                                                <div class="card-body">
-                                          <table id="tblModalSync" class="table table-bordered table-striped">
-                                              <thead>
-                                                  <tr>
-                                                      <th>Profile ID</th>
-                                                      <th>Name</th>
-                                                      <th>Email</th>
-                                                      <th>Mobile</th>
-                                                      <th>ID Number</th>
-                                                      <th>Birth Date</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                              @if(! empty($datasync))
-                                              @foreach($datasync['Data'] as $datas)
-                                                  <tr>
-                                                      <td>{{ $datas['ID'] }}</td>
-                                                      <td>{{ $datas['Name'] }}</td>
-                                                      <td>{{ $datas['Email'] }}</td>
-                                                      <td>{{ $datas['Mobile'] }}</td>
-                                                      <td>{{ $datas['ID_No'] }}</td>
-                                                      <td>{{ $datas['BirthDate'] }}</td>
-                                                  </tr>
-                                              @endforeach
-                                              @endif
-                                              </tbody>
-                                          </table>
-                                      </div>
-                                     </div>
-                                                            <!-- /.modal-content -->
-                                 </div>
-                                                            <!-- /.modal-dialog -->
-                                </div>
+                                                        
                                                         <!-- /.modal -->
-                                                        <!-- /.Modal Sync -->
-                                  <div class="{{ empty($tabname) || $tabname == 'inquiry' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="inquiry">
-                                      <div class="card-body">
-                                          <table id="example1" class="table table-bordered table-striped">
-                                              <thead>
-                                                  <tr>
-                                                      <th>Profile ID</th>
-                                                      <th>Name</th>
-                                                      <th>Email</th>
-                                                      <th>Mobile</th>
-                                                      <th>ID Number</th>
-                                                      <th>Birth Date</th>
-                                                      <th>Action</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                              @if(! empty($data))
-                                              @foreach($data['Data'] as $datas)
-                                                  <tr>
-                                                      <td>{{ $datas['ID'] }}</td>
-                                                      <td>{{ $datas['Name'] }}</td>
-                                                      <td>{{ $datas['Email'] }}</td>
-                                                      <td>{{ $datas['Mobile'] }}</td>
-                                                      <td>{{ $datas['ID_No'] }}</td>
-                                                      <td>{{ $datas['BirthDate'] }}</td>
-                                                      <td>
-                                                          <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
-                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm" >history</a>
-                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete" >Delete</a>
-                                                          <!-- <button class="btn btn-default" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete"> -->
-                                                      </td>
-                                                  </tr>
-                                              @endforeach
-                                              @endif
-                                              </tbody>
-                                          </table>
-                                         </div>
                                         </div>
+                                        </div>                <!-- /.Modal Sync -->
+
                                   <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
                                     <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
                                     @csrf
@@ -821,7 +547,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblTaxID">TaxID</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtTaxID" type="text" name="Tax" value="{{ old('Tax') }}">
+                                                                  <input class="form-control" id="TxtTaxID" type="number" name="Tax" value="{{ old('Tax') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -1114,7 +840,7 @@
               </div>
           </div>
           <!-- cobain modal delete -->
-          <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             
@@ -1123,14 +849,13 @@
                 </div>
             
                 <div class="modal-body">
-                    <p>You are about to delete one track, this procedure is irreversible.</p>
+                    <p id="confirm-message"></p>
                     <p>Do you want to proceed?</p>
-                    <p class="debug-url"></p>
                 </div>
                 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-danger btn-ok">Delete</a>
+                    <a class="btn btn-danger btn-ok" id="btnDel">Delete</a>
                 </div>
             </div>
         </div>
@@ -1152,60 +877,46 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+@endsection
 
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 1.0
-    </div>
-    <strong>Copyright &copy; 2021 <a href="#">Care Technologies</a>.</strong> All rights reserved.
-  </footer>
+@section('scriptpage')
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-<!-- jQuery -->
-<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- DataTables  & Plugins -->
-<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/jszip/jszip.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/pdfmake.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/vfs_fonts.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset('dist/js/demo.js')}}"></script>
-<!-- Toastr -->
-<script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
-<!-- SweetAlert2 -->
-<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script>
+    // $(document).on("click", ".btn-btn-outline-danger", function () {
+    //  var ids = $(this).data('id');
+    //  console.log(ids);
+    //  $(".modal-body #idkl").val( ids );
+    // });
+
+    $('#confirmation').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var message = button.data('message') ;
+  var href = button.attr('href');
+  var modal = $(this)
+  modal.find('#confirm-message').text(message);
+  modal.find('.modal-footer #btnDel').attr('href',href);
+  
+})
+</script>
+
+
 
 <!-- script modal button delete -->
-<script>
-$(document).on("change", ".open-modal-history", function () {
-     var DelHistory= $(this).data('id');
-     $(".modal-title #DelHistory").val( DelHistory );
-    });
 
-        $('#confirm-delete').on('show.bs.modal', function(e) {
-            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-            
-            $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').att    r('href') + '</strong>');
-        });
-    </script>
+<!-- 
+<script>
+$(document).on("change", ".btn btn-outline-danger", function () {
+var DelHistory= $(this).data('id');
+console.log(DelHistory);
+$(".modal-title #DelHistory").val( DelHistory );
+});
+
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        
+        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').att    r('href') + '</strong>');
+    });
+</script> -->
 
 
 
@@ -1228,6 +939,7 @@ function CGroup_OnChange(CGroup){
         listBox.appendChild(option);
     }
 }
+
 function Construct_ProfileName() {
     document.getElementById("TxtProfileName").value = document.getElementById("TxtFirstName").value + ((document.getElementById("TxtMiddleName").value == "") ? "": " " + document.getElementById("TxtMiddleName").value) + ((document.getElementById("TxtLastName").value == "") ? "": " " + document.getElementById("TxtLastName").value);
 }
@@ -1314,7 +1026,6 @@ function viewDetail(ID){
   document.getElementById("TxtBirthPlace").value = filterarray[0]['BirthPlace'];
   document.getElementById("TxtBirthDate").value = GetFormattedDate(filterarray[0]['BirthDate']);
   document.getElementById("LstOccupation").value = filterarray[0]['Occupation'];
-//   document.getElementById("TxtCAttention").value = filterarray[0]['Correspondence_Attention'];
   document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
   document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
   document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
@@ -1362,79 +1073,6 @@ function viewDetail(ID){
   document.getElementById("tabprofile").className = "nav-link active";
   document.getElementById("inquiry").className = "tab-pane";
   document.getElementById("profile").className = "active tab-pane";
-}
-function clearAll(ID){
-    document.getElementById("TxtProfileRefID").value = "";
-  document.getElementById("TxtProfileRefDesc").value = "";
-  document.getElementById("TxtProfileID").value = "";
-  document.getElementById("TxtFirstName").value = "";
-  document.getElementById("TxtMiddleName").value = "";
-  document.getElementById("TxtLastName").value = "";
-  document.getElementById("TxtProfileName").value = "";
-  document.getElementById("LstIDType").value = "";
-  document.getElementById("ID_Number").value = filterarray[0]['ID_No'];
-  document.getElementById("ID_Name").value = filterarray[0]['ID_Name'];
-  document.getElementById("TxtIDDate").value = GetFormattedDate(filterarray[0]['ID_Date']);
-  document.getElementById("LstSalutation").value = filterarray[0]['Salutation'];
-  document.getElementById("TxtProfileInitial").value = filterarray[0]['Initial'];
-  document.getElementById("TxtTitle").value = filterarray[0]['Title'];
-  document.getElementById("TxtProfileEmail").value = filterarray[0]['Email'];
-  document.getElementById("TxtProfileMobile").value = filterarray[0]['Mobile'];
-  document.getElementById("TxtProfilePhone").value = filterarray[0]['Phone'];
-  document.getElementById("TxtOwnerID").value = filterarray[0]['OwnerID'];
-  document.getElementById("TxtPAddress_1").value = filterarray[0]['Address_1'];
-  document.getElementById("TxtPAddress_2").value = filterarray[0]['Address_2'];
-  document.getElementById("TxtPAddress_3").value = filterarray[0]['Address_3'];
-  document.getElementById("LstCountry").value = filterarray[0]['Country'];
-  document.getElementById("TxtCity").value = filterarray[0]['City'];
-  document.getElementById("TxtProfileZipCode").value = filterarray[0]['ZipCode'];
-  document.getElementById("LstGender").value = filterarray[0]['Gender'];
-  document.getElementById("TxtBirthPlace").value = filterarray[0]['BirthPlace'];
-  document.getElementById("TxtBirthDate").value = GetFormattedDate(filterarray[0]['BirthDate']);
-  document.getElementById("LstOccupation").value = filterarray[0]['Occupation'];
-//   document.getElementById("TxtCAttention").value = filterarray[0]['Correspondence_Attention'];
-  document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
-  document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
-  document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
-    if (filterarray[0]['Corporatef'] == true) {
-        document.getElementById("CbxCorporateF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxCorporateF").removeAttribute("checked");
-    }
-  document.getElementById("TxtTaxID").value = filterarray[0]['TaxID'];
-  document.getElementById("religion").value = filterarray[0]['Religion'];
-  document.getElementById("LstIncome").value = filterarray[0]['Income'];
-  document.getElementById("TxtEmployment").value = filterarray[0]['Employment'];
-  if (filterarray[0]['WNIF'] == true) {
-        document.getElementById("CbxWNIF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxWNIF").removeAttribute("checked");
-    }
-  document.getElementById("LstMarital").value = filterarray[0]['Marital'];
-  document.getElementById("TxtContact").value = filterarray[0]['Contact'];
-  document.getElementById("TxtContactAddress").value = filterarray[0]['ContactAddress']; 
-  document.getElementById("TxtContactPhone").value = filterarray[0]['ContactPhone'];
-  document.getElementById("LstComType").value = filterarray[0]['CompanyType'];
-  document.getElementById("LstComGroup").value = filterarray[0]['CGroup'];
-  document.getElementById("LstSubComGroup").value = filterarray[0]['SCGroup']; 
-  document.getElementById("LstProvince").value = filterarray[0]['Province'];
-    if (filterarray[0]['ForceSyncF'] == true) {
-        document.getElementById("CbxForceSyncF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxForceSyncF").removeAttribute("checked");
-    }
-    if (filterarray[0]['DumpF'] == true) {
-        document.getElementById("CbxDumpF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxDumpF").removeAttribute("checked");
-    }
-    if (filterarray[0]['Restricted'] == true) {
-        document.getElementById("CbxRestrictedF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxRestrictedF").removeAttribute("checked");
-    }
-    document.getElementById("LstPType").value = filterarray[0]['PType'];
-    document.getElementById("TxtCName").value = filterarray[0]['CoName'];
 }
 function GetFormattedDate(datestring) {
     var d = new Date(datestring);
@@ -1502,5 +1140,4 @@ function GetFormattedDate(datestring) {
   }
   );
 </script>
-</body>
-</html>
+@endsection

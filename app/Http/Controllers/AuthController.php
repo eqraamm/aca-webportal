@@ -48,10 +48,9 @@ class AuthController extends Controller
         );
 
         $response  = APIMiddleware($data, 'Login');
-
-        dd($response);
         
         if ($response['code'] == '200'){
+            session(['login' => true]);
             return redirect()->route('profile');
         }else{
             Session::flash('error', $response['message']);
@@ -60,9 +59,9 @@ class AuthController extends Controller
     }
         
  
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::logout(); // menghapus session yang aktif
+        $request->session()->flush();
         return redirect()->route('login');
     }
 }
