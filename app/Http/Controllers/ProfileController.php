@@ -14,7 +14,7 @@ class ProfileController extends Controller
 {
     public function index(){
 
-        // dd($users);
+        // dd(session('ID'));
          // API Country
          $data = array(
             'Country' => ''
@@ -26,9 +26,11 @@ class ProfileController extends Controller
          //Data
          $data = array (
             'ID' => '',
-            'OwnerID' => 'aca_mo_1',
+            'OwnerID' => session('ID'),
         );
         $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
+
+        // dd($responseSearchProfile);
 
         // Data province
         $data = array(
@@ -50,14 +52,13 @@ class ProfileController extends Controller
 
         return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
         'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup, 
-        'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '', 'responseCodeHistory' => '')); 
+        'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '', 'responseCodeHistory' => '', 'responseCodeProfile' => $responseSearchProfile['code'])); 
     }
 
-    // drop profile 
     public function dropProfile($id){
         $data = array(
             'ID' => $id,
-            'OwnerID' => 'ACA_MO_1'
+            'OwnerID' => session('ID')
         );
         $responsedrop = APIMiddleware($data, "DropProfile");
 
@@ -65,10 +66,10 @@ class ProfileController extends Controller
             'Country' => ''
         );
         $responseCountry = APIMiddleware($data, 'SearchCountry');
-        // dd($this->listprofile);
+        
         $dataProfile = array(
             'ID' => '',
-            'OwnerID' => 'aca_mo_1'
+            'OwnerID' => session('ID')
         );
 
         $responseSearchProfile = APIMiddleware($dataProfile, 'SearchProfile');
@@ -96,7 +97,7 @@ class ProfileController extends Controller
 
         return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
         'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup,
-        'tabname' => 'inquiry', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage, 'responseCodeHistory' => '')); 
+        'tabname' => 'inquiry', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage, 'responseCodeHistory' => '','responseCodeProfile' => $responseSearchProfile['code'])); 
 
     }
     
@@ -105,6 +106,8 @@ class ProfileController extends Controller
     {
         $dataprofile = array(
             'ID' => ($request->input('ProfileID') == null) ? '' : $request->input('ProfileID'),
+            'RefID' => ($request->input('RefID') == null) ? '' : $request->input('RefID'),
+            'RefName' => ($request->input('RefName') == null) ? '' : $request->input('RefName'),
             'Firstname' => ($request->input('FirstName') == null) ? '' : $request->input('FirstName'),
             'Midname' => ($request->input('MiddleName') == null) ? '' : $request->input('MiddleName'),
             'Lastname' => ($request->input('LastName') == null) ? '' : $request->input('LastName'),
@@ -150,8 +153,12 @@ class ProfileController extends Controller
             'CGroup' => ($request->input('CGroup') == null) ? '' : $request->input('CGroup'),
             'SCGroup' => ($request->input('SubCompanyGroup') == null) ? '' : $request->input('SubCompanyGroup'),
             'PType' => ($request->input('PType') == null) ? '' : $request->input('PType'),
-            'Correspondence_Attention' => ($request->input('CoName') == null) ? '' : $request->input('CoName')
+            'Correspondence_Attention' => ($request->input('CoName') == null) ? '' : $request->input('CoName'),
+            'PIC_NAME_1' => ($request->input('PICName') == null) ? '' : $request->input('PICName'),
+            'PIC_TITLE_1' => ($request->input('PICTitle') == null) ? '' : $request->input('PICTitle')
         );
+
+        
 
         if ($dataprofile['ID'] == ''){
             if ($dataprofile['CorporateF'] == 0){
@@ -163,7 +170,7 @@ class ProfileController extends Controller
         }else{
             $data = array (
                 'ID' => $dataprofile['ID'],
-                'OwnerID' => 'aca_mo_1',
+                'OwnerID' => session('ID')
             );
             $searchprofilebyid = APIMiddleware($data, 'SearchProfile');
 
@@ -174,8 +181,7 @@ class ProfileController extends Controller
             }
         }
         
-        
-        $responseCode = $responseSave['code'];
+        $responseCode = ($responseSave['code'] == '401') ? '400' : $responseSave['code'];
         $responseMessage = $responseSave['message'];
 
         // List data country
@@ -187,7 +193,7 @@ class ProfileController extends Controller
          //Data tab inquiry profile
          $data = array (
             'ID' => '',
-            'OwnerID' => 'aca_mo_1',
+            'OwnerID' => session('ID')
         );
         $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
 
@@ -216,52 +222,47 @@ class ProfileController extends Controller
 
         return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
         'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup,
-        'tabname' => 'profile', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage, 'responseCodeHistory' => ''));
+        'tabname' => 'profile', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage, 'responseCodeHistory' => '', 'responseCodeProfile' => $responseSearchProfile['code']));
         
     }
-    // drop profile 
+
     public function historyProfile($id){
         $data = array(
             'ID' => $id,
-            'OwnerID' => 'ACA_MO_1'
+            'OwnerID' => session('ID')
         );
         $responseHistory = APIMiddleware($data, "SearchHistoryProfile");
 
-        $codeHistory = $responseHistory['code'];
+        // dd($responseHistory);
+        return view('tblHistory',array('responseCodeHistory' => $responseHistory['code'],'dataHistory' => $responseHistory));
+
+    }
+
+    public function listRefProfile(Request $request){
+
+        $data = $request->all();
+        #create or update your data here
+
+        // return response()->json(['success'=>'Ajax request submitted successfully']);
+        // return $data;
 
         $data = array(
-            'Country' => ''
+            'ID' => ($request->input('ID') == null) ? '' : $request->input('ID'),
+            'Name' => ($request->input('Name') == null) ? '' : $request->input('Name'),
+            'Email' => ($request->input('Email') == null) ? '' : $request->input('Email'),
+            'Address' => ($request->input('Address') == null) ? '' : $request->input('Address'),
+            'City' => ($request->input('City') == null) ? '' : $request->input('City'),
+            'ZipCode' => ($request->input('ZipCode') == null) ? '' : $request->input('ZipCode'),
+            'IDNO' => ($request->input('ID_NO') == null) ? '' : $request->input('ID_NO'),
+            'DOB' => ($request->input('BirthDate') == null) ? '' : $request->input('BirthDate'),
+            'MobileNo' => ($request->input('Mobile') == null) ? '' : $request->input('Mobile'),
+            'TaxID' => ($request->input('TaxID') == null) ? '' : $request->input('TaxID'),
         );
-        $responseCountry = APIMiddleware($data, 'SearchCountry');
+        $responseSync = APIMiddleware($data, "SearchListRefProfile");
 
-        $dataProfile = array(
-            'ID' => '',
-            'OwnerID' => 'aca_mo_1'
-        );
+        // dd($responseSync);
 
-        $responseSearchProfile = APIMiddleware($dataProfile, 'SearchProfile');
-
-        // Data province
-        $data = array(
-            'Province' => ''
-        );
-        $responseProvince = APIMiddleware($data, 'SearchProvince');
-
-        // Data CGroup
-        $data = array(
-            'CGroup' => ''
-        );
-        $responseCGroup = APIMiddleware($data, 'SearchCGroup');
-
-         // Data SCGroup
-         $data = array(
-            'SCGroup' => ''
-        );
-        $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
-
-        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
-        'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup,
-        'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '', 'dataHistory' => $responseHistory, 'responseCodeHistory' => $codeHistory)); 
+        return view('tblSyncProfile',array('responseCode' => $responseSync['code'],'datasync' => $responseSync));
 
     }
 } 

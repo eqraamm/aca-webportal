@@ -41,7 +41,7 @@
                                                   </tr>
                                               </thead>
                                               <tbody>
-                                              @if(! empty($data))
+                                              @if($responseCodeProfile == '200')
                                               @foreach($data['Data'] as $datas)
                                                   <tr>
                                                       <td>{{ $datas['RefID'] }}</td>
@@ -52,7 +52,7 @@
                                                       <td>{{ $datas['BirthDate'] }}</td>
                                                       <td>
                                                           <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
-                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm" >history</a>
+                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm history-profile" >history</a>
                                                           <!-- <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#confirm-delete" >Delete</a> -->
                                                           <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" id="btnDel" data-toggle="modal" data-target="#confirmation" data-message="You are about to delete profile data, this procedure is irreversible." data-id="{{$datas['ID']}}" data-backdrop="static">Delete</a>
                                                           
@@ -64,153 +64,110 @@
                                           </table>
                                           <!-- Modal History -->
                                           <div class="modal fade" id="modal-history">
-                                                            <div class="modal-dialog modal-xl">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                <label class="modal-title" id="DelHistory"></label>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                <div class="card-body">
-                                                                  <table id="tblModalHistory" class="table table-bordered table-striped">
-                                                                    <thead>
-                                                                         <tr>
-                                                                            <th>Action</th>
-                                                                            <th>Name</th>
-                                                                            <th>Old Value</th>
-                                                                            <th>New Value</th>
-                                                                            <th>Last Operator</th>
-                                                                            <th>Last Update</th>
-                                                                            <th>Last Time</th>
-                                                                         </tr>
-                                                                    </thead>
-                                                                        <tbody>
-                                                                        @if ($responseCodeHistory == '200')
-                                                                        @foreach($dataHistory['Data'] as $datas)
-                                                                            <tr>
-                                                                            <td>{{ $datas['Action'] }}</td>
-                                                                            <td>{{ $datas['ColName'] }}</td>
-                                                                            <td>{{ $datas['ColValueOld'] }}</td>
-                                                                            <td>{{ $datas['ColValueNew'] }}</td>
-                                                                            <td>{{ $datas['Last_Opr'] }}</td>
-                                                                            <td>{{ $datas['Last_Update'] }}</td>
-                                                                            <td>{{ $datas['Last_Time'] }}</td>
-                                                                            </tr>
-                                                                            @endforeach
-                                                                        @endif
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <label class="modal-title">History Profile</label>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body" id="bodyHistory">
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <!-- /.Modal History -->
+                                                        
+                                        </div>
+                                    </div>
+                                    </div>
 
-                                                                </div>
-                                                            </div>
-                                                            <!-- /.modal-content -->
-                                                            </div>
-                                                            <!-- /.modal-dialog -->
-                                                        </div>
-                                                        <!-- /.modal -->
-                                                        <!-- /.Modal History -->
-                                                        <!-- Modal Sync -->
-                                                        <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
+                                  <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
+                                    <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
                                                             <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                <h4 class="modal-title">Profile Inquiry</h4>
+                                                                <h4 class="modal-title" id="titleModalSync">Profile Inquiry</h4>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                                 </div>
-                                                                <div class="modal-body">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Profile ID</label>
-                                                                        <div class="col-sm-6">
-                                                                        <input class="form-control" id="TxtProfileIDModal" type="text" name="ProfileID" >
+                                                                <!-- <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">  -->
+                                                                    <div class="modal-body">
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-3 col-form-label">Profile ID</label>
+                                                                            <div class="col-sm-6">
+                                                                            <input class="form-control" id="TxtProfileIDModal" type="text" name="ProfileID" >
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <p class="col-sm-3 col-form-label">Name</p>
+                                                                            <div class="col-sm-6">
+                                                                                <input class="form-control" id="TxtProfileNameModal" name="Name" type="email">
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <p class="col-sm-3 col-form-label">Email</p>
+                                                                            <div class="col-sm-6">
+                                                                                <input class="form-control" id="TxtProfileEmailModal" name="Email" type="email">
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <p class="col-sm-3 col-form-label">Address</p>
+                                                                            <div class="col-sm-6">
+                                                                                <input class="form-control" id="TxtPAddress_1Modal" name="Address1" type="text">
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <p class="col-sm-3 col-form-label">City</p>
+                                                                            <div class="col-sm-6">
+                                                                            <input class="form-control" id="ModalTxtCity" name="CityModal" style="text-transform:uppercase;" type="text">
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <p class="col-sm-3 col-form-label">ZipCode</p>
+                                                                            <div class="col-sm-3">
+                                                                                <input class="form-control" id="TxtProfileZipCodeModal" name="ZipCode" type="text">
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <p class="col-sm-3 col-form-label">ID Number</p>
+                                                                            <div class="col-sm-6">
+                                                                                <input class="form-control" id="ID_NumberModal" name="ID_Number" type="text" maxlength="16" >
                                                                         </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">Email</p>
-                                                                        <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtProfileEmailModal" name="Email" type="email">
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">Address</p>
-                                                                        <div class="col-sm-6">
-                                                                             <input class="form-control" id="TxtPAddress_1Modal" name="Address1" type="text">
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">City</p>
-                                                                        <div class="col-sm-6">
-                                                                        <input class="form-control" id="ModalTxtCity" name="CityModal" style="text-transform:uppercase;" type="text">
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">ZipCode</p>
-                                                                        <div class="col-sm-3">
-                                                                            <input class="form-control" id="TxtProfileZipCodeModal" name="ZipCode" type="text">
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">ID Number</p>
-                                                                        <div class="col-sm-6">
-                                                                             <input class="form-control" id="ID_NumberModal" name="ID_Number" type="text" maxlength="16" >
-                                                                     </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">Mobile Phone</p>
-                                                                         <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtProfileMobileModal" name="MobilePhone" type="number">
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <p class="col-sm-3 col-form-label">Mobile Phone</p>
+                                                                            <div class="col-sm-6">
+                                                                                <input class="form-control" id="TxtProfileMobileModal" name="MobilePhone" type="number">
 
-                                                                        </div>
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <p class="col-sm-3 col-form-label">Tax ID</p>
+                                                                            <div class="col-sm-6">
+                                                                                <input class="form-control" id="TxtTaxIDModal" type="text" name="TaxModal">
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <p class="col-sm-3 col-form-label">Birth Date</p>
+                                                                            <div class="input-group date col-sm-6" id="reservationdate" data-target-input="nearest">
+                                                                                <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="ModalTxtBirthDate" name="ModalBirthDate" required />
+                                                                                    <div class="input-group-append" data-target="#ModalTxtBirthDate" data-toggle="datetimepicker"></div>
+                                                                            </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="form-group row">
-                                                                     <p class="col-sm-3 col-form-label">Tax ID</p>
-                                                                         <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtTaxIDModal" type="text" name="TaxModal">
-                                                                        </div>
-                                                                 </div>
-                                                                 <div class="form-group row">
-                                                                    <p class="col-sm-3 col-form-label">Birth Date</p>
-                                                                        <div class="input-group date col-sm-6" id="reservationdate" data-target-input="nearest">
-                                                                            <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="ModalTxtBirthDate" name="ModalBirthDate" required />
-                                                                                <div class="input-group-append" data-target="#ModalTxtBirthDate" data-toggle="datetimepicker"></div>
-                                                                         </div>
-                                                                </div>
-                                                            </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="reset" class="btn btn-secondary">Clear All</button>
-                                                                    <Button type="button" class="btn btn-primary" id="search" name="search" onclick="_onPressButton()">search</button>
-                                                                </div>
-                                                                <div class="card-body">
-                                          <table id="tblModalSync" class="table table-bordered table-striped">
-                                              <thead>
-                                                  <tr>
-                                                      <th>Profile ID</th>
-                                                      <th>Name</th>
-                                                      <th>Email</th>
-                                                      <th>Mobile</th>
-                                                      <th>ID Number</th>
-                                                      <th>Birth Date</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                              @if(! empty($datasync))
-                                              @foreach($datasync['Data'] as $datas)
-                                                  <tr>
-                                                      <td>{{ $datas['ID'] }}</td>
-                                                      <td>{{ $datas['Name'] }}</td>
-                                                      <td>{{ $datas['Email'] }}</td>
-                                                      <td>{{ $datas['Mobile'] }}</td>
-                                                      <td>{{ $datas['ID_No'] }}</td>
-                                                      <td>{{ $datas['BirthDate'] }}</td>
-                                                  </tr>
-                                              @endforeach
-                                              @endif
-                                              </tbody>
-                                          </table>
+                                                                    <div class="modal-footer">
+                                                                        <button type="reset" class="btn btn-secondary">Clear All</button>
+                                                                        <!-- <Button type="button" class="btn btn-primary sync-profile" id="search" name="search">search</button> -->
+                                                                        <a href="{{ route('profile.sync') }}" type="button" class="btn btn-primary sync-profile">Search</a>
+                                                                    </div>
+                                                                <!-- </form> -->
+                                                                
+                                                                <div class="card-body" id="cardbodyModalSync">
+                                          
                                       </div>
                                      </div>
                                                             <!-- /.modal-content -->
@@ -218,19 +175,15 @@
                                                             <!-- /.modal-dialog -->
                                 </div>
                                                         <!-- /.modal -->
-                                        </div>
-                                        </div>                <!-- /.Modal Sync -->
-
-                                  <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
                                     <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
                                     @csrf
                                                           <div class="form-group row">
                                                               <p for="TxtRefNo" class="col-sm-3 col-form-label">Profile ID</p>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtProfileRefID" type="text" disabled>
+                                                                  <input class="form-control" id="TxtProfileRefID" name="RefID" type="text" value="{{old('RefID')}}" readonly="readonly">
                                                               </div>
                                                               <div class="col-sm-4" style="display:none;">
-                                                                  <input class="form-control" id="TxtProfileRefDesc" type="text">
+                                                                  <input class="form-control" id="TxtProfileRefDesc" name="RefName" type="text" value="{{old('RefName')}}">
                                                               </div>
                                                               <div class="col-sm-2">
                                                               <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Sync</button>
@@ -437,7 +390,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">User Owner</p>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtOwnerID" type="text" name="UserOwner" value="ACA_MO_1">
+                                                                  <input class="form-control" id="TxtOwnerID" type="text" name="UserOwner" value="{{ Session::get('ID')}}" readonly="readonly">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -730,6 +683,18 @@
                                                                   </select>
                                                               </div>
                                                             </div>
+                                                            <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">PIC Name</p>
+                                                              <div class="col-sm-6">
+                                                                  <input class="form-control" id="TxtPICName" name="PICName" type="text" value="{{ old('PICName') }}">
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">PIC Title</p>
+                                                              <div class="col-sm-6">
+                                                                  <input class="form-control" id="TxtPICTitle" name="PICTitle" type="text" value="{{ old('PICTitle') }}">
+                                                              </div>
+                                                          </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Religion</p>
                                                               <div class="col-sm-3">
@@ -953,17 +918,27 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  
+  <!-- Modal -->
+<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <!-- <div class="modal-content"> -->
+      <div class="modal-body text-center">
+      <div class="spinner-border text-info" style="width: 4rem; height: 4rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      </div>
+    <!-- </div> -->
+  </div>
+</div>
+
+
+      
 @endsection
 
 @section('scriptpage')
 
 <script>
-    // $(document).on("click", ".btn-btn-outline-danger", function () {
-    //  var ids = $(this).data('id');
-    //  console.log(ids);
-    //  $(".modal-body #idkl").val( ids );
-    // });
-
     $('#confirmation').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget) // Button that triggered the modal
   var message = button.data('message') ;
@@ -975,43 +950,85 @@
 })
 </script>
 
-
-
-<!-- script modal button delete -->
-
-<!-- 
 <script>
-$(document).on("change", ".btn btn-outline-danger", function () {
-var DelHistory= $(this).data('id');
-console.log(DelHistory);
-$(".modal-title #DelHistory").val( DelHistory );
+
+$(".history-profile").click(function(event){
+    event.preventDefault();
+    var a_href = $(this).attr('href');
+
+    // $("#loadMe").modal({
+    //   backdrop: "static", //remove ability to close modal with click
+    //   keyboard: false, //remove option to close with keyboard
+    //   show: true //Display loader!
+    // });
+    // console.log(a_href);
+    $.ajax({
+    type: "GET",
+    url: a_href,
+    dataType: 'html'
+    }).done(function( msg ) {
+        $('#bodyHistory').html(msg);
+        $("#modal-history").modal('show');
+        // $("#loadMe").modal('hide');
+    });
 });
 
-    $('#confirm-delete').on('show.bs.modal', function(e) {
-        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-        
-        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').att    r('href') + '</strong>');
+$(".sync-profile").click(function(event){
+    event.preventDefault();
+
+    let ProfileID = $("input[name=ProfileID]").val();
+    let Name = $("input[name=Name]").val();
+    let email = $("input[name=email]").val();
+    let Address = $("input[name=Address1]").val();
+    let City = $("input[name=CityModal]").val();
+    let ZipCode = $("input[name=ZipCode]").val();
+    let ID_NO = $("input[name=ID_Number]").val();
+    let Mobile = $("input[name=MobilePhone]").val();
+    let Tax = $("input[name=TaxModal]").val();
+    let BirthDate = $("input[name=ModalBirthDate]").val();
+    let _token   = $('meta[name="csrf-token"]').attr('content');
+    var a_href = $(this).attr('href');
+
+    // $("#loadMe").modal({
+    //   backdrop: "static", //remove ability to close modal with click
+    //   keyboard: false, //remove option to close with keyboard
+    //   show: true //Display loader!
+    // });
+
+    $.ajax({
+    type: "POST",
+    url: a_href, // This is what I have updated
+    data:{
+          ID:ProfileID,
+          Name:Name,
+          Email:email,
+          Address:Address,
+          City:City,
+          ZipCode:ZipCode,
+          ID_NO:ID_NO,
+          Mobile:Mobile,
+          BirthDate:BirthDate,
+          TaxID:Tax,
+          _token: _token
+        },
+    }).done(function( msg ) {
+        // $("#loadMe").modal("hide");
+        console.log(msg);
+        $('#cardbodyModalSync').html(msg);
+    }).fail(function(msg){
+        console.log(msg);
+        // $("#loadMe").modal("hide");
     });
-</script> -->
+});
+</script>
+
 
 <script>
-// Get all the reset buttons from the dom
 var resetButtons = document.getElementById('clearbtn');
 console.log(resetButtons);
 
 resetButtons.addEventListener('click', resetForm);
 
-// Loop through each reset buttons to bind the click event
-// for(var i=0; i<resetButtons.length; i++){
-//   resetButtons[i].addEventListener('click', resetForm);
-// }
-
-/**
- * Function to hard reset the inputs of a form.
- *
- * @param object event The event object.
- * @return void
- */
 function resetForm(event){
 
   event.preventDefault();
@@ -1037,7 +1054,6 @@ function resetForm(event){
 
 }
 </script>
-
 <script>
 function _onPressButton() {
    var xhr = new XMLHttpRequest();
@@ -1203,12 +1219,15 @@ function viewDetail(ID){
     }
     document.getElementById("LstPType").value = filterarray[0]['PType'];
     document.getElementById("TxtCName").value = filterarray[0]['Correspondence_Attention'];
+    document.getElementById("TxtPICName").value = filterarray[0]['PIC_NAME_1'];
+    document.getElementById("TxtPICTitle").value = filterarray[0]['PIC_TITLE_1'];
 
   document.getElementById("tabinquiry").className = "nav-link";
   document.getElementById("tabprofile").className = "nav-link active";
   document.getElementById("inquiry").className = "tab-pane";
   document.getElementById("profile").className = "active tab-pane";
 }
+
 function GetFormattedDate(datestring) {
     var d = new Date(datestring);
     var month = d.getMonth()+ 1;
@@ -1264,14 +1283,10 @@ function GetFormattedDate(datestring) {
         "responsive": true,
         "autoWidth": false,
     });
-    $("#tblModalSync").DataTable({
-        "responsive": true,
-        "autoWidth": false,
-    });
-    $("#tblModalHistory").DataTable({
-        "responsive": true,
-        "autoWidth": false,
-    });
+    // $("#tblModalSync").DataTable({
+    //     "responsive": true,
+    //     "autoWidth": false,
+    // });
   }
   );
 </script>

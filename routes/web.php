@@ -31,6 +31,8 @@ Route::group(['middleware' => 'CekLogin'], function(){
     Route::post('/profile', 'ProfileController@SaveProfile')->name('profile.save');
     //History Profile
     Route::get('/profile/history/{id}', 'ProfileController@historyProfile')->name('profile.history');
+    //List Ref Profile For Sync
+    Route::post('/profile/sync', 'ProfileController@listRefProfile')->name('profile.sync');
     Route::get('/test', 'ProfileController@test')->name('test');
     Route::get('/sppa', 'SppaController@Sppa');
     Route::get('/Inquiry', 'InquiryController@inquiry');

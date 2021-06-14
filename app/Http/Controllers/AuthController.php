@@ -50,7 +50,15 @@ class AuthController extends Controller
         $response  = APIMiddleware($data, 'Login');
         
         if ($response['code'] == '200'){
+            $data = array (
+                'ID' => $request->input('username'),
+            );
+
+            $responseUser = APIMiddleware($data, 'SearchSysUser');
+            // dd($responseUser['Data'][0]['ID']);
             session(['login' => true]);
+            session(['ID' => $responseUser['Data'][0]['ID']]);
+            session(['Name' => $responseUser['Data'][0]['Name']]);
             return redirect()->route('profile');
         }else{
             Session::flash('error', $response['message']);
