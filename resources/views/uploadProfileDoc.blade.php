@@ -21,14 +21,15 @@
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            
+ 
             reader.onload = function (e) {
-                $('#profile-img-tag').attr('src', e.target.result);
+                $('.img-form').append('<img src="' +  e.target.result + '" width="200px" />')
+                // $('#profile-img-tag').attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
-    $("#exampleFormControlFile1 ").change(function(){
+    $("#exampleFormControlFile1").change(function(){
         readURL(this);
     });
   </script>

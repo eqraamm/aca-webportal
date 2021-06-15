@@ -22,7 +22,7 @@
                               <ul class="nav nav-pills mb-3">
                                 <li class="nav-item"><a id="tabinquiry" class="{{ empty($tabname) || $tabname == 'inquiry' ? 'nav-link active' : 'nav-link' }}" href="#inquiry" data-toggle="tab">Inquiry</a></li>
                                 <li class="nav-item"><a id="tabprofile" class="{{ empty($tabname) || $tabname == 'profile' ? 'nav-link active' : 'nav-link' }}" href="#profile" data-toggle="tab">Profile</a></li>
-                                <a href="#" type="delete" class="btn btn-outline-danger btn-sm btn-upload">Upload File</a>
+                                <!-- <a href="#" type="delete" class="btn btn-outline-danger btn-sm btn-upload">Upload File</a> -->
                               </ul>
                           </div><!-- /.card-header -->
                           <div class="card-body">
@@ -178,6 +178,8 @@
                                                         <!-- /.modal -->
                                     <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
                                     {{ csrf_field() }}
+                                                         
+                                                          </div>
                                                           <div class="form-group row">
                                                               <p for="TxtRefNo" class="col-sm-3 col-form-label">Profile ID</p>
                                                               <div class="col-sm-3">
@@ -186,9 +188,16 @@
                                                               <div class="col-sm-4" style="display:none;">
                                                                   <input class="form-control" id="TxtProfileRefDesc" name="RefName" type="text" value="{{old('RefName')}}">
                                                               </div>
-                                                              <div class="col-sm-2">
+                                                              <div class="col-sm-1">
                                                               <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Sync</button>
                                                               </div>
+                                                                <div class="col-sm-2">
+                                                                 <button type="delete" id="Btn-Upload" class="btn btn-block btn-outline-info btn-upload">Upload Document</button>
+                                                              </div>
+                                                              <div class ="col-sm-1">
+                                                                  <span type="text" id="owner" name="owner"> Created By: </span>
+                                                                  <span type="text" id="update" name="update"> Last Update: </span>
+                                                              </div>    
                                                           </div>
                                                           <div class="form-group row" style="display:none;">
                                                                 <label class="col-sm-3 col-form-label">Profile ID</label>
