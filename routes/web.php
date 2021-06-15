@@ -33,6 +33,13 @@ Route::group(['middleware' => 'CekLogin'], function(){
     Route::get('/profile/history/{id}', 'ProfileController@historyProfile')->name('profile.history');
     //List Ref Profile For Sync
     Route::post('/profile/sync', 'ProfileController@listRefProfile')->name('profile.sync');
+    //Upload Profile document
+    
+    Route::get('/profile/uploadDocument', function (){
+        return view('uploadProfileDoc');
+    })->name('profile.uploadDocument');
+    Route::post('/profile/uploadDocument', 'ProfileController@uploadProfileDocument')->name('profile.uploadDocumentPost');
+
     Route::get('/test', 'ProfileController@test')->name('test');
     Route::get('/sppa', 'SppaController@Sppa');
     Route::get('/Inquiry', 'InquiryController@inquiry');

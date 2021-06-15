@@ -158,8 +158,6 @@ class ProfileController extends Controller
             'PIC_TITLE_1' => ($request->input('PICTitle') == null) ? '' : $request->input('PICTitle')
         );
 
-        
-
         if ($dataprofile['ID'] == ''){
             if ($dataprofile['CorporateF'] == 0){
                 $dataprofile['ID'] = $dataprofile['ID_No'];
@@ -263,6 +261,40 @@ class ProfileController extends Controller
         // dd($responseSync);
 
         return view('tblSyncProfile',array('responseCode' => $responseSync['code'],'datasync' => $responseSync));
+
+    }
+
+    public function uploadProfileDocument(Request $request){
+
+        $data = $request->all();
+        #create or update your data here
+
+        // return response()->json(['success'=>'Ajax request submitted successfully']);
+        // return $data;
+
+        // $data = array(
+        //     'ID' => ($request->input('ID') == null) ? '' : $request->input('ID'),
+        //     'Name' => ($request->input('Name') == null) ? '' : $request->input('Name'),
+        //     'Email' => ($request->input('Email') == null) ? '' : $request->input('Email'),
+        //     'Address' => ($request->input('Address') == null) ? '' : $request->input('Address'),
+        //     'City' => ($request->input('City') == null) ? '' : $request->input('City'),
+        //     'ZipCode' => ($request->input('ZipCode') == null) ? '' : $request->input('ZipCode'),
+        //     'IDNO' => ($request->input('ID_NO') == null) ? '' : $request->input('ID_NO'),
+        //     'DOB' => ($request->input('BirthDate') == null) ? '' : $request->input('BirthDate'),
+        //     'MobileNo' => ($request->input('Mobile') == null) ? '' : $request->input('Mobile'),
+        //     'TaxID' => ($request->input('TaxID') == null) ? '' : $request->input('TaxID'),
+        // );
+        // $responseSync = APIMiddleware($data, "SearchListRefProfile");
+
+        // if ($request->hasFile('image')) {
+        //     return $request->file('image')->getClientOriginalName();
+        // } else {
+        //     return 'no file!';
+        // }
+        
+        dd($request->file('image'));
+
+        // return view('tblSyncProfile',array('responseCode' => $responseSync['code'],'datasync' => $responseSync));
 
     }
 } 

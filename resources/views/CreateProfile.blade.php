@@ -22,6 +22,7 @@
                               <ul class="nav nav-pills mb-3">
                                 <li class="nav-item"><a id="tabinquiry" class="{{ empty($tabname) || $tabname == 'inquiry' ? 'nav-link active' : 'nav-link' }}" href="#inquiry" data-toggle="tab">Inquiry</a></li>
                                 <li class="nav-item"><a id="tabprofile" class="{{ empty($tabname) || $tabname == 'profile' ? 'nav-link active' : 'nav-link' }}" href="#profile" data-toggle="tab">Profile</a></li>
+                                <a href="#" type="delete" class="btn btn-outline-danger btn-sm btn-upload">Upload File</a>
                               </ul>
                           </div><!-- /.card-header -->
                           <div class="card-body">
@@ -53,8 +54,8 @@
                                                       <td>
                                                           <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
                                                           <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm history-profile" >history</a>
-                                                          <!-- <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#confirm-delete" >Delete</a> -->
-                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" id="btnDel" data-toggle="modal" data-target="#confirmation" data-message="You are about to delete profile data, this procedure is irreversible." data-id="{{$datas['ID']}}" data-backdrop="static">Delete</a>
+                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm btn-del-row-profile">Delete</a>
+                                                          <!-- <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" id="btnDel" data-toggle="modal" data-target="#modal-general" data-message="You are about to delete profile data, this procedure is irreversible." data-id="{{$datas['ID']}}" data-backdrop="static">Delete</a> -->
                                                           
                                                       </td>
                                                   </tr>
@@ -176,7 +177,7 @@
                                 </div>
                                                         <!-- /.modal -->
                                     <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
-                                    @csrf
+                                    {{ csrf_field() }}
                                                           <div class="form-group row">
                                                               <p for="TxtRefNo" class="col-sm-3 col-form-label">Profile ID</p>
                                                               <div class="col-sm-3">
@@ -881,22 +882,18 @@
               </div>
           </div>
           <!-- cobain modal delete -->
-          <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="modal-general" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                    <h4 class="modal-title" id="modaltitle"></h4>
                 </div>
             
-                <div class="modal-body">
-                    <p id="confirm-message"></p>
-                    <p>Do you want to proceed?</p>
+                <div class="modal-body" id="modalbody">
                 </div>
                 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-danger btn-ok" id="btnDel">Delete</a>
+                <div class="modal-footer" id="modalfooter">
                 </div>
             </div>
         </div>
@@ -939,15 +936,77 @@
 @section('scriptpage')
 
 <script>
-    $('#confirmation').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var message = button.data('message') ;
-  var href = button.attr('href');
-  var modal = $(this)
-  modal.find('#confirm-message').text(message);
-  modal.find('.modal-footer #btnDel').attr('href',href);
+//     $('#modal-general').on('show.bs.modal', function (event) {
+//   var button = $(event.relatedTarget) // Button that triggered the modal
+//   var message = button.data('message') ;
+//   var href = button.attr('href');
+//   $('#modalbody').append('<p id="confirm-message"></p>')
+//   $('#modalbody').append('Do you want to proceed?</p>')
+//   var modal = $(this)
+//   modal.find('#confirm-message').text(message);
+//   modal.find('.modal-footer #btnDel').attr('href',href);
   
-})
+// })
+
+$(".btn-del-row-profile").click(function(event){
+    event.preventDefault();
+    var a_href = $(this).attr('href');
+
+    $('#modaltitle').text('Delete Profile');
+    
+    $('#modalbody').empty();
+    $('#modalbody').append('<p>Do you want to proceed?</p>');
+
+    $('#modalfooter').empty();
+    $('#modalfooter').append('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
+    $('#modalfooter').append('<a href="' + a_href + '" class="btn btn-danger btn-ok" id="btnDel">Delete</a>');
+
+    $("#modal-general").modal({
+      backdrop: "static", //remove ability to close modal with click
+      keyboard: false, //remove option to close with keyboard
+      show: true //Display loader!
+    });
+});
+
+$(".btn-upload").click(function(event){
+    event.preventDefault();
+
+    $('#modaltitle').text('Upload Profile Document');
+    
+    $('#modalbody').empty();
+    $.ajax({
+    type: "GET",
+    url: '{{route("profile.uploadDocument")}}',
+    dataType: 'html'
+    }).done(function( msg ) {
+        $('#modalbody').html(msg);
+        $("#modal-general").modal({
+            backdrop: "true", //remove ability to close modal with click
+            keyboard: false, //remove option to close with keyboard
+            show: true //Display loader!
+        });
+    });
+    // $.ajax({
+    //     url: '{{route("profile.uploadDocument")}}',
+    //     dataType: 'html'
+    //     success: function (response) { 
+    //         $("#modal-general").modal({
+    //             backdrop: "true", //remove ability to close modal with click
+    //             keyboard: false, //remove option to close with keyboard
+    //             show: true //Display loader!
+    //         });
+    //         console.log(data);
+    //         // $('#appends').append(data); 
+    //     },
+    // });
+    // $('#modalbody').append('<form id="form-upload" action="{{ route("profile.uploadDocument") }}" method="post" enctype="multipart/form-data"></form>');
+    // $('#form-upload').append('<div id>');
+
+    // $('#modalfooter').empty();
+    // $('#modalfooter').append('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
+    // $('#modalfooter').append('<a href="' + a_href + '" class="btn btn-danger btn-ok" id="btnDel">Delete</a>');
+});
+
 </script>
 
 <script>
@@ -967,6 +1026,7 @@ $(".history-profile").click(function(event){
     url: a_href,
     dataType: 'html'
     }).done(function( msg ) {
+        console.log(msg);
         $('#bodyHistory').html(msg);
         $("#modal-history").modal('show');
         // $("#loadMe").modal('hide');
