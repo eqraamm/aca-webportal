@@ -96,9 +96,41 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                     </div>
-                                                    <div class="modal-body" id="modalbody">
-                                                        <input id="browse" type="file" onchange="previewFiles()" multiple>
-                                                        <div id="preview"></div>
+                                                    <div class="modal-body" id="modal-body" style=" margin-left: auto; margin-right: auto; width: 40%;">
+                                                       
+                                                        <div class="form-group">
+                                                            <input type="hidden" class="form-control-file" name="profileid" id="txtProfileIDUpload" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlFile1"> *Allowed extension : JPG,JPEG,PNG,PDF 
+                                                                *Max Pic Size : 300 KB/File, Max Doc Size : 3000 KB/File</label>
+                                                            <input type="file" class="form-control-file" name="image" id="exampleFormControlFile1" onchange="previewFiles()" multiple="multiple" required>
+                                                            <div id="preview"></div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-block bg-gradient-primary col-5">
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <table id="tblModalUpload" class="table table-bordered table-striped">
+                                                                <thead>
+                                                                    <tr>
+                                                                    <th>file</th>
+                                                                    <th>Name</th>
+                                                                    <th>title</th>                                                                                                                                                                                                                                                                                                                                                    
+                                                                    <th>uploaded date</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                    <td>image</td>
+                                                                    <td>calvin</td>
+                                                                    <td>KTP</td>
+                                                                    <td>1/03/2021</td>
+                                                                    </tr>
+                                                                
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                         
                                                     </div>
                                                 </div>

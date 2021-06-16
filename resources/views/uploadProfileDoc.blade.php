@@ -1,6 +1,6 @@
 <form action="{{ route('profile.uploadDocument') }}" method="post" enctype="multipart/form-data">
 @csrf
-<div class="modal fade" id="modal-history">
+<div class="modal fade" id="modal-Doc">
  <div class="modal-dialog modal-xl">
   <div class="modal-content">
     <div class="form-group">
