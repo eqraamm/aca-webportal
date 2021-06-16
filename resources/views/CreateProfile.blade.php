@@ -176,6 +176,23 @@
                                                             <!-- /.modal-dialog -->
                                 </div>
                                                         <!-- /.modal -->
+
+                                    <!-- modal upload document -->
+                                    <div class="modal fade" id="modal-Doc">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <label class="modal-title">Upload Document</label>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body" id="bodyDoc">
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
                                     <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
                                     {{ csrf_field() }}
                                                          
@@ -1042,7 +1059,7 @@ $(".history-profile").click(function(event){
     });
 });
 
-$(".sync-profile").click(function(event){
+$(".history-profile").click(function(event){
     event.preventDefault();
 
     let ProfileID = $("input[name=ProfileID]").val();
