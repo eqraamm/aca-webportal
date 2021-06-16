@@ -17,6 +17,9 @@
     <div class="form-group">
       <img src="" id="profile-img-tag" width="200px" />
     </div>
+</div>
+</div>
+</div>
   </form>
   <div class="card-body">
             <table id="tblModalUpload" class="table table-bordered table-striped">
@@ -38,7 +41,7 @@
                   
                 </tbody>
             </table>
-            </div>
+  </div>
 
   
 

@@ -203,7 +203,7 @@
                                                           </div>
                                                           <div class="form-group row">
                                                               <p for="TxtRefNo" class="col-sm-3 col-form-label">Profile ID</p>
-                                                              <div class="col-sm-3">
+                                                              <div class="col-sm-5">
                                                                   <input class="form-control" id="TxtProfileRefID" name="RefID" type="text" value="{{old('RefID')}}" readonly="readonly">
                                                               </div>
                                                               <div class="col-sm-4" style="display:none;">
@@ -212,31 +212,33 @@
                                                               <div class="col-sm-1">
                                                               <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Sync</button>
                                                               </div>
-                                                                <div class="col-sm-2">
+                                                              <div class="col-md-2 ml-auto">
                                                                  <button type="delete" id="Btn-Upload" class="btn btn-block btn-outline-info btn-upload">Upload Document</button>
                                                               </div>
-                                                              <div class ="col-sm-1">
-                                                                  <span type="text" id="owner" name="owner"> Created By: </span>
-                                                                  <span type="text" id="update" name="update"> Last Update: </span>
-                                                              </div>    
-                                                          </div>
-                                                          <div class="form-group row" style="display:none;">
+                                                            </div>
+                                                            <div class="form-group row" style="display:none;">
                                                                 <label class="col-sm-3 col-form-label">Profile ID</label>
                                                                 <div class="col-sm-6">
                                                                     <input class="form-control" id="TxtProfileID" type="text" name="ProfileID" value="{{ old('ProfileID') }}" >
                                                                 </div>
-                                                           </div>
-                                                          <div class="form-group row">
-                                                              <label class="col-sm-3 col-form-label">First Name</label>
-                                                              <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtFirstName" type="text" name='FirstName' style="text-transform:uppercase" value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
-                                                              </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-3 col-form-label">First Name</label>
+                                                                <div class="col-sm-6">
+                                                                    <input class="form-control" id="TxtFirstName" type="text" name='FirstName' style="text-transform:uppercase" value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
+                                                                </div>
+                                                                <div class ="col-md-2 ml-auto">
+                                                                    <span type="text" id="owner" name="owner"> Created By: </span>
+                                                                </div>    
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Middle Name</p>
                                                               <div class="col-sm-6">
                                                                   <input class="form-control" id="TxtMiddleName" name="MiddleName" type="text"  style="text-transform:uppercase" value="{{ old('MiddleName') }}" onchange="Construct_ProfileName();">
                                                               </div>
+                                                              <div class ="col-md-2 ml-auto">
+                                                                    <span type="text" id="owner" name="owner"> Last Updated By: </span>
+                                                                </div>   
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Last Name</p>
