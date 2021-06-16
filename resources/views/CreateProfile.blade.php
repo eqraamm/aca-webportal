@@ -86,6 +86,25 @@
                                     </div>
 
                                   <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
+                                      <!--modal upload document -->
+                                      <div class="modal fade" id="modal-Doc">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <label class="modal-title">Upload Document</label>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body" id="modalbody">
+                                                        <input id="browse" type="file" onchange="previewFiles()" multiple>
+                                                        <div id="preview"></div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                  <!-- modal sync -->
                                     <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
                                                             <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
@@ -177,22 +196,7 @@
                                 </div>
                                                         <!-- /.modal -->
 
-                                    <!-- modal upload document -->
-                                    <div class="modal fade" id="modal-Doc">
-                                            <div class="modal-dialog modal-xl">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <label class="modal-title">Upload Document</label>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    </div>
-                                                    <div class="modal-body" id="bodyDoc">
-                                                        
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
+                                
                                     <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
                                     {{ csrf_field() }}
                                                          
@@ -1006,7 +1010,7 @@ $(".btn-upload").click(function(event){
     dataType: 'html'
     }).done(function( msg ) {
         $('#modalbody').html(msg);
-        $("#modal-general").modal({
+        $("#modal-Doc").modal({
             backdrop: "true", //remove ability to close modal with click
             keyboard: false, //remove option to close with keyboard
             show: true //Display loader!

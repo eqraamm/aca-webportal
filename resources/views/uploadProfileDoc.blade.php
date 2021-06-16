@@ -1,5 +1,8 @@
 <form action="{{ route('profile.uploadDocument') }}" method="post" enctype="multipart/form-data">
 @csrf
+<div class="modal fade" id="modal-history">
+ <div class="modal-dialog modal-xl">
+  <div class="modal-content">
     <div class="form-group">
       <input type="hidden" class="form-control-file" name="profileid" id="txtProfileIDUpload" required>
     </div>
@@ -16,12 +19,12 @@
     </div>
   </form>
   <div class="card-body">
-            <table id="tblModalHistory" class="table table-bordered table-striped">
+            <table id="tblModalUpload" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                     <th>file</th>
                     <th>Name</th>
-                    <th>title</th>
+                    <th>title</th>                                                                                                                                                                                                                                                                                                                                                    
                     <th>uploaded date</th>
                     </tr>
                 </thead>
