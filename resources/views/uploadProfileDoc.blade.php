@@ -1,27 +1,16 @@
-<form action="{{ route('profile.uploadDocument') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('profile.uploadDocument') }}" method="post" enctype="multipart/form-data" style="width: 100%; padding-left:5%; text-align: center;">
 @csrf
-<div class="modal fade" id="modal-Doc">
- <div class="modal-dialog modal-xl">
-  <div class="modal-content">
-    <div class="form-group">
-      <input type="hidden" class="form-control-file" name="profileid" id="txtProfileIDUpload" required>
-    </div>
-    <div class="form-group">
-    <label for="exampleFormControlFile1"> *Allowed extension : JPG,JPEG,PNG,PDF 
-      *Max Pic Size : 300 KB/File, Max Doc Size : 3000 KB/File</label>
-      <input type="file" class="form-control-file" name="image" id="exampleFormControlFile1" onchange="previewFiles()" multiple="multiple" required>
-      <div id="preview"></div>
-    </div>
-    <div class="form-group">
-      <input type="submit" class="btn btn-block bg-gradient-primary col-5">
-    </div>
-    <div class="form-group">
-      <img src="" id="profile-img-tag" width="200px" />
-    </div>
-</div>
-</div>
-</div>
-  </form>
+    
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1"> *Allowed extension : JPG,JPEG,PNG,PDF 
+                          *Max Pic Size : 300 KB/File, Max Doc Size : 3000 KB/File</label>
+                          <input type="file" class="form-control-file" name="image" id="exampleFormControlFile1" onchange="previewFiles()" multiple="multiple" required>
+                     </div>
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-block bg-gradient-primary col-3">
+                      </div>
+
+</form>
   <div class="card-body">
             <table id="tblModalUpload" class="table table-bordered table-striped">
                 <thead>
@@ -35,11 +24,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                    <td>image</td>
+                    <td id="preview"></td>
                     <td>calvin</td>
                     <td>KTP</td>
                     <td>1/03/2021</td>
-                    <td><h5><span class="badge badge-warning">pending</span></h5></td>
+                    <td><h5><span class="badge badge-warning">pending</span></h5>
+                    <a href="#" i class="nav-icon fas fa-trash"></i>
+                    </td>
+                  
                     </tr>
                   
                 </tbody>
@@ -95,3 +87,12 @@
         
 }
 </script>
+<script>
+  $(function () {
+    $("#tblModalUpload").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+    });
+  }
+  );
+  </script>
