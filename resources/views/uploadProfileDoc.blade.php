@@ -1,12 +1,16 @@
-<form action="{{ route('profile.uploadDocument') }}" method="post" enctype="multipart/form-data" style="width: 100%; padding-left:5%; text-align: center;">
+<form action="{{ route('profile.uploadDocument') }}" method="post" enctype="multipart/form-data" style="width: 100%; padding-left:5%; text-align:center;">
 @csrf
     
-                    <div class="form-group">
-                        <label for="exampleFormControlFile1"> *Allowed extension : JPG,JPEG,PNG,PDF 
-                          *Max Pic Size : 300 KB/File, Max Doc Size : 3000 KB/File</label>
-                          <input type="file" class="form-control-file" name="image" id="exampleFormControlFile1" onchange="previewFiles()" multiple="multiple" required>
+                    <div class="form-group" style="width: 100%; padding-left:5%; text-align: center;">
+                      <label for="exampleFormControlFile1"> *Allowed extension : JPG,JPEG,PNG,PDF 
+                        *Max Pic Size : 300 KB/File, Max Doc Size : 3000 KB/File</label>
+                        <table style="width: 100%; padding-left:5%; text-align: center;">
+                          <tr>
+                           <td><input type="file" class="form-control" name="image" id="exampleFormControlFile1" multiple="multiple" required></td>
+                          </tr>
+                        </table>                        
                      </div>
-                        <div class="form-group">
+                        <div class="form-group" align="center">
                           <input type="submit" class="btn btn-block bg-gradient-primary col-3">
                       </div>
 
@@ -20,43 +24,35 @@
                     <th>title</th>                                                                                                                                                                                                                                                                                                                                                    
                     <th>uploaded date</th>
                     <th>Status</th>
+                    <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                    <td id="preview"></td>
-                    <td>calvin</td>
-                    <td>KTP</td>
-                    <td>1/03/2021</td>
-                    <td><h5><span class="badge badge-warning">pending</span></h5>
-                    <a href="#" i class="nav-icon fas fa-trash"></i>
-                    </td>
-                  
-                    </tr>
-                  
+                <tbody id="body">
                 </tbody>
             </table>
   </div>
-
-  
+ 
 
   <script>
     function readURL(input) {
+      console.log(input.files.length);
          if(input.files && input.files[0]) {
+           for (i=0; i<input.files.length;i++){
+             var name = input.files[i].name;
+             console.log(name);
             var reader = new FileReader();
- 
-            reader.onload = function (e) {
-                $('.img-form').append('<img src="' +  e.target.result + '" width="200px" />')
-                // $('#profile-img-tag').attr('src', e.target.result);
+            reader.onload = function (e) { 
+                $('#body').append('<tr><td id="preview"><img src="' +  e.target.result + '" width="110px" /></td><td>'+ name +'</td><td>KTP</td><td>1/03/2021</td><td><h5><span class="badge badge-warning">pending</span></h5></td><td><a href="#" class="nav-icon fas fa-trash" style="font-size:25px;color:red;"></a> <a href="#" class="nav-icon fas fa-edit" style="font-size:25px;color:green;"></a></td></tr>');
             }
-            reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(input.files[i]);
+           }            
         }
     }
     $("#exampleFormControlFile1").change(function(){
         readURL(this);
     });
   </script>
-   <script>
+   <!-- <script>
             function previewFiles() {
                 
                 var preview = document.querySelector('#preview');
@@ -92,7 +88,10 @@
     $("#tblModalUpload").DataTable({
         "responsive": true,
         "autoWidth": false,
+        "searching": false,
+        "info": false,
+        
     });
   }
   );
-  </script>
+  </script> -->
