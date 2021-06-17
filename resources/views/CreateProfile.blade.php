@@ -105,7 +105,7 @@
                                                             <label for="exampleFormControlFile1"> *Allowed extension : JPG,JPEG,PNG,PDF 
                                                                 *Max Pic Size : 300 KB/File, Max Doc Size : 3000 KB/File</label>
                                                             <input type="file" class="form-control-file" name="image" id="exampleFormControlFile1" onchange="previewFiles()" multiple="multiple" required>
-                                                            <div id="preview"></div>
+                                                            <!-- <div id="preview"></div> -->
                                                         </div>
                                                         <div class="form-group">
                                                             <input type="submit" class="btn btn-block bg-gradient-primary col-5">
@@ -118,14 +118,25 @@
                                                                     <th>Name</th>
                                                                     <th>title</th>                                                                                                                                                                                                                                                                                                                                                    
                                                                     <th>uploaded date</th>
+                                                                    <th>Status</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
+                                                                    <tr>
+                                                                    <td id="preview"></td>
+                                                                    <td>calvin</td>
+                                                                    <td>KTP</td>
+                                                                    <td>1/03/2021</td>
+                                                                    <td><h5><span class="badge badge-warning">pending</span></h5>
+                                                                        
+                                                                    </td>
+                                                                    </tr>
                                                                     <tr>
                                                                     <td>image</td>
                                                                     <td>calvin</td>
                                                                     <td>KTP</td>
                                                                     <td>1/03/2021</td>
+                                                                    <td><h5><span class="badge badge-success">Saved</span></h5></td>
                                                                     </tr>
                                                                 
                                                                 </tbody>
