@@ -196,6 +196,7 @@
 <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
 
+
 @yield('scriptpage')
 
 </body>

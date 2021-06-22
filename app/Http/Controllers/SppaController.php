@@ -60,7 +60,7 @@ class SppaController extends Controller
             'CoverageID' => ''
         );
         $dataMO = array(
-            'ID' => 'aca_mo_1'
+            'ID' => ''
         );
         $dataBranch = array(
             'Branch' => ''
@@ -68,12 +68,16 @@ class SppaController extends Controller
         $dataCurrency = array(
             'Currency' => ''
         );
+        $dataProfile = array(
+            'OwnerID' => 'aca_mo_1'
+        );
 
         $responseProduct = APIMiddleware($dataProduct, 'SearchProduct');
         $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
         $responseMO = APIMiddleware($dataMO, 'SearchMO');
         $responseBranch = APIMiddleware($dataBranch, 'SearchBranch');
         $responseCurrency = APIMiddleware($dataCurrency, 'SearchCurrency');
+        $responseProfile = APIMiddleware($dataProfile, 'SearchProfile');
 
         return view('Transaction.policy')
             ->with([
@@ -82,6 +86,7 @@ class SppaController extends Controller
                 'mo' => $responseMO,
                 'branch' => $responseBranch,
                 'currency' => $responseCurrency,
+                'profile' => $responseProfile,
             ]);
     }
 }

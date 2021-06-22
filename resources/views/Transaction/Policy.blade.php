@@ -125,7 +125,7 @@
                 <div class="tab-pane" id="policy">
                   <div class="bs-stepper">
                     <form action="" method="post">
-                    <div class="bs-stepper-header" role="tablist">
+                      <div class="bs-stepper-header" role="tablist">
                         <!-- your steps here -->
                         <div class="step" data-target="#policy-part">
                           <button type="button" class="step-trigger" role="tab" aria-controls="policy-part" id="policy-part-trigger">
@@ -137,14 +137,14 @@
                         <div class="step" data-target="#information-part">
                           <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
                             <span class="bs-stepper-circle">2</span>
-                            <span class="bs-stepper-label">General Policy</span>
+                            <span class="bs-stepper-label">Risk & Interest</span>
                           </button>
                         </div>
                         <div class="line"></div>
-                        <div class="step" data-target="#beneficiaries-part">
-                          <button type="button" class="step-trigger" role="tab" aria-controls="beneficiaries-part" id="beneficiaries-part-trigger">
+                        <div class="step" data-target="#others-part">
+                          <button type="button" class="step-trigger" role="tab" aria-controls="others-part" id="others-part-trigger">
                             <span class="bs-stepper-circle">3</span>
-                            <span class="bs-stepper-label">Risk & Interest</span>
+                            <span class="bs-stepper-label">Others</span>
                           </button>
                         </div>
                       </div>
@@ -258,6 +258,9 @@
                                 <div class="col-sm-5">
                                   <select class="form-control" id="LstPHolder" required>
                                     <option value="" selected></option>
+                                    @foreach($profile['Data'] as $dataProfile)
+                                    <option value="{{ $dataProfile['ID'] }}">{{ $dataProfile['Name'] }}</option>
+                                    @endforeach
                                   </select>
                                 </div>
                               </div>
@@ -266,6 +269,9 @@
                                 <div class="col-sm-5">
                                   <select class="form-control" id="LstInsured" required>
                                     <option value="" selected></option>
+                                    @foreach($profile['Data'] as $dataProfile)
+                                    <option value="{{ $dataProfile['ID'] }}">{{ $dataProfile['Name'] }}</option>
+                                    @endforeach
                                   </select>
                                 </div>
                               </div>
@@ -443,7 +449,7 @@
                               <div class="form-group row">
                                 <p for="TxtArrivalDate" class="col-sm-3 col-form-label">Estimate Time Arrival :</p>
                                 <div class="input-group date col-sm-4" id="TxtArrivalDate" data-target-input="nearest">
-                                  <input type="date" class="form-control id="TxtArrivalDate" />
+                                  <input type="date" class="form-control id=" TxtArrivalDate" />
                                 </div>
                               </div>
                               <div class="form-group row">
@@ -532,7 +538,8 @@
                           <h2>Risk Coverage</h2>
                           <div class="card card-info">
                             <div class="card-body" id="cbRC">
-                              <table id="tableId" class="table table-condensed responsive">
+                              <table id="tblRiskCoverage" class="table table-condensed responsive table-striped">
+
                               </table>
                             </div>
                           </div>
@@ -588,12 +595,6 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Total :</p>
-                                <div class="col-sm-4">
-                                  <input class="form-control" id="TxtTotal" type="number" placeholder="0">
-                                </div>
-                              </div>
-                              <div class="form-group row">
                                 <p class="col-sm-3 col-form-label">Premium Calculation :</p>
                                 <div class="col-sm-6">
                                   <textarea class="form-control" rows="3" id="TxtViewPremium"></textarea>
@@ -604,7 +605,7 @@
                           <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
                           <button class="btn btn-primary" onclick="stepper.next()">Next</button>
                         </div>
-                        <div id="beneficiaries-part" class="content" role="tabpanel" aria-labelledby="beneficiaries-part-trigger">
+                        <div id="others-part" class="content" role="tabpanel" aria-labelledby="others-part-trigger">
                           <h2>Beneficiaries</h2>
                           <div class="card card-info">
                             <div class="card-body">
@@ -615,8 +616,111 @@
                             <div class="card-body">
                             </div>
                           </div>
+                          <h2>Default Clausula</h2>
+                          <div class="card card-info">
+                            <div class="card-body">
+                            </div>
+                          </div>
+                          <h2>Default Deductible</h2>
+                          <div class="card card-info">
+                            <div class="card-body" id="cbCD">
+                              <table id="tbl_covDeductible" class="table table-condensed responsive table-striped">
+
+                              </table>
+                            </div>
+                          </div>
+                          <h2>Policy/Document List</h2>
+                          <div class="card card-info">
+                            <div class="card-body">
+                            </div>
+                          </div>
+                          <h2>Submission</h2>
+                          <div class="card card-info">
+                            <div class="card-body">
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Immediate Inforce</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxAutoInforce">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Document Upload</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxPolicyUpload" disabled>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Auto Email</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxAutoEmail">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Hardcopy Policy</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxHardcopyPolicy">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Not Apply Rate Loading</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxNotApplyRateLoading">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Submit Date</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxSubmitDate">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Billing by Policy Year</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="cbxPolicyYearF">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Need e-Sign</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxNeedEsignF">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">e-Sign</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxeESign">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Document SPPA Status</p>
+                                <div class="col-form-label col-sm-4">
+                                  <label id="LblDocStatus" style="padding-left:2%;">No Document SPPA</label>
+                                </div>
+                              </div>
+                              <div class="form-group row" style="text-align: center;">
+                                <table>
+                                  <tr>
+                                    <td>
+                                      <button class="btn btn-primary" id="BtnSave">Save</button>
+                                      <button class="btn btn-primary" id="BtnValidate">Validate</button>
+                                      <button class="btn btn-primary" id="BtnAddCert">Add Certificate</button>
+                                      <button class="btn btn-primary" id="BtnCompliance">Complience</button>
+                                      <button class="btn btn-primary" id="BtnPayment">Payment</button>
+                                      <button class="btn btn-primary" id="BtnTSubmit">Quotation</button>
+                                      <button class="btn btn-primary" id="BtnRevise">Revise</button>
+                                      <button class="btn btn-primary" id="BtnsubmitConfirmation">Send Confirmation</button>
+                                      <button class="btn btn-primary" id="BtnSubmit">Submit</button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td><button class="btn btn-primary" id="BtnDocList">Document Checklist</button></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
                           <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
-                          <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+                          <!--<button class="btn btn-primary" onclick="">Submit</button>-->
                         </div>
                       </div>
                     </form>
@@ -642,30 +746,102 @@
 </div>
 @endsection
 @section('scriptpage')
-
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    })
+  $('#LstPHolder').on('change', function() { 
+    qq($(this).find('option').filter(':selected').text(), $('#LstInsured').find('option').filter(':selected').text());
+  });
+  $('#LstInsured').on('change', function() {
+    qq($('#LstPHolder').find('option').filter(':selected').text(), $(this).find('option').filter(':selected').text());
+  });
+
+  function qq(LstPHolder, LstInsured) {
+    if (LstPHolder == LstInsured) {
+      $('#TxtName').val(LstPHolder);
+    } else if (LstPHolder != '' && LstInsured != '') {
+      $('#TxtName').val(LstPHolder + " QQ " + LstInsured);
+    } else if (LstPHolder == '') {
+      $('#TxtName').val(LstInsured);
+    } else {
+      $('#TxtName').val(LstPHolder);
+    }
+  }
+
+  // function getCurrency() {
+  //   var bsCurrency = @json($currency['Data']);
+  //   var listBox = document.createElement("Select");
+  //   var option = document.createElement("OPTION");
+  //   listBox.className = "form-control";
+  //   listBox.id = "LstCurrencyTSI";
+  //   listBox.name = "CurrencyTSI";
+  //   option.value = bsCurrency.length.Currency;
+  //   option.innerHTML = bsCurrency.length.Description;
+  //   listBox.appendChild(option);
+  //   console.log(listBox);
+  // }
+
   function setSI_RC(Coverage) {
     var bsCoverage = @json($coverage['Data']);
-    var bsCurrency = @json($currency['Data']);
     const faCoverageDet = bsCoverage.filter(asd => asd.CoverageID == Coverage);
-    var divGrp = document.getElementById("cbSI");
+    var bsCurrency = @json($currency['Data']);
     //create SUM INSURED and Risk Coverage
-    while (divGrp.firstChild) {
-      divGrp.removeChild(divGrp.firstChild);
+    var divGrpSI = document.getElementById("cbSI");
+    while (divGrpSI.firstChild) {
+      divGrpSI.removeChild(divGrpSI.firstChild);
     }
+    //console.log(faCoverageDet);
+    $('#tblRiskCoverage').empty();
     if (faCoverageDet.length > 0) {
+      for (i = 0; i < faCoverageDet.length; i++) {
+        var CovDet = faCoverageDet[i].CoverageDetail;
+        $("#tblRiskCoverage").DataTable({
+          "data": CovDet,
+          "columns": [
+            {
+              "title": "",
+              "data": null
+            },
+            {
+              "title": "No",
+              "data": "OrderNo"
+            },
+            {
+              "title": "Risk Coverage",
+              "data": "Description"
+            },
+            {
+              "title": "Rate",
+              "data": "PolicyYear"
+            }
+          ],
+          "columnDefs": [{
+            "targets": 0,
+            "className": "select-checkbox",
+            "defaultContent": ""
+          }],
+          "select": {
+            "style": "multi",
+            "selector": "td:first-child"
+          },
+          "paging": false,
+          "lengthChange": true,
+          "searching": false,
+          "ordering": false,
+          "info": false,
+          "autoWidth": false,
+          "responsive": true,
+          "destroy": true,
+        });
+      }
       const SI = createSI(faCoverageDet);
       let SIF = SI.SiF;
       let SIDefault = SI.SiDefault;
       let SiLabel = SI.SiLabel;
       for (i = 0; i < SIF.length; i++) {
         if (SIF[i] != false && SiLabel[i] != '') {
-          var listBox = document.createElement("Select");
-          listbox.className = "form-control";
-          // listbox.id = "LstCurrency";
-          // listbox.name = "Currency";
-          var option = document.createElement("OPTION");
-          var divGrp = document.getElementById("cbSI");
+          var divGrpSI = document.getElementById("cbSI");
           var divFrm = document.createElement("div");
           divFrm.className = "form-group row";
           var label = document.createElement("P");
@@ -677,16 +853,12 @@
           txt.type = "number";
           txt.id = "TxtSI" + (i + 1);
           txt.name = "SI" + (i + 1);
-          txt.value = SIDefault[i];
+          txt.value = 0;
           label.innerHTML = SiLabel[i];
-          // option.value = bsCurrency[i].Currency;
-          // option.innerHTML = bsCurrency[i].Description;
-          // listbox.appendChild(option);
-          divGrp.appendChild(divFrm);
+          divGrpSI.appendChild(divFrm);
           divFrm.appendChild(label);
           divFrm.appendChild(divTxt);
           divTxt.appendChild(txt);
-          // divTxt.appendChild(listbox);
         }
       }
     }
@@ -712,10 +884,15 @@
       listBox.appendChild(option);
     };
     var divGrp = document.getElementById("cbObjectInfo");
+    var divGrpSI = document.getElementById("cbSI");
     //create object information from product
     while (divGrp.firstChild) {
       divGrp.removeChild(divGrp.firstChild);
     }
+    while (divGrpSI.firstChild) {
+      divGrpSI.removeChild(divGrpSI.firstChild);
+    }
+    $('#tblRiskCoverage').empty();
     if (faProduct.length > 0) {
       const arrFLDTAG = createArrFLDTAG(faProduct);
       for (i = 0; i < arrFLDTAG.length; i++) {
