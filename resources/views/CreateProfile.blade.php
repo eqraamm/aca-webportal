@@ -103,6 +103,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
 
                                   <!-- modal sync -->
                                     <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
@@ -203,6 +204,11 @@
                                                         <!-- /.modal -->
                                     <form class="form-horizontal form-save" id="needs-validation" action="{{ route('profile.save') }}" method="post">
                                     @csrf
+                                                        <div class="form-group row" style="display:none;">
+                                                                <div class="col-md-2 ml-auto">
+                                                                 <button type="delete" id="Btn-Upload" class="btn btn-block btn-outline-info btn-upload">Upload Document</button>
+                                                                </div>
+                                                        </div>
                                                           <div class="form-group row">
                                                               <p for="TxtRefNo" class="col-sm-3 col-form-label">Profile ID</p>
                                                               <div class="col-sm-5">
@@ -213,9 +219,6 @@
                                                               </div>
                                                               <div class="col-sm-1">
                                                               <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Sync</button>
-                                                              </div>
-                                                              <div class="col-md-2 ml-auto">
-                                                                 <button type="delete" id="Btn-Upload" class="btn btn-block btn-outline-info btn-upload">Upload Document</button>
                                                               </div>
                                                             </div>
                                                             <div class="form-group row" style="display:none;">
@@ -229,19 +232,12 @@
                                                                 <div class="col-sm-6">
                                                                     <input class="form-control" id="TxtFirstName" type="text" name='FirstName' style="text-transform:uppercase" value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
                                                                 </div>
-                                                                <div class ="col-md-2 ml-auto">
-                                                                    <span type="text" id="owner" name="owner"> Created By: </span>
-                                                                </div>    
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Middle Name</p>
                                                               <div class="col-sm-6">
                                                                   <input class="form-control" id="TxtMiddleName" name="MiddleName" type="text"  style="text-transform:uppercase" value="{{ old('MiddleName') }}" onchange="Construct_ProfileName();">
-                                                              </div>
-                                                              <div class ="col-md-2 ml-auto">
-                                                                    <span type="text" id="owner" name="owner"> Last Updated By: </span>
-                                                                </div>   
-                                                          </div>
+                                                              </div>                                                          </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Last Name</p>
                                                               <div class="col-sm-6">
@@ -312,7 +308,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblID_Number">ID Number</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="ID_Number" name="ID_Number" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" value="{{ old('ID_Number') }}" required>
+                                                                  <input class="form-control" id="ID_Number" name="ID_Number" type="text" value="{{ old('ID_Number') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -933,6 +929,18 @@
                                                                   <input type="checkbox" class="form-check-inputs" id="CbxRestrictedF" name="Restricted" value="true" {{ (old('Restricted') == 'true') ? 'checked' : '' }} disabled>
                                                               </div>
                                                           </div>
+                                                          <div class="form-group row">
+                                                              <span class="col-sm-3 col-form-label">Created By</span>
+                                                              <div class="col-form-label col-sm-4">
+                                                              <p id="Created" name="owner"></p>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Last Updated</p>
+                                                              <div class="col-form-label col-sm-4">
+                                                              <p id="LastUpdate" name="owner"></p>
+                                                              </div>
+                                                          </div>
                                                           <div class="form-group row justify-content-center">
                                                             <div class="col-sm-4">
                                                               <button type="submit" id="clickbtn" class="btn btn-block bg-gradient-primary col-5">Save</button>
@@ -1080,10 +1088,15 @@ function LstIDType_Change(){
     if (lstIDType == 'KTP') {
         document.getElementById("ID_Number").setAttribute("minlength", "16");
         document.getElementById("ID_Number").setAttribute("maxlength", "16");
+        document.getElementById("ID_Number").setAttribute("oninput" ,"this.value = this.value.replace(/[^0-9.]/g, '');");
     }else{
-        document.getElementById("ID_Number").removeAttribute("minlength");
         document.getElementById("ID_Number").removeAttribute("maxlength");
+        document.getElementById("ID_Number").removeAttribute("minlength");
+        document.getElementById("ID_Number").removeAttribute("oninput");
+        
+        
     }
+
 }
 $("#clearbtn").click(function(event){
         event.preventDefault();
@@ -1173,9 +1186,11 @@ function parseDataToInput(filterarray){
   document.getElementById("LstOccupation").value = filterarray[0]['Occupation'];
   document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
   document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
-  document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
+  document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
+  document.getElementById("Created").innerHTML = filterarray[0]['Last_Opr'] + ['  '] + ['-'] + ['  '] + ['('] + filterarray[0]['Last_Update'] + ['  '] + ['-'] + filterarray[0]['Last_Time']+ [')'];
+  document.getElementById("LastUpdate").innerHTML = filterarray[0]['Last_Opr'] + ['  '] + ['-'] + ['  '] + ['('] + filterarray[0]['Last_Update'] + ['  '] + ['-'] + filterarray[0]['Last_Time']+ [')'];
     if (filterarray[0]['Corporatef'] === true) {
-        console.log('bisa bos');
+        // console.log('bisa bos');
         document.getElementById("CbxCorporateF").setAttribute("checked", "");
         corporateF_chekcked();
     }else{
@@ -1385,8 +1400,8 @@ $(".btn-upload").click(function(event){
     url: '{{route("profile.uploadDocument")}}',
     dataType: 'html'
     }).done(function( msg ) {
-        $('#modalbody').html(msg);
-        $("#modal-general").modal({
+        $('#modal-body').html(msg);
+        $("#modal-Doc").modal({
             backdrop: "true", //remove ability to close modal with click
             keyboard: false, //remove option to close with keyboard
             show: true //Display loader!

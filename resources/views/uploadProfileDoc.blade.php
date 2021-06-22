@@ -35,19 +35,6 @@
 
   <script>
     function readURL(input) {
-<<<<<<< HEAD
-        if (input.files && input.files[0]) {
-          for (i=0; i < input.files.length;i++){
-            var reader = new FileReader();
-            // console.log(input.files);
-            // console.log(input.files.length);
-              reader.onload = function (e) {
-                // console.log(e);
-                  $('.img-form').append('<img src="' +  e.target.result + '" width="200px" /><p>"'+ input.files[0].name +'"</p>')
-              }
-              reader.readAsDataURL(input.files[i]);
-          }
-=======
       console.log(input.files.length);
          if(input.files && input.files[0]) {
            for (i=0; i<input.files.length;i++){
@@ -59,44 +46,13 @@
             }
             reader.readAsDataURL(input.files[i]);
            }            
->>>>>>> refs/remotes/origin/master
         }
     }
     $("#exampleFormControlFile1").change(function(){
         readURL(this);
     });
   </script>
-   <!-- <script>
-            function previewFiles() {
-                
-                var preview = document.querySelector('#preview');
-                var files   = document.querySelector('input[type=file]').files;
-                
-                function readAndPreview(file) {
-                    
-                    // Make sure `file.name` matches our extensions criteria
-                    if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
-                        document.getElementById('preview').innerHTML ="";
-                        var reader = new FileReader();
-                        reader.addEventListener("load", function () {
-                            var image = new Image();
-                            image.height = 100;
-                            image.title = file.name;
-                            image.src = this.result;
-                            preview.appendChild( image );
-                        }, false);
-                        
-                        reader.readAsDataURL(file);
-                    }
-                    
-                }
-                
-                if (files) {
-            [].forEach.call(files, readAndPreview);
-        }
-        
-}
-</script>
+  
 <script>
   $(function () {
     $("#tblModalUpload").DataTable({
@@ -104,8 +60,6 @@
         "autoWidth": false,
         "searching": false,
         "info": false,
-        
     });
-  }
-  );
-  </script> -->
+  });
+  </script>
