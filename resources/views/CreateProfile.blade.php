@@ -97,12 +97,11 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                     </div>
-                                                    <div class="modal-body" id="modal-body">
-                                                       
-                                                                                                     
+                                                    <div class="modal-body" id="modal-body">                                       
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
 
                                   <!-- modal sync -->
                                     <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
@@ -989,9 +988,9 @@
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <!-- <div class="modal-content"> -->
       <div class="modal-body text-center">
-      <div class="spinner-border text-info" style="width: 4rem; height: 4rem;" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
+        <div class="spinner-border text-info" style="width: 4rem; height: 4rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
       </div>
     <!-- </div> -->
   </div>

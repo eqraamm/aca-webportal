@@ -35,19 +35,6 @@
 
   <script>
     function readURL(input) {
-<<<<<<< HEAD
-        if (input.files && input.files[0]) {
-          for (i=0; i < input.files.length;i++){
-            var reader = new FileReader();
-            // console.log(input.files);
-            // console.log(input.files.length);
-              reader.onload = function (e) {
-                // console.log(e);
-                  $('.img-form').append('<img src="' +  e.target.result + '" width="200px" /><p>"'+ input.files[0].name +'"</p>')
-              }
-              reader.readAsDataURL(input.files[i]);
-          }
-=======
       console.log(input.files.length);
          if(input.files && input.files[0]) {
            for (i=0; i<input.files.length;i++){
@@ -59,7 +46,6 @@
             }
             reader.readAsDataURL(input.files[i]);
            }            
->>>>>>> refs/remotes/origin/master
         }
     }
     $("#exampleFormControlFile1").change(function(){
