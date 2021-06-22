@@ -87,6 +87,24 @@
                                     </div>
 
                                   <div class="{{ empty($tabname) || $tabname == 'profile' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="profile">
+                                      <!--modal upload document -->
+                                      <div class="modal fade" id="modal-Doc">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <label class="modal-title">Upload Document</label>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body" id="modal-body">
+                                                       
+                                                                                                     
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                  <!-- modal sync -->
                                     <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
                                                             <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
@@ -187,33 +205,42 @@
                                     @csrf
                                                           <div class="form-group row">
                                                               <p for="TxtRefNo" class="col-sm-3 col-form-label">Profile ID</p>
-                                                              <div class="col-sm-3">
+                                                              <div class="col-sm-5">
                                                                   <input class="form-control" id="TxtProfileRefID" name="RefID" type="text" value="{{old('RefID')}}" readonly="readonly">
                                                               </div>
                                                               <div class="col-sm-4" style="display:none;">
                                                                   <input class="form-control" id="TxtProfileRefDesc" name="RefName" type="text" value="{{old('RefName')}}">
                                                               </div>
-                                                              <div class="col-sm-2">
+                                                              <div class="col-sm-1">
                                                               <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Sync</button>
                                                               </div>
-                                                          </div>
-                                                          <div class="form-group row" style="display:none;">
+                                                              <div class="col-md-2 ml-auto">
+                                                                 <button type="delete" id="Btn-Upload" class="btn btn-block btn-outline-info btn-upload">Upload Document</button>
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group row" style="display:none;">
                                                                 <label class="col-sm-3 col-form-label">Profile ID</label>
                                                                 <div class="col-sm-6">
                                                                     <input class="form-control" id="TxtProfileID" type="text" name="ProfileID" value="{{ old('ProfileID') }}" >
                                                                 </div>
-                                                           </div>
-                                                          <div class="form-group row">
-                                                              <label class="col-sm-3 col-form-label">First Name</label>
-                                                              <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtFirstName" type="text" name='FirstName' style="text-transform:uppercase" value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
-                                                              </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-3 col-form-label">First Name</label>
+                                                                <div class="col-sm-6">
+                                                                    <input class="form-control" id="TxtFirstName" type="text" name='FirstName' style="text-transform:uppercase" value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
+                                                                </div>
+                                                                <div class ="col-md-2 ml-auto">
+                                                                    <span type="text" id="owner" name="owner"> Created By: </span>
+                                                                </div>    
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Middle Name</p>
                                                               <div class="col-sm-6">
                                                                   <input class="form-control" id="TxtMiddleName" name="MiddleName" type="text"  style="text-transform:uppercase" value="{{ old('MiddleName') }}" onchange="Construct_ProfileName();">
                                                               </div>
+                                                              <div class ="col-md-2 ml-auto">
+                                                                    <span type="text" id="owner" name="owner"> Last Updated By: </span>
+                                                                </div>   
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Last Name</p>
