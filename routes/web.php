@@ -38,10 +38,14 @@ Route::group(['middleware' => 'CekLogin'], function(){
     Route::get('/profile/uploadDocument', function (){
         return view('uploadProfileDoc');
     })->name('profile.uploadDocument');
+    
+    Route::get('/profile/sync/{id}', function(){
+        return Route::input('id');
+    })->name("profile.getsync");
+
     Route::post('/profile/uploadDocument', 'ProfileController@uploadProfileDocument')->name('profile.uploadDocumentPost');
 
-    Route::get('/test', 'ProfileController@test')->name('test');
-    Route::get('/sppa', 'SppaController@Sppa');
+    Route::get('/transaction', 'SppaController@showFormPolicy')->name('policy.transaction');
     Route::get('/Inquiry', 'InquiryController@inquiry');
 });
 

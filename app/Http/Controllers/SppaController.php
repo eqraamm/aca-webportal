@@ -50,8 +50,41 @@ class SppaController extends Controller
             'Product' => $responseProduct, 'Profile' => $responseProfile, 'Segment' => $responseSegment,
             'Class' => $responseClass));
     }
-       
-        }
+
+    public function showFormPolicy()
+    {
+        $dataProduct = array(
+            'ProductID' => ''
+        );
+        $dataCoverage = array(
+            'CoverageID' => ''
+        );
+        $dataMO = array(
+            'ID' => 'aca_mo_1'
+        );
+        $dataBranch = array(
+            'Branch' => ''
+        );
+        $dataCurrency = array(
+            'Currency' => ''
+        );
+
+        $responseProduct = APIMiddleware($dataProduct, 'SearchProduct');
+        $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
+        $responseMO = APIMiddleware($dataMO, 'SearchMO');
+        $responseBranch = APIMiddleware($dataBranch, 'SearchBranch');
+        $responseCurrency = APIMiddleware($dataCurrency, 'SearchCurrency');
+
+        return view('Transaction.policy')
+            ->with([
+                'product' => $responseProduct,
+                'coverage' => $responseCoverage,
+                'mo' => $responseMO,
+                'branch' => $responseBranch,
+                'currency' => $responseCurrency,
+            ]);
+    }
+}
 
 
 

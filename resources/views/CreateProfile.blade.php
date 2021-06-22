@@ -22,7 +22,8 @@
                               <ul class="nav nav-pills mb-3">
                                 <li class="nav-item"><a id="tabinquiry" class="{{ empty($tabname) || $tabname == 'inquiry' ? 'nav-link active' : 'nav-link' }}" href="#inquiry" data-toggle="tab">Inquiry</a></li>
                                 <li class="nav-item"><a id="tabprofile" class="{{ empty($tabname) || $tabname == 'profile' ? 'nav-link active' : 'nav-link' }}" href="#profile" data-toggle="tab">Profile</a></li>
-                                <a href="#" type="delete" class="btn btn-outline-danger btn-sm btn-upload">Upload File</a>
+                                
+                                <!-- <a href="{{route('profile.uploadDocument')}}" type="delete" class="btn btn-outline-danger btn-sm btn-upload">Upload File</a> -->
                               </ul>
                           </div><!-- /.card-header -->
                           <div class="card-body">
@@ -42,7 +43,7 @@
                                                   </tr>
                                               </thead>
                                               <tbody>
-                                              @if($responseCodeProfile == '200')
+                                              @if($data['code'] == '200')
                                               @foreach($data['Data'] as $datas)
                                                   <tr>
                                                       <td>{{ $datas['RefID'] }}</td>
@@ -53,7 +54,7 @@
                                                       <td>{{ $datas['BirthDate'] }}</td>
                                                       <td>
                                                           <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
-                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" class="btn btn-outline-info btn-sm history-profile" >history</a>
+                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" id="btn-history" class="btn btn-outline-info btn-sm history-profile" >history</a>
                                                           <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm btn-del-row-profile">Delete</a>
                                                           <!-- <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" id="btnDel" data-toggle="modal" data-target="#modal-general" data-message="You are about to delete profile data, this procedure is irreversible." data-id="{{$datas['ID']}}" data-backdrop="static">Delete</a> -->
                                                           
@@ -89,26 +90,30 @@
                                     <div class="modal fade" id="modal-sync" tabindex="-1" role="dialog">
                                                             <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
+                                                            <div id="div-overlay">
+                                                            
+                                                            </div>
                                                                 <div class="modal-header">
                                                                 <h4 class="modal-title" id="titleModalSync">Profile Inquiry</h4>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                                 </div>
-                                                                <!-- <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">  -->
+                                                                <form class="form-horizonta form-sync" action="{{ route('profile.sync') }}" method="post"> 
+                                                                @csrf
                                                                     <div class="modal-body">
                                                                     <div class="form-group row">
-                                                                        <label class="col-sm-3 col-form-label">Profile ID</label>
+                                                                        <label class="col-sm-3 col-form-label">Profile ID / Name</label>
                                                                             <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtProfileIDModal" type="text" name="ProfileID" >
+                                                                            <input class="form-control" id="TxtProfileIDModal" type="text" name="ProfileID" required>
                                                                             </div>
                                                                     </div>
-                                                                    <div class="form-group row">
+                                                                    <!-- <div class="form-group row">
                                                                         <p class="col-sm-3 col-form-label">Name</p>
                                                                             <div class="col-sm-6">
                                                                                 <input class="form-control" id="TxtProfileNameModal" name="Name" type="email">
                                                                             </div>
-                                                                    </div>
+                                                                    </div> -->
                                                                     <div class="form-group row">
                                                                         <p class="col-sm-3 col-form-label">Email</p>
                                                                             <div class="col-sm-6">
@@ -136,12 +141,12 @@
                                                                     <div class="form-group row">
                                                                         <p class="col-sm-3 col-form-label">ID Number</p>
                                                                             <div class="col-sm-6">
-                                                                                <input class="form-control" id="ID_NumberModal" name="ID_Number" type="text" maxlength="16" >
+                                                                                <input class="form-control" id="ID_NumberModal" name="ID_Number" type="text" maxlength="16">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <p class="col-sm-3 col-form-label">Mobile Phone</p>
-                                                                            <div class="col-sm-6">
+                                                                            <div class="col-sm-3">
                                                                                 <input class="form-control" id="TxtProfileMobileModal" name="MobilePhone" type="number">
 
                                                                             </div>
@@ -150,12 +155,12 @@
                                                                         <p class="col-sm-3 col-form-label">Tax ID</p>
                                                                             <div class="col-sm-6">
                                                                                 <input class="form-control" id="TxtTaxIDModal" type="text" name="TaxModal">
-                                                                            </div>
+                                                                    </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <p class="col-sm-3 col-form-label">Birth Date</p>
                                                                             <div class="input-group date col-sm-6" id="reservationdate" data-target-input="nearest">
-                                                                                <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="ModalTxtBirthDate" name="ModalBirthDate" required />
+                                                                                <input type="date" class="form-control datetimepicker-input" data-target="#TxtBirthDate" id="ModalTxtBirthDate" name="ModalBirthDate" />
                                                                                     <div class="input-group-append" data-target="#ModalTxtBirthDate" data-toggle="datetimepicker"></div>
                                                                             </div>
                                                                     </div>
@@ -163,21 +168,23 @@
                                                                     <div class="modal-footer">
                                                                         <button type="reset" class="btn btn-secondary">Clear All</button>
                                                                         <!-- <Button type="button" class="btn btn-primary sync-profile" id="search" name="search">search</button> -->
-                                                                        <a href="{{ route('profile.sync') }}" type="button" class="btn btn-primary sync-profile">Search</a>
+                                                                        <Button type="submit" class="btn btn-primary sync-profile" id="search" name="search">search</button>
+                                                                        <!-- <a href="{{ route('profile.sync') }}" type="button" class="btn btn-primary sync-profile">Search</a> -->
                                                                     </div>
-                                                                <!-- </form> -->
+                                                                </form>
                                                                 
                                                                 <div class="card-body" id="cardbodyModalSync">
-                                          
-                                      </div>
-                                     </div>
+                                                                <table id="tblSync" class="table table-bordered table-striped" style="width:100%">
+                                                                </table>
+                                                                </div>
+                                                            </div>
                                                             <!-- /.modal-content -->
                                  </div>
                                                             <!-- /.modal-dialog -->
                                 </div>
                                                         <!-- /.modal -->
-                                    <form class="form-horizontal" action="{{ route('profile.save') }}" method="post">
-                                    {{ csrf_field() }}
+                                    <form class="form-horizontal form-save" id="needs-validation" action="{{ route('profile.save') }}" method="post">
+                                    @csrf
                                                           <div class="form-group row">
                                                               <p for="TxtRefNo" class="col-sm-3 col-form-label">Profile ID</p>
                                                               <div class="col-sm-3">
@@ -229,7 +236,8 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblIDType">ID Type</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstIDType" name="IDType">
+                                                                  <select class="form-control" id="LstIDType" name="IDType" onchange="LstIDType_Change()">
+                                                                  <!-- <select class="form-control" id="LstIDType" name="IDType" > -->
                                                                       @if (old('IDType') == '')
                                                                       <option value="" selected></option>
                                                                       @else
@@ -277,7 +285,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblID_Number">ID Number</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="ID_Number" name="ID_Number" maxlength="16" type="text" value="{{ old('ID_Number') }}" required>
+                                                                  <input class="form-control" id="ID_Number" name="ID_Number" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" value="{{ old('ID_Number') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -378,13 +386,13 @@
                                                           </div>
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Mobile Phone</label>
-                                                              <div class="col-sm-6">
+                                                              <div class="col-sm-3">
                                                                   <input class="form-control" id="TxtProfileMobile" name="MobilePhone" type="number" value="{{ old('MobilePhone') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Phone</p>
-                                                              <div class="col-sm-6">
+                                                              <div class="col-sm-3">
                                                                   <input class="form-control" id="TxtProfilePhone" name="Phone" type="number" value="{{ old('Phone') }}">
                                                               </div>
                                                           </div>
@@ -421,6 +429,7 @@
                                                                       @else
                                                                       <option value=""></option>
                                                                       @endif
+                                                                      @if ($Country['code'] == '200')
                                                                       @foreach ($Country['Data'] as $dataCountry)
                                                                       @if (old('Country') == $dataCountry['Country'])
                                                                       <option value="{{$dataCountry['Country']}}" selected>{{$dataCountry['Description']}}</option>
@@ -428,6 +437,7 @@
                                                                       <option value="{{$dataCountry['Country']}}">{{$dataCountry['Description']}}</option>
                                                                       @endif
                                                                       @endforeach
+                                                                      @endif
                                                                   </select>
                                                               </div>
                                                               <div class="col-sm-3">
@@ -491,6 +501,7 @@
                                                                       @else
                                                                       <option value=""></option>
                                                                       @endif
+                                                                      @if ($Province['code'] == '200')
                                                                       @foreach ($Province['Data'] as $dataProvince)
                                                                       @if (old('Province') == $dataProvince['PROVINCE'])
                                                                       <option value="{{$dataProvince['PROVINCE']}}" selected>{{$dataProvince['DESCRIPTION']}}</option>
@@ -498,6 +509,7 @@
                                                                       <option value="{{$dataProvince['PROVINCE']}}">{{$dataProvince['DESCRIPTION']}}</option>
                                                                       @endif
                                                                       @endforeach
+                                                                      @endif
                                                                   </select>
                                                               </div>
                                                             </div>
@@ -543,10 +555,23 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Line of Business</p>
+                                                            <label class="col-sm-3 col-form-label">Line of Business</label>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstOccupation" name="Occupation" value="{{ old('Occupation') }}">
+                                                                  <select class="form-control" id="LstOccupation" name="Occupation" value="{{ old('Occupation') }}" required>
+                                                                      @if (old('Occupation') == '')
                                                                       <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+                                                                      @if ($Occupation['code'] == '200')
+                                                                        @foreach ($Occupation['Data'] as $dataOccupation)
+                                                                            @if (old('Occupation') == $dataOccupation['Occupation'])
+                                                                            <option value="{{$dataOccupation['Occupation']}}" selected>{{$dataOccupation['DESCRIPTION']}}</option>
+                                                                            @else
+                                                                            <option value="{{$dataOccupation['Occupation']}}">{{$dataOccupation['DESCRIPTION']}}</option>
+                                                                            @endif
+                                                                        @endforeach
+                                                                      @endif
                                                                   </select>
                                                               </div>
                                                           </div>
@@ -564,7 +589,7 @@
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Correspondence Phone</p>
-                                                              <div class="col-sm-6">
+                                                              <div class="col-sm-3">
                                                                   <input class="form-control" id="TxtCPhone" name="CoPhone" type="number" value="{{ old('CoPhone') }}">
                                                               </div>
                                                           </div>
@@ -575,15 +600,27 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label" id="LblTaxID">TaxID</p>
-                                                              <div class="col-sm-6">
+                                                              <p class="col-sm-3 col-form-label" id="LblTaxID">Tax ID</p>
+                                                              <div class="col-sm-3">
                                                                   <input class="form-control" id="TxtTaxID" type="number" name="Tax" value="{{ old('Tax') }}">
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label" id="LblTaxName">Tax Name</p>
+                                                              <div class="col-sm-6">
+                                                                  <input class="form-control" id="TxtTaxName" type="text" name="TaxName" value="{{ old('TaxName') }}">
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label" id="LblTaxAddress">Tax Address</p>
+                                                              <div class="col-sm-6">
+                                                                  <input class="form-control" id="TxtTaxAddress" type="text" name="TaxAddress" value="{{ old('TaxAddress') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblCType">Company Type</p>
                                                               <div class="col-sm-3">
-                                                                  <select class="form-control" id="LstComType" name="CompanyType">
+                                                                  <select class="form-control" id="LstComType" name="CompanyType" value="CAPTIVE">
                                                                       @if (old('CompanyType') == '')
                                                                       <option value="" selected></option>
                                                                       @else
@@ -655,13 +692,15 @@
                                                                       @else
                                                                       <option value=""></option>
                                                                       @endif
-                                                                      @foreach ($CGroup['Data'] as $dataCGroup)
-                                                                      @if (old('CGroup') == $dataCGroup['CGROUP'])
-                                                                      <option value="{{$dataCGroup['CGROUP']}}" selected>{{$dataCGroup['DESCRIPTION']}}</option>
-                                                                      @else
-                                                                      <option value="{{$dataCGroup['CGROUP']}}">{{$dataCGroup['DESCRIPTION']}}</option>
+                                                                      @if ($CGroup['code'] == '200')
+                                                                        @foreach ($CGroup['Data'] as $dataCGroup)
+                                                                            @if (old('CGroup') == $dataCGroup['CGROUP'])
+                                                                            <option value="{{$dataCGroup['CGROUP']}}" selected>{{$dataCGroup['DESCRIPTION']}}</option>
+                                                                            @else
+                                                                            <option value="{{$dataCGroup['CGROUP']}}">{{$dataCGroup['DESCRIPTION']}}</option>
+                                                                            @endif
+                                                                        @endforeach
                                                                       @endif
-                                                                      @endforeach
                                                                   </select>
                                                               </div>
                                                             </div>
@@ -674,26 +713,46 @@
                                                                       @else
                                                                       <option value=""></option>
                                                                       @endif
-                                                                      @foreach ($SCGroup['Data'] as $dataSCGroup)
-                                                                      @if (old('SubCompanyGroup') == $dataSCGroup['SCGROUP'])
-                                                                      <option value="{{$dataSCGroup['SCGROUP']}}" selected>{{$dataSCGroup['DESCRIPTION']}}</option>
-                                                                      @else
-                                                                      <option value="{{$dataSCGroup['SCGROUP']}}">{{$dataSCGroup['DESCRIPTION']}}</option>
+                                                                      @if ($SCGroup['code'] == '200')
+                                                                        @foreach ($SCGroup['Data'] as $dataSCGroup)
+                                                                            @if (old('SubCompanyGroup') == $dataSCGroup['SCGROUP'])
+                                                                            <option value="{{$dataSCGroup['SCGROUP']}}" selected>{{$dataSCGroup['DESCRIPTION']}}</option>
+                                                                            @else
+                                                                            <option value="{{$dataSCGroup['SCGROUP']}}">{{$dataSCGroup['DESCRIPTION']}}</option>
+                                                                            @endif
+                                                                        @endforeach
                                                                       @endif
-                                                                      @endforeach
                                                                   </select>
                                                               </div>
                                                             </div>
                                                             <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">PIC Name</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtPICName" name="PICName" type="text" value="{{ old('PICName') }}">
+                                                                  <input class="form-control" id="TxtContact" name="Contact" type="text" value="{{ old('Contact') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">PIC Address</p>
+                                                              <div class="col-sm-6">
+                                                                  <input class="form-control" id="TxtContactAddress" name="ConAddress" type="text" value="{{ old('ConAddress') }}">
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">PIC Phone</p>
+                                                              <div class="col-sm-3">
+                                                                  <input class="form-control" id="TxtContactPhone" name="ConPhone" type="number" value="{{ old('ConPhone') }}">
+                                                              </div>
+                                                          </div>
+                                                            <div class="form-group row" style="display:none;">
+                                                              <p class="col-sm-3 col-form-label">PIC Name</p>
+                                                              <div class="col-sm-6">
+                                                                  <input class="form-control" id="TxtPICName_1" name="PICName_1" type="text" value="{{ old('PICName') }}">
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row" style="display:none;">
                                                               <p class="col-sm-3 col-form-label">PIC Title</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtPICTitle" name="PICTitle" type="text" value="{{ old('PICTitle') }}">
+                                                                  <input class="form-control" id="TxtPICTitle_1" name="PICTitle_1" type="text" value="{{ old('PICTitle') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -830,30 +889,12 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Contact</p>
-                                                              <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtContact" name="Contact" type="text" value="{{ old('Contact') }}">
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Contact Address</p>
-                                                              <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtContactAddress" name="ConAddress" type="text" value="{{ old('ConAddress') }}">
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Contact Phone</p>
-                                                              <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtContactPhone" name="ConPhone" type="text" value="{{ old('ConPhone') }}">
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Syncronize Profile</p>
                                                               <div class="col-form-label col-sm-2"> 
                                                                   <input type="checkbox" class="form-check-inputs" id="CbxForceSyncF" name="Sync" value="true" {{ (old('Sync') == 'true') ? 'checked' : '' }}>
                                                               </div>
                                                           </div>
-                                                          <div class="form-group row">
+                                                          <div class="form-group row" style="display:none;">
                                                               <p class="col-sm-3 col-form-label">Dump</p>
                                                               <div class="col-form-label col-sm-2">
                                                                   <input type="checkbox" class="form-check-inputs" id="CbxDumpF" name="Dump" value="true" {{ (old('Dump') == 'true') ? 'checked' : '' }}>
@@ -917,7 +958,7 @@
   <!-- /.content-wrapper -->
   
   <!-- Modal -->
-<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+<div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" data-backdrop="static" data-keyboard="false" tabindex="-1">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <!-- <div class="modal-content"> -->
       <div class="modal-body text-center">
@@ -936,18 +977,356 @@
 @section('scriptpage')
 
 <script>
-//     $('#modal-general').on('show.bs.modal', function (event) {
-//   var button = $(event.relatedTarget) // Button that triggered the modal
-//   var message = button.data('message') ;
-//   var href = button.attr('href');
-//   $('#modalbody').append('<p id="confirm-message"></p>')
-//   $('#modalbody').append('Do you want to proceed?</p>')
-//   var modal = $(this)
-//   modal.find('#confirm-message').text(message);
-//   modal.find('.modal-footer #btnDel').attr('href',href);
-  
-// })
+$( document ).ready(function() {
+    console.log('{{session("errors")}}');
+    corporateF_chekcked();
+    $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+    });
+});
+function corporateF_chekcked(){
+    var cbxCorporate = document.getElementById("CbxCorporateF")
+    if (cbxCorporate.checked == true) {
+        // tidak wajib
+        document.getElementById("LblIDType").style.fontWeight = "normal";
+        document.getElementById("LstIDType").removeAttribute("required");
+        document.getElementById("LblID_Number").style.fontWeight = "normal";
+        document.getElementById("ID_Number").removeAttribute("required");
+        document.getElementById("LblID_Name").style.fontWeight = "normal";
+        document.getElementById("ID_Name").removeAttribute("required");
+        document.getElementById("LblBirthDate").style.fontWeight = "normal";
+        document.getElementById("TxtBirthPlace").removeAttribute("required");
+        document.getElementById("TxtBirthDate").removeAttribute("required");
+        document.getElementById("LblID_Name").style.fontWeight = "normal";
+        document.getElementById("ID_Name").removeAttribute("required");
+        document.getElementById("LblGender").style.fontWeight = "normal";
+        document.getElementById("LstGender").removeAttribute("required");
 
+        // wajib
+        document.getElementById("LblTaxID").style.fontWeight = "bold";
+        document.getElementById("TxtTaxID").setAttribute("required", "");
+        document.getElementById("LblCType").style.fontWeight = "bold";
+        document.getElementById("LstComType").setAttribute("required", "");
+        document.getElementById("LblCGroup").style.fontWeight = "bold";
+        document.getElementById("LstComGroup").setAttribute("required", "");
+        document.getElementById("LblCGroup").style.fontWeight = "bold";
+        document.getElementById("LstComGroup").setAttribute("required", "");
+        document.getElementById("LblSCGroup").style.fontWeight = "bold";
+        document.getElementById("LstSubComGroup").setAttribute("required", "");
+        document.getElementById("LblTaxName").style.fontWeight = "bold";
+        document.getElementById("TxtTaxName").setAttribute("required", "");
+        document.getElementById("LblTaxAddress").style.fontWeight = "bold";
+        document.getElementById("TxtTaxAddress").setAttribute("required", "");
+    }else{
+        // wajib
+        document.getElementById("LblIDType").style.fontWeight = "bold";
+        document.getElementById("LstIDType").setAttribute("required", "");
+        document.getElementById("LblID_Number").style.fontWeight = "bold";
+        document.getElementById("ID_Number").setAttribute("required", "");
+        document.getElementById("LblID_Name").style.fontWeight = "bold";
+        document.getElementById("ID_Name").setAttribute("required", "");
+        document.getElementById("LblBirthDate").style.fontWeight = "bold";
+        document.getElementById("TxtBirthPlace").setAttribute("required", "");
+        document.getElementById("TxtBirthDate").setAttribute("required", "");
+        document.getElementById("LblGender").style.fontWeight = "bold";
+        document.getElementById("LstGender").setAttribute("required", "");
+
+        // tidak wajib
+        document.getElementById("LblTaxID").style.fontWeight = "normal";
+        document.getElementById("TxtTaxID").removeAttribute("required");
+        document.getElementById("LblCType").style.fontWeight = "normal";
+        document.getElementById("LstComType").removeAttribute("required");
+        document.getElementById("LblCGroup").style.fontWeight = "normal";
+        document.getElementById("LstComGroup").removeAttribute("required");
+        document.getElementById("LblSCGroup").style.fontWeight = "normal";
+        document.getElementById("LstSubComGroup").removeAttribute("required");
+        document.getElementById("LblTaxName").style.fontWeight = "normal";
+        document.getElementById("TxtTaxName").removeAttribute("required");
+        document.getElementById("LblTaxAddress").style.fontWeight = "normal";
+        document.getElementById("TxtTaxAddress").removeAttribute("required");
+    }
+}
+function LstIDType_Change(){
+    var lstIDType = document.getElementById("LstIDType").value;
+    console.log(lstIDType);
+    if (lstIDType == 'KTP') {
+        document.getElementById("ID_Number").setAttribute("minlength", "16");
+        document.getElementById("ID_Number").setAttribute("maxlength", "16");
+    }else{
+        document.getElementById("ID_Number").removeAttribute("minlength");
+        document.getElementById("ID_Number").removeAttribute("maxlength");
+    }
+}
+$("#clearbtn").click(function(event){
+        event.preventDefault();
+
+    var form = event.currentTarget.form;
+    var inputs = form.querySelectorAll('input');
+    var selects = form.querySelectorAll('select');
+    inputs.forEach(function(input, index){
+    if (input.type != 'checkbox'){
+        if (input.name != 'UserOwner' && input.name != '_token') {
+            input.value = null;
+        }
+    }else{
+        input.checked = false;
+    }
+    });
+
+    selects.forEach(function(selects, index){
+        selects.value = null;
+    });
+    corporateF_chekcked();
+    $('#TxtFirstName').focus();
+});
+function CGroup_OnChange(CGroup){
+    var basedata = @json($SCGroup['Data']);
+    const filterarray = basedata.filter(asd => asd.CGROUP == CGroup);
+
+    document.getElementById("LstSubComGroup").options.length = 0;
+    var listBox = document.getElementById("LstSubComGroup");
+    var option = document.createElement("OPTION");
+    option.value = '';
+    option.innerHTML = '';
+    listBox.appendChild(option);
+    for (i = 0; i < filterarray.length; i++) {
+        var listBox = document.getElementById("LstSubComGroup");
+        var option = document.createElement("OPTION");
+        option.value = filterarray[i].SCGROUP;
+        option.innerHTML = filterarray[i].DESCRIPTION;
+        listBox.appendChild(option);
+    }
+}
+
+function Construct_ProfileName() {
+    document.getElementById("TxtProfileName").value = document.getElementById("TxtFirstName").value + ((document.getElementById("TxtMiddleName").value == "") ? "": " " + document.getElementById("TxtMiddleName").value) + ((document.getElementById("TxtLastName").value == "") ? "": " " + document.getElementById("TxtLastName").value);
+}
+function viewDetail(ID){
+  var basedata = @json($data['Data']);
+  console.log(basedata);
+  const filterarray = basedata.filter(asd => asd.ID == ID);
+  console.log(filterarray);
+  parseDataToInput(filterarray);
+
+  document.getElementById("tabinquiry").className = "nav-link";
+  document.getElementById("tabprofile").className = "nav-link active";
+  document.getElementById("inquiry").className = "tab-pane";
+  document.getElementById("profile").className = "active tab-pane";
+}
+function parseDataToInput(filterarray){
+    console.log(filterarray);
+  document.getElementById("TxtProfileRefID").value = (typeof filterarray[0]['RefID']) === 'undefined' ? filterarray[0]['ID'] : filterarray[0]['RefID'];
+  document.getElementById("TxtProfileRefDesc").value = (typeof filterarray[0]['RefName']) === 'undefined' ? filterarray[0]['Name'] : filterarray[0]['RefName'];
+  document.getElementById("TxtProfileID").value = filterarray[0]['ID'];
+  document.getElementById("TxtFirstName").value = filterarray[0]['FirstName'];
+  document.getElementById("TxtMiddleName").value = (typeof filterarray[0]['MidName']) == 'undefined' ? filterarray[0]['MiddleName'] : filterarray[0]['MidName'];
+  document.getElementById("TxtLastName").value = filterarray[0]['LastName'];
+  document.getElementById("TxtProfileName").value = filterarray[0]['Name'];
+  document.getElementById("LstIDType").value = filterarray[0]['ID_Type'];
+  document.getElementById("ID_Number").value = filterarray[0]['ID_No'];
+  document.getElementById("ID_Name").value = filterarray[0]['ID_Name'];
+  document.getElementById("TxtIDDate").value = GetFormattedDate(filterarray[0]['ID_Date']);
+  document.getElementById("LstSalutation").value = filterarray[0]['Salutation'];
+  document.getElementById("TxtProfileInitial").value = filterarray[0]['Initial'];
+  document.getElementById("TxtTitle").value = filterarray[0]['Title'];
+  document.getElementById("TxtProfileEmail").value = filterarray[0]['Email'];
+  document.getElementById("TxtProfileMobile").value = filterarray[0]['Mobile'];
+  document.getElementById("TxtProfilePhone").value = filterarray[0]['Phone'];
+  document.getElementById("TxtOwnerID").value = '{{ Session::get('ID')}}';
+  document.getElementById("TxtPAddress_1").value = filterarray[0]['Address_1'];
+  document.getElementById("TxtPAddress_2").value = filterarray[0]['Address_2'];
+  document.getElementById("TxtPAddress_3").value = filterarray[0]['Address_3'];
+  document.getElementById("LstCountry").value = filterarray[0]['Country'];
+  document.getElementById("TxtCity").value = filterarray[0]['City'];
+  document.getElementById("TxtProfileZipCode").value = filterarray[0]['ZipCode'];
+  document.getElementById("LstGender").value = filterarray[0]['Gender'];
+  document.getElementById("TxtBirthPlace").value = filterarray[0]['BirthPlace'];
+  document.getElementById("TxtBirthDate").value = GetFormattedDate(filterarray[0]['BirthDate']);
+  document.getElementById("LstOccupation").value = filterarray[0]['Occupation'];
+  document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
+  document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
+  document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
+    if (filterarray[0]['Corporatef'] === true) {
+        console.log('bisa bos');
+        document.getElementById("CbxCorporateF").setAttribute("checked", "");
+        corporateF_chekcked();
+    }else{
+        console.log('ga bisa bos');
+        document.getElementById("CbxCorporateF").removeAttribute("checked");
+    }
+  document.getElementById("TxtTaxID").value = filterarray[0]['TaxID'];
+  document.getElementById("religion").value = filterarray[0]['Religion'];
+  document.getElementById("LstIncome").value = filterarray[0]['Income'];
+  document.getElementById("TxtEmployment").value = filterarray[0]['Employment'];
+  if (filterarray[0]['WNIF'] == true) {
+        document.getElementById("CbxWNIF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxWNIF").removeAttribute("checked");
+    }
+  document.getElementById("LstMarital").value = filterarray[0]['Marital'];
+  document.getElementById("TxtContact").value = filterarray[0]['Contact'];
+  document.getElementById("TxtContactAddress").value = filterarray[0]['ContactAddress']; 
+  document.getElementById("TxtContactPhone").value = filterarray[0]['ContactPhone'];
+  document.getElementById("LstComType").value = filterarray[0]['CompanyType'];
+  document.getElementById("LstComGroup").value = filterarray[0]['CGroup'];
+  document.getElementById("LstSubComGroup").value = filterarray[0]['SCGroup']; 
+  document.getElementById("LstProvince").value = filterarray[0]['Province'];
+    if (filterarray[0]['ForceSyncF'] == true) {
+        document.getElementById("CbxForceSyncF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxForceSyncF").removeAttribute("checked");
+    }
+    if (filterarray[0]['DumpF'] == true) {
+        document.getElementById("CbxDumpF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxDumpF").removeAttribute("checked");
+    }
+    if (filterarray[0]['Restricted'] == true) {
+        document.getElementById("CbxRestrictedF").setAttribute("checked", "");
+    }else{
+        document.getElementById("CbxRestrictedF").removeAttribute("checked");
+    }
+    document.getElementById("LstPType").value = filterarray[0]['PType'];
+    document.getElementById("TxtCName").value = filterarray[0]['Correspondence_Attention'];
+    document.getElementById("TxtPICName_1").value = filterarray[0]['PIC_NAME_1'];
+    document.getElementById("TxtPICTitle_1").value = filterarray[0]['PIC_TITLE_1'];
+    document.getElementById("TxtTaxName").value = filterarray[0]['TaxName'];
+    document.getElementById("TxtTaxAddress").value = filterarray[0]['TaxAddress'];
+}
+
+function GetFormattedDate(datestring) {
+    var d = new Date(datestring);
+    var month = d.getMonth()+ 1;
+    if (month < 10){
+        month = '0' + month;
+    }
+    var day = d.getDate();
+    if (day < 10){
+        day = '0' + day;
+    }
+    var year = d.getFullYear();
+    return year + "-" + month + "-" + day;
+   
+}
+$(".history-profile").click(function(event){
+    event.preventDefault();
+    var a_href = $(this).attr('href');
+
+    $('#loadMe').modal('show');
+    
+    $.ajax({
+    type: "GET",
+    url: a_href,
+    dataType: 'html'
+    }).done(function( response ) {
+        console.log(response);
+        $('#loadMe').modal('hide');
+        $('#bodyHistory').html(response);
+        $("#modal-history").modal('show');
+    });
+});
+
+function toastMessage(responseCode, responseMessage){
+    var Toast = Swal.mixin(
+        {
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000
+        }
+    );
+    if (responseCode == "200"){
+        Toast.fire(
+            {
+                icon: 'success',
+                title: responseMessage
+            }
+        )
+    }else if (responseCode == "400" || responseCode == "401"){
+        Toast.fire(
+            {
+                icon: 'error',
+                title: responseMessage
+            }
+        )
+    }
+}
+
+$(".form-save").submit(function(event){
+    event.preventDefault();
+    var a_href = $(this).attr('action');
+
+    $("#loadMe").modal('show');
+
+    $.ajax({
+    type: "POST",
+    url: a_href, // This is what I have updated
+    data: $(".form-save").serialize(),
+    }).done(function( response ) {
+        console.log(response);
+        $("#loadMe").modal("hide");
+        toastMessage(response.code,response.message);
+        if (response.code == '401'){
+            $('#modal-sync').modal('show');
+            setTimeout(() => {
+                $('#cardbodyModalSync').html(response.html);
+            }, 1000);
+        }
+    }).fail(function(msg){
+        console.log(msg);
+        $("#loadMe").modal("hide");
+    });
+});
+
+
+$(".form-sync").submit(function(event){
+    event.preventDefault();
+
+    $('#div-overlay').empty();
+    $('#div-overlay').append('<div class="overlay"><i class="fas fa-2x fa-sync fa-spin"></i></div>');
+
+    let ProfileID = $("input[name=ProfileID]").val();
+    let Name = $("input[name=ProfileID]").val();
+    let email = $("input[name=email]").val();
+    let Address = $("input[name=Address1]").val();
+    let City = $("input[name=CityModal]").val();
+    let ZipCode = $("input[name=ZipCode]").val();
+    let ID_NO = $("input[name=ID_Number]").val();
+    let Mobile = $("input[name=MobilePhone]").val();
+    let Tax = $("input[name=TaxModal]").val();
+    let BirthDate = $("input[name=ModalBirthDate]").val();
+    let _token   = $('meta[name="csrf-token"]').attr('content');
+    var a_href = $(this).attr('action');
+    console.log(_token);
+
+    $.ajax({
+    type: "POST",
+    url: a_href, // This is what I have updated
+    data:{
+          ID:ProfileID,
+          Name:Name,
+          Email:email,
+          Address:Address,
+          City:City,
+          ZipCode:ZipCode,
+          ID_NO:ID_NO,
+          Mobile:Mobile,
+          BirthDate:BirthDate,
+          TaxID:Tax,
+          _token: _token
+        },
+    }).done(function( msg ) {
+        // $("#loadMe").modal("hide");
+        console.log(msg);
+        $('#cardbodyModalSync').html(msg);
+        $('#div-overlay').empty();
+    }).fail(function(msg){
+        console.log(msg);
+        // $("#loadMe").modal("hide");
+        $('#div-overlay').empty();
+    });
+});
 $(".btn-del-row-profile").click(function(event){
     event.preventDefault();
     var a_href = $(this).attr('href');
@@ -986,368 +1365,6 @@ $(".btn-upload").click(function(event){
             show: true //Display loader!
         });
     });
-    // $.ajax({
-    //     url: '{{route("profile.uploadDocument")}}',
-    //     dataType: 'html'
-    //     success: function (response) { 
-    //         $("#modal-general").modal({
-    //             backdrop: "true", //remove ability to close modal with click
-    //             keyboard: false, //remove option to close with keyboard
-    //             show: true //Display loader!
-    //         });
-    //         console.log(data);
-    //         // $('#appends').append(data); 
-    //     },
-    // });
-    // $('#modalbody').append('<form id="form-upload" action="{{ route("profile.uploadDocument") }}" method="post" enctype="multipart/form-data"></form>');
-    // $('#form-upload').append('<div id>');
-
-    // $('#modalfooter').empty();
-    // $('#modalfooter').append('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
-    // $('#modalfooter').append('<a href="' + a_href + '" class="btn btn-danger btn-ok" id="btnDel">Delete</a>');
 });
-
-</script>
-
-<script>
-
-$(".history-profile").click(function(event){
-    event.preventDefault();
-    var a_href = $(this).attr('href');
-
-    // $("#loadMe").modal({
-    //   backdrop: "static", //remove ability to close modal with click
-    //   keyboard: false, //remove option to close with keyboard
-    //   show: true //Display loader!
-    // });
-    // console.log(a_href);
-    $.ajax({
-    type: "GET",
-    url: a_href,
-    dataType: 'html'
-    }).done(function( msg ) {
-        console.log(msg);
-        $('#bodyHistory').html(msg);
-        $("#modal-history").modal('show');
-        // $("#loadMe").modal('hide');
-    });
-});
-
-$(".sync-profile").click(function(event){
-    event.preventDefault();
-
-    let ProfileID = $("input[name=ProfileID]").val();
-    let Name = $("input[name=Name]").val();
-    let email = $("input[name=email]").val();
-    let Address = $("input[name=Address1]").val();
-    let City = $("input[name=CityModal]").val();
-    let ZipCode = $("input[name=ZipCode]").val();
-    let ID_NO = $("input[name=ID_Number]").val();
-    let Mobile = $("input[name=MobilePhone]").val();
-    let Tax = $("input[name=TaxModal]").val();
-    let BirthDate = $("input[name=ModalBirthDate]").val();
-    let _token   = $('meta[name="csrf-token"]').attr('content');
-    var a_href = $(this).attr('href');
-
-    // $("#loadMe").modal({
-    //   backdrop: "static", //remove ability to close modal with click
-    //   keyboard: false, //remove option to close with keyboard
-    //   show: true //Display loader!
-    // });
-
-    $.ajax({
-    type: "POST",
-    url: a_href, // This is what I have updated
-    data:{
-          ID:ProfileID,
-          Name:Name,
-          Email:email,
-          Address:Address,
-          City:City,
-          ZipCode:ZipCode,
-          ID_NO:ID_NO,
-          Mobile:Mobile,
-          BirthDate:BirthDate,
-          TaxID:Tax,
-          _token: _token
-        },
-    }).done(function( msg ) {
-        // $("#loadMe").modal("hide");
-        console.log(msg);
-        $('#cardbodyModalSync').html(msg);
-    }).fail(function(msg){
-        console.log(msg);
-        // $("#loadMe").modal("hide");
-    });
-});
-</script>
-
-
-<script>
-var resetButtons = document.getElementById('clearbtn');
-console.log(resetButtons);
-
-resetButtons.addEventListener('click', resetForm);
-
-function resetForm(event){
-
-  event.preventDefault();
-
-  var form = event.currentTarget.form;
-  var inputs = form.querySelectorAll('input');
-  var selects = form.querySelectorAll('select');
-  console.log(inputs); 
-  console.log(selects); 
-
-  inputs.forEach(function(input, index){
-    if (input.type != 'checkbox'){
-        input.value = null;
-    }else{
-        input.checked = false;
-    }
-    // input.removeAttribute("checked");
-  });
-
-  selects.forEach(function(selects, index){
-    selects.value = null;
-  });
-
-}
-</script>
-<script>
-function _onPressButton() {
-   var xhr = new XMLHttpRequest();
-   var url ="http://uat2.care.co.id:9095/WEBAPI2/MiddlewareAPI/SearchHistoryProfile";
-
-   xhr.onload = function(){
-       document.getElementById("search").innerHtml = "loading...";
-   }
-   xhr.onerror = function () {
-                alert("Gagal mengambil data");
-            }
-  }
-</script>
-<script>
-function CGroup_OnChange(CGroup){
-    var basedata = @json($SCGroup['Data']);
-    const filterarray = basedata.filter(asd => asd.CGROUP == CGroup);
-
-    document.getElementById("LstSubComGroup").options.length = 0;
-    var listBox = document.getElementById("LstSubComGroup");
-    var option = document.createElement("OPTION");
-    option.value = '';
-    option.innerHTML = '';
-    listBox.appendChild(option);
-    for (i = 0; i < filterarray.length; i++) {
-        var listBox = document.getElementById("LstSubComGroup");
-        var option = document.createElement("OPTION");
-        option.value = filterarray[i].SCGROUP;
-        option.innerHTML = filterarray[i].DESCRIPTION;
-        listBox.appendChild(option);
-    }
-}
-
-function Construct_ProfileName() {
-    document.getElementById("TxtProfileName").value = document.getElementById("TxtFirstName").value + ((document.getElementById("TxtMiddleName").value == "") ? "": " " + document.getElementById("TxtMiddleName").value) + ((document.getElementById("TxtLastName").value == "") ? "": " " + document.getElementById("TxtLastName").value);
-}
-function corporateF_chekcked(){
-    var cbxCorporate = document.getElementById("CbxCorporateF")
-    if (cbxCorporate.checked == true) {
-        // tidak wajib
-        document.getElementById("LblIDType").style.fontWeight = "normal";
-        document.getElementById("LstIDType").removeAttribute("required");
-        document.getElementById("LblID_Number").style.fontWeight = "normal";
-        document.getElementById("ID_Number").removeAttribute("required");
-        document.getElementById("LblID_Name").style.fontWeight = "normal";
-        document.getElementById("ID_Name").removeAttribute("required");
-        document.getElementById("LblBirthDate").style.fontWeight = "normal";
-        document.getElementById("TxtBirthPlace").removeAttribute("required");
-        document.getElementById("TxtBirthDate").removeAttribute("required");
-        document.getElementById("LblID_Name").style.fontWeight = "normal";
-        document.getElementById("ID_Name").removeAttribute("required");
-        document.getElementById("LblGender").style.fontWeight = "normal";
-        document.getElementById("LstGender").removeAttribute("required");
-
-        // wajib
-        document.getElementById("LblTaxID").style.fontWeight = "bold";
-        document.getElementById("TxtTaxID").setAttribute("required", "");
-        document.getElementById("LblCType").style.fontWeight = "bold";
-        document.getElementById("LstComType").setAttribute("required", "");
-        document.getElementById("LblCGroup").style.fontWeight = "bold";
-        document.getElementById("LstComGroup").setAttribute("required", "");
-        document.getElementById("LblCGroup").style.fontWeight = "bold";
-        document.getElementById("LstComGroup").setAttribute("required", "");
-        document.getElementById("LblSCGroup").style.fontWeight = "bold";
-        document.getElementById("LstSubComGroup").setAttribute("required", "");
-    }else{
-        // wajib
-        document.getElementById("LblIDType").style.fontWeight = "bold";
-        document.getElementById("LstIDType").setAttribute("required", "");
-        document.getElementById("LblID_Number").style.fontWeight = "bold";
-        document.getElementById("ID_Number").setAttribute("required", "");
-        document.getElementById("LblID_Name").style.fontWeight = "bold";
-        document.getElementById("ID_Name").setAttribute("required", "");
-        document.getElementById("LblBirthDate").style.fontWeight = "bold";
-        document.getElementById("TxtBirthPlace").setAttribute("required", "");
-        document.getElementById("TxtBirthDate").setAttribute("required", "");
-        document.getElementById("LblGender").style.fontWeight = "bold";
-        document.getElementById("LstGender").setAttribute("required", "");
-
-        // tidak wajib
-        document.getElementById("LblTaxID").style.fontWeight = "normal";
-        document.getElementById("TxtTaxID").removeAttribute("required");
-        document.getElementById("LblCType").style.fontWeight = "normal";
-        document.getElementById("LstComType").removeAttribute("required");
-        document.getElementById("LblCGroup").style.fontWeight = "normal";
-        document.getElementById("LstComGroup").removeAttribute("required");
-        document.getElementById("LblSCGroup").style.fontWeight = "normal";
-        document.getElementById("LstSubComGroup").removeAttribute("required");
-    }
-}
-function viewDetail(ID){
-  var basedata = @json($data['Data']);
-  console.log(basedata);
-  const filterarray = basedata.filter(asd => asd.ID == ID);
-  console.log(filterarray);
-  document.getElementById("TxtProfileRefID").value = filterarray[0]['RefID'];
-  document.getElementById("TxtProfileRefDesc").value = filterarray[0]['RefName'];
-  document.getElementById("TxtProfileID").value = filterarray[0]['ID'];
-  document.getElementById("TxtFirstName").value = filterarray[0]['FirstName'];
-  document.getElementById("TxtMiddleName").value = filterarray[0]['MidName'];
-  document.getElementById("TxtLastName").value = filterarray[0]['LastName'];
-  document.getElementById("TxtProfileName").value = filterarray[0]['Name'];
-  document.getElementById("LstIDType").value = filterarray[0]['ID_Type'];
-  document.getElementById("ID_Number").value = filterarray[0]['ID_No'];
-  document.getElementById("ID_Name").value = filterarray[0]['ID_Name'];
-  document.getElementById("TxtIDDate").value = GetFormattedDate(filterarray[0]['ID_Date']);
-  document.getElementById("LstSalutation").value = filterarray[0]['Salutation'];
-  document.getElementById("TxtProfileInitial").value = filterarray[0]['Initial'];
-  document.getElementById("TxtTitle").value = filterarray[0]['Title'];
-  document.getElementById("TxtProfileEmail").value = filterarray[0]['Email'];
-  document.getElementById("TxtProfileMobile").value = filterarray[0]['Mobile'];
-  document.getElementById("TxtProfilePhone").value = filterarray[0]['Phone'];
-  document.getElementById("TxtOwnerID").value = filterarray[0]['OwnerID'];
-  document.getElementById("TxtPAddress_1").value = filterarray[0]['Address_1'];
-  document.getElementById("TxtPAddress_2").value = filterarray[0]['Address_2'];
-  document.getElementById("TxtPAddress_3").value = filterarray[0]['Address_3'];
-  document.getElementById("LstCountry").value = filterarray[0]['Country'];
-  document.getElementById("TxtCity").value = filterarray[0]['City'];
-  document.getElementById("TxtProfileZipCode").value = filterarray[0]['ZipCode'];
-  document.getElementById("LstGender").value = filterarray[0]['Gender'];
-  document.getElementById("TxtBirthPlace").value = filterarray[0]['BirthPlace'];
-  document.getElementById("TxtBirthDate").value = GetFormattedDate(filterarray[0]['BirthDate']);
-  document.getElementById("LstOccupation").value = filterarray[0]['Occupation'];
-  document.getElementById("TxtCAddress").value = filterarray[0]['Correspondence_Address'];
-  document.getElementById("TxtCPhone").value = filterarray[0]['Correspondence_Phone'];
-  document.getElementById("TxtCEmail").value = filterarray[0]['Correspondence_Email'];
-    if (filterarray[0]['Corporatef'] == true) {
-        document.getElementById("CbxCorporateF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxCorporateF").removeAttribute("checked");
-    }
-  document.getElementById("TxtTaxID").value = filterarray[0]['TaxID'];
-  document.getElementById("religion").value = filterarray[0]['Religion'];
-  document.getElementById("LstIncome").value = filterarray[0]['Income'];
-  document.getElementById("TxtEmployment").value = filterarray[0]['Employment'];
-  if (filterarray[0]['WNIF'] == true) {
-        document.getElementById("CbxWNIF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxWNIF").removeAttribute("checked");
-    }
-  document.getElementById("LstMarital").value = filterarray[0]['Marital'];
-  document.getElementById("TxtContact").value = filterarray[0]['Contact'];
-  document.getElementById("TxtContactAddress").value = filterarray[0]['ContactAddress']; 
-  document.getElementById("TxtContactPhone").value = filterarray[0]['ContactPhone'];
-  document.getElementById("LstComType").value = filterarray[0]['CompanyType'];
-  document.getElementById("LstComGroup").value = filterarray[0]['CGroup'];
-  document.getElementById("LstSubComGroup").value = filterarray[0]['SCGroup']; 
-  document.getElementById("LstProvince").value = filterarray[0]['Province'];
-    if (filterarray[0]['ForceSyncF'] == true) {
-        document.getElementById("CbxForceSyncF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxForceSyncF").removeAttribute("checked");
-    }
-    if (filterarray[0]['DumpF'] == true) {
-        document.getElementById("CbxDumpF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxDumpF").removeAttribute("checked");
-    }
-    if (filterarray[0]['Restricted'] == true) {
-        document.getElementById("CbxRestrictedF").setAttribute("checked", "");
-    }else{
-        document.getElementById("CbxRestrictedF").removeAttribute("checked");
-    }
-    document.getElementById("LstPType").value = filterarray[0]['PType'];
-    document.getElementById("TxtCName").value = filterarray[0]['Correspondence_Attention'];
-    document.getElementById("TxtPICName").value = filterarray[0]['PIC_NAME_1'];
-    document.getElementById("TxtPICTitle").value = filterarray[0]['PIC_TITLE_1'];
-
-  document.getElementById("tabinquiry").className = "nav-link";
-  document.getElementById("tabprofile").className = "nav-link active";
-  document.getElementById("inquiry").className = "tab-pane";
-  document.getElementById("profile").className = "active tab-pane";
-}
-
-function GetFormattedDate(datestring) {
-    var d = new Date(datestring);
-    var month = d.getMonth()+ 1;
-    if (month < 10){
-        month = '0' + month;
-    }
-    var day = d.getDate();
-    if (day < 10){
-        day = '0' + day;
-    }
-    var year = d.getFullYear();
-    return year + "-" + month + "-" + day;
-   
-}
-</script>
-<script>
-    function onLoadProfile(){
-        if (! '{{empty($dataHistory)}}'){
-            $("#modal-history").modal('show');
-        }
-        corporateF_chekcked();
-        $(function() {
-            var Toast = Swal.mixin(
-                {
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 5000
-                }
-            );
-            if ('{{ $responseCode }}' == "200"){
-                Toast.fire(
-                    {
-                        icon: 'success',
-                        title: '{{$responseMessage}}'
-                    }
-                )
-            }else if ('{{ $responseCode }}' == "400"){
-                Toast.fire(
-                    {
-                        icon: 'error',
-                        title: '{{$responseMessage}}'
-                    }
-                )
-            }
-        })
-    }
-</script>
-<!-- Page specific script -->
-<script>
-  $(function () {
-    $("#example1").DataTable({
-        "responsive": true,
-        "autoWidth": false,
-    });
-    // $("#tblModalSync").DataTable({
-    //     "responsive": true,
-    //     "autoWidth": false,
-    // });
-  }
-  );
 </script>
 @endsection

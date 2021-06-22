@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-    @if ($responseCodeHistory == '200')
+    @if ($dataHistory['code'] == '200')
     @foreach($dataHistory['Data'] as $datas)
         <tr>
         <td>{{ $datas['Action'] }}</td>
