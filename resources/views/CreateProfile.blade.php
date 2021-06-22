@@ -311,7 +311,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblID_Number">ID Number</p>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="ID_Number" name="ID_Number" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" value="{{ old('ID_Number') }}" required>
+                                                                  <input class="form-control" id="ID_Number" name="ID_Number" type="text"  value="{{ old('ID_Number') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -1006,6 +1006,7 @@
 $( document ).ready(function() {
     console.log('{{session("errors")}}');
     corporateF_chekcked();
+    Product_OnChage();
     $("#example1").DataTable({
         "responsive": true,
         "autoWidth": false,
@@ -1077,6 +1078,7 @@ function LstIDType_Change(){
     var lstIDType = document.getElementById("LstIDType").value;
     console.log(lstIDType);
     if (lstIDType == 'KTP') {
+        // oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         document.getElementById("ID_Number").setAttribute("minlength", "16");
         document.getElementById("ID_Number").setAttribute("maxlength", "16");
     }else{

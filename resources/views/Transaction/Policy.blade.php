@@ -130,20 +130,34 @@
                         <div class="step" data-target="#policy-part">
                           <button type="button" class="step-trigger" role="tab" aria-controls="policy-part" id="policy-part-trigger">
                             <span class="bs-stepper-circle">1</span>
-                            <span class="bs-stepper-label">General Policy Information</span>
+                            <span class="bs-stepper-label">Policy Information</span>
                           </button>
                         </div>
                         <div class="line"></div>
                         <div class="step" data-target="#information-part">
                           <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
                             <span class="bs-stepper-circle">2</span>
-                            <span class="bs-stepper-label">Risk & Interest</span>
+                            <span class="bs-stepper-label">Object Information</span>
+                          </button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="step" data-target="#risk-part">
+                          <button type="button" class="step-trigger" role="tab" aria-controls="risk-part" id="risk-part-trigger">
+                            <span class="bs-stepper-circle">3</span>
+                            <span class="bs-stepper-label">Risk</span>
+                          </button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="step" data-target="#payor-part">
+                          <button type="button" class="step-trigger" role="tab" aria-controls="payor-part" id="payor-part-trigger">
+                            <span class="bs-stepper-circle">4</span>
+                            <span class="bs-stepper-label">Payor</span>
                           </button>
                         </div>
                         <div class="line"></div>
                         <div class="step" data-target="#others-part">
                           <button type="button" class="step-trigger" role="tab" aria-controls="others-part" id="others-part-trigger">
-                            <span class="bs-stepper-circle">3</span>
+                            <span class="bs-stepper-circle">5</span>
                             <span class="bs-stepper-label">Others</span>
                           </button>
                         </div>
@@ -152,8 +166,8 @@
                         <!--<form class="form-horizontal">-->
                         <!-- your steps content here -->
                         <div id="policy-part" class="content" role="tabpanel" aria-labelledby="policy-part-trigger">
-                          <h2>Product & Coverage</h2>
-                          <div class="card card-info">
+                          <div class="card">
+                          <h2 class="card-header">Product & Coverage</h2>
                             <!-- /.card-header -->
                             <!-- form start -->
                             <div class="card-body">
@@ -161,9 +175,9 @@
                                 <label for="LstProduct" class="col-sm-2 col-form-label">Product : </label>
                                 <div class="col-sm-3">
                                   <select class="form-control" id="LstProduct" onchange="Product_OnChange(this.value)">
-                                    <option selected></option>
+                                    <!-- <option selected></option> -->
                                     @foreach($product['Data'] as $dataProduct)
-                                    <option value="{{ $dataProduct['ProductID'] }}">{{ $dataProduct['Description'] }}</option>
+                                    <option value="{{ $dataProduct['ProductID'] }}" selected>{{ $dataProduct['Description'] }}</option>
                                     @endforeach
                                   </select>
                                 </div>
@@ -181,9 +195,9 @@
                                 <label for="LstCoverage" class="col-sm-2 col-form-label">Coverage : </label>
                                 <div class="col-sm-3">
                                   <select class="form-control" id="LstCoverage" onchange="setSI_RC(this.value)">
-                                    <option selected></option>
+                                    <!-- <option selected></option> -->
                                     @foreach($coverage['Data'] as $dataCoverage)
-                                    <option value="{{ $dataCoverage['CoverageID'] }}">{{ $dataCoverage['Description'] }}</option>
+                                    <option value="{{ $dataCoverage['CoverageID'] }}" selected>{{ $dataCoverage['Description'] }}</option>
                                     @endforeach
                                   </select>
                                 </div>
@@ -291,65 +305,6 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p for="TxtName" class="col-sm-3 col-form-label">Business Source 1 : </p>
-                                <div class="col-sm-5">
-                                  <select class="form-control" id="LstAID_1">
-                                    <option value="" selected></option>
-                                  </select>
-                                </div>
-                                <div class="col-sm-2">
-                                  <select class="form-control" id="LstBSType_1">
-                                    <option value="" selected></option>
-                                    <option value="A">Agent</option>
-                                    <option value="B">Brokerage</option>
-                                    <option value="O">Others</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Fee : </p>
-                                <div class="col-sm-2">
-                                  <input class="form-control" id="TxtFee" type="number" placeholder="0">
-                                </div>
-                                <div class="col-sm-2">
-                                  <input class="form-control" id="TxtFeeAmount" type="number" placeholder="0">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Fee 1 : </p>
-                                <div class="col-sm-2">
-                                  <input class="form-control" id="TxtFee_1" type="number" placeholder="0">
-                                </div>
-                                <div class="col-sm-2">
-                                  <input class="form-control" id="TxtFeeAmount_1" type="number" placeholder="0">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Business Source 2 : </p>
-                                <div class="col-sm-5">
-                                  <select class="form-control" id="LstAID_2">
-                                    <option value="" selected></option>
-                                  </select>
-                                </div>
-                                <div class="col-sm-2">
-                                  <select class="form-control" id="LstBSType_2">
-                                    <option value="" selected></option>
-                                    <option value="A">Agent</option>
-                                    <option value="B">Brokerage</option>
-                                    <option value="O">Others</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Fee 2 : </p>
-                                <div class="col-sm-2">
-                                  <input class="form-control" id="TxtFee_2" type="number" placeholder="0">
-                                </div>
-                                <div class="col-sm-2">
-                                  <input class="form-control" id="TxtFeeAmount_2" type="number" placeholder="0">
-                                </div>
-                              </div>
-                              <div class="form-group row">
                                 <p class="col-sm-3 col-form-label">Segment : </p>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtSegment" type="text">
@@ -362,8 +317,9 @@
                                 <p class="col-sm-3 col-form-label">Marketing Officer : </p>
                                 <div class="col-sm-4">
                                   <select class="form-control" id="LstMO">
+                                    <option selected></option>
                                     @foreach($mo['Data'] as $dataMO)
-                                    <option value="{{ $dataMO['ID'] }}" selected>{{ $dataMO['Name'] }}</option>
+                                    <option value="{{ $dataMO['ID'] }}">{{ $dataMO['Name'] }}</option>
                                     @endforeach
                                   </select>
                                 </div>
@@ -372,66 +328,11 @@
                                 <p class="col-sm-3 col-form-label">Branch : </p>
                                 <div class="col-sm-4">
                                   <select class="form-control" id="LstBranch">
+                                    <option selected></option>
                                     @foreach($branch['Data'] as $dataBranch)
-                                    <option value="{{ $dataBranch['Branch'] }}" selected>{{ $dataBranch['Name'] }}</option>
+                                    <option value="{{ $dataBranch['Branch'] }}">{{ $dataBranch['Name'] }}</option>
                                     @endforeach
                                   </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Payor : </p>
-                                <div class="col-sm-4">
-                                  <select class="form-control" id="LstPayor">
-                                    <option value="" selected></option>
-                                    <option value="PHOLDER">Policy Holder</option>
-                                    <option value="SOURCE">Source</option>
-                                    <option value="INSURED">Insured</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">WPC : </p>
-                                <div class="col-sm-2">
-                                  <input class="form-control" id="TxtWPC" type="number" placeholder="0">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Grace Period : </p>
-                                <div class="col-sm-2">
-                                  <input class="form-control" id="TxtGrace" type="number" placeholder="0">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Prorata Period :</p>
-                                <div class="col-sm-2">
-                                  <input class="form-control" id="TxtPPeriod" type="number" placeholder="0">
-                                </div>
-                                <div class="col-sm-6">
-                                  <label> &nbsp; *(0 : Default, 1 : Daily Basis, 2 : Monthly Basis)</label>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Policy Holder's Address :</p>
-                                <div class="col-form-label">
-                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxPHolderAddressF">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Correspondence Name :</p>
-                                <div class="col-sm-4">
-                                  <input class="form-control" id="TxtAttention" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Correspondence Address :</p>
-                                <div class="col-sm-4">
-                                  <input class="form-control" id="TxtCorAddress" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Correspondence Email :</p>
-                                <div class="col-sm-4">
-                                  <input class="form-control" id="TxtCorEmail" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
@@ -535,18 +436,22 @@
                           <button class="btn btn-primary" onclick="stepper.next()">Next</button>
                         </div>
                         <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
+                          <div class="card">
+                            <h2 class="card-header">Object Information</h2>
+                            <div class="card-body" id="cbObjectInfo">
+
+                            </div>
+                          </div>
+                          <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                          <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+                        </div>
+                        <div id="risk-part" class="content" role="tabpanel" aria-labelledby="risk-part-trigger">
                           <h2>Risk Coverage</h2>
                           <div class="card card-info">
                             <div class="card-body" id="cbRC">
                               <table id="tblRiskCoverage" class="table table-condensed responsive table-striped">
 
                               </table>
-                            </div>
-                          </div>
-                          <h2>Object Information</h2>
-                          <div class="card card-info">
-                            <div class="card-body" id="cbObjectInfo">
-
                             </div>
                           </div>
                           <h2>Sum Insured</h2>
@@ -605,7 +510,136 @@
                           <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
                           <button class="btn btn-primary" onclick="stepper.next()">Next</button>
                         </div>
+                        <div id="payor-part" class="content" role="tabpanel" aria-labelledby="payor-part-trigger">
+                          <div class="card">
+                            <h2 class="card-header">Payor</h2>
+                            <div class="card-body" id="cbPayor">
+                            <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Payor : </p>
+                                <div class="col-sm-4">
+                                  <select class="form-control" id="LstPayor">
+                                    <option value="" selected></option>
+                                    <option value="PHOLDER">Policy Holder</option>
+                                    <option value="SOURCE">Source</option>
+                                    <option value="INSURED">Insured</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">WPC : </p>
+                                <div class="col-sm-2">
+                                  <input class="form-control" id="TxtWPC" type="number" placeholder="0">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Grace Period : </p>
+                                <div class="col-sm-2">
+                                  <input class="form-control" id="TxtGrace" type="number" placeholder="0">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Prorata Period :</p>
+                                <div class="col-sm-2">
+                                  <input class="form-control" id="TxtPPeriod" type="number" placeholder="0">
+                                </div>
+                                <div class="col-sm-6">
+                                  <label> &nbsp; *(0 : Default, 1 : Daily Basis, 2 : Monthly Basis)</label>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Policy Holder's Address :</p>
+                                <div class="col-form-label">
+                                  <input type="checkbox" class="form-check-input col-sm-1" id="CbxPHolderAddressF">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Correspondence Name :</p>
+                                <div class="col-sm-4">
+                                  <input class="form-control" id="TxtAttention" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Correspondence Address :</p>
+                                <div class="col-sm-4">
+                                  <input class="form-control" id="TxtCorAddress" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <p class="col-sm-3 col-form-label">Correspondence Email :</p>
+                                <div class="col-sm-4">
+                                  <input class="form-control" id="TxtCorEmail" type="text">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                          <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+                        </div>
                         <div id="others-part" class="content" role="tabpanel" aria-labelledby="others-part-trigger">
+                          <div class="card">
+                            <h3 class="card-header">Business Source</h3>
+                              <div class="card-body" id="cbBusinessSource">
+                                <div class="form-group row">
+                                  <p for="TxtName" class="col-sm-3 col-form-label">Business Source 1 : </p>
+                                  <div class="col-sm-5">
+                                    <select class="form-control" id="LstAID_1">
+                                      <option value="" selected></option>
+                                    </select>
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <select class="form-control" id="LstBSType_1">
+                                      <option value="" selected></option>
+                                      <option value="A">Agent</option>
+                                      <option value="B">Brokerage</option>
+                                      <option value="O">Others</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <p class="col-sm-3 col-form-label">Fee : </p>
+                                  <div class="col-sm-2">
+                                    <input class="form-control" id="TxtFee" type="number" placeholder="0">
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <input class="form-control" id="TxtFeeAmount" type="number" placeholder="0">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <p class="col-sm-3 col-form-label">Fee 1 : </p>
+                                  <div class="col-sm-2">
+                                    <input class="form-control" id="TxtFee_1" type="number" placeholder="0">
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <input class="form-control" id="TxtFeeAmount_1" type="number" placeholder="0">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <p class="col-sm-3 col-form-label">Business Source 2 : </p>
+                                  <div class="col-sm-5">
+                                    <select class="form-control" id="LstAID_2">
+                                      <option value="" selected></option>
+                                    </select>
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <select class="form-control" id="LstBSType_2">
+                                      <option value="" selected></option>
+                                      <option value="A">Agent</option>
+                                      <option value="B">Brokerage</option>
+                                      <option value="O">Others</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <p class="col-sm-3 col-form-label">Fee 2 : </p>
+                                  <div class="col-sm-2">
+                                    <input class="form-control" id="TxtFee_2" type="number" placeholder="0">
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <input class="form-control" id="TxtFeeAmount_2" type="number" placeholder="0">
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
                           <h2>Beneficiaries</h2>
                           <div class="card card-info">
                             <div class="card-body">
@@ -873,9 +907,9 @@
     document.getElementById("LstCoverage").options.length = 0;
     var listBox = document.getElementById("LstCoverage");
     var option = document.createElement("OPTION");
-    option.value = '';
-    option.innerHTML = '';
-    listBox.appendChild(option);
+    // option.value = 'dsa';
+    // option.innerHTML = 'ds';
+    // listBox.appendChild(option);
     for (i = 0; i < faCoverage.length; i++) {
       var listBox = document.getElementById("LstCoverage");
       var option = document.createElement("OPTION");
