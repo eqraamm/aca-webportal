@@ -73,7 +73,14 @@ class SppaController extends Controller
         );
 
         $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
-        // dd($responseProduct);
+        $dataProduct = $responseProduct['Data'];
+
+        $dataProductgendtab = array(
+            'ProductID' => ''
+        );
+        $fixarrProduct = APIMiddleware($dataProductgendtab, 'SearchGENDTABByProduct');
+        
+        // dd($fixarrProduct);
         $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
         $responseMO = APIMiddleware($dataMO, 'SearchMO');
         $responseBranch = APIMiddleware($dataBranch, 'SearchBranch');
@@ -88,6 +95,7 @@ class SppaController extends Controller
                 'branch' => $responseBranch,
                 'currency' => $responseCurrency,
                 'profile' => $responseProfile,
+                'gendtab' => $fixarrProduct,
             ]);
     }
 }
