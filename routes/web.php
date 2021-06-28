@@ -45,6 +45,8 @@ Route::group(['middleware' => 'CekLogin'], function(){
 
     Route::post('/profile/uploadDocument', 'ProfileController@uploadProfileDocument')->name('profile.uploadDocumentPost');
 
+     // Index Transaction
+    Route::get('/transaction', 'SppaController@sppa')->name('inquiry.transaction');
     Route::get('/transaction', 'SppaController@showFormPolicy')->name('policy.transaction');
     Route::get('/Inquiry', 'InquiryController@inquiry');
 });

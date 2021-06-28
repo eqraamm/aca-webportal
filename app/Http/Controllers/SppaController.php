@@ -10,6 +10,16 @@ class SppaController extends Controller
 {
     
     public function Sppa(){
+
+        // API policy
+        $data = array(
+            'ID' => '',
+            'RefNo' => '',
+            'PStatus' => '',
+            'Insured' => '',
+        );   
+        $responsePolicy = APIMiddleware($data, 'SearchPolicy');
+
         // API branch
         $data = array (
             'Branch' => ''
@@ -44,15 +54,21 @@ class SppaController extends Controller
         $data = array(
             'ID' => ''
         );
-        $responseProfile = APIMiddleware($data, 'SearchProfile');
 
-        return view('sppa', array('Branch' => $responseBranch, 'CT' => $responseCT, 
+        $responseProfile = APIMiddleware($data, 'SearchProfile');
+        return view('sppa', 'example1', array('Branch' => $responseBranch, 'CT' => $responseCT, 
             'Product' => $responseProduct, 'Profile' => $responseProfile, 'Segment' => $responseSegment,
-            'Class' => $responseClass));
+            'Class' => $responseClass, 'Policy' => $responsePolicy));
     }
 
     public function showFormPolicy()
     {
+        $dataPolicy = array(
+            'ID' => '',
+            'RefNo' => '',
+            'PStatus' => '',
+            'Insured' => '',
+        );   
         $dataProduct = array(
             'ProductID' => ''
         );
@@ -72,6 +88,7 @@ class SppaController extends Controller
             'OwnerID' => 'aca_mo_1'
         );
 
+        $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicy');
         $responseProduct = APIMiddleware($dataProduct, 'SearchProduct');
         $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
         $responseMO = APIMiddleware($dataMO, 'SearchMO');
@@ -81,6 +98,7 @@ class SppaController extends Controller
 
         return view('Transaction.policy')
             ->with([
+                'Policy' => $responsePolicy,
                 'product' => $responseProduct,
                 'coverage' => $responseCoverage,
                 'mo' => $responseMO,

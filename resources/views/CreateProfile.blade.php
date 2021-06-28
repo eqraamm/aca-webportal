@@ -53,11 +53,9 @@
                                                       <td>{{ $datas['ID_No'] }}</td>
                                                       <td>{{ $datas['BirthDate'] }}</td>
                                                       <td>
-                                                          <a href="#" type="button" class="btn btn-outline-primary btn-sm" onclick="viewDetail('{{ $datas['ID'] }}')">Detail</a>
-                                                          <a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" id="btn-history" class="btn btn-outline-info btn-sm history-profile" >history</a>
-                                                          <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm btn-del-row-profile">Delete</a>
-                                                          <!-- <a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn btn-outline-danger btn-sm" id="btnDel" data-toggle="modal" data-target="#modal-general" data-message="You are about to delete profile data, this procedure is irreversible." data-id="{{$datas['ID']}}" data-backdrop="static">Delete</a> -->
-                                                          
+                                                          <img src="../../dist/img/edit.svg" width="30" height="30" type="button" value="detail" onclick="viewDetail('{{ $datas['ID'] }}')">
+                                                          <img src="../../dist/img/file.svg" width="30" height="30" a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" id="btn-history" class="history-profile" ></a>
+                                                          <img src="../../dist/img/trash.svg" width="30" height="30" a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn-del-row-profile"></a>                                                          
                                                       </td>
                                                   </tr>
                                               @endforeach
@@ -164,14 +162,14 @@
                                                                     <div class="form-group row">
                                                                         <p class="col-sm-3 col-form-label">Mobile Phone</p>
                                                                             <div class="col-sm-3">
-                                                                                <input class="form-control" id="TxtProfileMobileModal" name="MobilePhone" type="number">
+                                                                                <input class="form-control" id="TxtProfileMobileModal" name="MobilePhone" type="text">
 
                                                                             </div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <p class="col-sm-3 col-form-label">Tax ID</p>
                                                                             <div class="col-sm-6">
-                                                                                <input class="form-control" id="TxtTaxIDModal" type="text" name="TaxModal">
+                                                                                <input class="form-control" id="TxtTaxIDModal" type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '');" name="TaxModal">
                                                                     </div>
                                                                     </div>
                                                                     <div class="form-group row">
@@ -228,7 +226,7 @@
                                                             <div class="form-group row">
                                                                 <label class="col-sm-3 col-form-label">First Name</label>
                                                                 <div class="col-sm-6">
-                                                                    <input class="form-control" id="TxtFirstName" type="text" name='FirstName' style="text-transform:uppercase" value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
+                                                                    <input class="form-control" id="TxtFirstName" type="text" name='FirstName' minlength="3" style="text-transform:uppercase" value="{{ old('FirstName') }}" onchange="Construct_ProfileName();" required>
                                                                 </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -245,7 +243,7 @@
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Full Name</label>
                                                               <div class="col-sm-6">
-                                                                  <input class="form-control" id="TxtProfileName" name="Name" type="text"  style="text-transform:uppercase" value="{{ old('Name') }}" required>
+                                                                  <input class="form-control" id="TxtProfileName" name="Name" type="text" minlength="3" style="text-transform:uppercase" value="{{ old('Name') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -408,13 +406,13 @@
                                                           <div class="form-group row">
                                                               <label class="col-sm-3 col-form-label">Mobile Phone</label>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtProfileMobile" name="MobilePhone" type="number" value="{{ old('MobilePhone') }}" required>
+                                                                  <input class="form-control" id="TxtProfileMobile" name="MobilePhone" type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="{{ old('MobilePhone') }}" required>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">Phone</p>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtProfilePhone" name="Phone" type="number" value="{{ old('Phone') }}">
+                                                                  <input class="form-control" id="TxtProfilePhone" name="Phone" type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="{{ old('Phone') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -623,7 +621,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label" id="LblTaxID">Tax ID</p>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtTaxID" type="number" name="Tax" value="{{ old('Tax') }}">
+                                                                  <input class="form-control" id="TxtTaxID" type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '');" name="Tax" value="{{ old('Tax') }}">
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
