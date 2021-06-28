@@ -133,24 +133,37 @@
                       </thead>
                       <tbody>
                         @php $no = 1; @endphp
+                        @if($data['code'] == '200')
+                         @foreach($dataPolicy['Data'] as $datas)                      
                         <tr>
                           <td>{{ $no++ }}</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                          <td>{{ $dataPolicy['RefID'] }}</td>
+                          <td>{{ $dataPolicy['PType'] }}</td>
+                          <td>{{ $dataPolicy['PStatus'] }}</td>
+                          <td>{{ $dataPolicy['Name'] }}</td>
+                          <td>{{ $dataPolicy['Product'] }}</td>
+                          <td>{{ $dataPolicy['Coverage'] }}</td>
+                          <td>{{ $dataPolicy['RefID'] }}</td>
+                          <td>{{ $dataPolicy['SI1'] }}</td>
+                          <td>{{ $dataPolicy['Premium'] }}</td>
                         </tr>
+                        @endforeach
+                        @endif
                       </tbody>
                     </table>
                   </div>
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="policy">
+                        <div class="icon mt-3 mb-3 " align="center">
+                          <p img src="../../dist/img/floppy-disk.png" id="save"  width="40" height="40" type="button" value="simpan"></p>
+                          <img src="../../dist/img/calculator.png" id="premi-cal" width="40" height="40" type="button" >
+                          <img src="../../dist/img/upload.svg" id="send" width="40" height="40" type="button">
+                          <img src="../../dist/img/file.svg" id="search" width="40" height="40" type="button">
+                          <img src="../../dist/img/edit.svg" id="edit" width="40" height="40" type="button">
+                          <img src="../../dist/img/button.png" id="download"  width="40" height="40" type="button">
+                          <img src="../../dist/img/remove.png" id="delete" width="40" height="40" type="button">               
+                         </div>
                   <div class="bs-stepper">
                     <form action="" method="post">
                       <div class="bs-stepper-header" role="tablist">
@@ -200,7 +213,7 @@
                             <!-- form start -->
                             <div class="card-body">
                               <div class="form-group row">
-                                <label for="LstProduct" class="col-sm-2 col-form-label">Product : </label>
+                                <label for="LstProduct" class="col-sm-2 col-form-label">Product  </label>
                                 <div class="col-sm-3">
                                   <select class="form-control" id="LstProduct" onchange="Product_OnChange(this.value)">
                                     <!-- <option selected></option> -->
@@ -209,7 +222,7 @@
                                     @endforeach
                                   </select>
                                 </div>
-                                <p for="LstDownloadProduct" class="col-sm-2 col-form-label">Product Info : </p>
+                                <p for="LstDownloadProduct" class="col-sm-2 col-form-label">Product Info  </p>
                                 <div class="col-sm-3">
                                   <select class="form-control" id="LstDownloadProduct">
                                     <option value="" selected></option>
@@ -220,7 +233,7 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="LstCoverage" class="col-sm-2 col-form-label">Coverage : </label>
+                                <label for="LstCoverage" class="col-sm-2 col-form-label">Coverage  </label>
                                 <div class="col-sm-3">
                                   <select class="form-control" id="LstCoverage" onchange="setSI_RC(this.value)">
                                     <!-- <option selected></option> -->
@@ -229,7 +242,7 @@
                                     @endforeach
                                   </select>
                                 </div>
-                                <label for="LstPayment" class="col-sm-2 col-form-label">Payment : </label>
+                                <label for="LstPayment" class="col-sm-2 col-form-label">Payment  </label>
                                 <div class="col-sm-3">
                                   <select class="form-control" id="LstPayment">
                                     <option value="" selected></option>
@@ -237,7 +250,7 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="LstSType" class="col-sm-2 col-form-label">Policy Status : </label>
+                                <label for="LstSType" class="col-sm-2 col-form-label">Policy Status  </label>
                                 <div class="col-sm-3">
                                   <select class="form-control" id="LstSType">
                                     <option value="" selected></option>
@@ -255,7 +268,7 @@
                             <h2 class="card-header">Policy Data</h2>
                             <div class="card-body">
                               <div class="form-group row">
-                                <p for="TxtPStatus" class="col-sm-3 col-form-label">Policy Status : </p>
+                                <p for="TxtPStatus" class="col-sm-3 col-form-label">Policy Status  </p>
                                 <div class="col-sm-2">
                                   <input class="form-control" id="TxtPStatus" type="text" disabled>
                                 </div>
@@ -269,25 +282,25 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p for="TxtPStatus" class="col-sm-3 col-form-label">Registration Date : </p>
+                                <p for="TxtPStatus" class="col-sm-3 col-form-label">Registration Date  </p>
                                 <div class="input-group date col-sm-4" id="reservationdate" data-target-input="nearest">
                                   <input type="date" class="form-control" id="TxtRegDate" />
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p for="TxtQuotationNo" class="col-sm-3 col-form-label">Quotation No. :</p>
+                                <p for="TxtQuotationNo" class="col-sm-3 col-form-label">Quotation No</p>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtQuotationNo" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p for="TxtRefNo" class="col-sm-3 col-form-label">Reference No. : </p>
+                                <p for="TxtRefNo" class="col-sm-3 col-form-label">Reference No  </p>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtRefNo" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p for="TxtPolicyNo" class="col-sm-3 col-form-label">Policy No. : </p>
+                                <p for="TxtPolicyNo" class="col-sm-3 col-form-label">Policy No  </p>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtPolicyNo" type="text">
                                 </div>
@@ -296,7 +309,7 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="LstPHolder" class="col-sm-3 col-form-label">Policy Holder : </label>
+                                <label for="LstPHolder" class="col-sm-3 col-form-label">Policy Holder  </label>
                                 <div class="col-sm-4">
                                   <select class="form-control" id="LstPHolder" required>
                                     <option value="" selected></option>
@@ -307,7 +320,7 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="LstInsured" class="col-sm-3 col-form-label">Insured : </label>
+                                <label for="LstInsured" class="col-sm-3 col-form-label">Insured  </label>
                                 <div class="col-sm-4">
                                   <select class="form-control" id="LstInsured" required>
                                     <option value="" selected></option>
@@ -318,17 +331,17 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="TxtName" class="col-sm-3 col-form-label">Long Insured Name : </label>
+                                <label for="TxtName" class="col-sm-3 col-form-label">Long Insured Name  </label>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtName" type="text" required>
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="TxtName" class="col-sm-3 col-form-label">Insurance Period : </label>
-                                <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
+                                <label for="TxtName" class="col-sm-3 col-form-label">Insurance Period  </label>
+                                <div class="input-group date col-sm-2" id="reservationdate" data-target-input="nearest">
                                   <input type="date" class="form-control" id="TxtSDate" required />
-                                </div>
-                                <div class="input-group date col-sm-3" id="reservationdate" data-target-input="nearest">
+                                </div>_
+                                <div class="input-group date col-sm-2" id="reservationdate" data-target-input="nearest">
                                   <input type="date" class="form-control" id="TxtEdate" required />
                                 </div>
                               </div>
@@ -337,12 +350,12 @@
                                 <div class="col-sm-3">
                                   <input class="form-control" id="TxtSegment" type="text">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                   <input class="form-control" id="TxtSegmentDesc" type="text" disabled>
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Marketing Officer : </p>
+                                <p class="col-sm-3 col-form-label">Marketing Officer  </p>
                                 <div class="col-sm-4">
                                   <select class="form-control" id="LstMO">
                                     <option selected></option>
@@ -353,7 +366,7 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Branch : </p>
+                                <p class="col-sm-3 col-form-label">Branch  </p>
                                 <div class="col-sm-4">
                                   <select class="form-control" id="LstBranch">
                                     <option selected></option>
@@ -370,91 +383,91 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p for="TxtDepartDate" class="col-sm-3 col-form-label">Estimate Time Depature :</p>
+                                <p for="TxtDepartDate" class="col-sm-3 col-form-label">Estimate Time Depature </p>
                                 <div class="input-group date col-sm-4" id="TxtDepartDate" data-target-input="nearest">
                                   <input type="date" class="form-control" id="TxtDepartDate" />
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p for="TxtArrivalDate" class="col-sm-3 col-form-label">Estimate Time Arrival :</p>
+                                <p for="TxtArrivalDate" class="col-sm-3 col-form-label">Estimate Time Arrival</p>
                                 <div class="input-group date col-sm-4" id="TxtArrivalDate" data-target-input="nearest">
                                   <input type="date" class="form-control id=" TxtArrivalDate" />
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Voyage From :</p>
-                                <div class="col-sm-3">
+                                <p class="col-sm-3 col-form-label">Voyage From </p>
+                                <div class="col-sm-4">
                                   <input class="form-control" id="TxtVoyageFromID" type="text">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                   <input class="form-control" id="TxtVoyageFromDesc" type="text" disabled>
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Port From :</p>
-                                <div class="col-sm-3">
+                                <p class="col-sm-3 col-form-label">Port From </p>
+                                <div class="col-sm-4">
                                   <input class="form-control" id="TxtPortFromID" type="text">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                   <input class="form-control" id="TxtPortFromDesc" type="text" disabled>
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Voyage To :</p>
-                                <div class="col-sm-3">
+                                <p class="col-sm-3 col-form-label">Voyage To </p>
+                                <div class="col-sm-4">
                                   <input class="form-control" id="TxtVoyageToID" type="text">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                   <input class="form-control" id="TxtVoyageToDesc" type="text" disabled>
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Port To :</p>
-                                <div class="col-sm-3">
+                                <p class="col-sm-3 col-form-label">Port To </p>
+                                <div class="col-sm-4">
                                   <input class="form-control" id="TxtPortToID" type="text">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                   <input class="form-control" id="TxtPortToDesc" type="text" disabled>
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Consignee Name :</p>
+                                <p class="col-sm-3 col-form-label">Consignee Name </p>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtConsigneeName" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Consignee Address :</p>
+                                <p class="col-sm-3 col-form-label">Consignee Address </p>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtConsigneeAddress" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Transhipment :</p>
+                                <p class="col-sm-3 col-form-label">Transhipment </p>
                                 <div class="col-form-label">
                                   <input type="checkbox" class="form-check-input col-sm-1" id="CbxTranshipment">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p for="TxtTransDate" class="col-sm-3 col-form-label">Transhipment Date :</p>
+                                <p for="TxtTransDate" class="col-sm-3 col-form-label">Transhipment Date </p>
                                 <div class="input-group date col-sm-4" id="TxtTransDate" data-target-input="nearest">
                                   <input type="date" class="form-control" id="TxtTransDate" />
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">At and From :</p>
+                                <p class="col-sm-3 col-form-label">At and From </p>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtTransAtAndFrom" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">To :</p>
+                                <p class="col-sm-3 col-form-label">To </p>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtTransTo" type="text">
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <p class="col-sm-3 col-form-label">Conveyance :</p>
+                                <p class="col-sm-3 col-form-label">Conveyance </p>
                                 <div class="col-sm-4">
                                   <input class="form-control" id="TxtTransConveyence" type="text">
                                 </div>
