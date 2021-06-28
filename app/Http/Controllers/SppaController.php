@@ -88,8 +88,13 @@ class SppaController extends Controller
             'OwnerID' => 'aca_mo_1'
         );
 
+<<<<<<< HEAD
         $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicy');
         $responseProduct = APIMiddleware($dataProduct, 'SearchProduct');
+=======
+        $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
+        // dd($responseProduct);
+>>>>>>> 292f79572c5e8750caef095ea3bfa45a6dc7cc32
         $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
         $responseMO = APIMiddleware($dataMO, 'SearchMO');
         $responseBranch = APIMiddleware($dataBranch, 'SearchBranch');
