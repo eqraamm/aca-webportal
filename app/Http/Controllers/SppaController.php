@@ -11,14 +11,14 @@ class SppaController extends Controller
     
     public function Sppa(){
 
-        // API policy
-        $data = array(
-            'ID' => '',
-            'RefNo' => '',
-            'PStatus' => '',
-            'Insured' => '',
-        );   
-        $responsePolicy = APIMiddleware($data, 'SearchPolicy');
+        // // API policy
+        // $data = array(
+        //     'ID' => '',
+        //     'RefNo' => '',
+        //     'PStatus' => '',
+        //     'Insured' => '',
+        // );   
+        // $responsePolicy = APIMiddleware($data, 'SearchPolicy');
 
         // API branch
         $data = array (
@@ -58,17 +58,17 @@ class SppaController extends Controller
         $responseProfile = APIMiddleware($data, 'SearchProfile');
         return view('sppa', 'example1', array('Branch' => $responseBranch, 'CT' => $responseCT, 
             'Product' => $responseProduct, 'Profile' => $responseProfile, 'Segment' => $responseSegment,
-            'Class' => $responseClass, 'Policy' => $responsePolicy));
+            'Class' => $responseClass));
     }
 
     public function showFormPolicy()
     {
-        $dataPolicy = array(
-            'ID' => '',
-            'RefNo' => '',
-            'PStatus' => '',
-            'Insured' => '',
-        );   
+        // $dataPolicy = array(
+        //     'ID' => '',
+        //     'RefNo' => '',
+        //     'PStatus' => '',
+        //     'Insured' => '',
+        // );   
         $dataProduct = array(
             'ProductID' => ''
         );
@@ -88,13 +88,8 @@ class SppaController extends Controller
             'OwnerID' => 'aca_mo_1'
         );
 
-<<<<<<< HEAD
-        $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicy');
-        $responseProduct = APIMiddleware($dataProduct, 'SearchProduct');
-=======
         $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
         // dd($responseProduct);
->>>>>>> 292f79572c5e8750caef095ea3bfa45a6dc7cc32
         $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
         $responseMO = APIMiddleware($dataMO, 'SearchMO');
         $responseBranch = APIMiddleware($dataBranch, 'SearchBranch');
@@ -103,7 +98,7 @@ class SppaController extends Controller
 
         return view('Transaction.policy')
             ->with([
-                'Policy' => $responsePolicy,
+                // 'Policy' => $responsePolicy,
                 'product' => $responseProduct,
                 'coverage' => $responseCoverage,
                 'mo' => $responseMO,

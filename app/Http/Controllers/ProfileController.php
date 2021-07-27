@@ -305,7 +305,7 @@ class ProfileController extends Controller
     public function listRefProfile(Request $request){
         $data = array(
             'ID' => ($request->input('ID') == null) ? '' : $request->input('ID'),
-            'Name' => ($request->input('Name') == null) ? '' : $request->input('ProfileID'),
+            'Name' => ($request->input('Name') == null) ? '' : $request->input('Name'),
             'Email' => ($request->input('Email') == null) ? '' : $request->input('Email'),
             'Address' => ($request->input('Address') == null) ? '' : $request->input('Address'),
             'City' => ($request->input('City') == null) ? '' : $request->input('City'),

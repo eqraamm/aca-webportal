@@ -105,22 +105,19 @@
                       </thead>
                       <tbody>
                         @php $no = 1; @endphp
-                        @if($data['code'] == '200')
-                         @foreach($dataPolicy['Data'] as $datas)                      
                         <tr>
                           <td>{{ $no++ }}</td>
-                          <td>{{ $dataPolicy['RefID'] }}</td>
-                          <td>{{ $dataPolicy['PType'] }}</td>
-                          <td>{{ $dataPolicy['PStatus'] }}</td>
-                          <td>{{ $dataPolicy['Name'] }}</td>
-                          <td>{{ $dataPolicy['Product'] }}</td>
-                          <td>{{ $dataPolicy['Coverage'] }}</td>
-                          <td>{{ $dataPolicy['RefID'] }}</td>
-                          <td>{{ $dataPolicy['SI1'] }}</td>
-                          <td>{{ $dataPolicy['Premium'] }}</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
                         </tr>
-                        @endforeach
-                        @endif
+
                       </tbody>
                     </table>
                   </div>
@@ -129,7 +126,7 @@
                 <div class="tab-pane" id="policy">
                         <div class="icon mt-3 mb-3 " align="center">
                           <p img src="../../dist/img/floppy-disk.png" id="save"  width="40" height="40" type="button" value="simpan"></p>
-                          <img src="../../dist/img/calculator.png" id="premi-cal" width="40" height="40" type="button" >
+                          <!-- <img src="../../dist/img/calculator.png" id="premi-cal" width="40" height="40" type="button" > -->
                           <img src="../../dist/img/upload.svg" id="send" width="40" height="40" type="button">
                           <img src="../../dist/img/file.svg" id="search" width="40" height="40" type="button">
                           <img src="../../dist/img/edit.svg" id="edit" width="40" height="40" type="button">
@@ -653,22 +650,40 @@
                                 </div>
                               </div>
                           </div>
-                          <h2>Beneficiaries</h2>
+                          <h3>Beneficiaries</h3>
+                          <div class="card card-info">
+                            <div class="card-body" id="cbBeneficiaries">
+                              <table>
+                                <tr>
+                                  <th><button type="button" id="AddRow_Beneficiaries" class="btn btn-block btn-outline-primary">Add</button></th>
+                                  <!-- <th><button type="button" id="DelRow_Beneficiaries" class="btn btn-block btn-outline-danger">Delete</button></th> -->
+                                </tr>
+                              </table>
+                              <table id="tbl_beneficiaries" class="table table-condensed responsive table-striped">
+
+                              </table>
+                            </div>
+                          </div>
+                          <h3>Interested Party</h3>
+                          <div class="card card-info">
+                            <div class="card-body" id="cbInterestedParty">
+                              <table>
+                                <tr>
+                                  <th><button type="button" id="AddRow_IP" class="btn btn-block btn-outline-primary">Add</button></th>
+                                  <!-- <th><button type="button" id="DelRow_IP" class="btn btn-block btn-outline-danger">Delete</button></th> -->
+                                </tr>
+                              </table>
+                              <table id="tbl_interestedparty" class="table table-condensed responsive table-striped">
+
+                              </table>
+                            </div>
+                          </div>
+                          <h3>Default Clausula</h3>
                           <div class="card card-info">
                             <div class="card-body">
                             </div>
                           </div>
-                          <h2>Interested Party</h2>
-                          <div class="card card-info">
-                            <div class="card-body">
-                            </div>
-                          </div>
-                          <h2>Default Clausula</h2>
-                          <div class="card card-info">
-                            <div class="card-body">
-                            </div>
-                          </div>
-                          <h2>Default Deductible</h2>
+                          <h3>Default Deductible</h3>
                           <div class="card card-info">
                             <div class="card-body" id="cbCD">
                               <table id="tbl_covDeductible" class="table table-condensed responsive table-striped">
@@ -676,12 +691,12 @@
                               </table>
                             </div>
                           </div>
-                          <h2>Policy/Document List</h2>
+                          <h3>Policy/Document List</h3>
                           <div class="card card-info">
                             <div class="card-body">
                             </div>
                           </div>
-                          <h2>Submission</h2>
+                          <h3>Submission</h3>
                           <div class="card card-info">
                             <div class="card-body">
                               <div class="form-group row">

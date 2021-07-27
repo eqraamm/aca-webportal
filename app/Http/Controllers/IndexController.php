@@ -10,19 +10,15 @@ class IndexController extends Controller
 {
 
     public function index(){
-        return view('dashboard');
-
-    }
-    
-    public function drop(){
-        //hapus data
         $data =array(
-            'ID' => '',
-            'OwnerID' => 'aca_mo_1',
+            'ID' => 'aca_mo_1',
+            'RefNo' => '',
+            'PStatus' => '',
+            'Insured' => ''
         );
-        $response = APIMiddleware($data , 'DropProfile');
-        return view('dashboard')->with('data', $response); 
+        $responseSearchPolicy = APIMiddleware($data, 'SearchPolicy');
+        // dd($responsePolicy);
+         return view('dashboard')->with('data', $responseSearchPolicy); 
     }
-
 }
 
