@@ -20,6 +20,8 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
@@ -30,6 +32,8 @@
   <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
   <!-- BStepper -->
   <link rel="stylesheet" href="{{asset('plugins/bs-stepper/css/bs-stepper.min.css')}}">
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="{{asset('plugins/dropzone/min/dropzone.min.css')}}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
@@ -92,48 +96,48 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="dashboard" class="nav-link">
+               <li class="{{ Session::get('sidebar') == 'dashboard' ? 'nav-link menu-open' : 'nav-link' }}">
+            <a href="{{ route('profile')}}" class="{{ Session::get('sidebar') == 'dashboard' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
             </a>
           </li>
-          <li class="nav-item menu-open">
-            <a href="{{ route('profile')}}" class="nav-link active">
+          <li class="{{ Session::get('sidebar') == 'profile' ? 'nav-link menu-open' : 'nav-link' }}">
+            <a href="{{ route('profile')}}" class="{{ Session::get('sidebar') == 'profile' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Nasabah
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{ route('policy.transaction')}}" class="nav-link">
+          <li class="{{ Session::get('sidebar') == 'sppa' ? 'nav-link menu-open' : 'nav-link' }}">
+            <a href="{{ route('policy.transaction')}}" class="{{ Session::get('sidebar') == 'sppa' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 SPPA
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="Inquiry" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
                 Inquiry SPPA
               </p>
             </a>
-          </li>
-          <li class="nav-item">
-            <a href="survey" class="nav-link">
+          </li> -->
+          <li class="{{ Session::get('sidebar') == 'survey' ? 'nav-link menu-open' : 'nav-link' }}">
+            <a href="survey" class="{{ Session::get('sidebar') == 'survey' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-tree"></i>
               <p>
                 Survey
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="report" class="nav-link">
+          <li class="{{ Session::get('sidebar') == 'report' ? 'nav-link menu-open' : 'nav-link' }}">
+            <a href="report" class="{{ Session::get('sidebar') == 'report' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Report
@@ -193,9 +197,17 @@
 <!-- SweetAlert2 -->
 <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <!-- daterangepicker -->
-<script src="{{asset('plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+<!-- InputMask -->
+<script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+<script src="{{asset('plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<!-- dropzonejs -->
+<script src="{{asset('plugins/dropzone/min/dropzone.min.js')}}"></script>
 
+<!-- General For Web Portal MW -->
+<script src="{{asset('dist/js/pages/webportal.js')}}"></script>
 
 @yield('scriptpage')
 

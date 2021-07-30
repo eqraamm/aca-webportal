@@ -58,6 +58,8 @@ class ProfileController extends Controller
         );
         $responseOccupation = APIMiddleware($data, 'SearchOccupation');
 
+        session(['sidebar' => 'profile']);
+
         return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
         'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup, 
         'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '', 'Occupation' => $responseOccupation)); 

@@ -46,8 +46,15 @@ Route::group(['middleware' => 'CekLogin'], function(){
     Route::post('/profile/uploadDocument', 'ProfileController@uploadProfileDocument')->name('profile.uploadDocumentPost');
 
      // Index Transaction
-    Route::get('/transaction', 'SppaController@sppa')->name('inquiry.transaction');
     Route::get('/transaction', 'SppaController@showFormPolicy')->name('policy.transaction');
     Route::get('/Inquiry', 'InquiryController@inquiry');
+    Route::POST('/premiumsimulation', 'SppaController@PremiumSimulation')->name('policy.premiumSimulation');
+    Route::POST('/getnewpolicyno', 'SppaController@GetNewPolicyNo')->name('policy.getnewpolicyno');
+    Route::POST('/savepolicydocument', 'SppaController@SavePoicyDocument')->name('policy.savepolicydocument');
+    Route::get('/modalupload', 'SppaController@showModalUpload')->name('policy.modalupload');
+    Route::POST('/SavePolicy', 'SppaController@SavePolicy')->name('policy.savepolicy');
+    Route::POST('/submitpolicy', 'SppaController@SubmitPolicy')->name('policy.submitpolicy');
+    Route::POST('/droppolicy', 'SppaController@DropPolicy')->name('policy.drop');
+    Route::get('/listpolicy', 'SppaController@showListPolicy')->name('policy.listPolicy');
 });
 

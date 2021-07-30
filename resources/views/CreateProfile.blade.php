@@ -1142,9 +1142,7 @@ function Construct_ProfileName() {
 }
 function viewDetail(ID){
   var basedata = @json($data['Data']);
-  console.log(basedata);
   const filterarray = basedata.filter(asd => asd.ID == ID);
-  console.log(filterarray);
   parseDataToInput(filterarray);
 
   document.getElementById("tabinquiry").className = "nav-link";
@@ -1153,7 +1151,6 @@ function viewDetail(ID){
   document.getElementById("profile").className = "active tab-pane";
 }
 function parseDataToInput(filterarray){
-    console.log(filterarray);
   document.getElementById("TxtProfileRefID").value = (typeof filterarray[0]['RefID']) === 'undefined' ? filterarray[0]['ID'] : filterarray[0]['RefID'];
   document.getElementById("TxtProfileRefDesc").value = (typeof filterarray[0]['RefName']) === 'undefined' ? filterarray[0]['Name'] : filterarray[0]['RefName'];
   document.getElementById("TxtProfileID").value = filterarray[0]['ID'];

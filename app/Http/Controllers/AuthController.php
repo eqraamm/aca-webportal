@@ -55,10 +55,12 @@ class AuthController extends Controller
             );
 
             $responseUser = APIMiddleware($data, 'SearchSysUser');
+            // dd($responseUser);
             // dd($responseUser['Data'][0]['ID']);
             session(['login' => true]);
             session(['ID' => $responseUser['Data'][0]['ID']]);
             session(['Name' => $responseUser['Data'][0]['Name']]);
+            session(['Role' => $responseUser['Data'][0]['Role']]);
             return redirect()->route('profile');
         }else{
             Session::flash('error', $response['message']);
