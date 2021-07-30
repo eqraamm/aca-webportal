@@ -8,7 +8,6 @@ use App\User;
 
 class SppaController extends Controller
 {
-
     public function showFormPolicy(){
         $dataPolicy = array(
             'ID' => session('ID'),
@@ -40,7 +39,9 @@ class SppaController extends Controller
         $dataCT = array(
             'CT' => ''
         );
-
+        
+        $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
+        // dd($responseProduct);
         $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicy');
         // dd($responsePolicy);
         $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
@@ -50,7 +51,7 @@ class SppaController extends Controller
             'ProductID' => ''
         );
         $fixarrProduct = APIMiddleware($dataProductgendtab, 'SearchGENDTABByProduct');
-        
+
         $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
         $responseMO = APIMiddleware($dataMO, 'SearchMO');
         $responseBranch = APIMiddleware($dataBranch, 'SearchBranch');
@@ -63,7 +64,7 @@ class SppaController extends Controller
 
         return view('Transaction.policy')
             ->with([
-                'Policy' => $responsePolicy,
+                // 'Policy' => $responsePolicy,
                 'product' => $responseProduct,
                 'coverage' => $responseCoverage,
                 'mo' => $responseMO,

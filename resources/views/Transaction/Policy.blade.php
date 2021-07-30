@@ -141,7 +141,7 @@
                 <div class="tab-pane" id="policy">
                         <!-- <div class="icon mt-3 mb-3 " align="center">
                           <p img src="../../dist/img/floppy-disk.png" id="save"  width="40" height="40" type="button" value="simpan"></p>
-                          <img src="../../dist/img/calculator.png" id="premi-cal" width="40" height="40" type="button" >
+                          <!-- <img src="../../dist/img/calculator.png" id="premi-cal" width="40" height="40" type="button" > -->
                           <img src="../../dist/img/upload.svg" id="send" width="40" height="40" type="button">
                           <img src="../../dist/img/file.svg" id="search" width="40" height="40" type="button">
                           <img src="../../dist/img/edit.svg" id="edit" width="40" height="40" type="button">
@@ -742,6 +742,7 @@
                                 </div>
                               </div>
                           </div>
+<<<<<<< HEAD
                           <div class="modal fade" id="modal-general" tabindex="-1" role="dialog">
                             <div class="modal-dialog modal-lg">
                               <div class="modal-content">
@@ -776,6 +777,39 @@
                                 </div>
                               </div>
                             </div>
+=======
+                          <h3>Beneficiaries</h3>
+                          <div class="card card-info">
+                            <div class="card-body" id="cbBeneficiaries">
+                              <table>
+                                <tr>
+                                  <th><button type="button" id="AddRow_Beneficiaries" class="btn btn-block btn-outline-primary">Add</button></th>
+                                  <!-- <th><button type="button" id="DelRow_Beneficiaries" class="btn btn-block btn-outline-danger">Delete</button></th> -->
+                                </tr>
+                              </table>
+                              <table id="tbl_beneficiaries" class="table table-condensed responsive table-striped">
+
+                              </table>
+                            </div>
+                          </div>
+<<<<<<< HEAD
+                          <h3>Interested Party</h3>
+                          <div class="card card-info">
+                            <div class="card-body" id="cbInterestedParty">
+                              <table>
+                                <tr>
+                                  <th><button type="button" id="AddRow_IP" class="btn btn-block btn-outline-primary">Add</button></th>
+                                  <!-- <th><button type="button" id="DelRow_IP" class="btn btn-block btn-outline-danger">Delete</button></th> -->
+                                </tr>
+                              </table>
+                              <table id="tbl_interestedparty" class="table table-condensed responsive table-striped">
+
+                              </table>
+                            </div>
+                          </div>
+                          <h3>Default Clausula</h3>
+                          <div class="card card-info">
+>>>>>>> refs/remotes/origin/master
                             <div class="card-body">
                               <table id="tblBeneficiaries" class="table table-condensed responsive table-striped">
                                 <thead>
@@ -792,7 +826,15 @@
                               </table>
                             </div>
                           </div>
+<<<<<<< HEAD
                           <div class="card" style="display:none;">
+=======
+                          <h3>Default Deductible</h3>
+                          <div class="card card-info">
+                            <div class="card-body" id="cbCD">
+=======
+                          <div class="card">
+>>>>>>> refs/remotes/origin/master
                             <h2 class="card-header">Interested Party</h2>
                             <div class="card-body">
                             </div>
@@ -808,11 +850,21 @@
                           <div class="card">
                             <h2 class="card-header">Default Deductible</h2>
                             <div class="card-body" id="cbDeductible">
+>>>>>>> refs/remotes/origin/master
                               <table id="tbl_covDeductible" class="table table-condensed responsive table-striped">
 
                               </table>
                             </div>
                           </div>
+<<<<<<< HEAD
+                          <h3>Policy/Document List</h3>
+                          <div class="card card-info">
+                            <div class="card-body">
+                            </div>
+                          </div>
+                          <h3>Submission</h3>
+                          <div class="card card-info">
+=======
                           <div class="card">
                             <div class="card-header container-fluid">
                               <div class="row">
@@ -848,6 +900,7 @@
                           </div>
                           <div class="card">
                             <h2 class="card-header">Submission</h2>
+>>>>>>> refs/remotes/origin/master
                             <div class="card-body">
                               <div class="form-group row">
                                 <p class="col-sm-3 col-form-label">Immediate Inforce</p>

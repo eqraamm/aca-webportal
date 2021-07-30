@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Http;
 // use Illuminate\Http\Request;
 // use App\User;
 
-class IndexController extends Controller
+class SurveyController extends Controller
 {
 
-    public function index(){
+    public function showsurvey(){
         $data =array(
             'ID' => session('ID'),
             'RefNo' => '',
@@ -18,7 +18,7 @@ class IndexController extends Controller
         );
         $responseSearchPolicy = APIMiddleware($data, 'SearchPolicy');
         //  dd($responseSearchPolicy);
-         return view('dashboard')->with('data', $responseSearchPolicy); 
+         return view('survey')->with('data', $responseSearchPolicy); 
     }
 }
 

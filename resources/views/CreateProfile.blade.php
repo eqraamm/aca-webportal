@@ -53,9 +53,9 @@
                                                       <td>{{ $datas['ID_No'] }}</td>
                                                       <td>{{ $datas['BirthDate'] }}</td>
                                                       <td>
-                                                          <img src="../../dist/img/edit.svg" width="30" height="30" type="button" value="detail" onclick="viewDetail('{{ $datas['ID'] }}')">
-                                                          <img src="../../dist/img/file.svg" width="30" height="30" a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" id="btn-history" class="history-profile" ></a>
-                                                          <img src="../../dist/img/trash.svg" width="30" height="30" a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn-del-row-profile"></a>                                                          
+                                                          <img src="{{asset('dist/img/edit.svg')}}" width="25" height="25" type="button" value="detail" onclick="viewDetail('{{ $datas['ID'] }}')">
+                                                          <img src="{{asset('dist/img/file.svg')}}" width="25" height="25" a href="{{ route('profile.history', ['id' =>$datas['ID']]) }}" type="button" id="btn-history" class="history-profile" ></a>
+                                                          <img src="{{asset('dist/img/trash.svg')}}" width="25" height="25" a href="{{ route('profile.drop', ['id' =>$datas['ID']]) }}" type="delete" class="btn-del-row-profile"></a>                                                          
                                                       </td>
                                                   </tr>
                                               @endforeach
@@ -118,17 +118,17 @@
                                                                 @csrf
                                                                     <div class="modal-body">
                                                                     <div class="form-group row">
-                                                                        <label class="col-sm-3 col-form-label">Profile ID / Name</label>
+                                                                        <label class="col-sm-3 col-form-label">Profile ID</label>
                                                                             <div class="col-sm-6">
-                                                                            <input class="form-control" id="TxtProfileIDModal" type="text" name="ProfileID" required>
+                                                                            <input class="form-control" id="TxtProfileIDModal" type="text" name="ProfileID">
                                                                             </div>
                                                                     </div>
-                                                                    <!-- <div class="form-group row">
-                                                                        <p class="col-sm-3 col-form-label">Name</p>
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-3 col-form-label">Name</label>
                                                                             <div class="col-sm-6">
-                                                                                <input class="form-control" id="TxtProfileNameModal" name="Name" type="email">
+                                                                                <input class="form-control" id="TxtProfileNameModal" name="Name" type="text">
                                                                             </div>
-                                                                    </div> -->
+                                                                    </div>
                                                                     <div class="form-group row">
                                                                         <p class="col-sm-3 col-form-label">Email</p>
                                                                             <div class="col-sm-6">
@@ -437,6 +437,54 @@
                                                               <p class="col-sm-3 col-form-label">Address 3</p>
                                                               <div class="col-sm-6">
                                                                   <input class="form-control" id="TxtPAddress_3" name="Address3" type="text" value="{{ old('Address3') }}">
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <p class="col-sm-3 col-form-label">Religion</p>
+                                                              <div class="col-sm-3">
+                                                                  <select class="form-control" id="religion" name="Religion"> 
+                                                                      @if (old('Religion') == '')
+                                                                      <option value="" selected></option>
+                                                                      @else
+                                                                      <option value=""></option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'BUDDHA')
+                                                                      <option value="BUDDHA" selected>BUDDHA</option>
+                                                                      @else
+                                                                      <option value="BUDDHA">BUDDHA</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'CATHOLIC')
+                                                                      <option value="CATHOLIC" selected>CATHOLIC</option>
+                                                                      @else
+                                                                      <option value="CATHOLIC">CATHOLIC</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'CHRISTIAN')
+                                                                      <option value="CHRISTIAN" selected>CHRISTIAN</option>
+                                                                      @else
+                                                                      <option value="CHRISTIAN">CHRISTIAN</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'HINDU')
+                                                                      <option value="HINDU" selected>HINDU</option>
+                                                                      @else
+                                                                      <option value="HINDU">HINDU</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'MOSLEM')
+                                                                      <option value="MOSLEM" selected>MOSLEM</option>
+                                                                      @else
+                                                                      <option value="MOSLEM">MOSLEM</option>
+                                                                      @endif
+
+                                                                      @if (old('Religion') == 'OTHERS')
+                                                                      <option value="OTHERS" selected>OTHERS</option>
+                                                                      @else
+                                                                      <option value="OTHERS">OTHERS</option>
+                                                                      @endif
+                                                                  </select>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -759,7 +807,7 @@
                                                           <div class="form-group row">
                                                               <p class="col-sm-3 col-form-label">PIC Phone</p>
                                                               <div class="col-sm-3">
-                                                                  <input class="form-control" id="TxtContactPhone" name="ConPhone" type="number" value="{{ old('ConPhone') }}">
+                                                                  <input class="form-control" id="TxtContactPhone" name="ConPhone" type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="{{ old('ConPhone') }}">
                                                               </div>
                                                           </div>
                                                             <div class="form-group row" style="display:none;">
@@ -772,54 +820,6 @@
                                                               <p class="col-sm-3 col-form-label">PIC Title</p>
                                                               <div class="col-sm-6">
                                                                   <input class="form-control" id="TxtPICTitle_1" name="PICTitle_1" type="text" value="{{ old('PICTitle') }}">
-                                                              </div>
-                                                          </div>
-                                                          <div class="form-group row">
-                                                              <p class="col-sm-3 col-form-label">Religion</p>
-                                                              <div class="col-sm-3">
-                                                                  <select class="form-control" id="religion" name="Religion"> 
-                                                                      @if (old('Religion') == '')
-                                                                      <option value="" selected></option>
-                                                                      @else
-                                                                      <option value=""></option>
-                                                                      @endif
-
-                                                                      @if (old('Religion') == 'BUDDHA')
-                                                                      <option value="BUDDHA" selected>BUDDHA</option>
-                                                                      @else
-                                                                      <option value="BUDDHA">BUDDHA</option>
-                                                                      @endif
-
-                                                                      @if (old('Religion') == 'CATHOLIC')
-                                                                      <option value="CATHOLIC" selected>CATHOLIC</option>
-                                                                      @else
-                                                                      <option value="CATHOLIC">CATHOLIC</option>
-                                                                      @endif
-
-                                                                      @if (old('Religion') == 'CHRISTIAN')
-                                                                      <option value="CHRISTIAN" selected>CHRISTIAN</option>
-                                                                      @else
-                                                                      <option value="CHRISTIAN">CHRISTIAN</option>
-                                                                      @endif
-
-                                                                      @if (old('Religion') == 'HINDU')
-                                                                      <option value="HINDU" selected>HINDU</option>
-                                                                      @else
-                                                                      <option value="HINDU">HINDU</option>
-                                                                      @endif
-
-                                                                      @if (old('Religion') == 'MOSLEM')
-                                                                      <option value="MOSLEM" selected>MOSLEM</option>
-                                                                      @else
-                                                                      <option value="MOSLEM">MOSLEM</option>
-                                                                      @endif
-
-                                                                      @if (old('Religion') == 'OTHERS')
-                                                                      <option value="OTHERS" selected>OTHERS</option>
-                                                                      @else
-                                                                      <option value="OTHERS">OTHERS</option>
-                                                                      @endif
-                                                                  </select>
                                                               </div>
                                                           </div>
                                                           <div class="form-group row">
@@ -1008,14 +1008,18 @@
 @section('scriptpage')
 
 <script>
-$( document ).ready(function() {
-    console.log('{{session("errors")}}');
-    corporateF_chekcked();
-    Product_OnChage();
+$(function () {
     $("#example1").DataTable({
         "responsive": true,
         "autoWidth": false,
     });
+  });
+</script>
+<script>
+$( document ).ready(function() {
+    console.log('{{session("errors")}}');
+    corporateF_chekcked();
+    Product_OnChage();
 });
 function corporateF_chekcked(){
     var cbxCorporate = document.getElementById("CbxCorporateF")
@@ -1324,7 +1328,7 @@ $(".form-sync").submit(function(event){
     $('#div-overlay').append('<div class="overlay"><i class="fas fa-2x fa-sync fa-spin"></i></div>');
 
     let ProfileID = $("input[name=ProfileID]").val();
-    let Name = $("input[name=ProfileID]").val();
+    let Name = $("input[name=Name]").val();
     let email = $("input[name=email]").val();
     let Address = $("input[name=Address1]").val();
     let City = $("input[name=CityModal]").val();
