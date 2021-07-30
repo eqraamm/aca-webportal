@@ -141,7 +141,7 @@
                 <div class="tab-pane" id="policy">
                         <!-- <div class="icon mt-3 mb-3 " align="center">
                           <p img src="../../dist/img/floppy-disk.png" id="save"  width="40" height="40" type="button" value="simpan"></p>
-                          <!-- <img src="../../dist/img/calculator.png" id="premi-cal" width="40" height="40" type="button" > -->
+                          <img src="../../dist/img/calculator.png" id="premi-cal" width="40" height="40" type="button" >
                           <img src="../../dist/img/upload.svg" id="send" width="40" height="40" type="button">
                           <img src="../../dist/img/file.svg" id="search" width="40" height="40" type="button">
                           <img src="../../dist/img/edit.svg" id="edit" width="40" height="40" type="button">
@@ -742,7 +742,6 @@
                                 </div>
                               </div>
                           </div>
-<<<<<<< HEAD
                           <div class="modal fade" id="modal-general" tabindex="-1" role="dialog">
                             <div class="modal-dialog modal-lg">
                               <div class="modal-content">
@@ -777,7 +776,6 @@
                                 </div>
                               </div>
                             </div>
-=======
                           <h3>Beneficiaries</h3>
                           <div class="card card-info">
                             <div class="card-body" id="cbBeneficiaries">
@@ -792,7 +790,6 @@
                               </table>
                             </div>
                           </div>
-<<<<<<< HEAD
                           <h3>Interested Party</h3>
                           <div class="card card-info">
                             <div class="card-body" id="cbInterestedParty">
@@ -809,7 +806,6 @@
                           </div>
                           <h3>Default Clausula</h3>
                           <div class="card card-info">
->>>>>>> refs/remotes/origin/master
                             <div class="card-body">
                               <table id="tblBeneficiaries" class="table table-condensed responsive table-striped">
                                 <thead>
@@ -826,15 +822,7 @@
                               </table>
                             </div>
                           </div>
-<<<<<<< HEAD
                           <div class="card" style="display:none;">
-=======
-                          <h3>Default Deductible</h3>
-                          <div class="card card-info">
-                            <div class="card-body" id="cbCD">
-=======
-                          <div class="card">
->>>>>>> refs/remotes/origin/master
                             <h2 class="card-header">Interested Party</h2>
                             <div class="card-body">
                             </div>
@@ -850,13 +838,11 @@
                           <div class="card">
                             <h2 class="card-header">Default Deductible</h2>
                             <div class="card-body" id="cbDeductible">
->>>>>>> refs/remotes/origin/master
                               <table id="tbl_covDeductible" class="table table-condensed responsive table-striped">
 
                               </table>
                             </div>
                           </div>
-<<<<<<< HEAD
                           <h3>Policy/Document List</h3>
                           <div class="card card-info">
                             <div class="card-body">
@@ -864,43 +850,6 @@
                           </div>
                           <h3>Submission</h3>
                           <div class="card card-info">
-=======
-                          <div class="card">
-                            <div class="card-header container-fluid">
-                              <div class="row">
-                                <div class="col-md-7">
-                                  <h2>Policy Photo/Document List</h2>
-                                </div>
-                                <div class="col-md-5 float-right">
-                                  <button class="btn btn-primary btn-upload" style="margin-left: 16em">
-                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
-                                  </svg>
-                                    Upload
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="card-body">
-                              <table id="tblPolDocUpload" class="table table-condensed responsive table-striped">
-                                <thead>
-                                  <tr>
-                                      <th>No.</th>
-                                      <th></th>
-                                      <th>FileType</th>
-                                      <th>Title</th>
-                                      <th>Remarks</th>
-                                      <th>Action</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                          <div class="card">
-                            <h2 class="card-header">Submission</h2>
->>>>>>> refs/remotes/origin/master
                             <div class="card-body">
                               <div class="form-group row">
                                 <p class="col-sm-3 col-form-label">Immediate Inforce</p>
@@ -1030,6 +979,7 @@
     $('#edate').datetimepicker({
           format: 'L'
     });
+    console.log(@json($Policy['Data']));
     var tblInquiry = $('#tblInquiryPolicy').DataTable( {
         "processing": true,
         "serverSide": false,
@@ -1041,7 +991,7 @@
             "type": "GET"
         },
         "columns": [
-          { "data": "PID" },
+          { "defaultContent": "", },
           { "data": "RefNo" },
           { "defaultContent": "",
             render: function(data, type, row) {
@@ -1104,7 +1054,15 @@
         ],
         "responsive": true,
         "autoWidth": false,
+        "order": [[ 1, 'asc' ]],
     } );
+    //add number increment
+    tblInquiry.on( 'order.dt search.dt', function () {
+      tblInquiry.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+
     function number_format(number, decimals, dec_point, thousands_sep) {
       // Strip all characters but numerical ones.
       number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
@@ -1128,9 +1086,6 @@
       }
       return s.join(dec);
 }
-    // setInterval( function () {
-    //   tblInquiry.ajax.reload( null, false ); // user paging is not reset on reload
-    // }, 10000 );
     // var tblInquiryPolicy = $("#tblInquiryPolicy").DataTable({
     //   ajax: "data.json",
     //   // "paging": true,
@@ -1180,13 +1135,6 @@
       refreshButton(false);
     }
   });
-
-  // <option value=""></option>
-  // <option value="R">Request</option>
-  // <option value="P">Process</option>
-  // <option value="T">Temporarily Process</option>
-  // <option value="C">Closed</option>
-  // <option value="S">Submit Confirmation</option>
 
   function parseDataToInput(polArray){
     // console.log(polArray);
@@ -1253,10 +1201,12 @@
     form.classList.remove('was-validated')
     var nextStep = event.detail.indexStep
     var currentStep = nextStep
+    console.log(nextStep);
 
     if (currentStep > 0) {
       currentStep--
     }
+    console.log(nextStep);
 
     var stepperPan = stepperPanList[currentStep]
     var fieldrequired = [].slice.call(stepperPan.querySelectorAll("[required]"));
@@ -2234,6 +2184,9 @@
     Product_OnChange(arrPolFilter[0]['ProductID']);
     parseDataToInput(arrPolFilter);
     
+    //calculate total premium
+    $('#TxtTotalPremium').val($('#Premium').val() + $('#AdmFee').val() + $('#StampDuty').val() - $('#Discount').val());
+
     //enable button after submit
     if (arrPolFilter[0]['PStatus'] == 'R'){
       refreshButton(true);
@@ -2391,32 +2344,6 @@
         toastMessage('400',error);
     }); 
   }
-
-  // $('.btn-del').click(function(event){
-  //   event.preventDefault();
-  //   var PID = $(this).attr('PID');
-  //   // var a_href = $(this).attr('action');
-  //   // let _token   = $('meta[name="csrf-token"]').attr('content');
-  //   console.log(PID);
-
-  //   // $("#loadMe").modal('show');
-
-  //   // $.ajax({
-  //   //   type: "POST",
-  //   //   url: a_href, 
-  //   //   data: {
-  //   //       PID: PID,
-  //   //       _token: _token
-  //   //     },
-  //   // }).done(function( response ) {
-  //   //   console.log(response);
-  //   //   $("#loadMe").modal("hide");
-  //   //   toastMessage(response.code,response.message);
-  //   // }).fail(function(xhr, status, error){
-  //   //     $("#loadMe").modal("hide");
-  //   //     toastMessage('400',error);
-  //   // }); 
-  // });
   
 </script>
 @endsection

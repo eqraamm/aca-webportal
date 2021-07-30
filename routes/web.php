@@ -25,7 +25,7 @@ Route::get('/logout', 'AuthController@logout')->name('logout');
 
 Route::group(['middleware' => 'CekLogin'], function(){
     // view dashboard
-    Route::get('/dashboard', 'AuthController@showFormWelcome');
+    // Route::get('/dashboard', 'AuthController@showFormWelcome');
     // data dashboard
     Route::get('/dashboard', 'IndexController@index')->name('dashboard');
     // Index Profile

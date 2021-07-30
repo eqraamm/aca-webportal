@@ -30,7 +30,7 @@
                               <div class="tab-content">
                                   <div class="{{ empty($tabname) || $tabname == 'inquiry' ? 'tab-pane fade show active' : 'tab-pane fade' }}" id="inquiry">
                                       <div class="card-body">
-                                          <table id="example1" class="table table-bordered table-striped">
+                                          <table id="example1" class="table table-condensed responsive table-striped" width="100%" >
                                               <thead>
                                                   <tr>
                                                       <th>Profile ID</th>
@@ -1009,6 +1009,7 @@
 
 <script>
 $(function () {
+    // console.log($(".history-profile"));
     $("#example1").DataTable({
         "responsive": true,
         "autoWidth": false,
@@ -1019,7 +1020,7 @@ $(function () {
 $( document ).ready(function() {
     console.log('{{session("errors")}}');
     corporateF_chekcked();
-    Product_OnChage();
+    // Product_OnChage();
 });
 function corporateF_chekcked(){
     var cbxCorporate = document.getElementById("CbxCorporateF")

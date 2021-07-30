@@ -16,6 +16,9 @@ class SurveyController extends Controller
             'PStatus' => '',
             'Insured' => ''
         );
+
+        session(['sidebar' => 'survey']);
+
         $responseSearchPolicy = APIMiddleware($data, 'SearchPolicy');
         //  dd($responseSearchPolicy);
          return view('survey')->with('data', $responseSearchPolicy); 

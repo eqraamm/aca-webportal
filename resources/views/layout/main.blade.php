@@ -96,8 +96,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <li class="{{ Session::get('sidebar') == 'dashboard' ? 'nav-link menu-open' : 'nav-link' }}">
-            <a href="{{ route('profile')}}" class="{{ Session::get('sidebar') == 'dashboard' ? 'nav-link active' : 'nav-link' }}">
+          <li class="{{ Session::get('sidebar') == 'dashboard' ? 'nav-link menu-open' : 'nav-link' }}">
+            <a href="{{ route('dashboard')}}" class="{{ Session::get('sidebar') == 'dashboard' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -137,7 +137,7 @@
             </a>
           </li>
           <li class="{{ Session::get('sidebar') == 'report' ? 'nav-link menu-open' : 'nav-link' }}">
-            <a href="report" class="{{ Session::get('sidebar') == 'report' ? 'nav-link active' : 'nav-link' }}">
+            <a href="#" class="{{ Session::get('sidebar') == 'report' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Report

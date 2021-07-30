@@ -16,6 +16,9 @@ class IndexController extends Controller
             'PStatus' => '',
             'Insured' => ''
         );
+
+        session(['sidebar' => 'dashboard']);
+
         $responseSearchPolicy = APIMiddleware($data, 'SearchPolicy');
         //  dd($responseSearchPolicy);
          return view('dashboard')->with('data', $responseSearchPolicy); 

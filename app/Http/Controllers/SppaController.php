@@ -39,7 +39,7 @@ class SppaController extends Controller
         $dataCT = array(
             'CT' => ''
         );
-        
+
         $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
         // dd($responseProduct);
         $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicy');
@@ -64,7 +64,7 @@ class SppaController extends Controller
 
         return view('Transaction.policy')
             ->with([
-                // 'Policy' => $responsePolicy,
+                'Policy' => $responsePolicy,
                 'product' => $responseProduct,
                 'coverage' => $responseCoverage,
                 'mo' => $responseMO,

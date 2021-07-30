@@ -47,9 +47,7 @@
 <script>
   $(function () {
     var arrPolicy = @json($data['Data']);
-    console.log(arrPolicy);
     var arrPolicySurvey = arrPolicy.filter(survey => survey.NeedSurveyF == true);
-    console.log(arrPolicySurvey);
         var t = $("#ListSurvey").DataTable({
           "data": arrPolicySurvey,
           "columns": [
@@ -87,7 +85,6 @@
             "orderable": false,
             "targets": 1
           },
-          
           {
            "width":"4.5%",
            "targets": [0] 
