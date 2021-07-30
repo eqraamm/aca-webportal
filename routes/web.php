@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SppaController;
+use App\Http\Controllers\SurveyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,5 +53,8 @@ Route::group(['middleware' => 'CekLogin'], function(){
     // qRoute::get('/transaction', 'SppaController@sppa')->name('inquiry.transaction');
     Route::get('/transaction', 'SppaController@showFormPolicy')->name('policy.transaction');
     Route::get('/Inquiry', 'InquiryController@inquiry');
+
+    // Index Survey
+    Route::get('/survey', 'SurveyController@showsurvey')->name('survey');
 });
 

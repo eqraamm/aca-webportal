@@ -11,13 +11,13 @@ class IndexController extends Controller
 
     public function index(){
         $data =array(
-            'ID' => 'aca_mo_1',
+            'ID' => session('ID'),
             'RefNo' => '',
             'PStatus' => '',
             'Insured' => ''
         );
         $responseSearchPolicy = APIMiddleware($data, 'SearchPolicy');
-        // dd($responsePolicy);
+        //  dd($responseSearchPolicy);
          return view('dashboard')->with('data', $responseSearchPolicy); 
     }
 }

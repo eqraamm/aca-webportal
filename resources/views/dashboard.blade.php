@@ -33,9 +33,6 @@
                                     <td>: <input type='date' name='dari tanggal'></td>
                                     <td>To </td>
                                     <td><input type='date' name='sampai tanggal'></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
                                     <td><input type="button" value="Search"></td>
                                 </tr>
                               </table> 
@@ -47,6 +44,7 @@
                                                                 <th>SPPA NO</th>
                                                                 <th>Long Insured Name</th>
                                                                 <th>Period</th>
+                                                                <th>Status</th>
                                                                 
                                                             </tr>
                                                         </thead>
@@ -57,6 +55,7 @@
                                                                 <td>{{ $datas['RefNo'] }}</td>
                                                                 <td>{{ $datas['AName'] }}</td>
                                                                 <td>{{ $datas['InceptionDate'] }} - {{ $datas['ExpiryDate'] }}</td>
+                                                                <td><input type="checkbox">
                                                             </tr>
                                                         @endforeach
                                                         
@@ -95,9 +94,16 @@
         "responsive": true,
         "autoWidth": false,
     });
-    console.log('huwow');
   });
 </script>
 @endsection
+<!-- <script>
+  function needsurvey(){
+    var arrPolicy = @json($['Data']);
+    console.log(arrPolicy);
+    var arrPolicySurvey = arrPolicy.filter(survey => survey.NeedSurveyF == 'true');
+    console.log(arrPolicySurvey);
+  }
+  </script> -->
 </body>
 </html>
