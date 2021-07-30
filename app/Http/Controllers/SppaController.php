@@ -88,8 +88,21 @@ class SppaController extends Controller
             'OwnerID' => 'aca_mo_1'
         );
 
+<<<<<<< HEAD
         $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
         // dd($responseProduct);
+=======
+        $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicy');
+        $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
+        $dataProduct = $responseProduct['Data'];
+
+        $dataProductgendtab = array(
+            'ProductID' => ''
+        );
+        $fixarrProduct = APIMiddleware($dataProductgendtab, 'SearchGENDTABByProduct');
+        
+        // dd($fixarrProduct);
+>>>>>>> refs/remotes/origin/master
         $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
         $responseMO = APIMiddleware($dataMO, 'SearchMO');
         $responseBranch = APIMiddleware($dataBranch, 'SearchBranch');
@@ -105,6 +118,7 @@ class SppaController extends Controller
                 'branch' => $responseBranch,
                 'currency' => $responseCurrency,
                 'profile' => $responseProfile,
+                'gendtab' => $fixarrProduct,
             ]);
     }
 }
