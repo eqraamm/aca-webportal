@@ -1,0 +1,109 @@
+body {
+  /* font-size:14px; */
+  font-family:'Quicksand', 'Helvetica Neue', Arial;
+  /* background-color:#eee; */
+  color:#454545
+}
+
+#headerTemplate{
+  vertical-align:top;
+  padding-top:20px;
+  padding-left:20px;
+  padding-bottom:20px;
+  padding-right:20px;
+  height:100%;
+  width:100%
+}
+
+.templateContainer{
+  background-color:#fff;
+  width:790px;
+}
+
+.tdLabel{
+  text-align:left;
+  max-width:100%;
+  width:200px;
+  word-wrap:break-word;
+  padding-left:15px;
+}
+
+.tdDot{
+  width:15px;
+}
+
+.tdValue{
+  text-align:left;
+  max-width:100%;
+  word-wrap:break-word;
+}
+
+.tblContentRow{
+  table-layout:fixed;
+  margin-top:20px;
+  width:95%;
+  /* border: 1px solid black; */
+}
+
+.deksripsiwaktu{
+  table-layout:fixed;
+  margin-top:10px;
+  width:100%;
+}
+
+.tdLabelObjectInfo{
+  text-align:left;
+  max-width:100%;
+  word-wrap:break-word;
+  width:35px;
+  vertical-align:top;
+  padding-top:10px;
+}
+
+.tdValueObjectInfo{
+  text-align:left;
+  max-width:100%;
+  width:100px;
+  word-wrap:break-word;
+  vertical-align:top;
+  padding-top:10px;
+  padding-left:10px;
+}
+
+.tdTab{
+  width: 3%;
+  white-space: nowrap;
+  padding-top:10px;
+}
+
+.strip{
+  width: 3%;
+  white-space: nowrap;
+  vertical-align:top;
+  padding-top:10px;
+}
+
+.titik{
+  text-align:left;
+  /* max-width:100%; */
+  width:5px;
+  vertical-align:top;
+  padding-top:10px;
+}
+
+.rowDetailObjInfo{
+  /* table-layout:fixed; */
+  width:95%;
+  /* border: 1px solid black; */
+}
+
+.tdRadioKendaraan{
+  text-align:left;
+  vertical-align:top;
+  padding-top:10px;
+  white-space: nowrap
+}
+
+.paragraphFooter{
+  text-align: justify;
+}
