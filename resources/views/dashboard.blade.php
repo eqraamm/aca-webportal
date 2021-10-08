@@ -53,7 +53,7 @@
                                                           @foreach($data['Data'] as $datas)
                                                             <tr>
                                                                 <td>{{ $datas['RefNo'] }}</td>
-                                                                <td>{{ $datas['AName'] }}</td>
+                                                                <td>{{ $datas['InsuredName'] }}</td>
                                                                 <td>{{ $datas['InceptionDate'] }} - {{ $datas['ExpiryDate'] }}</td>
                                                                 <td><input type="checkbox">
                                                             </tr>
@@ -97,13 +97,5 @@
   });
 </script>
 @endsection
-<!-- <script>
-  function needsurvey(){
-    var arrPolicy = @json($['Data']);
-    console.log(arrPolicy);
-    var arrPolicySurvey = arrPolicy.filter(survey => survey.NeedSurveyF == 'true');
-    console.log(arrPolicySurvey);
-  }
-  </script> -->
 </body>
 </html>

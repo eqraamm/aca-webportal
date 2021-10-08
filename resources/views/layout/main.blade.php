@@ -26,14 +26,20 @@
   <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css"> -->
     <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+  <!-- <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}"> -->
+  <!-- <script src="sweetalert2.min.js"></script> -->
+  <!-- <link rel="stylesheet" href="sweetalert2.min.css"> -->
   <!-- Toastr -->
   <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
   <!-- BStepper -->
   <link rel="stylesheet" href="{{asset('plugins/bs-stepper/css/bs-stepper.min.css')}}">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="{{asset('plugins/dropzone/min/dropzone.min.css')}}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
@@ -98,6 +104,7 @@
                with font-awesome or any other icon font library -->
           <li class="{{ Session::get('sidebar') == 'dashboard' ? 'nav-link menu-open' : 'nav-link' }}">
             <a href="{{ route('dashboard')}}" class="{{ Session::get('sidebar') == 'dashboard' ? 'nav-link active' : 'nav-link' }}">
+            <!-- <a href="{{ route('dashboard')}}" class="{{ Session::get('sidebar') == 'dashboard' ? 'nav-link active' : 'nav-link' }}"> -->
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -186,6 +193,7 @@
 <script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<!-- <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script> -->
 <!-- BStepperJS -->
 <script src="{{asset('plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
 <!-- AdminLTE App -->
@@ -195,7 +203,9 @@
 <!-- Toastr -->
 <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
 <!-- SweetAlert2 -->
-<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<!-- <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script> -->
+<!-- <script src="sweetalert2.all.min.js"></script> -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- daterangepicker -->
 <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
 <!-- InputMask -->
@@ -205,6 +215,8 @@
 <script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 <!-- dropzonejs -->
 <script src="{{asset('plugins/dropzone/min/dropzone.min.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
 
 <!-- General For Web Portal MW -->
 <script src="{{asset('dist/js/pages/webportal.js')}}"></script>

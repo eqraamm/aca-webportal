@@ -51,7 +51,7 @@
                     @endif
                     
         <div class="input-group mb-3">
-          <input type="username" name="username" class="form-control" placeholder="username">
+          <input type="username" name="username" class="form-control" placeholder="Username">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -69,10 +69,10 @@
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember">
+              <!-- <input type="checkbox" id="remember">
               <label for="remember">
                 Remember Me
-              </label>
+              </label> -->
             </div>
           </div>
           <!-- /.col -->

@@ -11,6 +11,7 @@ use Session;
 use App\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 
 class ProfileController extends Controller
@@ -18,10 +19,10 @@ class ProfileController extends Controller
     public function index(){
         // dd(session('ID'));
          // API Country
-         $data = array(
-            'Country' => ''
-        );
-        $responseCountry = APIMiddleware($data, 'SearchCountry');
+        //  $data = array(
+        //     'Country' => ''
+        // );
+        // $responseCountry = APIMiddleware($data, 'SearchCountry');
 
         // dd($responseCountry);
 
@@ -35,34 +36,37 @@ class ProfileController extends Controller
         // dd($responseSearchProfile);
 
         // Data province
-        $data = array(
-            'Province' => ''
-        );
-        $responseProvince = APIMiddleware($data, 'SearchProvince');
+        // $data = array(
+        //     'Province' => ''
+        // );
+        // $responseProvince = APIMiddleware($data, 'SearchProvince');
 
         // Data CGroup
-        $data = array(
-            'CGroup' => ''
-        );
-        $responseCGroup = APIMiddleware($data, 'SearchCGroup');
+        // $data = array(
+        //     'CGroup' => ''
+        // );
+        // $responseCGroup = APIMiddleware($data, 'SearchCGroup');
 
          // Data SCGroup
-         $data = array(
-            'SCGroup' => ''
-        );
-        $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
+        //  $data = array(
+        //     'SCGroup' => ''
+        // );
+        // $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
 
         // Data Occupation / LOB
-        $data = array(
-            'Occupation' => ''
-        );
-        $responseOccupation = APIMiddleware($data, 'SearchOccupation');
+        // $data = array(
+        //     'Occupation' => ''
+        // );
+        // $responseOccupation = APIMiddleware($data, 'SearchOccupation');
 
         session(['sidebar' => 'profile']);
 
-        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
-        'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup, 
-        'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '', 'Occupation' => $responseOccupation)); 
+        return view('Profile.Profile', array('data' => $responseSearchProfile, 
+        'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => ''));
+        
+        // return view('Profile.Profile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
+        // 'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup, 
+        // 'tabname' => 'inquiry', 'responseCode' => '', 'responseMessage' => '', 'Occupation' => $responseOccupation));
     }
 
     public function dropProfile($id){
@@ -112,25 +116,24 @@ class ProfileController extends Controller
         $responseMessage = $responsedrop['message'];
 
         // return $responsedrop;
-        return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
+        return view('Profile.Profile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
         'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup,
         'tabname' => 'inquiry', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage, 'Occupation' => $responseOccupation));
 
     }
     
     // api save profile 
-    public function SaveProfile(Request $request)
-    {
+    public function SaveProfile(Request $request){
         $dataprofile = array(
             'ID' => ($request->input('ProfileID') == null) ? '' : $request->input('ProfileID'),
             'RefID' => ($request->input('RefID') == null) ? '' : $request->input('RefID'),
             'RefName' => ($request->input('RefName') == null) ? '' : $request->input('RefName'),
-            'Firstname' => ($request->input('FirstName') == null) ? '' : $request->input('FirstName'),
-            'Midname' => ($request->input('MiddleName') == null) ? '' : $request->input('MiddleName'),
-            'Lastname' => ($request->input('LastName') == null) ? '' : $request->input('LastName'),
-            'Name' => ($request->input('Name') == null) ? '' : $request->input('Name'),
+            'Firstname' => ($request->input('FirstName') == null) ? '' : strtoupper($request->input('FirstName')),
+            'Midname' => ($request->input('MiddleName') == null) ? '' : strtoupper($request->input('MiddleName')),
+            'Lastname' => ($request->input('LastName') == null) ? '' : strtoupper($request->input('LastName')),
+            'Name' => ($request->input('Name') == null) ? '' : strtoupper($request->input('Name')),
             'ID_Type' => ($request->input('IDType') == null) ? '' : $request->input('IDType'),
-            'ID_Name' => ($request->input('ID_Name') == null) ? '' : $request->input('ID_Name'),
+            'ID_Name' => ($request->input('ID_Name') == null) ? '' : strtoupper($request->input('ID_Name')),
             'dateID' => ($request->input('IDDate') == null) ? '' : $request->input('IDDate'),
             'Salutation' => ($request->input('Salutation') == null) ? '' : $request->input('Salutation'),
             'Initial' => ($request->input('Salutation') == null) ? '' : $request->input('Salutation'),
@@ -157,7 +160,7 @@ class ProfileController extends Controller
             'TaxID' => ($request->input('Tax') == null) ? '' : $request->input('Tax'),
             'Religion' => ($request->input('Religion') == null) ? '' : $request->input('Religion'),
             'Income' => ($request->input('Income') == null) ? '' : $request->input('Income'),
-            'Employment' => ($request->input('CoAddress') == null) ? '' : $request->input('CoAddress'),
+            'Employment' => ($request->input('Employment') == null) ? '' : $request->input('Employment'),
             'Marital' => ($request->input('Marital') == null) ? '' : $request->input('Marital'),
             'WNIF' => ($request->input('Citizen') == null) ? '0' : '1',
             'Contact' => ($request->input('Contact') == null) ? '' : $request->input('Contact'),
@@ -177,39 +180,64 @@ class ProfileController extends Controller
             'TaxAddress' => ($request->input('TaxAddress') == null) ? '' : $request->input('TaxAddress')
         );
 
-        
+        // dd($dataprofile);
+
         if ($dataprofile['ID'] == ''){
             $responseValidateProfile  = APIMiddleware($dataprofile, 'ValidateProfile');
             // dd($responseValidateProfile);
             if ($responseValidateProfile['code'] == '400'){
                 return response()->json(['code' => '400','message'=>$responseValidateProfile['message']]);
             }else{
+
                 if ($dataprofile['CorporateF'] == "1"){
                     $payload = array(
                         'TaxID' => $dataprofile['TaxID']
                     );
+                    // dd($payload);
                     $responseSearchRefProfile = APIMiddleware($payload, 'SearchRefProfile');
+                    // dd($responseSearchRefProfile);
+
+                    
+                    // dump(count($data));
+                    // die;
+                    
                     if ($responseSearchRefProfile['code'] == '200'){
-                        // dd($html);
-                        // $collection = collect($responseSearchRefProfile['Data']);
-                        // $firstname = $dataprofile['Firstname'];
-                        // dd($dataprofile);
-                        // $filtered = $collection->where('FirstName', $firstname);
-                        // // array_value($filtered);
-                        // $firstname = $dataprofile['Firstname'];
-                        // $filteredArray = Arr::where($responseSearchRefProfile['Data'], function ($value, $key) use($firstname) {
-                        //     return $value['FirstName'] == $firstname;
-                        // });
-                        // $test = collect($filteredArray(0));
-                        // return $test;
-                        // dump($responseSearchRefProfile['Data']);
-                        // dump($filtered);
+                        //Cek validasi firstname , jika sama maka lolos, jika tidak maka tidak lolos
+                        // dump($responseSearchRefProfile);
+                        $FirstName = $dataprofile['Firstname'];
+                        // dump($FirstName);
+                        $data = Arr::where($responseSearchRefProfile['Data'], function ($value, $key) use($FirstName) {
+                            return strtoupper($value['FirstName']) == strtoupper($FirstName);
+                        });
+                        // dump($data);
                         // die;
-                        $html = view('tblSyncProfile',array('datasync' => $responseSearchRefProfile))->render();
-                        return response()->json(['code' => '401','message'=>'Profile already created in Core, please sync profile first.','html' => $html]);
+                        if (count($data) == 0){
+                            $html = view('Profile.modalSyncProfile',array('datasync' => $responseSearchRefProfile))->render();
+                            return response()->json(['code' => '402','message'=>'Profile already created in Core, please sync profile first.','html' => $html]);
+                        }else{
+                            $responseSave  = APIMiddleware($dataprofile, 'SaveProfile');
+                            // dd($responseSave);
+                            //Data Profile
+                            $dataprofile = array (
+                                'ID' => '',
+                                'OwnerID' => session('ID'),
+                            );
+                            // dd($dataprofile);
+                            $responseSearchProfile = APIMiddleware($dataprofile, 'SearchProfile');
+                            // dd($responseSearchProfile);
+                            return response()->json(['code' => $responseSave['code'],'message'=>$responseSave['message'],'Data'=>$responseSave['Data'],'html' => '', 'listprofile' => $responseSearchProfile]);
+                        }
                     }else{
                         $responseSave  = APIMiddleware($dataprofile, 'SaveProfile');
-                        return response()->json(['code' => $responseSave['code'],'message'=>$responseSave['message'],'html' => '']);
+
+                        //Data Profile
+                        $data = array (
+                            'ID' => '',
+                            'OwnerID' => session('ID'),
+                        );
+                        $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
+
+                        return response()->json(['code' => $responseSave['code'],'message'=>$responseSave['message'],'Data'=>$responseSave['Data'],'html' => '', 'listprofile' => $responseSearchProfile]);
                     }
                 }else{
                     $payload = array(
@@ -218,10 +246,17 @@ class ProfileController extends Controller
                     $responseSearchRefProfile = APIMiddleware($payload, 'SearchRefProfile');
                     if ($responseSearchRefProfile['code'] == '200'){
                         $html = view('tblSyncProfile',array('datasync' => $responseSearchRefProfile))->render();
-                        return response()->json(['code' => '401','message'=>'Profile already created in Core, please sync profile first.','html' => $html]);
+                        return response()->json(['code' => '402','message'=>'Profile already created in Core, please sync profile first.','html' => $html]);
                     }else{
                         $responseSave  = APIMiddleware($dataprofile, 'SaveProfile');
-                        return response()->json(['code' => $responseSave['code'],'message'=>$responseSave['message'],'html' => '']);
+
+                        //Data Profile
+                        $data = array (
+                            'ID' => '',
+                            'OwnerID' => session('ID'),
+                        );
+                        $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
+                        return response()->json(['code' => $responseSave['code'],'message'=>$responseSave['message'],'Data'=>$responseSave['Data'],'html' => '', 'listprofile' => $responseSearchProfile]);
                     }
                 }
             }
@@ -233,62 +268,25 @@ class ProfileController extends Controller
             $searchprofilebyid = APIMiddleware($data, 'SearchProfile');
 
             if ($searchprofilebyid['code'] == '200'){
+                $dataprofile['RefID'] = $searchprofilebyid['Data'][0]['RefID'];
+                $dataprofile['RefName'] = $searchprofilebyid['Data'][0]['RefName'];
+                // dd($dataprofile);
                 $responseSave  = APIMiddleware($dataprofile, 'UpdateProfile');
             }else{
                 $responseSave  = APIMiddleware($dataprofile, 'SaveProfile');
             }
-            return response()->json(['code' => $responseSave['code'],'message'=>$responseSave['message'],'html' => '']);
+
+            // dd($responseSave);
+
+            //Data Profile
+            $data = array (
+                'ID' => '',
+                'OwnerID' => session('ID'),
+            );
+            $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
+
+            return response()->json(['code' => $responseSave['code'],'message'=>$responseSave['message'],'Data'=>$responseSave['Data'],'html' => '', 'listprofile' => $responseSearchProfile]);
         }
-        
-        // $responseCode = ($responseSave['code'] == '401') ? '400' : $responseSave['code'];
-        // $responseMessage = $responseSave['message'];
-
-        // // List data country
-        // $data = array(
-        //     'Country' => ''
-        // );
-        // $responseCountry = APIMiddleware($data, 'SearchCountry');
-
-        //  //Data tab inquiry profile
-        //  $data = array (
-        //     'ID' => '',
-        //     'OwnerID' => session('ID')
-        // );
-        // $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
-
-        // // Data province
-        // $data = array(
-        //     'Province' => ''
-        // );
-        // $responseProvince = APIMiddleware($data, 'SearchProvince');
-
-        // // Data CGroup
-        // $data = array(
-        //     'CGroup' => ''
-        // );
-        // $responseCGroup = APIMiddleware($data, 'SearchCGroup');
-
-        //  // Data SCGroup
-        //  $data = array(
-        //     'SCGroup' => ''
-        // );
-        // $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
-
-        // // Data Occupation / LOB
-        // $data = array(
-        //     'Occupation' => ''
-        // );
-        // $responseOccupation = APIMiddleware($data, 'SearchOccupation');
-        
-        // // return redirect()->back()->with(array('Country' => $responseCountry, 'data' => $responseSearchProfile, 'tabname' => 'profile', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage))->withInput($request->all);
-
-        // session()->flashInput($request->input());
-        
-
-        // return view('CreateProfile', array('Country' => $responseCountry, 'data' => $responseSearchProfile, 
-        // 'Province' => $responseProvince, 'CGroup' => $responseCGroup, 'SCGroup' => $responseSCGroup,
-        // 'tabname' => 'profile', 'responseCode' => $responseCode, 'responseMessage' => $responseMessage, 'Occupation' => $responseOccupation));
-        
     }
 
     public function historyProfile($id){
@@ -297,10 +295,9 @@ class ProfileController extends Controller
             'OwnerID' => session('ID')
         );
         $responseHistory = APIMiddleware($data, "SearchHistoryProfile");
-
         // dd($responseHistory);
         // return $responseHistory;
-        return view('tblHistory',array('dataHistory' => $responseHistory));
+        return view('Profile.tblHistory',array('dataHistory' => $responseHistory));
 
     }
 
@@ -321,7 +318,7 @@ class ProfileController extends Controller
 
         // dd($responseSync);
 
-        return view('tblSyncProfile',array('datasync' => $responseSync));
+        return view('Profile.modalsyncProfile',array('datasync' => $responseSync));
 
     }
 
@@ -359,4 +356,61 @@ class ProfileController extends Controller
         // return view('tblSyncProfile',array('responseCode' => $responseSync['code'],'datasync' => $responseSync));
 
     }
+
+    public function getlistcountry(){
+        $data = array(
+            'Country' => ''
+        );
+        $responseCountry = APIMiddleware($data, 'SearchCountry');
+
+        return $responseCountry;
+    }
+
+    public function getlistProvince(){
+        $data = array(
+            'Province' => ''
+        );
+        $responseProvince = APIMiddleware($data, 'SearchProvince');
+
+        return $responseProvince;
+    }
+
+    public function getlistCGroup(){
+        $data = array(
+            'CGroup' => ''
+        );
+        $responseCGroup = APIMiddleware($data, 'SearchCGroup');
+
+        return $responseCGroup;
+    }
+
+    public function getlistSCGroup(){
+        $data = array(
+            'SCGroup' => ''
+        );
+        $responseSCGroup = APIMiddleware($data, 'SearchSCGroup');
+
+        return $responseSCGroup;
+    }
+
+    public function getlistOccupation(){
+        $data = array(
+            'Occupation' => ''
+        );
+        $responseOccupation = APIMiddleware($data, 'SearchOccupation');
+
+        return $responseOccupation;
+    }
+    
+    public function getlistProfile(){
+        $data = array (
+            'ID' => '',
+            'OwnerID' => session('ID'),
+        );
+        $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
+
+        return response()->json(['data' => $responseSearchProfile['Data']]);
+    }
+
+    
 } 

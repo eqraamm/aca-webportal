@@ -229,4 +229,12 @@ return [
 
     ],
 
+    //tambahan config untuk web portal
+    'AUTOEMAILCHECKBOXF' => env('AUTOEMAILCHECKBOXF', true),
+    'SHOWBUTTONGETPOLICYNO' => env('SHOWBUTTONGETPOLICYNO', true),
+    'SHOWPALIAS' => env('SHOWPALIAS', true),
+    'SHOWBILLINGBYPOLICYYEAR' => env('SHOWBILLINGBYPOLICYYEAR', true),
+    'MANDATORYBRANCH' => env('MANDATORYBRANCH', false),
+    'MANDATORYSEGMENT' => env('MANDATORYSEGMENT', false),
+
 ];

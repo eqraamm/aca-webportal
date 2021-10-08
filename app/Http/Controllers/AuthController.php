@@ -48,7 +48,7 @@ class AuthController extends Controller
         );
 
         $response  = APIMiddleware($data, 'Login');
-        
+        // return $response;
         if ($response['code'] == '200'){
             $data = array (
                 'ID' => $request->input('username'),
@@ -61,6 +61,7 @@ class AuthController extends Controller
             session(['ID' => $responseUser['Data'][0]['ID']]);
             session(['Name' => $responseUser['Data'][0]['Name']]);
             session(['Role' => $responseUser['Data'][0]['Role']]);
+            session(['Password' => $request->input('password')]);
             return redirect()->route('profile');
         }else{
             Session::flash('error', $response['message']);

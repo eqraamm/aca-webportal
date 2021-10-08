@@ -30,6 +30,7 @@
 </table>
 <script>
   $(function () {
+      console.log(@json($datasync['Data']));
     $("#tblModalSync").DataTable({
         "responsive": true,
         "autoWidth": false,
@@ -83,7 +84,7 @@ function viewDetailSync(ID){
   document.getElementById("TxtTaxID").value = filterarray[0]['TaxID'];
   document.getElementById("religion").value = filterarray[0]['Religion'];
   document.getElementById("LstIncome").value = filterarray[0]['Income'];
-  document.getElementById("TxtEmployment").value = filterarray[0]['Employment'];
+  document.getElementById("LstEmployment").value = filterarray[0]['Employment'];
   if (filterarray[0]['WNIF'] == true) {
         document.getElementById("CbxWNIF").setAttribute("checked", "");
     }else{

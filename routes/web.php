@@ -47,6 +47,13 @@ Route::group(['middleware' => 'CekLogin'], function(){
         return Route::input('id');
     })->name("profile.getsync");
 
+    Route::get('/getlistprofile', 'ProfileController@getlistProfile')->name('listprofile');
+    Route::get('/getlistcountry', 'ProfileController@getlistcountry')->name('listcountry');
+    Route::get('/getlistProvince', 'ProfileController@getlistProvince')->name('listprovince');
+    Route::get('/getlistCGroup', 'ProfileController@getlistCGroup')->name('listcgroup');
+    Route::get('/getlistSCGroup', 'ProfileController@getlistSCGroup')->name('listscgroup');
+    Route::get('/getlistOccupation', 'ProfileController@getlistOccupation')->name('listoccupation');
+
     Route::post('/profile/uploadDocument', 'ProfileController@uploadProfileDocument')->name('profile.uploadDocumentPost');
 
      // Index Transaction
@@ -63,8 +70,31 @@ Route::group(['middleware' => 'CekLogin'], function(){
     // qRoute::get('/transaction', 'SppaController@sppa')->name('inquiry.transaction');
     Route::get('/transaction', 'SppaController@showFormPolicy')->name('policy.transaction');
     Route::get('/Inquiry', 'InquiryController@inquiry');
+    Route::POST('/tempsubmitpolicy', 'SppaController@TempSubmitPolicy')->name('policy.tempsubmitpolicy');
+    Route::POST('/revisepolicy', 'SppaController@RevisePolicy')->name('policy.revisepolicy');
+    Route::POST('/submitpolicyconfirmation', 'SppaController@SubmitPolicyConfirmation')->name('policy.submitpolicyconfirmation');
+
+    Route::get('/getlistmo', 'SppaController@getlistMo')->name('listmo');
+    Route::get('/getlistbranch', 'SppaController@getlistbranch')->name('listbranch');
+    Route::get('/getlistcurrency', 'SppaController@getlistcurrency')->name('listcurrency');
+    Route::get('/getlistprofile', 'SppaController@getlistprofile')->name('listprofile');
+    Route::get('/getlistsegment', 'SppaController@getlistsegment')->name('listsegment');
+    Route::get('/getlistct', 'SppaController@getlistct')->name('listct');
+    Route::get('/getlistagent', 'SppaController@getlistagent')->name('listagent');
+    Route::get('/getlistproduct', 'SppaController@getlistproduct')->name('listproduct');
+    Route::get('/getlistcoverage', 'SppaController@getlistcoverage')->name('listcoverage');
+    Route::get('/getlistgendtab', 'SppaController@getlistgendtab')->name('listgendtab');
+
+    Route::post('/docpreview', 'SppaController@getDocumentPreview')->name('docpreview');
 
     // Index Survey
     Route::get('/survey', 'SurveyController@showsurvey')->name('survey');
 });
+
+// Route::get('/sppadoc/{data}', 'SppaController@getPolicyDoc')->name('sppadoc');
+Route::get('/sppadoc', 'SppaController@getPolicyDoc')->name('sppadoc');
+Route::POST('/submitsppadoc', 'SppaController@SubmitPolicyDocSPPA')->name('submitsppadoc');
+// Route::view('/sppadoc', 'Transaction.PolicyDocSPPA');
+Route::get('/sppadocold/{data}', 'SppaController@getPolicyDoc')->name('sppadocold');
+// Route::view('/sppadocold', 'Transaction.backupdocsppa');
 

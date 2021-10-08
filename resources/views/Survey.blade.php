@@ -47,9 +47,22 @@
 <script>
   $(function () {
     var arrPolicy = @json($data['Data']);
-    var arrPolicySurvey = arrPolicy.filter(survey => survey.NeedSurveyF == true);
+    console.log(arrPolicy);
+    var filter = {
+      NeedSurveyF: true,
+      SurveyF: false,
+    };
+    surveytemp = arrPolicy.filter(function(item) {
+      for (var key in filter) {
+        if (item[key] === undefined || item[key] != filter[key])
+          return false;
+      }
+      return true;
+    });
+    console.log(surveytemp);
+
         var t = $("#ListSurvey").DataTable({
-          "data": arrPolicySurvey,
+          "data": surveytemp,
           "columns": [
             {
               "title": "",
