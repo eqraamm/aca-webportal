@@ -89,6 +89,10 @@ Route::group(['middleware' => 'CekLogin'], function(){
 
     // Index Survey
     Route::get('/survey', 'SurveyController@showsurvey')->name('survey');
+    Route::post('/emailsurvey', 'SurveyController@SubmitSurvey')->name('survey.submitsurvey');
+
+    // index report
+    Route::get('/report', 'ReportController@Retrive')->name('retrive');
 });
 
 // Route::get('/sppadoc/{data}', 'SppaController@getPolicyDoc')->name('sppadoc');

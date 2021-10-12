@@ -69,3 +69,41 @@ function getData(ajaxurl) {
     });
 };
 
+function getformatedDate(date){
+    console.log(date);
+    if (date === undefined){
+        var d = new Date();
+    }else{
+        var d = new Date(date);
+    }
+    console.log(d);
+
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var year = d.getFullYear();
+
+    var output = (month<10 ? '0' : '') + month + '/' +  (day<10 ? '0' : '') + day + '/' + year ;
+    return output;
+  }
+
+  function getFormatedTime(date){
+    var d = new Date(date);
+
+    var hour = d.getHours();
+    var minute = d.getMinutes();
+    var second = d.getSeconds();
+
+    var output = (hour<10 ? '0' : '') + hour + ':' +  (minute<10 ? '0' : '') + minute + ':' + (second<10 ? '0' : '') + second;
+    return output;
+  }
+
+//   function getformatedDate(date){
+//     var d = new Date(date);
+
+//     var month = d.getMonth()+1;
+//     var day = d.getDate();
+//     var year = d.getFullYear();
+
+//     var output = (month<10 ? '0' : '') + month + '/' +  (day<10 ? '0' : '') + day + '/' + year ;
+//     return output;
+//   }

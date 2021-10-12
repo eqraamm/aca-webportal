@@ -181,7 +181,7 @@
       function openInNewTab(url) {
         // console.log(url);
         let pdfWindow = window.open("");
-
+        // console.log(url);
         var baseurl = "<iframe width='100%' height='100%' src='data:application/pdf;base64,"+ url +"'></iframe>";
         pdfWindow.document.write(baseurl, '_blank');
         // var win = window.open(url, '_blank');

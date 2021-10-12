@@ -20,7 +20,12 @@ function APIMiddleware($array_plaintext, $path)
     $ciphertext = openssl_encrypt($data, $method, $privatekey, OPENSSL_NO_PADDING);
     $ciphertext = base64_encode($ciphertext);
 
-    $response = Http::timeout(60)->post($url, [
+    // $response = Http::timeout(60)->post($url, [
+    //     'data' => $ciphertext,
+    //     'XPublic' => $publickey,
+    // ]);
+
+    $response = Http::post($url, [
         'data' => $ciphertext,
         'XPublic' => $publickey,
     ]);
@@ -45,11 +50,13 @@ function tgl_indo($tanggal){
         'November',
         'Desember'
     );
-    $pecahkan = explode('-', $tanggal);
+    $pecahkan = explode('/', $tanggal);
+
+    // dd($pecahkan);
     
     // variabel pecahkan 0 = tanggal
     // variabel pecahkan 1 = bulan
     // variabel pecahkan 2 = tahun
- 
-    return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+    // dd($pecahkan[1] . ' ' . $bulan[ (int)$pecahkan[0] ] . ' ' . $pecahkan[2]);
+    return $pecahkan[1] . ' ' . $bulan[ (int)$pecahkan[0] ] . ' ' . $pecahkan[2];
 }

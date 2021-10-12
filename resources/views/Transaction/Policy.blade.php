@@ -600,6 +600,7 @@
                           <div class="card">
                             <h2 class="card-header">Premium Simulation</h2>
                             <div class="card-body">
+                            @if (config('app.SHOWNOTAPPLYRATELOADING'))
                               <div class="form-group row">
                                 <p class="col-sm-3 col-form-label">Not Apply Rate Loading</p>
                                 <div class="col-sm-4">
@@ -607,6 +608,7 @@
                                   <input type="hidden" class="form-check-input col-sm-1" id="IncludeExtCovF" name="IncludeExtCovF"/>
                                 </div>
                               </div>
+                            @endif
                               <div class="form-group row">
                                 <p class="col-sm-3 col-form-label">Discount :</p>
                                 <div class="col-sm-2">
@@ -1013,7 +1015,7 @@
 @endsection
 @section('scriptpage')
 <script>
-  let arrCurrency,arrCoverage,arrProduct,arrGendtab, cbProduct, cbCoverage, cbGendtab;
+  let arrCurrency,arrCoverage,arrProduct,arrGendtab, cbProduct, cbCoverage, cbGendtab, arrProfile;
   let _token   = $('meta[name="csrf-token"]').attr('content');
   // let arrCoverage;
   // let arrProduct;
@@ -1081,7 +1083,9 @@
     //Currency
     if (resArray[5].code == '200'){
       var listbox = document.getElementById("Currency");
-      addOptionItem(listbox,resArray[5].Data,'Currency','Description',true);    
+      addOptionItem(listbox,resArray[5].Data,'Currency','Description',true);
+      $('#Currency').val('IDR');
+      $('#Currency').trigger('change');    
     }
 
     //Profile
@@ -1091,6 +1095,7 @@
       addOptionItem(listbox1,faProfile,'ID','Name',true,true);
       var listbox2 = document.getElementById("InsuredID");
       addOptionItem(listbox2,faProfile,'ID','Name',true,true);
+      arrProfile = faProfile;
     }
 
     //Segment
@@ -1115,6 +1120,7 @@
     
     console.timeEnd('main')
   }
+  
   main();
 
   $( document ).ready(function() {
@@ -1137,7 +1143,7 @@
     if (Role == 'MARKETING OFFICER'){
       $('#divLstMO').attr('style','display:none;');
     }
-    $('#RegDate').val(getTodayDate());
+    $('#RegDate').val(getformatedDate());
     if ($('#PStatus').val() == ''){
       $('#PStatus').val('Request');
       // $('#PStatus').val($('#PStatus').val().toUpperCase());
@@ -1317,11 +1323,15 @@
 
     $('#btntest').click(function (event){
       event.preventDefault();
-      // tblInquiry.rows( function ( idx, data, node ) {
-      //   // console.log(data.PID == 145);
-      //   return data.PID == 145;
-      // }).remove().draw();
-      // removeRowTable(tblInquiry, 145);
+      var str="Policy Number : 12345678\n" +
+        "Reference Number : statusCode\n";
+        var pstr = '<table style="width:100%"><tbody><tr><td style="text-align:left;padding-left:10%">Policy Number</td><td>:</td><td style="text-align:left;padding-left:5%">372378738237829</td></tr><tr><td style="text-align:left;padding-left:10%">Reference Number</td><td>:</td><td style="text-align:left;padding-left:5%">372378738237829</td></tr></tbody></table>'
+      Swal.fire({
+        icon: 'success',
+        title: 'Policy Successfully Submitted.',
+        html: pstr,
+        // text : 'Policy Number : asd'
+      })
     });
 
   function removeRowTable(table, value){
@@ -1346,16 +1356,6 @@
     }
   });
 
-  function getTodayDate(){
-    var d = new Date();
-
-    var month = d.getMonth()+1;
-    var day = d.getDate();
-    var year = d.getFullYear();
-
-    var output = (month<10 ? '0' : '') + month + '/' +  (day<10 ? '0' : '') + day + '/' + year ;
-    return output;
-  }
   var stepperpolicy = document.querySelector('#stepper-policy')
   window.stepperForm = new Stepper(stepperpolicy, {
     linear: false,
@@ -1407,11 +1407,35 @@
   //   }
   // })
 
-  $('#PolicyHolder').on('change', function() { 
-    qq_Pholder($(this).find('option').filter(':selected').text(), $('#InsuredID').find('option').filter(':selected').text());
+  $('#PolicyHolder').on('change', function() {
+    var Pholder, InsuredID; 
+    if ($(this).val() != ''){
+      const faPHolder = arrProfile.filter(base => base.ID === $(this).val());
+      console.log(faPHolder);
+      Pholder = faPHolder[0]['Name'];
+      console.log($('#InsuredID').val());
+      if ($('#InsuredID').val() == '') {
+        InsuredID = ''; 
+      }else{
+        const faInsured = arrProfile.filter(base => base.ID === $('#InsuredID').val());
+        InsuredID = faInsured[0]['Name'];
+      }
+      qq_Pholder(Pholder, InsuredID);
+    }
   });
   $('#InsuredID').on('change', function() {
-    qq_Insured($('#PolicyHolder').find('option').filter(':selected').text(), $(this).find('option').filter(':selected').text());
+    if ($(this).val() != ''){
+      var Pholder, InsuredID; 
+        const faInsured = arrProfile.filter(base => base.ID === $(this).val());
+        InsuredID = faInsured[0]['Name'];
+        if ($('#PolicyHolder').val() == '') {
+          Pholder = ''; 
+        }else{
+          const faPHolder = arrProfile.filter(base => base.ID === $('#PolicyHolder').val());
+          Pholder = faPHolder[0]['Name'];
+        }
+        qq_Insured(Pholder, InsuredID);
+    }
   });
 
   function qq_Pholder(LstPHolder, LstInsured) {
@@ -1421,8 +1445,8 @@
     } else if (LstPHolder != '' && LstInsured != '') {
       $('#InsuredName').val(LstPHolder + " QQ " + LstInsured);
     } else {
-      $('#InsuredID').val($('#PHolder').val());
-      $('#InsuredID').trigger('change');
+      // $('#InsuredID').val($('#PHolder').val());
+      // $('#InsuredID').trigger('change');
       $('#InsuredName').val(LstPHolder);
     }
   }
@@ -1434,8 +1458,8 @@
     } else if (LstPHolder != '' && LstInsured != '') {
       $('#InsuredName').val(LstPHolder + " QQ " + LstInsured);
     } else {
-      $('#PHolder').val(LstInsured);
-      $('#PHolder').trigger('change');
+      // $('#PHolder').val(LstInsured);
+      // $('#PHolder').trigger('change');
       // console.log('pholder : ' + $('#PHolder'));
       // console.log('insured : ' + LstInsured);
       $('#InsuredName').val(LstInsured);
@@ -1466,11 +1490,12 @@
 
     var bsCurrency = arrCurrency;
     var aStatus = faCoverageDet[0]['AStatus'];
+    var cbxInforceF = document.getElementById('InforceF');
     if (aStatus != 'C'){
-      $('#InforceF').attr('checked','checked');
+      cbxInforceF.checked = true;
       $('#InforceF').attr('disabled','disabled');
     }else{
-      $('#InforceF').removeAttr('checked');
+      cbxInforceF.checked = false;
       $('#InforceF').removeAttr('disabled');
     }
     //Hardcode for default grace period ambil dari MW_COVERAGE
@@ -2442,6 +2467,11 @@
     event.preventDefault();
     $("#loadMe").modal('show');
 
+    var asd = document.getElementById('InforceF');
+    console.log(asd.checked);
+
+    $('#InforceF').removeAttr('disabled');
+
     if (validateRequired()){
       $("#loadMe").modal("hide");
     }else{
@@ -2461,6 +2491,7 @@
           refreshButton(true);
           $('#img-btn-revise').attr("disabled","disabled");
           viewDetail(response.data[0]['PID']);
+          $('#InforceF').attr('disabled','disabled');
           // console.log($('#NeedESignF').checked());
           // $('#tabinquiry').attr("class","nav-link active");
           // $('#tabpolicy').attr("class","nav-link");
@@ -2470,6 +2501,7 @@
         $("#loadMe").modal("hide");
         toastMessage(response.code,response.message);
       }).fail(function(xhr, status, error){
+        $('#InforceF').attr('disabled','disabled');
         console.log(xhr);
         console.log(status);
         console.log(error);
@@ -2543,6 +2575,7 @@
       var response = result.value.data;
       var listpolicy = result.value.listpolicy;
       var policyno = response[0]['PolicyNO'];
+      var RefNo = $('#RefNo').val();
       // console.log(listpolicy);
       removeRowTable(tblInquiry, listpolicy[0]['PID']);
       tblInquiry.rows.add(listpolicy).draw();
@@ -2551,10 +2584,12 @@
       $('#PStatus').val('Process');
       refreshButton(false);
       disableAll();
+      var html = '<table style="width:100%"><tbody><tr><td style="text-align:left;padding-left:10%">Policy Number</td><td>:</td><td style="text-align:left;padding-left:5%">'+ policyno +'</td></tr><tr><td style="text-align:left;padding-left:10%">Reference Number</td><td>:</td><td style="text-align:left;padding-left:5%">'+ $('#RefNo').val(); +'</td></tr></tbody></table>'
       Swal.fire({
         icon: 'success',
         title: 'Policy Successfully Submitted.',
-        text: 'Policy Number : ' + policyno
+        // text: 'Policy Number : ' + policyno,
+        html: html,
       })
     })
 
@@ -2641,12 +2676,13 @@
       showLoaderOnConfirm: true,
       preConfirm: (value) => {
         return new Promise(function(resolve, reject) {
-          console.log(value);
+          var PID = $('#PID').val();
           var refno = $('#RefNo').val();
           $.ajax({
             type: "POST",
             url: "{{ route('docpreview') }}", 
             data: {
+              PID: PID,
               RefNo: refno,
               Document: value,
               _token: _token
@@ -2720,7 +2756,7 @@
     SubmitDateF_Checked();
     Product_OnChange($('#ProductID').val());
     $('#PID').val('-1');
-    $('#RegDate').val(getTodayDate());
+    $('#RegDate').val(getformatedDate());
     $('.select2bs4').trigger('change');
 
     $("#loadMe").modal("hide");
@@ -2848,6 +2884,7 @@
           $('#' + key).val(polArray[0][key]);  
         }
       }else if($('#' + key).attr('type') == 'checkbox'){
+        console.log('key : ' + key + ' , Value : ' + polArray[0][key]);
         if (polArray[0][key] == true){
           document.getElementById(key).checked = true;
           // $('#' + key).attr('checked','checked');

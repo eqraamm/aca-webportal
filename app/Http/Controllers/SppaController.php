@@ -117,8 +117,8 @@ class SppaController extends Controller
             'ProductID' => ($request->input('LstProduct') == null) ? '' : $request->input('LstProduct'),
             'CoverageID' => ($request->input('LstCoverage') == null) ? '' : $request->input('LstCoverage'),
             'IncludeExtCovF' => true,
-            'InceptionDate' => ($request->input('TxtSDate') == null) ? '' : $request->input('TxtSDate'),
-            'ExpiryDate' => ($request->input('TxtEDate') == null) ? '' : $request->input('TxtEDate'),
+            'InceptionDate' => ($request->input('TxtSDate') == null) ? '' : date_format(date_create($request->input("TxtSDate")),"Y-m-d"),
+            'ExpiryDate' => ($request->input('TxtEDate') == null) ? '' : date_format(date_create($request->input("TxtEDate")),"Y-m-d"),
             'NotApplyRateLoadingF' => ($request->input('CbxNotApplyRateLoading') == null) ? false : true,
             'PHolder' => ($request->input('LstProduct') == null) ? '' : $request->input('LstProduct'),
             'Currency' => ($request->input('LstCurrency') == null) ? '' : $request->input('LstCurrency'),
@@ -217,7 +217,7 @@ class SppaController extends Controller
     }
 
     public function SavePolicy(Request $request){
-        // dd($request);
+        // return $request->input();
         $datapolicy = array(
             'PID' => ($request->input('TxtPID') == null) ? '' : $request->input('TxtPID'),
             'RefNo' => ($request->input('TxtRefNo') == null) ? '' : $request->input('TxtRefNo'),
@@ -225,8 +225,8 @@ class SppaController extends Controller
             'InsuredName' => ($request->input('TxtName') == null) ? '' : $request->input('TxtName'),
             'ProductID' => ($request->input('LstProduct') == null) ? '' : $request->input('LstProduct'),
             'CoverageID' => ($request->input('LstCoverage') == null) ? '' : $request->input('LstCoverage'),
-            'InceptionDate' => ($request->input('TxtSDate') == null) ? '' : $request->input('TxtSDate'),
-            'ExpiryDate' => ($request->input('TxtEDate') == null) ? '' : $request->input('TxtEDate'),
+            'InceptionDate' => ($request->input('TxtSDate') == null) ? '' : date_format(date_create($request->input("TxtSDate")),"Y-m-d"),
+            'ExpiryDate' => ($request->input('TxtEDate') == null) ? '' : date_format(date_create($request->input("TxtEDate")),"Y-m-d"),
             'Currency' => ($request->input('LstCurrency') == null) ? '' : $request->input('LstCurrency'),
             'AID' => session('ID'),
             'BSTYPE' => ($request->input('LstBSTYPE') == null) ? '' : $request->input('LstBSTYPE'),
@@ -282,6 +282,7 @@ class SppaController extends Controller
             'Correspondence_Email' => ($request->input('TxtCorEmail') == null) ? '' : $request->input('TxtCorEmail'),
             'CT' => ($request->input('LstCT') == null) ? '' : $request->input('LstCT'),
             'SubmitDateF' => ($request->input('CbxSubmitDate') == null) ? false : true,
+            'InforceF' => ($request->input('CbxAutoInforce') == null) ? false : true,
         );
 
         //Additional Business Source
@@ -414,12 +415,13 @@ class SppaController extends Controller
             'ProductID' => $dataPolicy[0]['ProductID'],
             'CoverageID' => $dataPolicy[0]['CoverageID'],
             'IncludeExtCovF' => true,
-            'InceptionDate' => $dataPolicy[0]['InceptionDate'],
-            'ExpiryDate' => $dataPolicy[0]['ExpiryDate'],
+            'InceptionDate' => date_format(date_create($dataPolicy[0]['InceptionDate']),"Y-m-d"),
+            'ExpiryDate' => date_format(date_create($dataPolicy[0]['ExpiryDate']),"Y-m-d"),
             'NotApplyRateLoadingF' => $dataPolicy[0]['NotApplyRateLoadingF'],
             'PHolder' => $dataPolicy[0]['PolicyHolder'],
             'Currency' => $dataPolicy[0]['Currency'],
         );
+        // dd($PremiumSimulationDoc);
 
         //Object Info
         for ($i = 1; $i <= 15; ++$i) {
@@ -486,7 +488,7 @@ class SppaController extends Controller
             $dataPayload = array(
                 "PID" => $responseRevisePolicy['Data'][0]['PID']
             );
-            $responseCalculate = APIMiddleware($dataCalculate, 'CalculatePolicy');
+            $responseCalculate = APIMiddleware($dataPayload, 'CalculatePolicy');
 
             // return $responseCalculate;
 
@@ -572,7 +574,7 @@ class SppaController extends Controller
         // return $responsePolicy;
         $dateInception = tgl_indo($responsePolicy['Data'][0]['InceptionDate']);
         $dateExpiry = tgl_indo($responsePolicy['Data'][0]['ExpiryDate']);
-        $dateNow = tgl_indo(date("Y-m-d"));
+        $dateNow = tgl_indo(date("m/d/Y"));
         $dateExpiryDocument=date_create(date("Y-m-d"));
         date_add($dateExpiryDocument,date_interval_create_from_date_string("14 days"));
         $dateExpiryDocument = date_format($dateExpiryDocument,"d F Y");
@@ -683,7 +685,7 @@ class SppaController extends Controller
     }
 
     public function SubmitPolicyDocSPPA(Request $request){
-        // dd($request->input('payload'));
+        // dd($request);
         $payload = $request->input('payload');
         $datasign = array(
             'img' => ($request->input('Imgttd') == null) ? '' : $request->input('Imgttd'),
@@ -699,6 +701,12 @@ class SppaController extends Controller
         $payload['kondisi_kendaraan'] = ($request->input('kondisikendaraan') == null) ? '' : $request->input('kondisikendaraan');
         $payload['tempat_survey'] = ($request->input('tempatsurvey') == null) ? '' : $request->input('tempatsurvey');
         // return $payload;
+        if ($payload['SubmitDateF'] == 'true'){
+            $payload['SubmitDateF'] = true;
+        }else{
+            $payload['SubmitDateF'] = false;
+        }
+        // dd($payload);
         $html = view('Transaction.PolicyDocSppaPDF')
             ->with([
                 'payload' => $payload
@@ -728,14 +736,15 @@ class SppaController extends Controller
 
             $policypic = array();
 
-            $title = $PID." - Document SPPA Esign";
+            $title = "Document SPPA e-Sign";
+            $remarks = $PID." - Document SPPA e-Sign";
             $image = $responseDocSppa['Data'];
 
             $temppolicypic = array(
                 'ImageID' => '0',
                 'TmpFile' => $image,
                 'Title' => $title,
-                'Remark' => '',
+                'Remark' => $remarks,
                 'FileType' => 'PDF'
             );   
             $policypic[] = $temppolicypic;
@@ -767,11 +776,14 @@ class SppaController extends Controller
     }
 
     public function getDocumentPreview(Request $request){
+        $PID = $request->input('PID');
         $refno = $request->input('RefNo');
         $document = $request->input('Document');
 
         if ($document == 'sppa'){
-            $payload = $this->create_payload(session('ID'), $refno);
+            $payload = $this->create_payload(session('ID'), $PID);
+
+            // return $payload;
     
             $html = view('Transaction.PolicyDocSppaPDF')->with([
                 'payload' => $payload
@@ -780,6 +792,8 @@ class SppaController extends Controller
             // return $html;
     
             $dataPrintSPPA = array(
+                'PID' => $PID,
+                'DocumentType' => $document,
                 'URLDoc' => $html,
                 'isLandScape' => false,
                 'MarginLeft' => 10,
@@ -787,28 +801,27 @@ class SppaController extends Controller
                 'MarginRight' => 50,
                 'MarginTop' => 20
             );
+
+            // return $dataPrintSPPA;
     
-            $responseDocSppa = APIMiddleware($dataPrintSPPA, 'ConvertWebPageToPDF');
+            $responseDocSppa = APIMiddleware($dataPrintSPPA, 'PreviewDocument');
             return $responseDocSppa;
         }else{
             return response()->json(['code' => '400','message'=>'Document Not Ready.']);   
         }
     }
 
-    function create_payload($userid, $refno){   
+    function create_payload($userid, $PID){   
         $dataPolicy = array(
-            'ID' => $userid,
-            'RefNo' => $refno,
-            'PStatus' => '',
-            'Insured' => '',
+            'PID' => $PID
         ); 
         
-        $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicy');
+        $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
 
-        // return $responsePolicy;
+        // dd($responsePolicy);
         $dateInception = tgl_indo($responsePolicy['Data'][0]['InceptionDate']);
         $dateExpiry = tgl_indo($responsePolicy['Data'][0]['ExpiryDate']);
-        $dateNow = tgl_indo(date("Y-m-d"));
+        $dateNow = tgl_indo(date("m/d/Y"));
         $dateExpiryDocument=date_create(date("Y-m-d"));
         date_add($dateExpiryDocument,date_interval_create_from_date_string("14 days"));
         $dateExpiryDocument = date_format($dateExpiryDocument,"d F Y");
@@ -892,6 +905,7 @@ class SppaController extends Controller
         //Premium Simulation
         $PremiumSimulation = array();
         $TempPremiumSimulation = array();
+        // dd($responsePremiumSimulation);
         foreach ($responsePremiumSimulation['Data'] as $premi){
             $TempPremiumSimulation['Risk'] = $premi['Risk'];
             $TempPremiumSimulation['SPremium'] = $premi['SPremium'];
