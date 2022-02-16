@@ -810,7 +810,8 @@
                     @endif
                     <!-- End Detail Pilihan Penyelesaian Sengketa -->
                     
-                    <!-- Kondisi Kendaraan -->
+                  
+                    <!-- Kondisi Object -->
                     <tr>
                       <td>
                         <table class="tblContentRow">
@@ -818,7 +819,7 @@
                             <tr>
                               <td class="tdLabel">
                                 <span>
-                                  Kondisi Kendaraan :
+                                  Kondisi Obyek Pertanggungan :
                                 </span>
                               </td>
                             </tr>
@@ -826,7 +827,7 @@
                         </table>
                       </td>
                     </tr>
-                    <!-- End Kondisi Kendaraan -->
+                    <!-- End Kondisi Object -->
 
                     <!-- Detail Kondisi Kendaraan -->
                     @if ($payload['option_sengketa'] == '')
@@ -897,12 +898,12 @@
                             <tr>
                               <td class="tdLabel" style="width:40px">
                                 <span>
-                                  Obyek Pertanggungan dapat di survey di :
+                                  Obyek Pertanggungan dapat di survey pada tanggal dan jam :
                                 </span>
                               </td>
                               <td class="tdLabelObjectInfo" style="padding-top:0px;">
                                 @if ($payload['option_sengketa'] == '')
-                                  <input type="text" id="tempatsurvey" name="tempatsurvey" style="width:100%;padding-top:0;" />
+                                  <textarea type="text" id="tempatsurvey" name="tempatsurvey" style="width:100%;padding-top:0;"></textarea>
                                 @else
                                   <span>{{ $payload['tempat_survey'] }}</span>
                                 @endif

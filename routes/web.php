@@ -25,9 +25,11 @@ Route::get('/logout', 'AuthController@logout')->name('logout');
 
 Route::group(['middleware' => 'CekLogin'], function(){
     // view dashboard
-    // Route::get('/dashboard', 'AuthController@showFormWelcome');
-    // data dashboard
     Route::get('/dashboard', 'IndexController@index')->name('dashboard');
+    // widget dashboard
+    Route::get('/dashboard/widget', 'IndexController@modalWidget')->name('Dashboard.Widget');
+    Route::get('/dashboard/detailpolicy/{pid}', 'IndexController@modalDetailPolicy')->name('Dashboard.ModalDetPolicy');
+
     // Index Profile
     Route::get('/profile', 'ProfileController@index')->name('profile');
     //Drop Profile
@@ -53,15 +55,21 @@ Route::group(['middleware' => 'CekLogin'], function(){
     Route::get('/getlistCGroup', 'ProfileController@getlistCGroup')->name('listcgroup');
     Route::get('/getlistSCGroup', 'ProfileController@getlistSCGroup')->name('listscgroup');
     Route::get('/getlistOccupation', 'ProfileController@getlistOccupation')->name('listoccupation');
+    Route::get('/getlistDistrict', 'ProfileController@getlistDistrict')->name('listDistrict');
+    Route::get('/getlistSubDistrict', 'ProfileController@getlistSubDistrict')->name('listSubDistrict');
+    Route::get('/getlistVillage', 'ProfileController@getlistVillage')->name('listVillage');
 
     Route::post('/profile/uploadDocument', 'ProfileController@uploadProfileDocument')->name('profile.uploadDocumentPost');
+
+    // Search Profile
+    Route::get('/profile/search', 'ProfileController@SearchProfile')->name('profile.search');
 
      // Index Transaction
     Route::get('/transaction', 'SppaController@showFormPolicy')->name('policy.transaction');
     Route::get('/Inquiry', 'InquiryController@inquiry');
     Route::POST('/premiumsimulation', 'SppaController@PremiumSimulation')->name('policy.premiumSimulation');
     Route::POST('/getnewpolicyno', 'SppaController@GetNewPolicyNo')->name('policy.getnewpolicyno');
-    Route::POST('/savepolicydocument', 'SppaController@SavePoicyDocument')->name('policy.savepolicydocument');
+    Route::POST('/savepolicydocument', 'SppaController@SavePolicyDocument')->name('policy.savepolicydocument');
     Route::get('/modalupload', 'SppaController@showModalUpload')->name('policy.modalupload');
     Route::POST('/SavePolicy', 'SppaController@SavePolicy')->name('policy.savepolicy');
     Route::POST('/submitpolicy', 'SppaController@SubmitPolicy')->name('policy.submitpolicy');
@@ -84,8 +92,17 @@ Route::group(['middleware' => 'CekLogin'], function(){
     Route::get('/getlistproduct', 'SppaController@getlistproduct')->name('listproduct');
     Route::get('/getlistcoverage', 'SppaController@getlistcoverage')->name('listcoverage');
     Route::get('/getlistgendtab', 'SppaController@getlistgendtab')->name('listgendtab');
+    Route::get('/getprivileges', 'SppaController@getprivileges')->name('getprivileges');
 
     Route::post('/docpreview', 'SppaController@getDocumentPreview')->name('docpreview');
+    Route::get('/getdetailpolicy', 'SppaController@getDetailPolicy')->name('policy.getdetail');
+
+    Route::POST('/droppolicydocument', 'SppaController@DropPolicyDocument')->name('policy.dropdocument');
+
+    Route::get('/transaction/modalInstallment', 'SppaController@showModalInstallment')->name('policy.modalinstallment');
+
+    //Simulasi test
+    Route::get('/transaction/simulasifunction', 'SppaController@simulasifunction');
 
     // Index Survey
     Route::get('/survey', 'SurveyController@showsurvey')->name('survey');
@@ -93,6 +110,18 @@ Route::group(['middleware' => 'CekLogin'], function(){
 
     // index report
     Route::get('/report', 'ReportController@Retrive')->name('retrive');
+
+    //User Information
+    Route::get('/userinfo', 'UserInfoController@Index');
+
+    //demo gaude chart
+    // Route::get('/gauge', function () {
+    //     return view('gaugechartdemo');
+    // });
+});
+//demo gaude chart
+Route::get('/gauge', function () {
+    return view('gaugechartdemo');
 });
 
 // Route::get('/sppadoc/{data}', 'SppaController@getPolicyDoc')->name('sppadoc');

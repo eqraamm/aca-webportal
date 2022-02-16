@@ -13,7 +13,6 @@ class SppaController extends Controller
 {
     public function showFormPolicy(){
         session(['sidebar' => 'sppa']);
-
         return view('Transaction.policy');
     }
 
@@ -109,7 +108,6 @@ class SppaController extends Controller
         return $fixarrProduct;
     }
 
-    // api save profile 
     public function PremiumSimulation(Request $request)
     {
         // dd($request);
@@ -132,7 +130,8 @@ class SppaController extends Controller
             $dataPremiumSimulation['FLDID'.$i] = $responseProduct['Data'][0]['FLDID'. $i];
             $dataPremiumSimulation['ValueID'.$i] = ($request->input('FLDID'.$i) == null) ? '' : $request->input('FLDID'.$i);
         }
-        $IncludeExtCovF = $request->input('IncludeExtCovF');
+        $IncludeExtCovF = ($request->input('IncludeExtCoverF') == null) ? false : true;
+        // return $IncludeExtCovF;
         if ($IncludeExtCovF){
             $dataPremiumSimulation['IncludeExtCovF'] = $IncludeExtCovF;
         }else{
@@ -142,66 +141,114 @@ class SppaController extends Controller
             }
         }
         //Sum Insured
-        for ($i = 1; $i <= 5; ++$i) {
-            $dataPremiumSimulation['SI_'.$i] = ($request->input('SI'.$i) == null) ? 0 : $request->input('SI'.$i);
+        // for ($i = 1; $i <= 5; ++$i) {
+        //     $dataPremiumSimulation['SI_'.$i] = ($request->input('SI'.$i) == null) ? 0 : $request->input('SI'.$i);
+        // }
+        //Sum Insured
+        // for ($i = 1; $i <= 10; ++$i) {
+        //     $tempsi = str_replace('.','',str_replace(',','',$request->input('SI'.$i)));
+        //     // return $tempsi;
+        //     if (str_contains($tempsi,',')){
+        //         $SI = substr($tempsi,0,strlen($tempsi) - 2);
+        //     }else{
+        //         $SI = $tempsi;
+        //     }
+        //     // return $SI;
+        //     $dataPremiumSimulation['SI_'.$i] = ($SI == null) ? 0 : $SI;
+        // }
+
+        //Sum Insured
+        for ($i = 1; $i <= 10; ++$i) {
+            $tempsi = str_replace('.','',str_replace(',','',$request->input('SI'.$i)));
+            if (str_contains($request->input('SI'.$i),'.')){
+                $SI = substr($tempsi,0,strlen($tempsi) - 2);
+            }else{
+                $SI = $tempsi;
+            }
+            $dataPremiumSimulation['SI_'.$i] = ($SI == null) ? 0 : $SI;
         }
         //Rate
         for ($i = 1; $i <= 10; ++$i) {
-            $dataPremiumSimulation['Rate_'.$i] = 0;
+            $dataPremiumSimulation['Rate_'.$i] =  ($request->input('Rate'.$i) == null) ? 0 : $request->input('Rate'.$i);
         }
-        //PCTLOSS
+        //StrPCTIndemnity
+        for ($i = 1; $i <= 100; ++$i) {
+            $dataPremiumSimulation['PCTIndemnity_'.$i] =  ($request->input('PCTIndemnity_'.$i) == null) ? 0 : $request->input('PCTIndemnity_'.$i);
+        }
+        // PCTLOSS
         for ($i = 1; $i <= 3; ++$i) {
             $dataPremiumSimulation['PCTLOSS_'.$i] = 0;
         }
         // dd($dataPremiumSimulation);
         $responsePremiumSimulation = APIMiddleware($dataPremiumSimulation, 'PremiumSimulation');
-
+        // dd($responsePremiumSimulation);
         return response()->json(['code' => $responsePremiumSimulation['code'],'message'=>$responsePremiumSimulation['message'],'data' => $responsePremiumSimulation['Data']]);
     }
 
-    public function SavePoicyDocument(Request $request){
+    public function SavePolicyDocument(Request $request){
         // dd($request);
+        // sleep(10);
+        $PID = $request->input('PID');
         $policypic = array();
 
-        for ($i=0; $i < count($request->file('file')); $i++){
-            $file = $request->file('file')[$i];
-            $title = $file->getClientOriginalName();
-            $image = base64_encode(file_get_contents($file));
-            // dd($file);
+        $remarks = ($request->input('Remarks') == null) ? '' : $request->input('Remarks');
+        $title = ($request->input('Title') == null) ? '' : $request->input('Title');
 
-            $temppolicypic = array(
-                'ImageID' => '0',
-                'TmpFile' => $image,
-                'Title' => $title,
-                'Remark' => '',
-                'FileType' => ''
-            );   
-            $policypic[] = $temppolicypic;
-        }
+        // for ($i=0; $i < count($request->file('file')); $i++){
+        //     $file = $request->file('file')[$i];
+        //     $title = $file->getClientOriginalName();
+        //     $filetype = $file->getClientOriginalExtension();
+        //     $image = base64_encode(file_get_contents($file));
+        //     // dd($file);
+
+        //     $temppolicypic = array(
+        //         'ImageID' => '0',
+        //         'TmpFile' => $image,
+        //         'Title' => $title,
+        //         'Remark' => $remarks,
+        //         'FileType' => $filetype
+        //     );   
+        //     $policypic[] = $temppolicypic;
+        // }
         
-        // $policypic = array();
-        // $policypic['ImageID'] = '0';
-        // $policypic['TmpFile'] = 'tempfile';
-        // $policypic['Title'] = 'title';
-        // $policypic['Remark'] = 'Remark';
-        // $policypic['FileType'] = 'FileType';
+        $file = $request->file('file');
+        // $title = $file->getClientOriginalName();
+        $filetype = $file->getClientOriginalExtension();
+        $image = base64_encode(file_get_contents($file));
+        // dd($file);
+
+        $temppolicypic = array(
+            'ImageID' => '0',
+            'TmpFile' => $image,
+            'Title' => $title,
+            'Remark' => $remarks,
+            'FileType' => $filetype
+        );   
+        $policypic[] = $temppolicypic;
 
         $datapic = array(
-            'PID'=> $request->input('PID'),
+            'PID'=> $PID,
             'PolicyPIC'=> $policypic
         );
+
+        // return $datapic;
         // dd($datapic);
         // dd(response()->json($datapic));
 
         $responsePolicyDoc = APIMiddleware($datapic, 'SavePolicyDocument');
 
-        return response()->json(['code' => $responsePolicyDoc['code'],'message'=>$responsePolicyDoc['message'],'data' => $responsePolicyDoc['Data']]);
+        $dataPolicyDoc = array(
+            'PID' => $PID
+        );
+
+        $responseListPolicyDoc = APIMiddleware($dataPolicyDoc,'SearchPolicyDocument');
+
+        return response()->json(['code' => $responsePolicyDoc['code'],'message'=>$responsePolicyDoc['message'],'data' => $responsePolicyDoc['Data'], 'listpolicydoc' => $responseListPolicyDoc]);
 
     }
 
     public function showModalUpload(){
         return view('Transaction.modalupload');
-
     }
 
     public function GetNewPolicyNo(Request $request){
@@ -217,7 +264,9 @@ class SppaController extends Controller
     }
 
     public function SavePolicy(Request $request){
-        // return $request->input();
+        // dd($request);
+        $temppremium = str_replace('.','',str_replace(',','',$request->input('TxtPremium')));
+        $premium = substr($temppremium,0,strlen($temppremium) - 2);
         $datapolicy = array(
             'PID' => ($request->input('TxtPID') == null) ? '' : $request->input('TxtPID'),
             'RefNo' => ($request->input('TxtRefNo') == null) ? '' : $request->input('TxtRefNo'),
@@ -243,7 +292,7 @@ class SppaController extends Controller
             'PPeriod' => ($request->input('TxtPPeriod') == null) ? 0 : $request->input('TxtPPeriod'),
             'CREFNO' => ($request->input('TxtQuotationNo') == null) ? '' : $request->input('TxtQuotationNo'),
             'Discount' => ($request->input('TxtDiscount') == null) ? 0 : $request->input('TxtDiscount'),
-            'DisctPCT' => ($request->input('TxtDiscountPCT') == null) ? 0 : $request->input('TxtDiscountPCT'),
+            'DiscPCT' => ($request->input('TxtDiscountPCT') == null) ? 0 : $request->input('TxtDiscountPCT'),
             'ADMFee' => ($request->input('TxtAdmFee') == null) ? 0 : $request->input('TxtAdmFee'),
             'StampDuty' => ($request->input('TxtStampDuty') == null) ? 0 : $request->input('TxtStampDuty'),
             'LPID' => '-1',
@@ -272,7 +321,7 @@ class SppaController extends Controller
             'NCDATE' => '',
             'Payment_IRate' => 0,
             'Payment_DecreaseF' => 0,
-            'Premium' => ($request->input('TxtPremium') == null) ? 0 : $request->input('TxtPremium'),
+            'Premium' => ($premium == null) ? 0 : $premium,
             'SPremium' => ($request->input('TxtSPremium') == null) ? '' : $request->input('TxtSPremium'),
             'PType' => '',
             'InsuredID' => ($request->input('LstInsured') == null) ? '' : $request->input('LstInsured'),
@@ -283,14 +332,22 @@ class SppaController extends Controller
             'CT' => ($request->input('LstCT') == null) ? '' : $request->input('LstCT'),
             'SubmitDateF' => ($request->input('CbxSubmitDate') == null) ? false : true,
             'InforceF' => ($request->input('CbxAutoInforce') == null) ? false : true,
+            'Payment_Term' => ($request->input('LstPayment_Term') == null) ? 0 : $request->input('LstPayment_Term'),
+            'Payment_Tenor' => ($request->input('TxtPayment_Tenor') == null) ? 0 : $request->input('TxtPayment_Tenor'),
         );
+
+        $CommBy = $request->input('CommBy');
+        // dd($CommBy);
 
         //Additional Business Source
         for ($i = 1; $i <= 4; ++$i) {
             $datapolicy['AID_'.$i] = ($request->input('LstAID_'.$i) == null) ? '' : $request->input('LstAID_'.$i);
             $datapolicy['BSTYPE_'.$i] = ($request->input('LstBSType_'.$i) == null) ? '' : $request->input('LstBSType_'.$i);
-            $datapolicy['Fee_'.$i] = ($request->input('TxtFee_'.$i) == null) ? 0 : $request->input('TxtFee_'.$i);
-            $datapolicy['FeeAmount_'.$i] = ($request->input('TxtFeeAmount_'.$i) == null) ? 0 : $request->input('TxtFeeAmount_'.$i);
+            if ($CommBy == 'CommAmount'){
+                $datapolicy['FeeAmount_'.$i] = ($request->input('TxtFeeAmount_'.$i) == null) ? 0 : $request->input('TxtFeeAmount_'.$i);
+            }else{
+                $datapolicy['Fee_'.$i] = ($request->input('TxtFee_'.$i) == null) ? 0 : $request->input('TxtFee_'.$i);
+            }
         }
 
         $dataProduct = array(
@@ -298,6 +355,7 @@ class SppaController extends Controller
         );
         //Object Info
         $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
+        // dd($responseProduct);
         for ($i = 1; $i <= 30; ++$i) {
             $datapolicy['FLDID'.$i] = $responseProduct['Data'][0]['FLDID'. $i];
             if ($responseProduct['Data'][0]['FLDTAB'. $i] == true){
@@ -316,18 +374,82 @@ class SppaController extends Controller
         
         //Sum Insured
         for ($i = 1; $i <= 10; ++$i) {
-            $datapolicy['SI_'.$i] = ($request->input('SI'.$i) == null) ? 0 : $request->input('SI'.$i);
+            $tempsi = str_replace('.','',str_replace(',','',$request->input('SI'.$i)));
+            if (str_contains($request->input('SI'.$i),'.')){
+                $SI = substr($tempsi,0,strlen($tempsi) - 2);
+            }else{
+                $SI = $tempsi;
+            }
+            $datapolicy['SI_'.$i] = ($SI == null) ? 0 : $SI;
         }
+
+        //hardcode sementara
+        // switch ($datapolicy['CoverageID']){
+        //     case 'OTO-01A':
+        //         if ($datapolicy['SI_1'] < 100000001){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kendaraan Bermotor Below Minimum 100.000.000','data' => []]);
+        //         }else if ($datapolicy['SI_2'] < 25000000){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Tanggung Jawab Hukum Pihak Ketiga Below Minimum 25.000.000','data' => []]);
+        //         }
+        //         break;                
+        //     case 'OTO-02':
+        //         if ($datapolicy['SI_1'] < 100000000){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kendaraan Bermotor Below Minimum 100.000.000','data' => []]);
+        //         }else if ($datapolicy['SI_2'] < 50000000){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Tanggung Jawab Hukum Pihak Ketiga Below Minimum 50.000.000','data' => []]);
+        //         }else if($datapolicy['SI_3'] < 10000000){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kecelakaan Diri Pengemudi Below Minimum 10.000.000','data' => []]);
+        //         }else if($datapolicy['SI_4'] < 10000000){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kecelakaan Diri Penumpang Below Minimum 10.000.000','data' => []]);
+        //         }
+        //         break;
+        //     case 'OTO-03':
+        //         if ($datapolicy['SI_1'] < 100000000){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kendaraan Bermotor Below Minimum 100.000.000','data' => []]);
+        //         }else if ($datapolicy['SI_2'] < 75000000){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Tanggung Jawab Hukum Pihak Ketiga Below Minimum 75.000.000','data' => []]);
+        //         }else if($datapolicy['SI_3'] < 10000000){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured ecelakaan Diri Pengemudi Below Minimum 10.000.000','data' => []]);
+        //         }else if($datapolicy['SI_4'] < 10000000){
+        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kecelakaan Diri Penumpang Below Minimum 10.000.000','data' => []]);
+        //         }
+        //         break;
+        // }
+
         //Rate
         for ($i = 1; $i <= 10; ++$i) {
-            $datapolicy['Rate_'.$i] = 0;
+            $datapolicy['Rate_'.$i] = ($request->input('Rate'.$i) == null) ? 0 : $request->input('Rate'.$i);
         }
+
+        //Deductible Amount
+        for ($i = 1; $i <= 10; ++$i) {
+            $datapolicy['DEDUCTIBLE'.$i] = ($request->input('FixedMin'.$i) == null) ? 0 : $request->input('FixedMin'.$i);
+        }
+
+        //Deductible % of TSI
+        for ($i = 1; $i <= 10; ++$i) {
+            $datapolicy['DEDPCTTSI'.$i] = ($request->input('DEDPCTTSI'.$i) == null) ? 0 : $request->input('DEDPCTTSI'.$i);
+        }
+
+        //Deductible % of Claim
+        for ($i = 1; $i <= 10; ++$i) {
+            $datapolicy['DEDPCTCL'.$i] = ($request->input('DEDPCTCL'.$i) == null) ? 0 : $request->input('DEDPCTCL'.$i);
+        }
+
         //PCTLOSS
         for ($i = 1; $i <= 3; ++$i) {
             $datapolicy['PCTLOSS_'.$i] = 0;
         }
 
-        // return $datapolicy;
+        //StrPCTIndemnity
+        for ($i = 1; $i <= 100; ++$i) {
+            $datapolicy['PCTIndemnity_'.$i] =  ($request->input('PCTIndemnity_'.$i) == null) ? 0 : $request->input('PCTIndemnity_'.$i);
+            if ($datapolicy['PCTIndemnity_'.$i] != 0){
+                $datapolicy['PCTIndemnityF'] = true;
+            }
+        }
+
+        // dd($datapolicy);
 
         $responsePolicy = APIMiddleware($datapolicy, 'SavePolicy');
 
@@ -336,12 +458,14 @@ class SppaController extends Controller
         if ($responsePolicy['code'] == '200'){
             $dataPolicy = array(
                 'PID' => $responsePolicy['Data'][0]['PID']
-                // 'ID' => session('ID'),
-                // 'RefNo' => $responsePolicy['Data'][0]['RefNo'],
-                // // 'RefNo' => '',
-                // 'PStatus' => '',
-                // 'Insured' => '',
-            );  
+            );
+            
+            $responseValidate = APIMiddleware($dataPolicy, 'ValidatePolicy');
+            // dd($responseValidate);
+            if ($responseValidate['code'] == '400'){
+                return response()->json(['code' => $responseValidate['code'],'message'=>$responseValidate['message'],'data' => []]);
+            }
+            
             $listpolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
     
             return response()->json(['code' => $responsePolicy['code'],'message'=>$responsePolicy['message'],'data' => $responsePolicy['Data'], 'listpolicy' => $listpolicy]);
@@ -356,23 +480,27 @@ class SppaController extends Controller
         $PID = $request->input('PID');
         $datapolicy = array(
             "PID" => ($PID == null) ? '' : $PID,
-            "SubmitDateF" => ($request->input('SubmitDateF') == "true") ? true : false
+            "SubmitDateF" => ($request->input('SubmitDateF') == "true") ? true : false,
+            'UserName' => session('ID'),
+            'Password' => session('Password')
         );
         // dd($datapolicy);
         $responseSubmitPolicy = APIMiddleware($datapolicy, 'SubmitPolicy');
 
-        if ($responseSubmitPolicy['code'] == '200'){
-            $dataPolicy = array(
-                'PID' => $PID
-            );  
-            $listpolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
+        return response()->json(['code' => $responseSubmitPolicy['code'],'message'=>$responseSubmitPolicy['message'],'data' => $responseSubmitPolicy['Data']]);
 
-            // return $listpolicy;
+        // if ($responseSubmitPolicy['code'] == '200'){
+        //     $dataPolicy = array(
+        //         'PID' => $PID
+        //     );  
+        //     $listpolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
+
+        //     // return $listpolicy;
     
-            return response()->json(['code' => $responseSubmitPolicy['code'],'message'=>$responseSubmitPolicy['message'],'data' => $responseSubmitPolicy['Data'], 'listpolicy' => $listpolicy]);
-        }else{
-            return response()->json(['code' => $responseSubmitPolicy['code'],'message'=>$responseSubmitPolicy['message'],'data' => $responseSubmitPolicy['Data']]);
-        }
+        //     return response()->json(['code' => $responseSubmitPolicy['code'],'message'=>$responseSubmitPolicy['message'],'data' => $responseSubmitPolicy['Data'], 'listpolicy' => $listpolicy]);
+        // }else{
+        //     return response()->json(['code' => $responseSubmitPolicy['code'],'message'=>$responseSubmitPolicy['message'],'data' => $responseSubmitPolicy['Data']]);
+        // }
     }
 
     public function DropPolicy(Request $request){
@@ -409,6 +537,19 @@ class SppaController extends Controller
         return response()->json(['data' => $responsePolicy['Data']]);
     }
 
+    public function getDetailPolicy(Request $request){
+        // dd($request->get('PID'));
+        $PID = $request->get('PID');
+        $dataPolicy = array(
+            'PID' => $PID
+        );  
+
+        $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
+        // return $responseDoc;
+        // return response()->json($responsePolicy);
+        return $responsePolicy;
+    }
+
     public function PremiumSimulationDoc($dataPolicy){
         // dd($dataPolicy);
         $dataPremiumSimulation = array(
@@ -441,7 +582,11 @@ class SppaController extends Controller
         }
         //Rate
         for ($i = 1; $i <= 10; ++$i) {
-            $dataPremiumSimulation['Rate_'.$i] = $dataPolicy[0]['Rate_'.$i];
+            $dataPremiumSimulation['RATE_'.$i] = $dataPolicy[0]['RATE_'.$i];
+        }
+        //StrPCTIndemnity
+        for ($i = 1; $i <= 100; ++$i) {
+            $dataPremiumSimulation['PCTIndemnity_'.$i] = $dataPolicy[0]['PCTIndemnity_'.$i];
         }
         //PCTLOSS
         for ($i = 1; $i <= 3; ++$i) {
@@ -568,8 +713,9 @@ class SppaController extends Controller
         // dd($dataPolicy);
         
         $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
+        $NotApplyRateLoadingF = $responsePolicy['Data'][0]['NotApplyRateLoadingF'];
 
-        // dd($responsePolicy);
+        // dd($NotApplyRateLoadingF);
         
         // return $responsePolicy;
         $dateInception = tgl_indo($responsePolicy['Data'][0]['InceptionDate']);
@@ -631,7 +777,10 @@ class SppaController extends Controller
                 'StampDuty' => $responsePolicy['Data'][0]['StampDuty'],
                 'AID' => $responsePolicy['Data'][0]['AID'],
                 'SubmitDateF' => $responsePolicy['Data'][0]['SubmitDateF'],
-                'periodDays' => $period_days->format('%a')
+                'periodDays' => $period_days->format('%a'),
+                'CoverageID' => $responsePolicy['Data'][0]['CoverageID'],
+                'ProductID' => $responsePolicy['Data'][0]['ProductID']
+
             );
             for ($i = 1; $i <= 30; $i++) {
                $payload['FLDTAG'.$i] = $responseProduct['Data'][0]['FLDTAG'.($i)];
@@ -651,10 +800,14 @@ class SppaController extends Controller
             $CoverageDeductible = array();
             $TempCoverageDeductible = array();
             foreach ($responseCoverage['Data'][0]['CoverageDeductible'] as $deductible){
-                $TempCoverageDeductible['Description'] = $deductible['Description'];
-                $CoverageDeductible[] = $TempCoverageDeductible;
+                if ($NotApplyRateLoadingF == $deductible['NotApplyRateLoadingF']){
+                    $TempCoverageDeductible['Description'] = $deductible['Description'];
+                    $CoverageDeductible[] = $TempCoverageDeductible;
+                }
             }
             $payload['CoverageDeductible'] = $CoverageDeductible;
+
+            // dd($payload);
 
             //Premium Simulation
             $PremiumSimulation = array();
@@ -817,6 +970,8 @@ class SppaController extends Controller
         ); 
         
         $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
+        $NotApplyRateLoadingF = $responsePolicy['Data'][0]['NotApplyRateLoadingF'];
+        // dd($NotApplyRateLoadingF);
 
         // dd($responsePolicy);
         $dateInception = tgl_indo($responsePolicy['Data'][0]['InceptionDate']);
@@ -897,10 +1052,13 @@ class SppaController extends Controller
         $CoverageDeductible = array();
         $TempCoverageDeductible = array();
         foreach ($responseCoverage['Data'][0]['CoverageDeductible'] as $deductible){
-            $TempCoverageDeductible['Description'] = $deductible['Description'];
-            $CoverageDeductible[] = $TempCoverageDeductible;
+            if ($NotApplyRateLoadingF == $deductible['NotApplyRateLoadingF']){
+                $TempCoverageDeductible['Description'] = $deductible['Description'];
+                $CoverageDeductible[] = $TempCoverageDeductible;
+            }
         }
         $payload['CoverageDeductible'] = $CoverageDeductible;
+        // dd($payload);
 
         //Premium Simulation
         $PremiumSimulation = array();
@@ -915,6 +1073,101 @@ class SppaController extends Controller
         $payload['PremiumSimulation'] = $PremiumSimulation;
 
         return $payload;
+    }
+
+    function DropPolicyDocument(Request $request){
+        $PID = $request->input('PID');
+        $datapolicy = array(
+            "PID" => ($PID == null) ? '' : $PID,
+            "ImageID" => ($request->input('ImageID') == null) ? '' : $request->input('ImageID')
+        );
+        $responseDropPolicyDocument = APIMiddleware($datapolicy, 'DropPolicyDocument');
+
+        if ($responseDropPolicyDocument['code'] == '200'){
+            $dataPolicy = array(
+                'PID' => $PID
+            );  
+            $listpolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
+    
+            return response()->json(['code' => $responseDropPolicyDocument['code'],'message'=>$responseDropPolicyDocument['message'],'data' => $responseDropPolicyDocument['Data'], 'listpolicy' => $listpolicy]);
+        }else{
+            return response()->json(['code' => $responseDropPolicyDocument['code'],'message'=>$responseDropPolicyDocument['message'],'data' => $responseDropPolicyDocument['Data']]);
+        }
+    }
+
+    public function getPrivileges(Request $request){
+        $FName = $request->get('FName');
+        $dataPrivileges = array(
+            'Username' => session('ID'),
+            'Password' => session('Password'),
+            'FName' => $FName
+        );  
+
+        $responsePrivileges = APIMiddleware($dataPrivileges, 'CheckPrivileges');
+        // return $responseDoc;
+        return response()->json($responsePrivileges);
+    }
+
+    public function showModalInstallment(Request $request){
+        // dd($request);
+        
+        $maxrows = $request->get('payment_tenor');
+        $payment_term = $request->get('payment_term');
+        $TSI = number_format($request->get('tsi'),7,'.',',');
+        // dd($TSI);
+        $RoundF;
+        $tPCT = 0;
+        $TotalPCT = 100;
+        if ($maxrows > 0 ){
+            $PCT = 100 / $maxrows;
+            //hardcode RoundF sementara True
+            $RoundF = false;
+
+            if ($RoundF){
+                $PCT = number_format(round($PCT,2),13,'.',',');
+            }
+        }
+
+        $data = array();
+
+        for ($i=1; $i <= $maxrows; $i++){
+            $rowPCT;
+            $sdate = date_create($request->get('sdate'));
+            date_add($sdate,date_interval_create_from_date_string(($i - 1) * $payment_term . " months"));
+            if ($i < $maxrows){
+                $rowPCT = $PCT;
+            }else{
+                if ($RoundF){
+                    $rowPCT = number_format($TotalPCT - $tPCT,13,'.',',');
+                }else{
+                    $rowPCT = $PCT;
+                }
+            }
+            $premium = number_format($rowPCT / 100 * $request->get('premium'),7,'.',',');
+
+            $tPCT += $PCT;
+
+            $data2 = array(
+                'rowno' => $i,
+                'InstDate' => date_format($sdate,"m/d/Y"),
+                'PCT' => $rowPCT,
+                'Amount' => $premium,
+                'SI' => $TSI
+            );
+            $data[$i] = $data2;
+        }
+
+        return view('Transaction.modalInstallment',array('data' => $data));;
+    }
+
+    public function simulasifunction(){
+        try {
+            // dd($asdasd);
+        } catch (Throwable $e) {
+            report($e);
+    
+            return false;
+        }
     }
 
 }

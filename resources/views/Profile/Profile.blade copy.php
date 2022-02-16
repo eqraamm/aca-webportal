@@ -216,27 +216,21 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <div class="col-md-2 ml-auto">
-                        <button type="delete" id="btn-sync" class="btn btn-block btn-outline-info btn-upload" disabled>Synchronize Data</button>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <a class="col-sm-3 col-form-label" type="button" data-toggle="modal" data-target="#modal-sync">Reference Profile ID</a>
-                      <!-- <p for="TxtRefNo" class="col-sm-3 col-form-label">Reference Profile ID</p> -->
-                      <div class="col-sm-6">
+                      <p for="TxtRefNo" class="col-sm-3 col-form-label">Profile ID</p>
+                      <div class="col-sm-5">
                         <input class="form-control" id="RefID" name="RefID" type="text" readonly="readonly">
                       </div>
                       <div class="col-sm-4" style="display:none;">
                         <input class="form-control" id="RefName" name="RefName" type="text">
                       </div>
-                      <!-- <div class="col-sm-2">
-                        <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Inquiry From Core</button>
-                      </div> -->
+                      <div class="col-sm-1">
+                        <button type="button" id="BtnSync" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#modal-sync">Sync</button>
+                      </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" style="display:none;">
                       <label class="col-sm-3 col-form-label">Profile ID</label>
                       <div class="col-sm-6">
-                        <input class="form-control" id="ID" type="text" name="ProfileID" readonly>
+                        <input class="form-control" id="ID" type="text" name="ProfileID">
                       </div>
                     </div>
                     <div class="form-group row">
@@ -340,47 +334,9 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-3 col-form-label"></label>
-                      <div class="col-sm-2">
-                        <p for="RT">RT</p>
-                        <input class="form-control" id="SOI" name="SOI" type="text" required>
-                      </div>
-                      <div class="col-sm-2">
-                        <p for="RW">RW</p>
-                        <input class="form-control" id="MOO" name="MOO" type="text" required>
-                      </div>
-                      <div class="col-sm-2">
-                        <p for="Province">Province</p>
-                        <select class="form-control select2bs4" id="Province" name="Province" required> 
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label"></label>
-                      <div class="col-sm-2">
-                        <p for="District">District</p>
-                        <select class="form-control select2bs4" id="District" name="District" required> 
-                        </select>
-                      </div>
-                      <div class="col-sm-2">
-                        <p for="SubDistrict">Sub District</p>
-                        <select class="form-control select2bs4" id="SubDistrict" name="SubDistrict" required>
-                        </select>
-                      </div>
-                      <div class="col-sm-2">
-                        <p for="Village">Village</p>
-                        <select class="form-control select2bs4" id="Village" name="Village" required>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- <div class="form-group row">
-                    <label class="col-sm-3 col-form-label"></label>
-                      
-                    </div> -->
-                    <div class="form-group row" style=>
                       <p class="col-sm-3 col-form-label">Address 2</p>
                       <div class="col-sm-6">
-                        <input class="form-control" id="Address_2" name="Address2" type="text">
+                        <input class="form-control" id="Address_2" name="Address2" type="text"">
                       </div>
                     </div>
                     <div class="form-group row">
@@ -413,13 +369,13 @@
                         </select>
                       </div>
                     </div>
-                    <!-- <div class="form-group row">
+                    <div class="form-group row">
                       <label class="col-sm-3 col-form-label">Province</label>
                       <div class="col-sm-3">
                         <select class="form-control select2bs4" id="Province" name="Province" required> 
                         </select>
                       </div>
-                    </div> -->
+                    </div>
                     <div class="form-group row">
                       <p class="col-sm-3 col-form-label">ZipCode</p>
                       <div class="col-sm-3">
@@ -922,639 +878,560 @@
     corporateF_chekcked();
     $('.select2bs4').select2({
       theme: 'bootstrap4',
-	  });
+	});
 
-    //get data option country
-    async function getcountry() {
-      try {
-        const res = await getData('{{ route("listcountry") }}')
-        var listbox = document.getElementById("Country");
-        addOptionItem(listbox,res.Data,'Country','Description',true);
-      } catch(err) {
-        console.log(err);
-      }
+  //get data option country
+  async function getcountry() {
+    try {
+      const res = await getData('{{ route("listcountry") }}')
+      var listbox = document.getElementById("Country");
+      addOptionItem(listbox,res.Data,'Country','Description',true);
+    } catch(err) {
+      console.log(err);
     }
-    
-    //get data option province
-    async function getprovince() {
-      try {
-        const res = await getData('{{ route("listprovince") }}')
-        var listbox = document.getElementById("Province");
-        addOptionItem(listbox,res.Data,'PROVINCE','DESCRIPTION',true);
-      } catch(err) {
-        console.log(err);
-      }
-    }
-
-    //get data option company group
-    async function getcgroup() {
-      try {
-        const res = await getData('{{ route("listcgroup") }}')
-        var listbox = document.getElementById("CGroup");
-        addOptionItem(listbox,res.Data,'CGROUP','DESCRIPTION',true);
-      } catch(err) {
-        console.log(err);
-      }
-    }
-
-    //get data option sub company group
-    async function getscgroup() {
-      try {
-        const res = await getData('{{ route("listscgroup") }}')
-        var listbox = document.getElementById("SCGroup");
-        addOptionItem(listbox,res.Data,'SCGROUP','DESCRIPTION',true);
-        arrSCGroup = res;
-      } catch(err) {
-        console.log(err);
-      }
-    }
-
-    //get data option occupation
-    async function getoccupation() {
-      try {
-        const res = await getData('{{ route("listoccupation") }}')
-        var listbox = document.getElementById("Occupation");
-        addOptionItem(listbox,res.Data,'Occupation','DESCRIPTION',true);
-      } catch(err) {
-        console.log(err);
-      }
-    }
-
-    $('#div-group-modalbirthdate').datetimepicker({
-      format: 'L'
-    });
-    $('#div-group-iddate').datetimepicker({
-      format: 'L'
-    });
-    $('#div-group-birthdate').datetimepicker({
-      format: 'L'
-    });
-
-  });
-
-  function addOptionItem(selectElement, data, LblValue, LblDescription, withBlankItem = true){
-    if (withBlankItem){
-      var option = document.createElement("OPTION");
-      option.value = '';
-      option.innerHTML = '';
-      selectElement.appendChild(option);
-    }
-    for (j = 0; j < data.length; j++) {
-        var option = document.createElement("OPTION");
-        option.value = data[j][LblValue];
-        option.innerHTML = data[j][LblDescription];
-        selectElement.appendChild(option);
+  }
+  
+  //get data option province
+  async function getprovince() {
+    try {
+      const res = await getData('{{ route("listprovince") }}')
+      var listbox = document.getElementById("Province");
+      addOptionItem(listbox,res.Data,'PROVINCE','DESCRIPTION',true);
+    } catch(err) {
+      console.log(err);
     }
   }
 
-  function CGroup_OnChange(CGroup) {
-    var basedata = arrSCGroup.Data;
-    var filterarray;
-    if (CGroup == ''){
-      filterarray = basedata;
-    }else{
-      filterarray = basedata.filter(asd => asd.CGROUP == CGroup);
+  //get data option company group
+  async function getcgroup() {
+    try {
+      const res = await getData('{{ route("listcgroup") }}')
+      var listbox = document.getElementById("CGroup");
+      addOptionItem(listbox,res.Data,'CGROUP','DESCRIPTION',true);
+    } catch(err) {
+      console.log(err);
     }
-    // console.log(filterarray);
+  }
 
-    // console.log(filterarray);
+  //get data option sub company group
+  async function getscgroup() {
+    try {
+      const res = await getData('{{ route("listscgroup") }}')
+      var listbox = document.getElementById("SCGroup");
+      addOptionItem(listbox,res.Data,'SCGROUP','DESCRIPTION',true);
+      arrSCGroup = res;
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
-    document.getElementById("SCGroup").options.length = 0;
-    var listBox = document.getElementById("SCGroup");
+  //get data option occupation
+  async function getoccupation() {
+    try {
+      const res = await getData('{{ route("listoccupation") }}')
+      var listbox = document.getElementById("Occupation");
+      addOptionItem(listbox,res.Data,'Occupation','DESCRIPTION',true);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+	$('#div-group-modalbirthdate').datetimepicker({
+		format: 'L'
+	});
+	$('#div-group-iddate').datetimepicker({
+		format: 'L'
+	});
+	$('#div-group-birthdate').datetimepicker({
+		format: 'L'
+	});
+
+});
+
+function addOptionItem(selectElement, data, LblValue, LblDescription, withBlankItem = true){
+  if (withBlankItem){
     var option = document.createElement("OPTION");
     option.value = '';
     option.innerHTML = '';
-    listBox.appendChild(option);
-    for (i = 0; i < filterarray.length; i++) {
-      var listBox = document.getElementById("SCGroup");
+    selectElement.appendChild(option);
+  }
+  for (j = 0; j < data.length; j++) {
       var option = document.createElement("OPTION");
-      option.value = filterarray[i].SCGROUP;
-      option.innerHTML = filterarray[i].DESCRIPTION;
-      listBox.appendChild(option);
-    }
+      option.value = data[j][LblValue];
+      option.innerHTML = data[j][LblDescription];
+      selectElement.appendChild(option);
   }
+}
 
-  var basedata = @json($data['Data']);
-  // var tblProfile = $("#example1").DataTable({
-  //   "processing": true,
-  //   "serverSide": false,
-  //   "ajax": {
-  //       "url": "{{ route('listprofile') }}",
-  //       "type": "GET"
-  //   },
-  //   "columns": [
-  //         { "data": "ID" },
-  //   ],
+function CGroup_OnChange(CGroup) {
+	var basedata = arrSCGroup.Data;
+  var filterarray;
+  if (CGroup == ''){
+    filterarray = basedata;
+  }else{
+    filterarray = basedata.filter(asd => asd.CGROUP == CGroup);
+  }
+  // console.log(filterarray);
 
-  // });
-  // var asd = [];
-  // var asd1 = ["image","dsjakdljsakjd"];
-  // // asd[0].push = arrtest;
-  // console.log(asd1);
-  // console.log(basedata);
+  // console.log(filterarray);
 
-  var tblProfile = $("#example1").DataTable({
-    "data": basedata,
-    "columns": [
-      {
-        "defaultContent": ""
-      },
-      {
-        "data":"ID"
-      },
-      {
-        "data":"RefID"
-      },
-      {
-        "data":"Name"
-      },
-      {
-        "data":"Email"
-      },
-      {
-        "data":"Mobile"
-      },
-      {
-        "data":"ID_No"
-      },
-      {
-        "data":"BirthDate"
-      },
-      {
-        "defaultContent": "",
-        render: function(data, type, row, meta) {
-          var fn = "viewDetail('"+ row['ID'] +"')"
-          var fn_history = "viewHistory('"+ row['ID'] +"')"
-          var fn_delete = "showModalDel('"+ row['ID'] +"')"
-          return '<img src="{{asset("dist/img/edit.svg")}}" width="25" height="25" type="button" title="Detail Profile" onclick="' + fn + '">' + 
-          '<img src="{{asset("dist/img/file.svg")}}" width="25" height="25" onclick="'+ fn_history +'" type="button" id="btn-history" class="history-profile">' + 
-          '<img src="{{asset("dist/img/trash.svg")}}" width="25" height="25" onclick="'+ fn_delete +'" type="button" class="btn-del-row-profile">';
-        } 
-      }
-    ],
-    "order": [[ 1, 'asc' ]],
-    "responsive": true,
-    "autoWidth": false,
-    "searching": false,
+	document.getElementById("SCGroup").options.length = 0;
+	var listBox = document.getElementById("SCGroup");
+	var option = document.createElement("OPTION");
+	option.value = '';
+	option.innerHTML = '';
+	listBox.appendChild(option);
+	for (i = 0; i < filterarray.length; i++) {
+		var listBox = document.getElementById("SCGroup");
+		var option = document.createElement("OPTION");
+		option.value = filterarray[i].SCGROUP;
+		option.innerHTML = filterarray[i].DESCRIPTION;
+		listBox.appendChild(option);
+	}
+}
+
+var basedata = @json($data['Data']);
+console.log(basedata);
+// var tblProfile = $("#example1").DataTable({
+//   "processing": true,
+//   "serverSide": false,
+//   "ajax": {
+//       "url": "{{ route('listprofile') }}",
+//       "type": "GET"
+//   },
+//   "columns": [
+//         { "data": "ID" },
+//   ],
+
+// });
+// var asd = [];
+// var asd1 = ["image","dsjakdljsakjd"];
+// // asd[0].push = arrtest;
+// console.log(asd1);
+// console.log(basedata);
+
+var tblProfile = $("#example1").DataTable({
+  "data": basedata,
+  "columns": [
+    {
+      "defaultContent": ""
+    },
+    {
+      "data":"ID"
+    },
+    {
+      "data":"RefID"
+    },
+    {
+      "data":"Name"
+    },
+    {
+      "data":"Email"
+    },
+    {
+      "data":"Mobile"
+    },
+    {
+      "data":"ID_No"
+    },
+    {
+      "data":"BirthDate"
+    },
+    {
+      "defaultContent": "",
+      render: function(data, type, row, meta) {
+        var fn = "viewDetail('"+ row['ID'] +"')"
+        var fn_history = "viewHistory('"+ row['ID'] +"')"
+        var fn_delete = "showModalDel('"+ row['ID'] +"')"
+        return '<img src="{{asset("dist/img/edit.svg")}}" width="25" height="25" type="button" title="Detail Profile" onclick="' + fn + '">' + 
+        '<img src="{{asset("dist/img/file.svg")}}" width="25" height="25" onclick="'+ fn_history +'" type="button" id="btn-history" class="history-profile">' + 
+        '<img src="{{asset("dist/img/trash.svg")}}" width="25" height="25" onclick="'+ fn_delete +'" type="button" class="btn-del-row-profile">';
+      } 
+    }
+  ],
+  "order": [[ 1, 'asc' ]],
+	"responsive": true,
+	"autoWidth": false,
+  "searching": false,
+});
+
+tblProfile.on( 'order.dt search.dt', function () {
+  tblProfile.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+    cell.innerHTML = i+1;
   });
+}).draw();
 
-  tblProfile.on('order.dt search.dt', function () {
-    tblProfile.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-      cell.innerHTML = i+1;
-    });
-  }).draw();
+function corporateF_chekcked() {
+	var cbxCorporate = document.getElementById("Corporatef");
+	if (cbxCorporate.checked == true) {
+		// tidak wajib
+    $('#LblIDType').css('font-weight','normal');
+    $('#ID_Type').removeAttr('required');
+    $('#LblID_Number').css('font-weight','normal');
+    $('#ID_No').removeAttr('required');
+    $('#LblID_Name').css('font-weight','normal');
+    $('#ID_Name').removeAttr('required');
+    $('#LblBirthDate').css('font-weight','normal');
+    $('#BirthPlace').removeAttr('required');
+    $('#BirthDate').removeAttr('required');
+    $('#LblID_Name').css('font-weight','normal');
+    $('#ID_Name').removeAttr('required');
+    $('#LblGender').css('font-weight','normal');
+    $('#Gender').removeAttr('required');
 
-  function corporateF_chekcked() {
-    var cbxCorporate = document.getElementById("Corporatef");
-    if (cbxCorporate.checked == true) {
-      // tidak wajib
-      $('#LblIDType').css('font-weight','normal');
-      $('#ID_Type').removeAttr('required');
-      $('#LblID_Number').css('font-weight','normal');
-      $('#ID_No').removeAttr('required');
-      $('#LblID_Name').css('font-weight','normal');
-      $('#ID_Name').removeAttr('required');
-      $('#LblBirthDate').css('font-weight','normal');
-      $('#BirthPlace').removeAttr('required');
-      $('#BirthDate').removeAttr('required');
-      $('#LblID_Name').css('font-weight','normal');
-      $('#ID_Name').removeAttr('required');
-      $('#LblGender').css('font-weight','normal');
-      $('#Gender').removeAttr('required');
+		// wajib
+    $('#LblTaxID').css('font-weight','bold');
+    $('#TaxID').attr('required','required');
+    $('#LblCType').css('font-weight','bold');
+    $('#CType').attr('required','required');
+    $('#LblCGroup').css('font-weight','bold');
+    $('#CGroup').attr('required','required');
+    $('#LblSCGroup').css('font-weight','bold');
+    $('#SCGroup').attr('required','required');
+    $('#LblTaxName').css('font-weight','bold');
+    $('#TxtTaxName').attr('required','required');
+    $('#LblTaxAddress').css('font-weight','bold');
+    $('#TxtTaxAddress').attr('required','required');
+    $('#LblPicName').css('font-weight','bold');
+    $('#Contact').attr('required','required');
+	} else {
+		// wajib
+    $('#LblIDType').css('font-weight','bold');
+    $('#ID_Type').attr('required');
+    $('#LblID_Number').css('font-weight','bold');
+    $('#ID_No').attr('required');
+    $('#LblID_Name').css('font-weight','bold');
+    $('#ID_Name').attr('required');
+    $('#LblBirthDate').css('font-weight','bold');
+    $('#BirthPlace').attr('required');
+    $('#BirthDate').attr('required');
+    $('#LblID_Name').css('font-weight','bold');
+    $('#ID_Name').attr('required');
+    $('#LblGender').css('font-weight','bold');
+    $('#Gender').attr('required');
 
-      // wajib
-      $('#LblTaxID').css('font-weight','bold');
-      $('#TaxID').attr('required','required');
-      $('#LblCType').css('font-weight','bold');
-      $('#CType').attr('required','required');
-      $('#LblCGroup').css('font-weight','bold');
-      $('#CGroup').attr('required','required');
-      $('#LblSCGroup').css('font-weight','bold');
-      $('#SCGroup').attr('required','required');
-      $('#LblTaxName').css('font-weight','bold');
-      $('#TxtTaxName').attr('required','required');
-      $('#LblTaxAddress').css('font-weight','bold');
-      $('#TxtTaxAddress').attr('required','required');
-      $('#LblPicName').css('font-weight','bold');
-      $('#Contact').attr('required','required');
-    } else {
-      // wajib
-      $('#LblIDType').css('font-weight','bold');
-      $('#ID_Type').attr('required');
-      $('#LblID_Number').css('font-weight','bold');
-      $('#ID_No').attr('required');
-      $('#LblID_Name').css('font-weight','bold');
-      $('#ID_Name').attr('required');
-      $('#LblBirthDate').css('font-weight','bold');
-      $('#BirthPlace').attr('required');
-      $('#BirthDate').attr('required');
-      $('#LblID_Name').css('font-weight','bold');
-      $('#ID_Name').attr('required');
-      $('#LblGender').css('font-weight','bold');
-      $('#Gender').attr('required');
+		// tidak wajib
+    $('#LblTaxID').css('font-weight','normal');
+    $('#TaxID').removeAttr('required');
+    $('#LblCType').css('font-weight','normal');
+    $('#CType').removeAttr('required');
+    $('#LblCGroup').css('font-weight','normal');
+    $('#CGroup').removeAttr('required');
+    $('#LblSCGroup').css('font-weight','normal');
+    $('#SCGroup').removeAttr('required');
+    $('#LblTaxName').css('font-weight','normal');
+    $('#TxtTaxName').removeAttr('required');
+    $('#LblTaxAddress').css('font-weight','normal');
+    $('#TxtTaxAddress').removeAttr('required');
+    $('#LblPicName').css('font-weight','normal');
+    $('#Contact').removeAttr('required');
+	}
+}
 
-      // tidak wajib
-      $('#LblTaxID').css('font-weight','normal');
-      $('#TaxID').removeAttr('required');
-      $('#LblCType').css('font-weight','normal');
-      $('#CType').removeAttr('required');
-      $('#LblCGroup').css('font-weight','normal');
-      $('#CGroup').removeAttr('required');
-      $('#LblSCGroup').css('font-weight','normal');
-      $('#SCGroup').removeAttr('required');
-      $('#LblTaxName').css('font-weight','normal');
-      $('#TxtTaxName').removeAttr('required');
-      $('#LblTaxAddress').css('font-weight','normal');
-      $('#TxtTaxAddress').removeAttr('required');
-      $('#LblPicName').css('font-weight','normal');
-      $('#Contact').removeAttr('required');
-    }
-  }
+function LstIDType_Change() {
+	var lstIDType = document.getElementById("ID_Type").value;
+	if (lstIDType == 'KTP') {
+		$("#ID_No").attr("minlength", "16");
+		$("#ID_No").attr("maxlength", "16");
+		$("#ID_No").attr("oninput", "this.value = this.value.replace(/[^0-9.]/g, '');");
+	} else {
+		$("#ID_No").removeAttr("maxlength");
+		$("#ID_No").removeAttr("minlength");
+		$("#ID_No").removeAttr("oninput");
+	}
 
-  function LstIDType_Change() {
-    var lstIDType = document.getElementById("ID_Type").value;
-    if (lstIDType == 'KTP') {
-      $("#ID_No").attr("minlength", "16");
-      $("#ID_No").attr("maxlength", "16");
-      $("#ID_No").attr("oninput", "this.value = this.value.replace(/[^0-9.]/g, '');");
-    } else {
-      $("#ID_No").removeAttr("maxlength");
-      $("#ID_No").removeAttr("minlength");
-      $("#ID_No").removeAttr("oninput");
-    }
+}
+$("#clearbtn").click(function(event) {
+	event.preventDefault();
 
-  }
-  $("#clearbtn").click(function(event) {
-    event.preventDefault();
+	var form = event.currentTarget.form;
+	var inputs = form.querySelectorAll('input');
+	var selects = form.querySelectorAll('select');
+	inputs.forEach(function(input, index) {
+		if (input.type != 'checkbox') {
+			if (input.name != 'UserOwner' && input.name != '_token') {
+				input.value = null;
+			}
+		} else {
+			input.removeAttribute('checked');
+		}
+	});
 
-    var form = event.currentTarget.form;
-    var inputs = form.querySelectorAll('input');
-    var selects = form.querySelectorAll('select');
-    inputs.forEach(function(input, index) {
-      if (input.type != 'checkbox') {
-        if (input.name != 'UserOwner' && input.name != '_token') {
-          input.value = null;
-        }
-      } else {
-        input.removeAttribute('checked');
-      }
-    });
+	selects.forEach(function(selects, index) {
+		selects.value = null;
+	});
+  $('.select2bs4').trigger('change');
+	corporateF_chekcked();
+	$('#FirstName').focus();
+});
 
-    selects.forEach(function(selects, index) {
-      selects.value = null;
-    });
+
+
+function Construct_ProfileName() {
+	document.getElementById("Name").value = document.getElementById("FirstName").value + ((document.getElementById("MidName").value == "") ? "" : " " + document.getElementById("MidName").value) + ((document.getElementById("LastName").value == "") ? "" : " " + document.getElementById("LastName").value);
+}
+
+function viewDetail(ID) {
+    var data = tblProfile.rows().data();
+    // var basedata = @json($data['Data']);
+    // console.log(data);
+    const filterarray = data.filter(asd => asd.ID == ID);
+    // console.log('filterarray');
+    // console.log(filterarray);
+    parseDataToInput(filterarray);
     $('.select2bs4').trigger('change');
     corporateF_chekcked();
-    $('#FirstName').focus();
-    $('#btn-sync').attr('disabled','disabled');
-  });
+    $('#SCGroup').val(filterarray[0]['SCGroup']);
+    $('#SCGroup').trigger('change');
 
+    $('#tabinquiry').attr('class','nav-link');
+    $('#tabprofile').attr('class','nav-link active');
+    $('#inquiry').attr('class','tab-pane');
+    $('#profile').attr('class','active tab-pane');
+    toastMessage('200','Data Successfully Retrivied');
+}
 
+// $('#asd').click(function(event){
+//   event.preventDefault();
+//   $('#WNIF').attr('checked','checked');
+//   $('.select2bs4').trigger('change');
+// })
 
-  function Construct_ProfileName() {
-    document.getElementById("Name").value = document.getElementById("FirstName").value + ((document.getElementById("MidName").value == "") ? "" : " " + document.getElementById("MidName").value) + ((document.getElementById("LastName").value == "") ? "" : " " + document.getElementById("LastName").value);
-  }
+// $('#asd_uncheck').click(function(event){
+//   event.preventDefault();
+//   $('#WNIF').removeAttr('checked');
+// })
 
-  async function viewDetail(ID) {
-      var data = tblProfile.rows().data();
-      // var basedata = @json($data['Data']);
-      // console.log(data);
-      const filterarray = data.filter(asd => asd.ID == ID);
-      // console.log('filterarray');
-      // console.log(filterarray);
-      parseDataToInput(filterarray);
-      $('.select2bs4').trigger('change');
-      corporateF_chekcked();
-      $('#SCGroup').val(filterarray[0]['SCGroup']);
-      $('#SCGroup').trigger('change');
-
-      await getDistrict(filterarray[0]['Province'], filterarray[0]['District']);
-      await getSubDistrict(filterarray[0]['District'],filterarray[0]['Province'], filterarray[0]['SubDistrict']);
-      await getVillage(filterarray[0]['SubDistrict'],filterarray[0]['District'],filterarray[0]['Province'], filterarray[0]['Village']);
-
-      $('#btn-sync').removeAttr('disabled');
-
-      $('#tabinquiry').attr('class','nav-link');
-      $('#tabprofile').attr('class','nav-link active');
-      $('#inquiry').attr('class','tab-pane');
-      $('#profile').attr('class','active tab-pane');
-      toastMessage('200','Data Successfully Retrivied');
-  }
-
-  // $('#asd').click(function(event){
-  //   event.preventDefault();
-  //   $('#WNIF').attr('checked','checked');
-  //   $('.select2bs4').trigger('change');
-  // })
-
-  // $('#asd_uncheck').click(function(event){
-  //   event.preventDefault();
-  //   $('#WNIF').removeAttr('checked');
-  // })
-
-  function parseDataToInput(filterarray){
-    // $('#WNIF').attr('checked','checked');
-    for (var key in filterarray[0]){
-      if($('#' + key).attr('type') == 'checkbox'){
-        // console.log ('Key : ' + key + ' Value : ' + filterarray[0][key]);
-        if (filterarray[0][key] === true){
-          // console.log ('Masuk True - Key : ' + key + ' Value : ' + filterarray[0][key]);
-          $('#' + key).attr('checked','checked');
-          // console.log($('#' + key));
-        }else{
-          // console.log ('Masuk else - Key : ' + key + ' Value : ' + filterarray[0][key]);
-          $('#' + key).removeAttr('checked');
-        }
+function parseDataToInput(filterarray){
+  // $('#WNIF').attr('checked','checked');
+  for (var key in filterarray[0]){
+    if($('#' + key).attr('type') == 'checkbox'){
+      // console.log ('Key : ' + key + ' Value : ' + filterarray[0][key]);
+      if (filterarray[0][key] === true){
+        // console.log ('Masuk True - Key : ' + key + ' Value : ' + filterarray[0][key]);
+        $('#' + key).attr('checked','checked');
+        // console.log($('#' + key));
       }else{
-        $('#' + key).val(filterarray[0][key]);
-        // console.log ('Key : ' + key + ' Value : ' + filterarray[0][key]);
+        // console.log ('Masuk else - Key : ' + key + ' Value : ' + filterarray[0][key]);
+        $('#' + key).removeAttr('checked');
       }
+    }else{
+      $('#' + key).val(filterarray[0][key]);
+      // console.log ('Key : ' + key + ' Value : ' + filterarray[0][key]);
     }
-    $('#OwnerID').val("{{ session('ID') }}")
   }
+  $('#OwnerID').val("{{ session('ID') }}")
+}
 
-  function GetFormattedDate(datestring) {
-    var d = new Date(datestring);
-    var month = d.getMonth() + 1;
-    if (month < 10) {
-      month = '0' + month;
-    }
-    var day = d.getDate();
-    if (day < 10) {
-      day = '0' + day;
-    }
-    var year = d.getFullYear();
-    return month + "/" + day + "/" + year;
-  }
+function GetFormattedDate(datestring) {
+	var d = new Date(datestring);
+	var month = d.getMonth() + 1;
+	if (month < 10) {
+		month = '0' + month;
+	}
+	var day = d.getDate();
+	if (day < 10) {
+		day = '0' + day;
+	}
+	var year = d.getFullYear();
+	return month + "/" + day + "/" + year;
+}
 
-  function viewHistory(ID){  
-    var url = "{{ route('profile.history', ['id' => ':id']) }}";
-    url = url.replace(':id',ID);
-    console.log(url);
-    $('#loadMe').modal('show');
+function viewHistory(ID){  
+  var url = "{{ route('profile.history', ['id' => ':id']) }}";
+  url = url.replace(':id',ID);
+  console.log(url);
+	$('#loadMe').modal('show');
 
-    $.ajax({
-      type: "GET",
-      url: url,
-      dataType: 'html'
-    }).done(function(response) {
-      console.log(response);
-      $('#loadMe').modal('hide');
-      $('#bodyHistory').html(response);
-      $("#modal-history").modal('show');
-    });
-  }
+	$.ajax({
+		type: "GET",
+		url: url,
+		dataType: 'html'
+	}).done(function(response) {
+		console.log(response);
+		$('#loadMe').modal('hide');
+		$('#bodyHistory').html(response);
+		$("#modal-history").modal('show');
+	});
+  console.log('asd');
+}
 
-  $(".form-save").submit(function(event) {
-    event.preventDefault();
-    $("#loadMe").modal('show');
-    try{
-      var a_href = $(this).attr('action');
-
-      $.ajax({
-        type: "POST",
-        url: a_href, // This is what I have updated
-        data: $(".form-save").serialize(),
-      }).done(function(response) {
-        // console.log(response);
-        if (response.code == '200') {
-          tblProfile.clear().rows.add(response.listprofile.Data).draw();
-          viewDetail(response.Data[0]['ID'])
-        }
-        // $("#loadMe").modal("hide");
-        toastMessage(response.code, response.message);
-        if (response.code == '402') {
-          $('#modal-sync').modal('show');
-          setTimeout(() => {
-            $('#cardbodyModalSync').html(response.html);
-          }, 1000);
-        }
-        $("#loadMe").modal("hide");
-      }).fail(function(xhr, status, error){
-        console.log(xhr);
-        throw error;
-      });
-    }catch(err){
-      toastMessage('400',err);
-      $("#loadMe").modal("hide");
-      console.log('catch');
-    }finally{
-      // $("#loadMe").modal("hide");
-      // console.log('finally');
-    }
-    
-    
-  });
-
-
-  $(".form-sync").submit(function(event) {
-    event.preventDefault();
-
-    $('#div-overlay').empty();
-    $('#div-overlay').append('<div class="overlay"><i class="fas fa-2x fa-sync fa-spin"></i></div>');
-
-    let ProfileID = $("input[name=ProfileID]").val();
-    let Name = $("input[name=Name]").val();
-    let email = $("input[name=email]").val();
-    let Address = $("input[name=Address1]").val();
-    let City = $("input[name=CityModal]").val();
-    let ZipCode = $("input[name=ZipCode]").val();
-    let ID_NO = $("input[name=ID_Number]").val();
-    let Mobile = $("input[name=MobilePhone]").val();
-    let Tax = $("input[name=TaxModal]").val();
-    let BirthDate = $("input[name=ModalBirthDate]").val();
-    let _token = $('meta[name="csrf-token"]').attr('content');
+$(".form-save").submit(function(event) {
+  event.preventDefault();
+  $("#loadMe").modal('show');
+  try{
     var a_href = $(this).attr('action');
-    console.log(_token);
 
     $.ajax({
       type: "POST",
       url: a_href, // This is what I have updated
-      data: {
-        ID: ProfileID,
-        Name: Name,
-        Email: email,
-        Address: Address,
-        City: City,
-        ZipCode: ZipCode,
-        ID_NO: ID_NO,
-        Mobile: Mobile,
-        BirthDate: BirthDate,
-        TaxID: Tax,
-        _token: _token
-      },
-    }).done(function(msg) {
+      data: $(".form-save").serialize(),
+    }).done(function(response) {
+      console.log(response);
+      if (response.code == '200') {
+        tblProfile.clear().rows.add(response.listprofile.Data).draw();
+        viewDetail(response.Data[0]['ID'])
+      }
       // $("#loadMe").modal("hide");
-      console.log(msg);
-      $('#cardbodyModalSync').html(msg);
-      $('#div-overlay').empty();
-    }).fail(function(msg) {
-      console.log(msg);
-      // $("#loadMe").modal("hide");
-      $('#div-overlay').empty();
+      toastMessage(response.code, response.message);
+      if (response.code == '402') {
+        $('#modal-sync').modal('show');
+        setTimeout(() => {
+          $('#cardbodyModalSync').html(response.html);
+        }, 1000);
+      }
+      $("#loadMe").modal("hide");
+    }).fail(function(xhr, status, error){
+      console.log(xhr);
+      throw error;
     });
-  });
-
-
-  function showModalDel(ID){
-    url = "{{ route('profile.drop', ['id' => ':id']) }}"
-    url = url.replace(':id',ID);
-
-    $('#modaltitle').text('Delete Profile');
-
-    $('#modalbody').empty();
-    $('#modalbody').append('<p>Do you want to proceed?</p>');
-
-    $('#modalfooter').empty();
-    $('#modalfooter').append('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
-    $('#modalfooter').append('<a href="' + url + '" class="btn btn-danger btn-ok" id="btnDel">Delete</a>');
-
-    $("#modal-general").modal({
-      backdrop: "static", //remove ability to close modal with click
-      keyboard: false, //remove option to close with keyboard
-      show: true //Display loader!
-    });
+  }catch(err){
+    toastMessage('400',err);
+    $("#loadMe").modal("hide");
+    console.log('catch');
+  }finally{
+    // $("#loadMe").modal("hide");
+    // console.log('finally');
   }
+	
+	
+});
 
-  // $(".btn-del-row-profile").click(function(event) {
-  // 	event.preventDefault();
-  // 	var a_href = $(this).attr('href');
 
-  // 	$('#modaltitle').text('Delete Profile');
+$(".form-sync").submit(function(event) {
+	event.preventDefault();
 
-  // 	$('#modalbody').empty();
-  // 	$('#modalbody').append('<p>Do you want to proceed?</p>');
+	$('#div-overlay').empty();
+	$('#div-overlay').append('<div class="overlay"><i class="fas fa-2x fa-sync fa-spin"></i></div>');
 
-  // 	$('#modalfooter').empty();
-  // 	$('#modalfooter').append('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
-  // 	$('#modalfooter').append('<a href="' + a_href + '" class="btn btn-danger btn-ok" id="btnDel">Delete</a>');
+	let ProfileID = $("input[name=ProfileID]").val();
+	let Name = $("input[name=Name]").val();
+	let email = $("input[name=email]").val();
+	let Address = $("input[name=Address1]").val();
+	let City = $("input[name=CityModal]").val();
+	let ZipCode = $("input[name=ZipCode]").val();
+	let ID_NO = $("input[name=ID_Number]").val();
+	let Mobile = $("input[name=MobilePhone]").val();
+	let Tax = $("input[name=TaxModal]").val();
+	let BirthDate = $("input[name=ModalBirthDate]").val();
+	let _token = $('meta[name="csrf-token"]').attr('content');
+	var a_href = $(this).attr('action');
+	console.log(_token);
 
-  // 	$("#modal-general").modal({
-  // 		backdrop: "static", //remove ability to close modal with click
-  // 		keyboard: false, //remove option to close with keyboard
-  // 		show: true //Display loader!
-  // 	});
-  // });
+	$.ajax({
+		type: "POST",
+		url: a_href, // This is what I have updated
+		data: {
+			ID: ProfileID,
+			Name: Name,
+			Email: email,
+			Address: Address,
+			City: City,
+			ZipCode: ZipCode,
+			ID_NO: ID_NO,
+			Mobile: Mobile,
+			BirthDate: BirthDate,
+			TaxID: Tax,
+			_token: _token
+		},
+	}).done(function(msg) {
+		// $("#loadMe").modal("hide");
+		console.log(msg);
+		$('#cardbodyModalSync').html(msg);
+		$('#div-overlay').empty();
+	}).fail(function(msg) {
+		console.log(msg);
+		// $("#loadMe").modal("hide");
+		$('#div-overlay').empty();
+	});
+});
 
-  $(".btn-upload").click(function(event) {
-    event.preventDefault();
 
-    $('#modaltitle').text('Upload Profile Document');
+function showModalDel(ID){
+  url = "{{ route('profile.drop', ['id' => ':id']) }}"
+  url = url.replace(':id',ID);
 
-    $('#modalbody').empty();
-    $.ajax({
-      type: "GET",
-      url: '{{route("profile.uploadDocument")}}',
-      dataType: 'html'
-    }).done(function(msg) {
-      $('#modal-body').html(msg);
-      $("#modal-Doc").modal({
-        backdrop: "true", //remove ability to close modal with click
-        keyboard: false, //remove option to close with keyboard
-        show: true //Display loader!
-      });
-    });
-  });
+  $('#modaltitle').text('Delete Profile');
 
-  $("#btn-search-profile").click(async function(event){
-    event.preventDefault();
-    try{
-      var ID = '';
-      var name = $('#SearchName').val();
-      var email = $('#SearchEmail').val();
-      var id_no = $('#SearchID_No').val();
-      var mobile = $('#SearchMobileNo').val();
-      var url = "{{ route('profile.search') }}?ID=" + ID + "&name=" + name + "&email=" + email + "&id_no=" + id_no + "&mobile=" + mobile;
-      // console.log(url);
+	$('#modalbody').empty();
+	$('#modalbody').append('<p>Do you want to proceed?</p>');
 
-      var response = await getDataNew(url);
-      // console.log(response);
-      if (response.code == '200'){
-        drawDataTable(tblProfile,response.Data);
-      }
-      toastMessage(response.code,response.message);
-    }catch(err){
-      toastMessage('400','Whoops, Something Went Wrong, please contact your Administrator.');
+	$('#modalfooter').empty();
+	$('#modalfooter').append('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
+	$('#modalfooter').append('<a href="' + url + '" class="btn btn-danger btn-ok" id="btnDel">Delete</a>');
+
+	$("#modal-general").modal({
+		backdrop: "static", //remove ability to close modal with click
+		keyboard: false, //remove option to close with keyboard
+		show: true //Display loader!
+	});
+}
+
+// $(".btn-del-row-profile").click(function(event) {
+// 	event.preventDefault();
+// 	var a_href = $(this).attr('href');
+
+// 	$('#modaltitle').text('Delete Profile');
+
+// 	$('#modalbody').empty();
+// 	$('#modalbody').append('<p>Do you want to proceed?</p>');
+
+// 	$('#modalfooter').empty();
+// 	$('#modalfooter').append('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>');
+// 	$('#modalfooter').append('<a href="' + a_href + '" class="btn btn-danger btn-ok" id="btnDel">Delete</a>');
+
+// 	$("#modal-general").modal({
+// 		backdrop: "static", //remove ability to close modal with click
+// 		keyboard: false, //remove option to close with keyboard
+// 		show: true //Display loader!
+// 	});
+// });
+
+$(".btn-upload").click(function(event) {
+	event.preventDefault();
+
+	$('#modaltitle').text('Upload Profile Document');
+
+	$('#modalbody').empty();
+	$.ajax({
+		type: "GET",
+		url: '{{route("profile.uploadDocument")}}',
+		dataType: 'html'
+	}).done(function(msg) {
+		$('#modal-body').html(msg);
+		$("#modal-Doc").modal({
+			backdrop: "true", //remove ability to close modal with click
+			keyboard: false, //remove option to close with keyboard
+			show: true //Display loader!
+		});
+	});
+});
+
+$("#btn-search-profile").click(async function(event){
+  event.preventDefault();
+  try{
+    var ID = '';
+    var name = $('#SearchName').val();
+    var email = $('#SearchEmail').val();
+    var id_no = $('#SearchID_No').val();
+    var mobile = $('#SearchMobileNo').val();
+    var url = "{{ route('profile.search') }}?ID=" + ID + "&name=" + name + "&email=" + email + "&id_no=" + id_no + "&mobile=" + mobile;
+    console.log(url);
+
+    var response = await getDataNew(url);
+    if (response.code == '200'){
+      drawDataTable(tblProfile,response.Data);
     }
-  });
-  
-  // document.getElementById('btn-search-profile').addEventListener("click", myFunction);  
-
-  async function drawDataTable(table,data){
-    table.clear().draw();
-    table.rows.add(data);
-    table.columns.adjust().draw();
-    // await sleep(1);
-    table.columns.adjust().draw(); 
+    toastMessage(response.code,response.message);
+  }catch(err){
+    toastMessage('400','Whoops, Something Went Wrong, please contact your Administrator.');
   }
+});
 
-  async function getDistrict(province, value = '') {
-    try {
-      var url = "{{ route('listDistrict') }}?province=" + province
-      const res = await getData(url)
-      var listbox = document.getElementById("District");
-      $('#District').empty();
-      addOptionItem(listbox,res.Data,'District','Description',true);
-      if (value != ''){
-        $('#District').val(value);
-        $('#District').trigger('change');
-      }
-    } catch(err) {
-      console.log(err);
-    }
-  }
-
-  $("#Province").on("select2:select", function () {
-    getDistrict(this.value);
-  });
-
-  async function getSubDistrict(district,province, value = '') {
-    try {
-      var url = "{{ route('listSubDistrict') }}?district=" + district + "&province=" + province
-      const res = await getData(url)
-      var listbox = document.getElementById("SubDistrict");
-      $('#SubDistrict').empty();
-      addOptionItem(listbox,res.Data,'SubDistrict','Description',true);
-      if (value != ''){
-        $('#SubDistrict').val(value);
-        $('#SubDistrict').trigger('change')
-      }
-    } catch(err) {
-      console.log(err);
-    }
-  }
-
-  $("#District").on("select2:select", function () {
-    getSubDistrict(this.value,$('#Province').val());
-  });
-
-  async function getVillage(subdistrict,district,province, value = '') {
-    try {
-      var url = "{{ route('listVillage') }}?subdistrict=" + subdistrict + "&district=" + district + "&province=" + province
-      const res = await getData(url)
-      var listbox = document.getElementById("Village");
-      $('#Village').empty();
-      addOptionItem(listbox,res.Data,'Village','Description',true);
-      if (value != ''){
-        $('#Village').val(value);
-        $('#Village').trigger('change');
-      }
-    } catch(err) {
-      console.log(err);
-    }
-  }
-
-  $("#SubDistrict").on("select2:select", function () {
-    getVillage(this.value,$('#District').val(),$('#Province').val());
-  });
-
-  $('#btn-sync').on('click', function(){
-    // console.log('haha');
-    $('.form-save').trigger('submit');
-  });
-
-  // $('#SOI').on('change', function(event){
-  //   if (this.value)
-  // });
+function drawDataTable(table,data){
+  table.clear().draw();
+  table.rows.add(data);
+  table.columns.adjust().draw(); 
+}
 </script>
 @endsection

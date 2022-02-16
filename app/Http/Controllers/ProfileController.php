@@ -177,7 +177,12 @@ class ProfileController extends Controller
             'PIC_NAME_1' => ($request->input('PICName_1') == null) ? '' : $request->input('PICName_1'),
             'PIC_TITLE_1' => ($request->input('PICTitle_1') == null) ? '' : $request->input('PICTitle_1'),
             'TaxName' => ($request->input('TaxName') == null) ? '' : $request->input('TaxName'),
-            'TaxAddress' => ($request->input('TaxAddress') == null) ? '' : $request->input('TaxAddress')
+            'TaxAddress' => ($request->input('TaxAddress') == null) ? '' : $request->input('TaxAddress'),
+            'SOI' => ($request->input('SOI') == null) ? '' : $request->input('SOI'),
+            'MOO' => ($request->input('MOO') == null) ? '' : $request->input('MOO'),
+            'Village' => ($request->input('Village') == null) ? '' : $request->input('Village'),
+            'SubDistrict' => ($request->input('SubDistrict') == null) ? '' : $request->input('SubDistrict'),
+            'District' => ($request->input('District') == null) ? '' : $request->input('District')
         );
 
         // dd($dataprofile);
@@ -412,5 +417,64 @@ class ProfileController extends Controller
         return response()->json(['data' => $responseSearchProfile['Data']]);
     }
 
-    
+    public function getlistDistrict(Request $request){
+        $Province = $request->get('province');
+        $data = array(
+            'District' => '',
+            'Province' => $Province
+        );
+        $responseDistrict = APIMiddleware($data, 'SearchDistrict');
+
+        return $responseDistrict;
+    }
+
+    public function getlistSubDistrict(Request $request){
+        $Province = $request->get('province');
+        $District = $request->get('district');
+        $data = array(
+            'SubDistrict' => '',
+            'District' => $District,
+            'Province' => $Province
+        );
+        $responseSubDistrict = APIMiddleware($data, 'SearchSubDistrict');
+
+        return $responseSubDistrict;
+    }
+
+    public function getlistVillage(Request $request){
+        $Province = $request->get('province');
+        $District = $request->get('district');
+        $SubDistrict = $request->get('subdistrict');
+        $data = array(
+            'Village' => '',
+            'SubDistrict' => $SubDistrict,
+            'District' => $District,
+            'Province' => $Province
+        );
+        $responseVillage = APIMiddleware($data, 'SearchVillage');
+
+        return $responseVillage;
+    }
+
+    public function SearchProfile(Request $request){
+        $ID = $request->get('ID');
+        $name = $request->get('name');
+        $email = $request->get('email');
+        $id_no = $request->get('id_no');
+        $mobile = $request->get('mobile');
+        
+         //Data
+         $data = array (
+            'ID' => $ID,
+            'OwnerID' => session('ID'),
+            'Name' => $name,
+            'Email' => $email,
+            'ID_No' => $id_no,
+            'Mobile' => $mobile
+        );
+        // dd($data);
+        $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
+
+        return $responseSearchProfile;
+    }
 } 

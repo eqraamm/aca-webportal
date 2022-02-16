@@ -17,7 +17,7 @@ class AuthController extends Controller
     {
         if (session('login')) { // true sekalian session field di users nanti bisa dipanggil via Auth
             //Login Success
-            return redirect()->route('profile');
+            return redirect()->route('dashboard');
         }
         return view('login');
     }
@@ -46,8 +46,11 @@ class AuthController extends Controller
             'username' => $request->input('username'),
             'password' => $request->input('password'),
         );
+        // dump($data);
+        // dd($data);
 
         $response  = APIMiddleware($data, 'Login');
+        // dd($response);
         // return $response;
         if ($response['code'] == '200'){
             $data = array (
@@ -62,7 +65,7 @@ class AuthController extends Controller
             session(['Name' => $responseUser['Data'][0]['Name']]);
             session(['Role' => $responseUser['Data'][0]['Role']]);
             session(['Password' => $request->input('password')]);
-            return redirect()->route('profile');
+            return redirect()->route('dashboard');
         }else{
             Session::flash('error', $response['message']);
             return redirect()->route('login');

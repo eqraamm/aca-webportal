@@ -40,6 +40,8 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+
+  @yield('head-linkrel')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
@@ -115,7 +117,7 @@
             <a href="{{ route('profile')}}" class="{{ Session::get('sidebar') == 'profile' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Nasabah
+                Client
               </p>
             </a>
           </li>
@@ -143,19 +145,79 @@
               </p>
             </a>
           </li>
-          <li class="{{ Session::get('sidebar') == 'report' ? 'nav-link menu-open' : 'nav-link' }}">
+          <!-- <li class="{{ Session::get('sidebar') == 'report' ? 'nav-link menu-open' : 'nav-link' }}">
             <a href="#" class="{{ Session::get('sidebar') == 'report' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Report
               </p>
             </a>
-          </li>
+          </li> -->
       </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
   </aside>
+  
+  <!-- Loading -->
+  <div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-body text-center">
+        <div class="spinner-border text-info" style="width: 4rem; height: 4rem;" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal General -->
+  <div class="modal fade" id="modal-general" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="class-modal-dialog" class="modal-dialog">
+      <div class="modal-content">
+        <div id="div-overlay-modal">
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modaltitle"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modalbody">
+        </div>
+        <div class="modal-footer" id="modalfooter">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="modal-img" id="myModal" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <span class="close-img">&times;</span>
+      <div class="modal-body text-center">
+        <img class="modal-img-content" id="img01">
+        <div id="caption"></div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal" role="dialog">
+    <span class="close-img">&times;</span>
+    <!-- <div class="modal-body text-center"> -->
+      <img class="modal-img-content" id="img01">
+      <div id="caption"></div>
+    <!-- </div> -->
+  </div>
+  <!-- <div class="modal" id="myModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <span class="close-img">&times;</span>
+      <div class="modal-body text-center">
+        <img class="modal-img-content" id="img01">
+        <div id="caption"></div>
+      </div>
+    </div>
+  </div> -->
 
     @yield('maincontent')
 
@@ -217,6 +279,10 @@
 <script src="{{asset('plugins/dropzone/min/dropzone.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
+<!-- ChartJS -->
+<script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
+<!-- jQuery Knob -->
+<script src="{{asset('plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 
 <!-- General For Web Portal MW -->
 <script src="{{asset('dist/js/pages/webportal.js')}}"></script>

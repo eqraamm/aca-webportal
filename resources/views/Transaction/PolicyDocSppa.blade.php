@@ -12,14 +12,6 @@
       // signatureCapture();
       var signaturePad;
 
-      // $('#btnTestFrame').click(function(event){
-      //   var windo = window.open("", "_blank"); 
-      //   var objbuilder = '<iframe width="100%" height="100%" src="data:application/pdf;base64,'+ base64 +'"></iframe>';
-      //   // var objbuilder = '<object width="100%" height="100%" src="data:application/pdf;base64,"></object>';
-      //   windo.document.write(objbuilder); 
-      //   windo.focus();
-      // });
-
       $('#btnSubmit').click(function(event){
         event.preventDefault();
 
@@ -101,14 +93,14 @@
                 confirmButtonText: "Sign Document",
               }).then((result) => {
                 if (result.isConfirmed) {
-                  // var canvas = '<div id="canvas"><canvas class="roundCorners" id="newSignature" style="border:1px solid #c4caac"></canvas></div><div><button>Clear sign</button></div><br><div><input id="namattd" name="namattd" style="text-align:center"></div>';
-                  var canvas = '<div id="canvas"><canvas class="roundCorners" id="newSignature" style="border:1px solid #c4caac"></canvas></div><div></div><br><div><input id="namattd" name="namattd" style="text-align:center" placeholder="Signer Name"></div>';
+                  var canvas = '<div id="canvas"><canvas class="roundCorners" id="newSignature" style="border:1px solid #c4caac"></canvas></div><br><div><input id="namattd" name="namattd" style="text-align:center"></div><br><div><button onclick="clearSign()" type="button">Clear</button></div>';
+                  // var canvas = '<div id="canvas"><canvas class="roundCorners" id="newSignature" style="border:1px solid #c4caac"></canvas></div><div></div><br><div><input id="namattd" name="namattd" style="text-align:center" placeholder="Signer Name"></div>';
                   Swal.fire({
                     title: "<i>Signature</i>", 
                     html: canvas,
                     confirmButtonText: "Save",
-                    // cancelButtonText: "Clear Signature", 
-                    // showCancelButton: true,
+                    // denyButtonText: "Clear Signature", 
+                    // showDenyButton: true,
                     showLoaderOnConfirm: false,
                     allowEscapeKey: false,
                     allowOutsideClick: false,
@@ -163,7 +155,7 @@
                           window.location.href = "http://www.aca.co.id";  
                         }
                       })
-                    }else if(result.dismiss === Swal.DismissReason.cancel){
+                    }else if(result.isDenied){
                       console.log('haha');
                       signaturePad.clear();
                     }
@@ -188,6 +180,7 @@
         // win.focus();
      }
 
+     
       $('#btnSign').on('click', function(event){
         event.preventDefault();
         var canvas = '<div id="canvas"><canvas class="roundCorners" id="newSignature" style="border: 1px solid #c4caac;"></canvas></div><br><div><input id="namattd" name="namattd" style="text-align:center;"/> </div>';
@@ -216,6 +209,7 @@
       });
 
       $('#btnClearSign').on('click', function(event){
+        console.log('haha');
         event.preventDefault();
         $('#lblNamaTtd').text('');
         document.getElementById("img-ttd").src = '';
@@ -309,6 +303,12 @@
             s[1] += new Array(prec - s[1].length + 1).join('0');
         }
         return s.join(dec);
+      }
+
+      function clearSign(){
+        console.log('hahahahahahah');
+        signaturePad.clear();
+        $('#namattd').val('')
       }
     </script>
     <!-- SweetAlert2 -->

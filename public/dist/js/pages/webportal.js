@@ -27,9 +27,10 @@ function toastMessage(responseCode, responseMessage){
             }
         )
     }
-  }
+}
 
-function popupToast(inputtype, inputLabel, inputPlaceholder,elementID, readonly){
+function popupToast(inputtype, inputLabel, inputPlaceholder,elementID, readonly, regex, fldtag){
+    console.log(regex);
     var attributes = new Array();
     if (readonly){
         attributes = {
@@ -46,14 +47,23 @@ function popupToast(inputtype, inputLabel, inputPlaceholder,elementID, readonly)
           input: inputtype,
           inputLabel: inputLabel,
           inputPlaceholder: inputPlaceholder,
-          inputOptions: {
-              sppa: 'SPPA Document',
-              quotation: 'Quotation'
-          },
           confirmButtonColor: '#0d6efd',
           inputValue: $('#' + elementID).val(),
           inputAttributes: attributes,
-          showCancelButton: true
+          showCancelButton: true,
+          showLoaderOnConfirm: true,
+          preConfirm: (value) => {
+            return new Promise(function(resolve, reject) {
+                if (!checkRegex(value.toUpperCase(),regex)){
+                    reject(new Error("The format "+ fldtag +" is invalid !"));
+                }
+                resolve();
+            }).catch(error => {
+                Swal.showValidationMessage(
+                  `${error}`
+                )
+            })
+          }
         })
         if (text) {
           $('#' + elementID).val(text);
@@ -70,13 +80,13 @@ function getData(ajaxurl) {
 };
 
 function getformatedDate(date){
-    console.log(date);
+    // console.log(date);
     if (date === undefined){
         var d = new Date();
     }else{
         var d = new Date(date);
     }
-    console.log(d);
+    // console.log(d);
 
     var month = d.getMonth()+1;
     var day = d.getDate();
@@ -84,9 +94,9 @@ function getformatedDate(date){
 
     var output = (month<10 ? '0' : '') + month + '/' +  (day<10 ? '0' : '') + day + '/' + year ;
     return output;
-  }
+}
 
-  function getFormatedTime(date){
+function getFormatedTime(date){
     var d = new Date(date);
 
     var hour = d.getHours();
@@ -95,15 +105,68 @@ function getformatedDate(date){
 
     var output = (hour<10 ? '0' : '') + hour + ':' +  (minute<10 ? '0' : '') + minute + ':' + (second<10 ? '0' : '') + second;
     return output;
+}
+
+function getModalView(url){
+    return $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'html',
+      beforeSend: function() { $('#loadMe').modal('show'); },
+        complete: function() { $('#loadMe').modal('hide'); }
+    });
+}
+
+function getDataNew(ajaxurl) { 
+    return $.ajax({
+        url: ajaxurl,
+        type: 'GET',
+        contentType: "application/json; charset=utf-8",
+        beforeSend: function() { $('#loadMe').modal('show'); },
+        complete: function() { $('#loadMe').modal('hide'); }
+    });
+};
+
+function number_format(number, decimals, thousands_sep, dec_point) {
+    // Strip all characters but numerical ones.
+    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        s = '',
+        toFixedFix = function (n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+        };
+    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}
+
+function checkRegex(input, regex_exp){
+    var regex = new RegExp(regex_exp);
+    // console.log(regex);
+    if(regex.test(input)){
+      return true;
+    }else{
+      return false;
+    }
+}
+
+async function sleep(time = 1) {
+    const sleepMilliseconds = time * 1000
+    
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(`Slept for: ${sleepMilliseconds}ms`)
+      }, sleepMilliseconds)
+    })
   }
-
-//   function getformatedDate(date){
-//     var d = new Date(date);
-
-//     var month = d.getMonth()+1;
-//     var day = d.getDate();
-//     var year = d.getFullYear();
-
-//     var output = (month<10 ? '0' : '') + month + '/' +  (day<10 ? '0' : '') + day + '/' + year ;
-//     return output;
-//   }

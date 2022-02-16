@@ -238,5 +238,6 @@ return [
     'MANDATORYSEGMENT' => env('MANDATORYSEGMENT', false),
     'URLSURVEY' => env('URLSURVEY', 'https://uat2.care.co.id:9096/RTCSurvey/'),
     'SHOWNOTAPPLYRATELOADING' => env('SHOWNOTAPPLYRATELOADING', true),
+    'SHOWIMMEDIATEINFORCE' => env('SHOWIMMEDIATEINFORCE', true),
 
 ];

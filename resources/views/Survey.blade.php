@@ -37,6 +37,44 @@
         </main>
     </section>
 </div>
+<!-- Modal Survey -->
+<div class="card">
+    <div class="card-body">
+        <div class="modal fade" id="modal-survey" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div id="div-overlay"></div>
+                    <div class="modal-header">
+                        <label class="modal-title">Schedule Survey</label>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="survey">
+                        <div class="form-group">
+                        <input type="hidden" id="PID"/>
+                        <label for="TxtName" class="col-sm-4 col-form-label">Set Survey Date</label>
+                        <div class="input-group date col-sm-6" id="TxtSurveyDate" data-target-input="nearest">
+                            <input type="text" id="SurveyDate" data-format="yyyy-MM-dd hh:mm:ss" name="TxtSurveyDate" class="form-control datetimepicker-input" data-target="#TxtSurveyDate" required />
+                            <div class="input-group-append" data-target="#TxtSurveyDate" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-sm-4">
+                            <button type="button" onclick="SubmitSurvey()" id="btn_send" class="btn btn-block btn-outline-primary">Send Survey</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <!-- Modal Loading-->
 <div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" data-backdrop="static" data-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -49,51 +87,16 @@
         <!-- </div> -->
     </div>
 </div>
-<!-- Modal Survey -->
-<div class="modal fade" id="modal-survey" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        <div id="div-overlay"></div>
-            <div class="modal-header">
-                <label class="modal-title">Entry Form Survey</label>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="survey">
-                <!-- <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Survey ID</label>
-                    <div class="col-sm-6">
-                        <input class="form-control" id="TxtSurveyID" type="text" name="PID">
-                    </div>
-                </div> -->
-                <div class="form-group row">
-                  <input type="hidden" id="PID"/>
-                  <label for="TxtName" class="col-sm-3 col-form-label">Survey Schedule</label>
-                  <div class="input-group date col-sm-4" id="TxtSurveyDate" data-target-input="nearest">
-                      <input type="text" id="SurveyDate" data-format="yyyy-MM-dd hh:mm:ss" name="TxtSurveyDate" class="form-control datetimepicker-input" data-target="#TxtSurveyDate" required />
-                      <div class="input-group-append" data-target="#TxtSurveyDate" data-toggle="datetimepicker">
-                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                      </div>
-                  </div>
-                  <!-- <div class="col-sm-6">
-                      <input class="form-control" id="TxtSurveyTime" type="text" name="SurveyTime">
-                  </div> -->
-                </div>
-                <div class="col-sm-2">
-                    <button type="button" onclick="SubmitSurvey()" id="btn_send" class="btn btn-block btn-outline-primary">Send Survey</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
     <!-- /.Modal Survey -->
     <!-- /.content-wrapper -->
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
+    <!-- <aside class="control-sidebar control-sidebar-dark"> -->
         <!-- Control sidebar content goes here -->
-    </aside>
+    <!-- </aside> -->
     <!-- /.control-sidebar -->
-</div>
+<!-- </div> -->
 @endsection
 
 @section('scriptpage')
@@ -102,7 +105,7 @@
       $('#TxtSurveyDate').datetimepicker(
         {
           icons: {
-              time: "fa fa-clock-o",
+              time: "fa fa-clock",
               date: "fa fa-calendar",
               up: "fa fa-arrow-up",
               down: "fa fa-arrow-down"
@@ -127,6 +130,9 @@
                 {
                     "title": "No",
                     "data": null
+                },
+                {
+                    "data": "PID"
                 },
                 {
                     "title": "Reference Number",
@@ -166,6 +172,20 @@
                   }
                 },
                 {
+                  "title": "Start Survey",
+                  "defaultContent": "-",
+                  render: function(data, type, row) {
+                    return row['ActualDate'] + '<br>' + row['StartTimeSurvey'];
+                  }
+                },
+                {
+                  "title": "Finish Survey",
+                  "defaultContent": "-",
+                  render: function(data, type, row) {
+                    return row['ActualDate'] + '<br>' + row['EndTimeSurvey'];
+                  }
+                },
+                {
                     "title": "Action",
                     "defaultContent": "",
                     render: function(data, type, row) {
@@ -192,8 +212,15 @@
             "select": {
                 "style": "multi"
             },
+            "columnDefs": [
+                {
+                    "targets": [ 1 ],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
             "order": [
-                [0, 'asc']
+                [1, 'desc']
             ],
             "autoWidth": false,
             "responsive": true,
@@ -269,9 +296,10 @@
             },
         }).done(function(response) {
             console.log(response);
-            // if (response.code == "200") {}
+            if (response.code == "200") {
+                $("#modal-survey").modal("hide");
+            }
             $('#div-overlay').empty();
-            // $("#loadMe").modal("hide");
             toastMessage(response.code, response.message);
         }).fail(function(xhr, status, error) {
             console.log(xhr);
@@ -283,7 +311,7 @@
 
     function joinSurvey(PID){
         event.preventDefault();
-        var URL = '{{ config("app.URLSURVEY") }}' + '?id=' + PID;
+        var URL = '{{ config("app.URLSURVEY") }}' + '?id=' + PID + '&userid=mo';
         // console.log(URL);
         openInNewTab(URL);
     }
