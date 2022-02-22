@@ -264,7 +264,7 @@ class SppaController extends Controller
     }
 
     public function SavePolicy(Request $request){
-        // dd($request);
+        // dd($request->input('ClausulaCode'));
         $temppremium = str_replace('.','',str_replace(',','',$request->input('TxtPremium')));
         $premium = substr($temppremium,0,strlen($temppremium) - 2);
         $datapolicy = array(
@@ -289,7 +289,7 @@ class SppaController extends Controller
             'PolicyYearF' => ($request->input('cbxPolicyYearF') == null) ? false : true,
             'NeedESignF' => ($request->input('CbxNeedEsignF') == null) ? false : true,
             'DefaultPayor' => ($request->input('LstPayor') == null) ? '' : $request->input('LstPayor'),
-            'PPeriod' => ($request->input('TxtPPeriod') == null) ? 0 : $request->input('TxtPPeriod'),
+            'PPeriod' => ($request->input('LstPPeriod') == null) ? 0 : $request->input('LstPPeriod'),
             'CREFNO' => ($request->input('TxtQuotationNo') == null) ? '' : $request->input('TxtQuotationNo'),
             'Discount' => ($request->input('TxtDiscount') == null) ? 0 : $request->input('TxtDiscount'),
             'DiscPCT' => ($request->input('TxtDiscountPCT') == null) ? 0 : $request->input('TxtDiscountPCT'),
@@ -367,9 +367,17 @@ class SppaController extends Controller
         }
         //Clausula Code
         if ($request->input('ClausulaCode') != null){
-            for ($i = 0; $i < 5; ++$i) {
-                $datapolicy['ClausulaCode'.($i + 1)] = ($request->input('ClausulaCode')[$i] == null) ? '' : $request->input('ClausulaCode')[$i];
+            $ClausulaCode = '';
+            $datapolicy['ClausulaCodeF'] = true;
+            for ($i = 0; $i < count($request->input('ClausulaCode')); ++$i) {
+                if ($ClausulaCode == ''){
+                    $ClausulaCode = ($request->input('ClausulaCode')[$i] == null) ? '' : $request->input('ClausulaCode')[$i];
+                }else{
+                    $ClausulaCode = ($request->input('ClausulaCode')[$i] == null) ? $ClausulaCode : $ClausulaCode.','.$request->input('ClausulaCode')[$i];
+                }
             }
+            $datapolicy['Clausulacode1'] = $ClausulaCode;
+            // dd($ClausulaCode);
         }
         
         //Sum Insured

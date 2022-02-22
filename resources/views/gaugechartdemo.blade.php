@@ -110,21 +110,69 @@
         Looks not good!
       </div>
       <button type="button" id="test-button">test</button>
-      <table id="example1" class="table table-striped dt-responsive nowrap" width="100%">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Profile ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>ID Number</th>
-            <th>Birth Date</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-      </table>
-      <button type="button" id="refresh">Refresh</button>
+      <form id='form-1'>
+        <table id="example1" class="table table-striped dt-responsive nowrap" width="100%">
+          <thead>
+            <tr>
+              <th></th>
+              <th>No</th>
+              <th>Profile ID</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="checkbox" name="cbx[]" value="ekram"></input>
+              </td>
+              <td>1</td>
+              <td>ekram</td>
+              <td>Ekram Ganteng</td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" name="cbx[]" value="fitri"></input>
+              </td>
+              <td>2</td>
+              <td>fitri</td>
+              <td>Fitri Andre Ina</td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" name="cbx[]" value="Alesha"></input>
+              </td>
+              <td>3</td>
+              <td>Alesha</td>
+              <td>Alesha Chayrah Azzahra</td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" name="cbx[]" value="fitrialesha"></input>
+              </td>
+              <td>4</td>
+              <td>fitrialesha</td>
+              <td>futri Alesha Chayrah Azzahra</td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" name="cbx[]" value="Aleshachay"></input>
+              </td>
+              <td>5</td>
+              <td>Aleshachay</td>
+              <td>Alesha Chayrah Azzahra</td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" name="cbx[]" value="abrisam"></input>
+              </td>
+              <td>6</td>
+              <td>abrisam</td>
+              <td>abrisam</td>
+            </tr>
+          </tbody>
+        </table>
+      <button type="submit" id="refresh">Refresh</button>
+      </form>
       <div class="form-group">
         <input type="text" id="test1"></input>
       </div>
@@ -173,6 +221,7 @@
     <button id="btn-sweetalert" type="button">Sweet Alert</button>
     <button id="btn-loop" type="button">btn loop get data by PID</button>
     <button id="btn-ajax" type="button">btn get data by ajax</button>
+    <input type="checkbox" id="test-disable"></input>
   </section>
 </div>
 
@@ -202,6 +251,8 @@
       },
       theme: 'bootstrap4',
     });
+
+    console.log($('#test-disable').attr("disabled"));
 
 
     $('.select2bs4').select2({
@@ -326,26 +377,44 @@
       }
     ];
     console.log(basedata);
-    
 
-    $('#refresh').on('click',function(){
+    var tblProfile = $('#example1').DataTable({
+        columnDefs: [{
+            orderable: false,
+            targets: [1,2,3]
+        }],
+        "pageLength": 5,
+    });
+ 
+    $('#form-1').submit(function (event){
+      event.preventDefault();
       // console.log('haha');
-      var arr = {
-        RefID : "asd",
-        Name : "ekram",
-        Email : "ekram@care.co.id",
-        Mobile : "02929292",
-        ID_No : "8391832",
-        BirthDate : "<input type='text'></input>",
-        ID : "ekk"
-      }
-      // console.log(arr);
-      basedata.push(arr);
-      console.log(basedata);
-      tblProfile.clear().draw();
-      tblProfile.rows.add(basedata).draw(); // Add new data
+      // console.log(this.serialize());
+      var data = tblProfile.$('input').serialize();
+      console.log(data);
+      console.log($(this).serialize() + data);
+    });
+
+    // $('#refresh').on('click',function(){
+    //   // console.log('haha');
+    //   // var arr = {
+    //   //   RefID : "asd",
+    //   //   Name : "ekram",
+    //   //   Email : "ekram@care.co.id",
+    //   //   Mobile : "02929292",
+    //   //   ID_No : "8391832",
+    //   //   BirthDate : "<input type='text'></input>",
+    //   //   ID : "ekk"
+    //   // }
+    //   // console.log(arr);
+    //   // basedata.push(arr);
+    //   // console.log(basedata);
+    //   // tblProfile.clear().draw();
+    //   // tblProfile.rows.add(basedata).draw(); // Add new data
+    //   var data = tblProfile.$('input').serialize();
+    //   console.log(data);
       
-    })
+    // })
     // var globalvar = 'ekram';
     $('#test-button').on('click', function(){
       var num = '12,000,000.00';

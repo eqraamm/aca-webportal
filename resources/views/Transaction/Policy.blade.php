@@ -1191,6 +1191,7 @@
   let viewDetailF = false;
   let _token   = $('meta[name="csrf-token"]').attr('content');
   let tblDeductible;
+  let tblClausula;
   // let arrCoverage;
   // let arrProduct;
   // let arrGendtab;
@@ -1782,6 +1783,7 @@
           "responsive": true,
           "destroy": true,
         });
+
         var listTxtRate = [].slice.call(document.querySelectorAll('.TxtRate'));
         listTxtRate.forEach(function (rate) {
           rate.setAttribute('oninput',"this.value = this.value.replace(/[^0-9.]/g, '');");
@@ -1867,15 +1869,19 @@
         // listTxtDEDPCTCL.forEach(function (pctcl) {
         //   pctcl.setAttribute('oninput',"this.value = this.value.replace(/[^0-9.]/g, '');");
         // });
-        var tblClausula = $("#tbl_covClausula").DataTable({
+        tblClausula = $("#tbl_covClausula").DataTable({
           "data": CovClausula,
           "columns": [
             {
               "title": "",
-              "className": "select-checkbox",
+              "className": "",
               "defaultContent": "",
               render: function(data, type, row) {
-                return '<input class="form-control" id="ClausulaCode' + row['OrderNo'] + ' " name="ClausulaCode[]" type="checkbox" value="' + row['RefCode'] + '" checked>';
+                if (row['EditableF']){
+                  return '<input class="form-control" id="Clausulacode'+ row['OrderNo'] +'" name="ClausulaCode[]" type="checkbox" value="' + row['RefCode'] + '">';
+                }else{
+                  return '<input class="form-control" id="Clausulacode'+ row['OrderNo'] +'" name="ClausulaCode[]" type="checkbox" value="' + row['RefCode'] + '" disabled checked>';
+                }
               }
             },
             {
@@ -1919,7 +1925,7 @@
           "paging": true,
           "lengthChange": true,
           "searching": true,
-          "ordering": false,
+          "order": [[ 1, 'asc' ]],
           "info": false,
           "autoWidth": false,
           "responsive": true,
@@ -2921,8 +2927,10 @@
   }
 
   $('#img-btn-save').click(function(event){
+    // console.log(clausula);
     try{
       event.preventDefault();
+      // console.log('haha');
       $("#loadMe").modal('show');
 
       var asd = document.getElementById('InforceF');
@@ -2933,8 +2941,10 @@
         throw '';
       }
       var deductible = tblDeductible.$('input, select').serialize();
-      var full = $("#form-policy").serialize() + deductible;
-      // console.log(full);
+      var clausula = tblClausula.$('input').serialize();
+      var full = $("#form-policy").serialize() + '&' + deductible + '&' + clausula;
+      // console.log($("#form-policy").serialize());
+      
       $.ajax({
         type: "POST",
         url: "{{ route('policy.savepolicy') }}", 
@@ -3065,10 +3075,10 @@
               var url = "{{ route('policy.getdetail') }}?PID=" + $('#PID').val()
               var Policy;
               var jobPolicy;
-              for (i=0; i < 3; i++){
-                console.log('loop - ' + i);
+              for (i=0; i < 5; i++){
+                // console.log('loop - ' + i);
                 var res = await getData(url);
-                console.log(res);
+                // console.log(res);
                 Policy = res.Data;
                 jobPolicy = res.Data[0].PolicyJob;
                 if (jobPolicy[0].ANO != -1){
@@ -3076,7 +3086,7 @@
                   break;
                 }
                 await sleep(4);
-                console.log('after sleep');
+                // console.log('after sleep');
               }
 
               // var response = result.value.data;
@@ -3319,7 +3329,6 @@
 
   function viewDetail(data){
     enableAll();
-    console.log(data);
     arrPolicy = data;
     // var table = $('#tblInquiryPolicy').DataTable();
     // var data = table.rows().data();
@@ -3413,6 +3422,7 @@
     checkPrivilegesByPassESign();
     SubmitDateF_Checked();
     Segment_OnChange($('#Segment').val());
+    checkClausulaPolicy(arrPolFilter);
     // $('#DisabledNeedESignF').attr('disabled','disabled');
     toastMessage('200','Data Successfully Retrivied');
   }
@@ -3514,7 +3524,7 @@
   function parseDataToInput(polArray){
     // console.log(polArray);
     for (var key in polArray[0]) {
-      // console.log(key);
+      // console.log('key : ' + key + ', type : ' + $('#' + key).attr('type'));
       if (key == 'PStatus'){
         if (polArray[0][key] == 'R'){
           $('#' + key).val('Request');  
@@ -3531,12 +3541,14 @@
         }
       }else if($('#' + key).attr('type') == 'checkbox'){
         // console.log('key : ' + key + ' , Value : ' + polArray[0][key]);
-        if (polArray[0][key] == true){
+        if (polArray[0][key] == true || polArray[0][key] == $('#' + key).val()){
           document.getElementById(key).checked = true;
           // $('#' + key).attr('checked','checked');
         }else{
-          document.getElementById(key).checked = false;
+          if (typeof $('#' + key).attr('disabled') == undefined || $('#' + key).attr('disabled') == ''){
+            document.getElementById(key).checked = false;
           // $('#' + key).removeAttr('checked');
+          }
         }
       }
       else if($('#' + key).is('select')){
@@ -3825,7 +3837,6 @@
   }
 
   function SubmitDateF_Checked(){
-    console.log(arrPolicy);
     var cbxSubmitDate = document.getElementById("SubmitDateF");
     var PStatus = $('#PStatus').val();
     if (cbxSubmitDate.checked == true){
@@ -3845,9 +3856,15 @@
           sdate.setDate(sdate.getDate() + diffDays);
           $('#ExpiryDate').val(format_date(sdate));
         }else{
+          // console.log($('#ExpiryDate').val());
           var sdate = new Date();
-          var edate = new Date();
-          edate.setFullYear(edate.getFullYear()+1);
+          var edate;
+          if ($('#ExpiryDate').val() != ''){
+            edate = new Date($('#ExpiryDate').val());
+          }else{
+            edate = new Date();
+            edate.setFullYear(edate.getFullYear()+1);
+          }
           $('#InceptionDate').val(format_date(sdate));
           $('#ExpiryDate').val(format_date(edate));
         }
@@ -4077,6 +4094,15 @@
       CommByAmount.click();
       $('#FeeAmount_1').trigger('change');
     }
+  }
+
+  function checkClausulaPolicy(policydata){
+    var nodeTable = tblClausula.rows().nodes();
+    $(nodeTable).find('input').each(function(){
+      if (!this.hasAttribute('disabled')){
+        this.checked = policydata[0]['Clausulacode1'].includes(this.value);
+      }
+    })
   }
 </script>
 @endsection
