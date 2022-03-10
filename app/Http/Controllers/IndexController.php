@@ -21,7 +21,11 @@ class IndexController extends Controller
 
         $responseSearchPolicy = APIMiddleware($data, 'SearchPolicy');
         //  dd($responseSearchPolicy);
-         return view('dashboard')->with('data', $responseSearchPolicy); 
+        if (session('Role') == 'AGENT'){
+            return view('dashboard.dashboardAgent')->with('data', $responseSearchPolicy); 
+        }else{
+            return view('dashboard')->with('data', $responseSearchPolicy); 
+        }
     }
 
     public function modalWidget(Request $request){

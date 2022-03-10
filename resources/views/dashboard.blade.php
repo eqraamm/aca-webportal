@@ -280,14 +280,6 @@
     </div>
   </section>
 </div>
-
-<!-- /.content-wrapper -->
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
-</div>
 @endsection
 
 @section('scriptpage')
@@ -1159,6 +1151,3 @@
 
 </script>
 @endsection
-</body>
-
-</html>

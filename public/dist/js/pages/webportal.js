@@ -169,4 +169,51 @@ async function sleep(time = 1) {
         resolve(`Slept for: ${sleepMilliseconds}ms`)
       }, sleepMilliseconds)
     })
-  }
+}
+
+function dateDiff(interval,SDate, EDate){
+    switch (interval.toUpperCase()) {
+      case 'DAY':
+        return Math.ceil((Math.abs(SDate - EDate))/ (1000 * 60 * 60 * 24));   
+        break;
+      case 'MONTH':
+        var months = (EDate.getFullYear() - SDate.getFullYear()) * 12;
+        months -= SDate.getMonth();
+        months += EDate.getMonth();
+        return months;
+        break;
+      case 'YEAR':
+        return (EDate.getFullYear() - SDate.getFullYear());
+        break;
+      default:
+        return (EDate.getFullYear() - SDate.getFullYear());
+        break;
+    }
+}
+
+function dateAdd(interval, increment, SDate){
+var newdate = new Date(SDate);
+switch (interval.toUpperCase()) {
+    case 'DAY':
+    newdate.setDate(SDate.getDate() + increment);
+    return newdate;
+    break;
+    case 'MONTH':
+    newdate.setMonth(SDate.getMonth() + increment);
+    return newdate;
+    break;
+    case 'YEAR':
+    newdate.setFullYear(SDate.getFullYear() + increment);
+    return newdate;
+    break;
+    default:
+    newdate.setFullYear(SDate.getFullYear() + increment);
+    return newdate;
+    break;
+}
+}
+
+function refreshDataTable(table, data){
+    table.clear().draw();
+    table.rows.add(data).draw(); // Add new data
+}

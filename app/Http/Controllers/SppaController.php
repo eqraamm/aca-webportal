@@ -391,39 +391,6 @@ class SppaController extends Controller
             $datapolicy['SI_'.$i] = ($SI == null) ? 0 : $SI;
         }
 
-        //hardcode sementara
-        // switch ($datapolicy['CoverageID']){
-        //     case 'OTO-01A':
-        //         if ($datapolicy['SI_1'] < 100000001){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kendaraan Bermotor Below Minimum 100.000.000','data' => []]);
-        //         }else if ($datapolicy['SI_2'] < 25000000){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Tanggung Jawab Hukum Pihak Ketiga Below Minimum 25.000.000','data' => []]);
-        //         }
-        //         break;                
-        //     case 'OTO-02':
-        //         if ($datapolicy['SI_1'] < 100000000){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kendaraan Bermotor Below Minimum 100.000.000','data' => []]);
-        //         }else if ($datapolicy['SI_2'] < 50000000){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Tanggung Jawab Hukum Pihak Ketiga Below Minimum 50.000.000','data' => []]);
-        //         }else if($datapolicy['SI_3'] < 10000000){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kecelakaan Diri Pengemudi Below Minimum 10.000.000','data' => []]);
-        //         }else if($datapolicy['SI_4'] < 10000000){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kecelakaan Diri Penumpang Below Minimum 10.000.000','data' => []]);
-        //         }
-        //         break;
-        //     case 'OTO-03':
-        //         if ($datapolicy['SI_1'] < 100000000){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kendaraan Bermotor Below Minimum 100.000.000','data' => []]);
-        //         }else if ($datapolicy['SI_2'] < 75000000){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Tanggung Jawab Hukum Pihak Ketiga Below Minimum 75.000.000','data' => []]);
-        //         }else if($datapolicy['SI_3'] < 10000000){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured ecelakaan Diri Pengemudi Below Minimum 10.000.000','data' => []]);
-        //         }else if($datapolicy['SI_4'] < 10000000){
-        //             return response()->json(['code' => '400','message'=> 'Save Policy Failed. Sum Insured Kecelakaan Diri Penumpang Below Minimum 10.000.000','data' => []]);
-        //         }
-        //         break;
-        // }
-
         //Rate
         for ($i = 1; $i <= 10; ++$i) {
             $datapolicy['Rate_'.$i] = ($request->input('Rate'.$i) == null) ? 0 : $request->input('Rate'.$i);
@@ -452,9 +419,9 @@ class SppaController extends Controller
         //StrPCTIndemnity
         for ($i = 1; $i <= 100; ++$i) {
             $datapolicy['PCTIndemnity_'.$i] =  ($request->input('PCTIndemnity_'.$i) == null) ? 0 : $request->input('PCTIndemnity_'.$i);
-            if ($datapolicy['PCTIndemnity_'.$i] != 0){
-                $datapolicy['PCTIndemnityF'] = true;
-            }
+            // if ($datapolicy['PCTIndemnity_'.$i] != 0){
+            //     $datapolicy['PCTIndemnityF'] = true;
+            // }
         }
 
         // dd($datapolicy);

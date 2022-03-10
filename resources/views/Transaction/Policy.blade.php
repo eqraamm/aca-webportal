@@ -1192,6 +1192,7 @@
   let _token   = $('meta[name="csrf-token"]').attr('content');
   let tblDeductible;
   let tblClausula;
+  let tblRC;
   // let arrCoverage;
   // let arrProduct;
   // let arrGendtab;
@@ -1208,7 +1209,6 @@
   }
 
   function checkPrivilegesByPassESign(){
-    console.log(privilegesByPassESign);
     document.getElementById('NeedESignF').checked = !privilegesByPassESign;
     if (privilegesByPassESign){
       if (arrPolicy.length > 0){
@@ -1391,6 +1391,9 @@
     });
 
     $('#CommByAmount').trigger('click');
+    var sdate = new Date();
+    $('#InceptionDate').val(format_date(sdate));
+    $('#ExpiryDate').val(format_date(dateAdd('year',1,sdate)));
     
   });
 
@@ -1706,9 +1709,10 @@
         let CovDet = faCoverageDet[i].CoverageDetail;
         let CovDeduc = faCoverageDet[i].CoverageDeductible;
         let CovClausula = faCoverageDet[i].CoverageClauses;
-        var tblRC = $("#tblRiskCoverage").DataTable({
+        tblRC = $("#tblRiskCoverage").DataTable({
           "data": CovDet,
-          "columns": [{
+          "columns": [
+            {
               "title": "",
               "className": "select-checkbox",
               "defaultContent": "",
@@ -1727,31 +1731,37 @@
             },
             {
               "title": "No",
-              "data": "OrderNo"
+              "defaultContent": ""
             },
             {
               "title": "Risk Coverage",
               "data": "Description"
             },
             {
+              "title": "Period",
+              "defaultContent" : "",
+              render: function(data, type, row){
+                var sdate = new Date($('#InceptionDate').val());
+                var edate = new Date($('#ExpiryDate').val());
+                return format_date((row['PolicyYear'] == 0) ? sdate : dateAdd('year',row['PolicyYear'] - 1,sdate)) + ' - ' + format_date((row['PolicyYear'] == 0) ? edate : (dateAdd('year',row['PolicyYear'],sdate) > edate) ? edate : dateAdd('year',row['PolicyYear'],sdate));
+              }
+            },
+            {
               "title": "Rate"
             },
             {
-              "title": "% of Sum Insured"
+              "title": "% of Sum Insured",
+              "defaultContent" : "",
+              render: function(data, type, row) {
+                if (row['RefCode'] == 'EQ-0202-C/1' || row['RefCode'] == 'EQ-0202-C/2' || row['RefCode'] == 'EQ-0202-C/3' || row['RefCode'] == 'FL-0202-C/1' || row['RefCode'] == 'FL-0202-C/2' || row['RefCode'] == 'FL-0202-C/3'){
+                  return "<input class='form-control TxtRate onkeyup_regex' onkeyup='keyup_regex(this)' id='PCTIndemnity_" + row['OrderNo'] + "' name='PCTIndemnity_" + row['OrderNo'] + "' type='text' data-regex='^0$|^10$|^100$' value = '0'><div class='invalid-feedback'>Percentage can only be 10 or 100</div>";
+                }else{
+                  return "<input class='form-control TxtRate onkeyup_regex' onkeyup='keyup_regex(this)' id='PCTIndemnity_" + row['OrderNo'] + "' name='PCTIndemnity_" + row['OrderNo'] + "' type='text' data-regex='^100(\\.0{0,2})? *%?$|^\\d{1,2}(\\.\\d{1,2})? *%?$' value = '0'><div class='invalid-feedback'>Percentage can't be greater than 100</div>";
+                }
+              }
             }
           ],
           "columnDefs": [
-            {
-              targets: [3],
-              data: 'OrderNo',
-              render: function(data, type, row) {
-                // if (IncludeExtCoverF) {
-                  // return "<input class='form-control TxtRate' id='Rate_" + data + "' name='Rate" + data + "' type='text' value = '0' readonly>";
-                // }else{
-                  return "<input class='form-control TxtRate' id='RATE_" + data + "' name='Rate" + data + "' type='text' value = '0'>";
-                // }
-              }
-            },
             {
               targets: [4],
               data: 'OrderNo',
@@ -1759,13 +1769,8 @@
                 // if (IncludeExtCoverF) {
                   // return "<input class='form-control TxtRate' id='Rate_" + data + "' name='Rate" + data + "' type='text' value = '0' readonly>";
                 // }else{
-                  // return "<input class='form-control TxtRate onkeyup_regex' onkeyup='keyup_regex(this)' id='PCTIndemnity_" + data + "' name='PCTIndemnity_" + data + "' type='text' data-regex='^100(\\.0{0,2})? *%?$|^\\d{1,2}(\\.\\d{1,2})? *%?$' value = '0'><div class='invalid-feedback'>Percentage can't be greater than 100</div>";
+                  return "<input class='form-control TxtRate' id='RATE_" + data + "' name='Rate" + data + "' type='text' value = '0'>";
                 // }
-                if (row['RefCode'] == 'EQ-0202-C' || row['RefCode'] == 'FL-0202-C'){
-                  return "<input class='form-control TxtRate onkeyup_regex' onkeyup='keyup_regex(this)' id='PCTIndemnity_" + data + "' name='PCTIndemnity_" + data + "' type='text' data-regex='^0$|^10$|^100$' value = '0'><div class='invalid-feedback'>Percentage can only be 10 or 100</div>";
-                }else{
-                  return "<input class='form-control TxtRate onkeyup_regex' onkeyup='keyup_regex(this)' id='PCTIndemnity_" + data + "' name='PCTIndemnity_" + data + "' type='text' data-regex='^100(\\.0{0,2})? *%?$|^\\d{1,2}(\\.\\d{1,2})? *%?$' value = '0'><div class='invalid-feedback'>Percentage can't be greater than 100</div>";
-                }
               }
             },
             {
@@ -1784,15 +1789,18 @@
           "destroy": true,
         });
 
+        tblRC.on( 'order.dt search.dt', function () {
+          tblRC.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+          });
+        }).draw();
+
         var listTxtRate = [].slice.call(document.querySelectorAll('.TxtRate'));
         listTxtRate.forEach(function (rate) {
           rate.setAttribute('oninput',"this.value = this.value.replace(/[^0-9.]/g, '');");
         });
 
-        // keyup_regex
-        
         const CovDeducFil = CovDeduc.filter(CovDeduc => CovDeduc.NotApplyRateLoadingF == NotApplyRateLoadingF.checked);
-        // console.log(CovDeducFil);
         tblDeductible = $("#tbl_covDeductible").DataTable({
           "data": CovDeducFil,
           "columns": [{
@@ -1857,18 +1865,6 @@
           "responsive": true,
           "destroy": true,
         });
-        // var listTxtFixedMin = [].slice.call(document.querySelectorAll('.TxtFixedMin'));
-        // listTxtFixedMin.forEach(function (fixedmin) {
-        //   fixedmin.setAttribute('oninput',"this.value = this.value.replace(/[^0-9.]/g, '');");
-        // });
-        // var listTxtDEDPCTTSI = [].slice.call(document.querySelectorAll('.TxtDEDPCTTSI'));
-        // listTxtDEDPCTTSI.forEach(function (pcttsi) {
-        //   pcttsi.setAttribute('oninput',"this.value = this.value.replace(/[^0-9.]/g, '');");
-        // });
-        // var listTxtDEDPCTCL = [].slice.call(document.querySelectorAll('.TxtDEDPCTCL'));
-        // listTxtDEDPCTCL.forEach(function (pctcl) {
-        //   pctcl.setAttribute('oninput',"this.value = this.value.replace(/[^0-9.]/g, '');");
-        // });
         tblClausula = $("#tbl_covClausula").DataTable({
           "data": CovClausula,
           "columns": [
@@ -1976,6 +1972,7 @@
         }
       }
     }
+    refreshTableRisk();
   }
 
   function spreadObjInfo(ValueID, FLDID, ProductID, rowno){
@@ -2823,7 +2820,6 @@
     if ($('#Premium').val() != '' && $('#Premium').val() != '0'){
       var premium = $('#Premium').val().replace(/\,/g,'');
       var feeamount = ($('#FeeAmount_1').val()) == '' ? 0 : $('#FeeAmount_1').val().replace(/\,/g,'');
-      console.log(premium);
       $('#Fee_1').val(feeamount / premium * 100);
       if ($('#Fee_1').val() > 100){
         $('#Fee_1').val(0);
@@ -3291,6 +3287,9 @@
       $(this).prop('selectedIndex', 0);
     });
     $('#Currency').val('IDR');
+    var sdate = new Date();
+    $('#InceptionDate').val(format_date(sdate));
+    $('#ExpiryDate').val(format_date(dateAdd('year',1,sdate)));
     SubmitDateF_Checked();
     Product_OnChange($('#ProductID').val());
     checkPrivilegesByPassESign();
@@ -3327,7 +3326,7 @@
     $('#tabpolicy').tab('show');
   }
 
-  function viewDetail(data){
+  async function viewDetail(data){
     enableAll();
     arrPolicy = data;
     // var table = $('#tblInquiryPolicy').DataTable();
@@ -3340,8 +3339,9 @@
     $('#CoverageID').val(arrPolFilter[0]['CoverageID']);
     $('#CoverageID').trigger('change');
     // console.log(arrPolFilter);
+    // refreshTableRisk();
+    
     parseDataToInput(arrPolFilter);
-    drawDataTablePolDoc(data[0]['PolicyDocs']);
 
     //calculate total premium
     let Premium = parseInt(arrPolFilter[0]['Premium']);
@@ -3524,7 +3524,6 @@
   function parseDataToInput(polArray){
     // console.log(polArray);
     for (var key in polArray[0]) {
-      // console.log('key : ' + key + ', type : ' + $('#' + key).attr('type'));
       if (key == 'PStatus'){
         if (polArray[0][key] == 'R'){
           $('#' + key).val('Request');  
@@ -3550,8 +3549,7 @@
           // $('#' + key).removeAttr('checked');
           }
         }
-      }
-      else if($('#' + key).is('select')){
+      }else if($('#' + key).is('select')){
         if ($('#' + key).val() != polArray[0][key]){
           // $('#' + key).val(polArray[0][key]);
           // var x = document.querySelectorAll('#' + key);
@@ -3564,7 +3562,8 @@
         if ($('#' + key).hasClass('num-format')){
           $('#' + key).val(number_format(polArray[0][key],2,',','.'));
         }else{
-          $('#' + key).val(polArray[0][key]); 
+          $('#' + key).val(polArray[0][key]);
+          // console.log('key : ' + key + ', type : ' + $('#' + key).attr('type') + ' value : ' + polArray[0][key]);
         }
       }
     }
@@ -3788,6 +3787,7 @@
         $('#InceptionDate').val($('#ExpiryDate').val());
         throw output[0]['message'];
       }
+      refreshTableRisk();
     }catch (err){
       toastMessage('400',err);
     }
@@ -3796,26 +3796,22 @@
   $('#sdate').on('change.datetimepicker', function(e){ 
     try{
       var sdate = new Date($('#InceptionDate').val());
-      sdate.setFullYear(sdate.getFullYear()+1);
-      var month = sdate.getMonth() + 1;
-      if (month < 10) {
-        month = '0' + month;
-      }
-      var day = sdate.getDate();
-      if (day < 10) {
-        day = '0' + day;
-      }
-      var year = sdate.getFullYear();
-      $('#ExpiryDate').val(month + "/" + day + "/" + year);
-      // var output = checkPeriodePolicy(sdate,edate);
-      // if (output[0]['status'] == false){
-      //   $('#InceptionDate').val($('#ExpiryDate').val());
-      //   throw output[0]['message'];
-      // }
+      $('#ExpiryDate').val(format_date(dateAdd('year',1,sdate)));
+      refreshTableRisk();
     }catch (err){
       toastMessage('400',err);
     }
-  })
+  });
+
+  function refreshTableRisk(){
+    var Coverage = $('#CoverageID').val();
+    var dsCoverage = arrCoverage['Data'].filter(dscoverage => dscoverage.CoverageID == Coverage);
+    var sdate = new Date($('#InceptionDate').val());
+    var edate = new Date($('#ExpiryDate').val());
+    var policyYear = (edate > dateAdd('year',dateDiff('year',sdate,edate),sdate)) ? dateDiff('year',sdate,edate) + 1 : dateDiff('year',sdate,edate);
+    var dsCoverageDet = dsCoverage[0].CoverageDetail.filter(dscoveragedet => dscoveragedet.PolicyYear <= policyYear);
+    refreshDataTable(tblRC,dsCoverageDet);
+  }
 
   function checkPeriodePolicy(sdate, edate){
     var returnStatus = new Array()
@@ -4083,7 +4079,6 @@
   });
 
   function Check_CommissionBy(data_policy){
-    console.log(data_policy);
     var CommByAmount = document.getElementById('CommByAmount');
     var CommByPercent = document.getElementById('CommByPercent');
 

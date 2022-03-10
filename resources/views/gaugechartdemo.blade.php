@@ -395,26 +395,26 @@
       console.log($(this).serialize() + data);
     });
 
-    // $('#refresh').on('click',function(){
-    //   // console.log('haha');
-    //   // var arr = {
-    //   //   RefID : "asd",
-    //   //   Name : "ekram",
-    //   //   Email : "ekram@care.co.id",
-    //   //   Mobile : "02929292",
-    //   //   ID_No : "8391832",
-    //   //   BirthDate : "<input type='text'></input>",
-    //   //   ID : "ekk"
-    //   // }
-    //   // console.log(arr);
-    //   // basedata.push(arr);
-    //   // console.log(basedata);
-    //   // tblProfile.clear().draw();
-    //   // tblProfile.rows.add(basedata).draw(); // Add new data
-    //   var data = tblProfile.$('input').serialize();
-    //   console.log(data);
+    $('#refresh').on('click',function(){
+      console.log('haha');
+      var arr = {
+        RefID : "asd",
+        Name : "ekram",
+        Email : "ekram@care.co.id",
+        Mobile : "02929292",
+        ID_No : "8391832",
+        BirthDate : "<input type='text'></input>",
+        ID : "ekk"
+      }
+      console.log(arr);
+      basedata.push(arr);
+      console.log(basedata);
+      tblProfile.clear().draw();
+      tblProfile.rows.add(basedata).draw(); // Add new data
+      // var data = tblProfile.$('input').serialize();
+      // console.log(data);
       
-    // })
+    })
     // var globalvar = 'ekram';
     $('#test-button').on('click', function(){
       var num = '12,000,000.00';
