@@ -217,3 +217,24 @@ function refreshDataTable(table, data){
     table.clear().draw();
     table.rows.add(data).draw(); // Add new data
 }
+
+function addOptionItem(selectElement, data, LblValue, LblDescription, withBlankItem = true, descriptionWithID = false){
+    if (withBlankItem){
+      var option = document.createElement("OPTION");
+      option.value = '';
+      option.innerHTML = '';
+      selectElement.appendChild(option);
+    }
+    for (j = 0; j < data.length; j++) {
+        var option = document.createElement("OPTION");
+        option.value = data[j][LblValue];
+        if (descriptionWithID){
+          option.innerHTML = data[j][LblValue] + ' - ' + data[j][LblDescription];
+        }else{
+          option.innerHTML = data[j][LblDescription];
+        }
+        selectElement.appendChild(option);
+    }
+}
+
+$('.number-format').attr('oninput',"this.value = this.value.replace(/[^0-9.]/g, '');");

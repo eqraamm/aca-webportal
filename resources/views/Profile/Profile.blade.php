@@ -3,7 +3,7 @@
 
 @section('maincontent')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+<div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <div class="container-fluid"></div>
@@ -339,40 +339,42 @@
                         <input class="form-control" id="Address_1" name="Address1" type="text" required>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label"></label>
-                      <div class="col-sm-2">
-                        <p for="RT">RT</p>
-                        <input class="form-control" id="SOI" name="SOI" type="text" required>
+                    @if (config('app.DETAILADDRESSF'))
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-2">
+                          <p for="RT">RT</p>
+                          <input class="form-control" id="SOI" name="SOI" type="text" required>
+                        </div>
+                        <div class="col-sm-2">
+                          <p for="RW">RW</p>
+                          <input class="form-control" id="MOO" name="MOO" type="text" required>
+                        </div>
+                        <div class="col-sm-2">
+                          <p for="Province">Province</p>
+                          <select class="form-control select2bs4" id="Province" name="Province" required> 
+                          </select>
+                        </div>
                       </div>
-                      <div class="col-sm-2">
-                        <p for="RW">RW</p>
-                        <input class="form-control" id="MOO" name="MOO" type="text" required>
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-2">
+                          <p for="District">District</p>
+                          <select class="form-control select2bs4" id="District" name="District" required> 
+                          </select>
+                        </div>
+                        <div class="col-sm-2">
+                          <p for="SubDistrict">Sub District</p>
+                          <select class="form-control select2bs4" id="SubDistrict" name="SubDistrict" required>
+                          </select>
+                        </div>
+                        <div class="col-sm-2">
+                          <p for="Village">Village</p>
+                          <select class="form-control select2bs4" id="Village" name="Village" required>
+                          </select>
+                        </div>
                       </div>
-                      <div class="col-sm-2">
-                        <p for="Province">Province</p>
-                        <select class="form-control select2bs4" id="Province" name="Province" required> 
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label"></label>
-                      <div class="col-sm-2">
-                        <p for="District">District</p>
-                        <select class="form-control select2bs4" id="District" name="District" required> 
-                        </select>
-                      </div>
-                      <div class="col-sm-2">
-                        <p for="SubDistrict">Sub District</p>
-                        <select class="form-control select2bs4" id="SubDistrict" name="SubDistrict" required>
-                        </select>
-                      </div>
-                      <div class="col-sm-2">
-                        <p for="Village">Village</p>
-                        <select class="form-control select2bs4" id="Village" name="Village" required>
-                        </select>
-                      </div>
-                    </div>
+                    @endif
                     <!-- <div class="form-group row">
                     <label class="col-sm-3 col-form-label"></label>
                       
@@ -413,13 +415,15 @@
                         </select>
                       </div>
                     </div>
-                    <!-- <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Province</label>
-                      <div class="col-sm-3">
-                        <select class="form-control select2bs4" id="Province" name="Province" required> 
-                        </select>
+                    @if (!config('app.DETAILADDRESSF'))
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Province</label>
+                        <div class="col-sm-3">
+                          <select class="form-control select2bs4" id="Province" name="Province" required> 
+                          </select>
+                        </div>
                       </div>
-                    </div> -->
+                    @endif
                     <div class="form-group row">
                       <p class="col-sm-3 col-form-label">ZipCode</p>
                       <div class="col-sm-3">
@@ -882,30 +886,6 @@
         </div>
       </div>
     </div>
-    <!-- cobain modal delete -->
-    <!-- <div class="modal fade" id="modal-general" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="modaltitle"></h4>
-          </div>
-          <div class="modal-body" id="modalbody"></div>
-          <div class="modal-footer" id="modalfooter"></div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- Modal Loading -->
-    <!-- <div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" data-backdrop="static" data-keyboard="false" tabindex="-1">
-      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-body text-center">
-          <div class="spinner-border text-info" style="width: 4rem; height: 4rem;" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- End Modal Loading -->
   </section>
 </div>
 @endsection
@@ -992,20 +972,20 @@
 
   });
 
-  function addOptionItem(selectElement, data, LblValue, LblDescription, withBlankItem = true){
-    if (withBlankItem){
-      var option = document.createElement("OPTION");
-      option.value = '';
-      option.innerHTML = '';
-      selectElement.appendChild(option);
-    }
-    for (j = 0; j < data.length; j++) {
-        var option = document.createElement("OPTION");
-        option.value = data[j][LblValue];
-        option.innerHTML = data[j][LblDescription];
-        selectElement.appendChild(option);
-    }
-  }
+  // function addOptionItem(selectElement, data, LblValue, LblDescription, withBlankItem = true){
+  //   if (withBlankItem){
+  //     var option = document.createElement("OPTION");
+  //     option.value = '';
+  //     option.innerHTML = '';
+  //     selectElement.appendChild(option);
+  //   }
+  //   for (j = 0; j < data.length; j++) {
+  //       var option = document.createElement("OPTION");
+  //       option.value = data[j][LblValue];
+  //       option.innerHTML = data[j][LblDescription];
+  //       selectElement.appendChild(option);
+  //   }
+  // }
 
   function CGroup_OnChange(CGroup) {
     var basedata = arrSCGroup.Data;
@@ -1227,10 +1207,11 @@
       corporateF_chekcked();
       $('#SCGroup').val(filterarray[0]['SCGroup']);
       $('#SCGroup').trigger('change');
-
-      await getDistrict(filterarray[0]['Province'], filterarray[0]['District']);
-      await getSubDistrict(filterarray[0]['District'],filterarray[0]['Province'], filterarray[0]['SubDistrict']);
-      await getVillage(filterarray[0]['SubDistrict'],filterarray[0]['District'],filterarray[0]['Province'], filterarray[0]['Village']);
+      if ("{{config('app.DETAILADDRESSF')}}"){
+        await getDistrict(filterarray[0]['Province'], filterarray[0]['District']);
+        await getSubDistrict(filterarray[0]['District'],filterarray[0]['Province'], filterarray[0]['SubDistrict']);
+        await getVillage(filterarray[0]['SubDistrict'],filterarray[0]['District'],filterarray[0]['Province'], filterarray[0]['Village']);
+      }
 
       $('#btn-sync').removeAttr('disabled');
 
@@ -1240,17 +1221,6 @@
       $('#profile').attr('class','active tab-pane');
       toastMessage('200','Data Successfully Retrivied');
   }
-
-  // $('#asd').click(function(event){
-  //   event.preventDefault();
-  //   $('#WNIF').attr('checked','checked');
-  //   $('.select2bs4').trigger('change');
-  // })
-
-  // $('#asd_uncheck').click(function(event){
-  //   event.preventDefault();
-  //   $('#WNIF').removeAttr('checked');
-  // })
 
   function parseDataToInput(filterarray){
     // $('#WNIF').attr('checked','checked');

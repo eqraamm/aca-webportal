@@ -544,8 +544,37 @@
                     </tr>
                     <!-- End Perhitungan Premi -->
 
-                    <!-- Detail Perhitungan Premi -->
                     <tr>
+                      <td>
+                        <div class="table-responsive">
+                          <table class="table table-bordered" style="width: 95%; margin:0 auto;">
+                            <thead>
+                              <tr>
+                                <td style="width:10%;text-align:center;">Tahun</td>
+                                <td style="width:40%;text-align:center;">Jaminan</td>
+                                <td style="width:20%;text-align:center;">Harga Pertanggungan (RP)</td>
+                                <td style="width:15%;text-align:center;">Tarif (%)</td>
+                                <td style="width:15%;text-align:center;">Nilai Premi (Rp)</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach ($payload['PremiumSimulation'] as $premisimulation)
+                                <tr>
+                                  <td style="width:10%;text-align:center;">{{$premisimulation['PolicyYear']}}</td>
+                                  <td style="width:40%;text-align:left;">{{$premisimulation['Risk']}}</td>
+                                  <td style="width:20%;text-align:center;">{{ number_format($premisimulation['SI'],2) }}</td>
+                                  <td style="width:15%;text-align:center;">{{ $premisimulation['SProrata'] == '' ? $premisimulation['Rate'] : $premisimulation['Rate'].' x '.$premisimulation['SProrata'] }}</td>
+                                  <td style="width:15%;text-align:center;">{{ number_format($premisimulation['Premium'],2) }}</td>
+                                </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Detail Perhitungan Premi -->
+                    <!-- <tr>
                       <td>
                         <table border="0" class="rowDetailObjInfo" style="width:95%">
                           <tbody id="tblPremiumSimulation">
@@ -580,7 +609,7 @@
                           </tbody>
                         </table>
                       </td>
-                    </tr>
+                    </tr> -->
                     <!-- End Detail Perhitungan Premi -->
 
                     <!-- Horizontal Line -->

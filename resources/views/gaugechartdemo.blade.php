@@ -171,7 +171,9 @@
             </tr>
           </tbody>
         </table>
-      <button type="submit" id="refresh">Refresh</button>
+        <input type="hidden" id="test" name="test" />
+        <input type="hidden" id="test1" name="test1" />
+        <button type="submit" id="refresh">Refresh</button>
       </form>
       <div class="form-group">
         <input type="text" id="test1"></input>
@@ -390,9 +392,10 @@
       event.preventDefault();
       // console.log('haha');
       // console.log(this.serialize());
-      var data = tblProfile.$('input').serialize();
-      console.log(data);
-      console.log($(this).serialize() + data);
+      // var data = tblProfile.$('input').serialize();
+      // console.log(data);
+      console.log($(this).serialize());
+
     });
 
     $('#refresh').on('click',function(){

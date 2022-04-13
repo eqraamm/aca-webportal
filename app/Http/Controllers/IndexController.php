@@ -21,8 +21,15 @@ class IndexController extends Controller
 
         $responseSearchPolicy = APIMiddleware($data, 'SearchPolicy');
         //  dd($responseSearchPolicy);
+
+        $data = array(
+            'ID' => session('ID')
+        );
+        $responseSearchStoredData_GWP = APIMiddleware($data, 'SearchStoredData_GWP');
+        // dd($responseSearchStoredData_GWP);
+
         if (session('Role') == 'AGENT'){
-            return view('dashboard.dashboardAgent')->with('data', $responseSearchPolicy); 
+            return view('dashboard.dashboardAgent')->with('data', $responseSearchStoredData_GWP); 
         }else{
             return view('dashboard')->with('data', $responseSearchPolicy); 
         }

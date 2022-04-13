@@ -12,17 +12,6 @@
   <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <!-- <div class="col-sm-6">
-          <h1 class="m-0">Dashboard</h1>
-        </div> -->
-        <!-- /.col -->
-        <!-- <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
-            </ol>
-          </div> -->
-        <!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
@@ -31,36 +20,6 @@
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
-      <!-- <div class="modal fade" id="modal-sm">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Update</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body" style="text-align: center;">
-              <div class="form-group row">
-                <p class="col-sm-2">Rate</p>
-                <p class="col-sm-2">:</p>
-                <div class="col-sm-7">
-                  <input class="form-control" id="TxtRate" type="text">
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer justify-content-between"> -->
-              <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-              <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-            </div>
-          </div> -->
-          <!-- /.modal-content -->
-        <!-- </div> -->
-        <!-- /.modal-dialog -->
-      <!-- </div> -->
-      <!-- /.modal -->
-      <!-- Small boxes (Stat box) -->
-      <!-- /.row -->
       <!-- Main row -->
       <div class="row">
         <div class="col-md-12">
@@ -181,51 +140,6 @@
                         <button id="img-btn-clear" href="#" class="btn float-right" style="overflow:hidden; color: #ff1100;" data-toggle="tooltip" data-placement="top" title="Clear All">
                           <i class="fas fa-times-circle fa-2x"></i>
                         </button>
-                        <!-- <button id="img-btn-save" href="#" class="btn" style="overflow:hidden;" data-toggle="tooltip" data-placement="top" title="Save">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" fill="#60e314" class="bi bi-save-fill" viewBox="0 0 16 16">
-                            <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
-                          </svg> -->
-                        <!-- </button> -->
-                        <!-- <button class="btn" id="img-btn-save" style="width:40px; height:40px; background-image: url('{{asset('dist/img/floppy-disk.png')}}'); background-repeat: no-repeat; background-size: 100%; top center;" data-toggle="tooltip" data-placement="top" title="Save"></button> -->
-                        <!-- <img src="{{asset('dist/img/floppy-disk.png')}}" style="width:30px; height:30px;"> -->
-                        <!-- <img src="{{asset('dist/img/floppy-disk.png')}}" id="img-btn-save" type="button" style="width:4.5%; height:4.5%; padding-left:1%;" data-toggle="tooltip" title="Save"> -->
-                        <!-- <button class="btn" id="img-btn-search" style="width:40px; height:40px; padding-left: 1em; background-image: url('{{asset('dist/img/file.svg')}}'); background-repeat: no-repeat; background-size: 100%; top center;" data-toggle="tooltip" data-placement="top" title="Preview" ></button> -->
-                        <!-- <button id="img-btn-preview" href="#" class="btn" style="overflow:hidden;" data-toggle="tooltip" data-placement="top" title="Preview">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" fill="#1088eb" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
-                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0z"/>
-                          </svg>
-                        </button> -->
-                        <!-- <button class="btn" id="img-btn-search" style="width:40px; height:40px; margin-left: 1em; background-image: url('{{asset('dist/img/paper-plane.svg')}}'); background-repeat: no-repeat; background-size: 100%; top center;" data-toggle="tooltip" data-placement="top" title="Send Confirmation"></button> -->
-                        <!-- <button id="img-btn-send" href="#" class="btn" style="overflow:hidden;" data-#deeffc="tooltip" data-placement="top" title="Send Confirmation">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
-                          <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
-                        </svg>
-                        </button> -->
-                        <!-- <img src="{{asset('dist/img/paper-plane.svg')}}" id="img-btn-send" type="button" style="width:4.5%; height:4.5%; padding-left:1%;" data-toggle="tooltip" title="Send Confirmation"> -->
-                        <!-- <img src="{{asset('dist/img/edit.svg')}}" id="edit" type="button" style="width:4.5%; height:4.5%; padding-left:1%;"> -->
-                        <!-- <button id="img-btn-revise" href="{{ route('policy.revisepolicy') }}" class="btn" style="overflow:hidden;" data-toggle="tooltip" data-placement="top" title="Revise">
-                          <svg xmlns="http://www.w3.org/2000/svg" style="width:35px; height:35px;" fill="#ffac54" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                          </svg>
-                        </button> -->
-                        <!-- <a href="{{ route('policy.revisepolicy') }}" id="img-btn-revise" data-toggle="tooltip" title="Revise">
-                          <svg xmlns="http://www.w3.org/2000/svg" style="width:4%; height:4%; padding-left:1%;" fill="#ffac54" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                          </svg>
-                        </a> -->
-                        <!-- <img src="{{asset('dist/img/check-solid.svg')}}" id="download" type="button" style="width:4.5%; height:4.5%; padding-left:1%;"> -->
-                        <!-- <button id="img-btn-submit" href="{{ route('policy.submitpolicy') }}" class="btn" style="overflow:hidden;" data-toggle="tooltip" data-placement="top" title="Submit">
-                          <svg xmlns="http://www.w3.org/2000/svg" style="width:35px; height:35px;" fill="#57a63f" class="bi bi-check-lg" viewBox="0 0 16 16">
-                            <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z"/>
-                          </svg>
-                        </button> -->
-                        <!-- <a href="{{ route('policy.submitpolicy') }}" id="img-btn-submit" data-toggle="tooltip" title="Submit">
-                          <svg xmlns="http://www.w3.org/2000/svg" style="width:4%; height:4%; padding-left:1%;" fill="#57a63f" class="bi bi-check-lg" viewBox="0 0 16 16">
-                            <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z"/>
-                          </svg>
-                        </a> -->
-                        <!-- <button class="btn" id="img-btn-closed" style="width:40px; height:40px; padding-left:1%; background-image: url('{{asset('dist/img/remove.png')}}'); background-repeat: no-repeat; background-size: 100%; top center;" data-toggle="tooltip" data-placement="top" title="Save"></button> -->
-                        <!-- <img src="{{asset('dist/img/remove.png')}}" id="img-btn-closed" type="button" style="width:4.5%; height:4.5%; padding-left:1%;" data-toggle="tooltip" title="Cancel">                -->
                       </div>
                       <div id="stepper-policy" class="bs-stepper">
                         <div class="bs-stepper-header" role="tablist">
@@ -616,6 +530,8 @@
                                 <table id="tblRiskCoverage" class="table table-condensed responsive table-striped">
 
                                 </table>
+                                <div id="div-rate">
+                                </div>
                               </div>
                             </div>
                             <div class="card">
@@ -1049,43 +965,34 @@
                                     <input type="checkbox" class="form-check-input col-sm-1" id="SubmitDateF" name="CbxSubmitDate">
                                   </div>
                                 </div> -->
-                                <div class="form-group row">
-                                  <p class="col-sm-3 col-form-label">Need e-Sign</p>
-                                  <div class="col-form-label">
-                                    <input type="checkbox" class="form-check-input col-sm-1" id="NeedESignF" name="CbxNeedEsignF">
-                                    <input type="checkbox" class="form-check-input col-sm-1" id="DisabledNeedESignF" name="DisabledCbxNeedEsignF" checked=true disabled>
+                                <div id='div-esign'>
+                                  <div class="form-group row">
+                                    <p class="col-sm-3 col-form-label">Need e-Sign</p>
+                                    <div class="col-form-label">
+                                      <input type="checkbox" class="form-check-input col-sm-1" id="NeedESignF" name="CbxNeedEsignF">
+                                      <input type="checkbox" class="form-check-input col-sm-1" id="DisabledNeedESignF" name="DisabledCbxNeedEsignF" checked=true disabled>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <p class="col-sm-3 col-form-label">e-Sign</p>
+                                    <div class="col-form-label">
+                                      <input type="checkbox" class="form-check-input col-sm-1" id="EsignF" name="CbxESign" disabled>
+                                    </div>
                                   </div>
                                 </div>
-                                <div class="form-group row">
-                                  <p class="col-sm-3 col-form-label">e-Sign</p>
-                                  <div class="col-form-label">
-                                    <input type="checkbox" class="form-check-input col-sm-1" id="EsignF" name="CbxESign" disabled>
-                                  </div>
-                                </div>
-                                <div class="form-group row" id="div-needsurveyf">
-                                  <p class="col-sm-3 col-form-label">Need Survey</p>
-                                  <div class="col-form-label">
-                                    <input type="checkbox" class="form-check-input col-sm-1" id="NeedSurveyF" name="CbxNeedSurveyF">
-                                    <input type="checkbox" class="form-check-input col-sm-1" id="DisabledNeedSurveyF" name="DisabledNeedSurveyF" checked=true disabled>
+                                <div id='div-survey'>
+                                  <div class="form-group row" id="div-needsurveyf">
+                                    <p class="col-sm-3 col-form-label">Need Survey</p>
+                                    <div class="col-form-label">
+                                      <input type="checkbox" class="form-check-input col-sm-1" id="NeedSurveyF" name="CbxNeedSurveyF">
+                                      <input type="checkbox" class="form-check-input col-sm-1" id="DisabledNeedSurveyF" name="DisabledNeedSurveyF" checked=true disabled>
+                                    </div>
                                   </div>
                                 </div>
                                 <!-- <div class="form-group row">
                                   <p class="col-sm-3 col-form-label">Document SPPA Status</p>
                                   <div class="col-form-label col-sm-4">
                                     <label id="DocStatus" style="padding-left:2%;">No Document SPPA</label>
-                                  </div>
-                                </div> -->
-                                <!-- <div class="form-group row" style="width: 100%; padding-left:5%; text-align: center;">
-                                  <div class="col text-center">
-                                    <button class="btn btn-primary" id="BtnSave">Save</button>
-                                    <button class="btn btn-primary" id="BtnValidate">Validate</button>
-                                    <button class="btn btn-primary" id="BtnAddCert">Add Certificate</button>
-                                    <button class="btn btn-primary" id="BtnCompliance">Complience</button>
-                                    <button class="btn btn-primary" id="BtnPayment">Payment</button>
-                                    <button class="btn btn-primary" id="BtnTSubmit">Quotation</button>
-                                    <button class="btn btn-primary" id="BtnRevise">Revise</button>
-                                    <button class="btn btn-primary" id="BtnSubmitConfirmation">Send Confirmation</button>
-                                    <button class="btn btn-primary" id="BtnSubmit">Submit</button>
                                   </div>
                                 </div> -->
                               </div>
@@ -1111,79 +1018,22 @@
 </div>
 <!-- /.row (main row) -->
 </div><!-- /.container-fluid -->
-<!-- Modal Loading-->
-<!-- <div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" data-backdrop="static" data-keyboard="false" tabindex="-1">
-  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-      <div class="modal-body text-center">
-        <div class="spinner-border text-info" style="width: 4rem; height: 4rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-  </div>
-</div> -->
 
 <div class="modal" id="img-modal" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" data-backdrop="static" data-keyboard="false" tabindex="-1">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-    <!-- <div class="modal-content"> -->
       <div class="modal-body text-center">
         <span class="close">&times;</span>
         <img class="modal-img-content" id="img01">
         <div id="caption"></div>
       </div>
-    <!-- </div> -->
   </div>
 </div>
-
-<!-- <div class="modal fade" id="modal-view">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <label class="modal-title">History Profile</label>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="bodyHistory"></div>
-    </div>
-  </div>
-</div> -->
-
-<!-- <div class="modal fade" id="modal-general" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div id="class-modal-dialog" class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="modaltitle"></h4>
-      </div>
-      <div class="modal-body" id="modalbody"></div>
-      <div class="modal-footer" id="modalfooter"></div>
-    </div>
-  </div>
-</div> -->
 </section>
 <!-- /.content -->
 </div>
 @endsection
 @section('scriptpage')
-<!-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script> -->
 <script>
-  // function functionOne(_callback){
-  //   console.log('function one');
-  //   // do some asynchronus work 
-  //   _callback();
-  // }
-
-  // function functionTwo(){
-  //     // do some asynchronus work 
-  //     console.log('fucntion two');
-  //     functionOne(()=>{
-  //       setTimeout(()=>{
-  //           console.log("inside timeout");
-  //       },5000);
-  //     });
-  // }
-
-  // functionTwo();
-  
   let arrCurrency,arrCoverage,arrProduct,arrGendtab, cbProduct, cbCoverage, cbGendtab, arrProfile, privilegesByPassESign, callback_PID;
   let arrPolicy = [];
   let getMasterDataF = false;
@@ -1193,9 +1043,7 @@
   let tblDeductible;
   let tblClausula;
   let tblRC;
-  // let arrCoverage;
-  // let arrProduct;
-  // let arrGendtab;
+  let Role = '{{session("Role")}}';
   
 
   async function getDataMaster(url) {
@@ -1319,24 +1167,17 @@
   // main();
 
   $( document ).ready(function() {
-    // console.time('main');
-    // getproduct();
-    // getcoverage();
-    // getgendtab();
-    // // getmo();
-    // getbranch();
-    // getcurrency();
-    // getprofile();
-    // getsegment();
-    // getct();
-    // getagent();
-    // console.timeEnd('main');
-
-    
-    
-    var Role = '{{session("Role")}}';
+    var SENDCONFIRMATIONF = "{{ config('app.SENDCONFIRMATIONF') }}";
+    console.log(SENDCONFIRMATIONF);
+    if (!SENDCONFIRMATIONF) {
+      $('#img-btn-send').attr('style','display:none');
+      $('#div-esign').attr('style','display:none');
+    }
     if (Role == 'MARKETING OFFICER'){
       $('#divLstMO').attr('style','display:none;');
+    }else if (Role == 'AGENT'){
+      $('#card-business-source').attr('style','display:none;');
+      $('#div-survey').attr('style','display:none;');
     }
     $('#RegDate').val(getformatedDate());
     if ($('#PStatus').val() == ''){
@@ -1427,7 +1268,6 @@
     }
   }
 
-  // console.log(policy);
   var tblInquiry = $('#tblInquiryPolicy').DataTable( {
     "processing": true,
     "serverSide": false,
@@ -1738,41 +1578,48 @@
               "data": "Description"
             },
             {
-              "title": "Period",
-              "defaultContent" : "",
-              render: function(data, type, row){
-                var sdate = new Date($('#InceptionDate').val());
-                var edate = new Date($('#ExpiryDate').val());
-                return format_date((row['PolicyYear'] == 0) ? sdate : dateAdd('year',row['PolicyYear'] - 1,sdate)) + ' - ' + format_date((row['PolicyYear'] == 0) ? edate : (dateAdd('year',row['PolicyYear'],sdate) > edate) ? edate : dateAdd('year',row['PolicyYear'],sdate));
-              }
-            },
-            {
-              "title": "Rate"
-            },
-            {
-              "title": "% of Sum Insured",
-              "defaultContent" : "",
-              render: function(data, type, row) {
-                if (row['RefCode'] == 'EQ-0202-C/1' || row['RefCode'] == 'EQ-0202-C/2' || row['RefCode'] == 'EQ-0202-C/3' || row['RefCode'] == 'FL-0202-C/1' || row['RefCode'] == 'FL-0202-C/2' || row['RefCode'] == 'FL-0202-C/3'){
-                  return "<input class='form-control TxtRate onkeyup_regex' onkeyup='keyup_regex(this)' id='PCTIndemnity_" + row['OrderNo'] + "' name='PCTIndemnity_" + row['OrderNo'] + "' type='text' data-regex='^0$|^10$|^100$' value = '0'><div class='invalid-feedback'>Percentage can only be 10 or 100</div>";
-                }else{
-                  return "<input class='form-control TxtRate onkeyup_regex' onkeyup='keyup_regex(this)' id='PCTIndemnity_" + row['OrderNo'] + "' name='PCTIndemnity_" + row['OrderNo'] + "' type='text' data-regex='^100(\\.0{0,2})? *%?$|^\\d{1,2}(\\.\\d{1,2})? *%?$' value = '0'><div class='invalid-feedback'>Percentage can't be greater than 100</div>";
-                }
+              "defaultContent":"",
+              render: function(data,type,row){
+                var fn = "detailRisk('"+ row['RefCode'] +"','"+ row['Description'] +"','"+ row['OrderNo'] +"')"
+                return '<img src="{{asset("dist/img/edit.svg")}}" width="30" height="30" type="button" value="detail" onclick="'+ fn +'">'
               }
             }
+            // {
+            //   "title": "Period",
+            //   "defaultContent" : "",
+            //   render: function(data, type, row){
+            //     var sdate = new Date($('#InceptionDate').val());
+            //     var edate = new Date($('#ExpiryDate').val());
+            //     return format_date((row['PolicyYear'] == 0) ? sdate : dateAdd('year',row['PolicyYear'] - 1,sdate)) + ' - ' + format_date((row['PolicyYear'] == 0) ? edate : (dateAdd('year',row['PolicyYear'],sdate) > edate) ? edate : dateAdd('year',row['PolicyYear'],sdate));
+            //   }
+            // },
+            // {
+            //   "title": "Rate"
+            // },
+            // {
+            //   "title": "% of Sum Insured",
+            //   "defaultContent" : "",
+            //   render: function(data, type, row) {
+            //     if (row['RefCode'] == 'EQ-0202-C/1' || row['RefCode'] == 'EQ-0202-C/2' || row['RefCode'] == 'EQ-0202-C/3' || row['RefCode'] == 'FL-0202-C/1' || row['RefCode'] == 'FL-0202-C/2' || row['RefCode'] == 'FL-0202-C/3'){
+            //       return "<input class='form-control TxtRate onkeyup_regex' onkeyup='keyup_regex(this)' id='PCTIndemnity_" + row['OrderNo'] + "' name='PCTIndemnity_" + row['OrderNo'] + "' type='text' data-regex='^0$|^10$|^100$' value = '0'><div class='invalid-feedback'>Percentage can only be 10 or 100</div>";
+            //     }else{
+            //       return "<input class='form-control TxtRate onkeyup_regex' onkeyup='keyup_regex(this)' id='PCTIndemnity_" + row['OrderNo'] + "' name='PCTIndemnity_" + row['OrderNo'] + "' type='text' data-regex='^100(\\.0{0,2})? *%?$|^\\d{1,2}(\\.\\d{1,2})? *%?$' value = '0'><div class='invalid-feedback'>Percentage can't be greater than 100</div>";
+            //     }
+            //   }
+            // }
           ],
           "columnDefs": [
-            {
-              targets: [4],
-              data: 'OrderNo',
-              render: function(data, type, row) {
-                // if (IncludeExtCoverF) {
-                  // return "<input class='form-control TxtRate' id='Rate_" + data + "' name='Rate" + data + "' type='text' value = '0' readonly>";
-                // }else{
-                  return "<input class='form-control TxtRate' id='RATE_" + data + "' name='Rate" + data + "' type='text' value = '0'>";
-                // }
-              }
-            },
+            // {
+            //   targets: [4],
+            //   data: 'OrderNo',
+            //   render: function(data, type, row) {
+            //     // if (IncludeExtCoverF) {
+            //       // return "<input class='form-control TxtRate' id='Rate_" + data + "' name='Rate" + data + "' type='text' value = '0' readonly>";
+            //     // }else{
+            //       return "<input class='form-control TxtRate' id='hm-RATE_" + data + "' name='Rate" + data + "' type='text' value = '0'>";
+            //     // }
+            //   }
+            // },
             {
               "width":"4.5%",
               "targets": [0] 
@@ -1975,6 +1822,72 @@
     refreshTableRisk();
   }
 
+  function detailRisk(risk,remarks,orderno){
+    event.preventDefault();
+
+    var sdate = new Date($('#InceptionDate').val());
+    var edate = new Date($('#ExpiryDate').val());
+
+    var policyYear = (edate > dateAdd('year',dateDiff('year',sdate,edate),sdate)) ? dateDiff('year',sdate,edate) + 1 : dateDiff('year',sdate,edate);
+
+    $('#class-modal-dialog').attr('class','modal-dialog modal-md');
+    
+    $('#modaltitle').text('Risk Coverage');
+    
+    $('#modalbody').empty();
+
+    $('#modalfooter').empty();
+
+    var url = "{{ route('policy.modalrisk') }}?risk=" + risk + "&remarks=" + remarks + "&orderno=" + orderno + "&policyyear=" + policyYear;
+
+    $.ajax({
+    type: "GET",
+    url: url,
+    dataType: 'html'
+    }).done(function( response ) {
+        // $('#loadMe').modal('hide');
+        $('#modalbody').html(response);
+        $('#modal-general').modal({
+          keyboard: false,
+          backdrop: 'static',
+          show: true
+        })
+    });
+  }
+
+  function refreshTableRisk(){
+    var Coverage = $('#CoverageID').val();
+    var dsCoverage = arrCoverage['Data'].filter(dscoverage => dscoverage.CoverageID == Coverage);
+    var sdate = new Date($('#InceptionDate').val());
+    var edate = new Date($('#ExpiryDate').val());
+    var policyYear = (!"{{ config('app.SPREADRISKBYYEAR') }}") ? 1 : (edate > dateAdd('year',dateDiff('year',sdate,edate),sdate)) ? dateDiff('year',sdate,edate) + 1 : dateDiff('year',sdate,edate);
+    var dsCoverageDet = dsCoverage[0].CoverageDetail.filter(dscoveragedet => dscoveragedet.PolicyYear <= policyYear);
+
+    refreshDataTable(tblRC,dsCoverageDet);
+
+    var policyYear = (edate > dateAdd('year',dateDiff('year',sdate,edate),sdate)) ? dateDiff('year',sdate,edate) + 1 : dateDiff('year',sdate,edate);
+    dsCoverageDet = dsCoverage[0].CoverageDetail.filter(dscoveragedet => dscoveragedet.PolicyYear <= policyYear);
+
+    $('#div-rate').empty();
+    var divGroupRate = document.getElementById('div-rate');
+    for(i=0; i < dsCoverageDet.length; i++){
+      if (dsCoverageDet[i]['OrderNo'] != 0){
+        var rate = document.createElement("INPUT");
+        rate.setAttribute("id","RATE_" + dsCoverageDet[i]['OrderNo']);
+        rate.setAttribute("name","RATE_" + dsCoverageDet[i]['OrderNo']);
+        rate.setAttribute("type","hidden");
+
+        var pctindemnity = document.createElement("INPUT");
+        pctindemnity.setAttribute("id","PCTIndemnity_" + dsCoverageDet[i]['OrderNo']);
+        pctindemnity.setAttribute("name","PCTIndemnity_" + dsCoverageDet[i]['OrderNo']);
+        pctindemnity.setAttribute("type","hidden");
+
+        divGroupRate.appendChild(rate); 
+        divGroupRate.appendChild(pctindemnity); 
+      }
+    }
+  }
+
   function spreadObjInfo(ValueID, FLDID, ProductID, rowno){
     if (ValueID != ''){
       var listValueID = [];
@@ -2054,26 +1967,6 @@
     }
   }
 
-
-  function addOptionItem(selectElement, data, LblValue, LblDescription, withBlankItem = true, descriptionWithID = false){
-    if (withBlankItem){
-      var option = document.createElement("OPTION");
-      option.value = '';
-      option.innerHTML = '';
-      selectElement.appendChild(option);
-    }
-    for (j = 0; j < data.length; j++) {
-        var option = document.createElement("OPTION");
-        option.value = data[j][LblValue];
-        if (descriptionWithID){
-          option.innerHTML = data[j][LblValue] + ' - ' + data[j][LblDescription];
-        }else{
-          option.innerHTML = data[j][LblDescription];
-        }
-        selectElement.appendChild(option);
-    }
-  }
-
   function Product_OnChange(Product) {
     var bsCoverage = arrCoverage['Data'];
     var bsProduct = arrProduct['Data'];
@@ -2113,6 +2006,10 @@
         {
           "Value":"M",
           "Description":"Multiple Policy"
+        },
+        {
+          "Value":"O",
+          "Description":"Open Cover Policy"
         }
       ];
     }
@@ -2288,8 +2185,8 @@
         }
       }
       $('.select2bs4').select2({
-      theme: 'bootstrap4',
-    });
+        theme: 'bootstrap4',
+      });
     }
     // $('.select2bs4').select2({
     //   theme: 'bootstrap4'
@@ -2321,7 +2218,8 @@
   }
 
   function keyup_regex(element){
-    console.log(element.getAttribute('data-regex'));
+    console.log(element);
+    // console.log(element.getAttribute('data-regex'));
     var exp = element.getAttribute('data-regex');
     var value = element.value;
     if (exp != '' && exp != undefined){
@@ -2335,11 +2233,6 @@
       }
     }
   }
-
-  // $("#ValueID1").on("select2:select", function () {
-  //   console.log('haha');
-  //   console.log($(this).attr("data-fldid"));
-  // });
 
   function Nospecialcharacter(a){
     var c = a[0].selectionStart,
@@ -2729,16 +2622,17 @@
                 $('#' + response.data[i]['RATE_SOURCE']).val(response.data[i]['Rate']); 
               }
             }
-            // console.log($('#DiscPCT').val());
+            $('#Premium').val(number_format(premium,2,',','.'));
+            premium = $('#Premium').val().replace(/\,/g,'');
+            console.log(premium); 
             if ($('#DiscPCT').val() != 0){
               var discount = (premium * $('#DiscPCT').val() / 100);
-              $('#Discount').val(discount);
+              $('#Discount').val(number_format(discount,2,',','.'));
               var totalpremium = premium + response.data[0]['AdmFee'] + response.data[0]['StampDuty'] - discount;
             }else{
               var totalpremium = premium + response.data[0]['AdmFee'] + response.data[0]['StampDuty'];
             }
             // console.log(totalpremium);
-            $('#Premium').val(number_format(premium,2,',','.'));
             $('#AdmFee').val(response.data[0]['AdmFee']);
             $('#StampDuty').val(response.data[0]['StampDuty']);
             $('#TxtTotalPremium').val(number_format(totalpremium,2,',','.'));
@@ -3220,7 +3114,6 @@
               _token: _token
             },
             }).done(function(msg) {
-              console.log(msg);
               if (msg.code == '200'){
                 openInNewTab(msg.Data);
                 resolve({
@@ -3231,7 +3124,6 @@
               }
               // return msg;
             }).fail(function(xhr, status, error) {
-              console.log(xhr);
               // $("#loadMe").modal("hide");
               var message = xhr.responseJSON['message'];
               reject(new Error(message));
@@ -3245,7 +3137,6 @@
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
-      console.log(result);
     })
   })
 
@@ -3334,10 +3225,13 @@
     // const arrPolFilter = data.filter(pol => pol.PID == PID);
     const arrPolFilter = data;
     $('#PID').val(arrPolFilter[0]['PID']);
+    $('#InceptionDate').val(arrPolFilter[0]['InceptionDate']);
+    $('#ExpiryDate').val(arrPolFilter[0]['ExpiryDate']);
     $('#ProductID').val(arrPolFilter[0]['ProductID']);
     $('#ProductID').trigger('change');
     $('#CoverageID').val(arrPolFilter[0]['CoverageID']);
     $('#CoverageID').trigger('change');
+    // await sleep(1);
     // console.log(arrPolFilter);
     // refreshTableRisk();
     
@@ -3737,10 +3631,12 @@
   }
 
   function Segment_OnChange(segment){
-    if (segment == 'DIRECT'){
-      $('#card-business-source').attr('style','display:none;');
-    }else{
-      $('#card-business-source').removeAttr('style');
+    if (Role != 'AGENT'){
+      if (segment == 'DIRECT'){
+        $('#card-business-source').attr('style','display:none;');
+      }else{
+        $('#card-business-source').removeAttr('style');
+      }
     }
 
     var Coverage = $('#CoverageID').val();
@@ -3802,16 +3698,6 @@
       toastMessage('400',err);
     }
   });
-
-  function refreshTableRisk(){
-    var Coverage = $('#CoverageID').val();
-    var dsCoverage = arrCoverage['Data'].filter(dscoverage => dscoverage.CoverageID == Coverage);
-    var sdate = new Date($('#InceptionDate').val());
-    var edate = new Date($('#ExpiryDate').val());
-    var policyYear = (edate > dateAdd('year',dateDiff('year',sdate,edate),sdate)) ? dateDiff('year',sdate,edate) + 1 : dateDiff('year',sdate,edate);
-    var dsCoverageDet = dsCoverage[0].CoverageDetail.filter(dscoveragedet => dscoveragedet.PolicyYear <= policyYear);
-    refreshDataTable(tblRC,dsCoverageDet);
-  }
 
   function checkPeriodePolicy(sdate, edate){
     var returnStatus = new Array()
@@ -3917,7 +3803,7 @@
       var sdate = $('#InceptionDate').val();
       var payment_term = $('#Payment_Term').val();
       var payment_tenor = $('#Payment_Tenor').val();
-      var premium = parseInt($('#TxtTotalPremium').val() == undefined ?  0 : $('#TxtTotalPremium').val().replace(/\,/g, ''));
+      var premium = parseInt($('#Premium').val() == undefined ?  0 : $('#Premium').val().replace(/\,/g, ''));
       // var tsi = parseInt($('#SI_1').val()) + parseInt($('#SI_2').val()) + parseInt($('#SI_3').val() == undefined ? 0 : $('#SI_3').val());
       var tsi = 0
       

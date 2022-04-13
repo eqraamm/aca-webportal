@@ -114,6 +114,8 @@ Route::group(['middleware' => 'CekLogin'], function(){
     //User Information
     Route::get('/userinfo', 'UserInfoController@Index');
 
+    Route::get('/modalrisk', 'SppaController@showModalRisk')->name('policy.modalrisk');
+
     //demo gaude chart
     // Route::get('/gauge', function () {
     //     return view('gaugechartdemo');
@@ -122,6 +124,9 @@ Route::group(['middleware' => 'CekLogin'], function(){
 //demo gaude chart
 Route::get('/gauge', function () {
     return view('gaugechartdemo');
+});
+Route::get('/figma', function () {
+    return view('figma');
 });
 
 // Route::get('/sppadoc/{data}', 'SppaController@getPolicyDoc')->name('sppadoc');

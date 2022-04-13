@@ -1,5 +1,11 @@
 @extends('layout/mainDocSPPA')
 @section('scriptpage')
+<!-- jQuery -->
+<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
     <script>
       console.log(@json($payload));
@@ -178,7 +184,7 @@
         pdfWindow.document.write(baseurl, '_blank');
         // var win = window.open(url, '_blank');
         // win.focus();
-     }
+      }
 
      
       $('#btnSign').on('click', function(event){
@@ -311,6 +317,7 @@
         $('#namattd').val('')
       }
     </script>
+    
     <!-- SweetAlert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- General For Web Portal MW -->

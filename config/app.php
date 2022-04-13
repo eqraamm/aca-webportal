@@ -239,5 +239,12 @@ return [
     'URLSURVEY' => env('URLSURVEY', 'https://uat2.care.co.id:9096/RTCSurvey/'),
     'SHOWNOTAPPLYRATELOADING' => env('SHOWNOTAPPLYRATELOADING', true),
     'SHOWIMMEDIATEINFORCE' => env('SHOWIMMEDIATEINFORCE', true),
+    'SPREADRISKBYYEAR' => env('SPREADRISKBYYEAR', true),
+    'URLAPIMIDDLEWARE' => env('URLAPIMIDDLEWARE', 'http://localhost/api/MiddlewareAPI/'),
+    'PRIVATEKEY' => env('PRIVATEKEY', ''),
+    'PUBLICKEY' => env('PUBLICKEY', ''),
+    'DETAILADDRESSF' => env('DETAILADDRESSF', true),
+    'SENDCONFIRMATIONF' => env('SENDCONFIRMATIONF', true),
+    'FLDID' => env('FLDID', ''),
 
 ];

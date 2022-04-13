@@ -18,9 +18,12 @@ class SppaController extends Controller
 
     public function getlistMo(){
         $dataMO = array(
-            'ID' => ''
+            'ID' => '',
+            'Role' => 'MARKETING OFFICER',
+            'UserName' => session('ID'),
+            'Password' => ''
         );
-        $responseMO = APIMiddleware($dataMO, 'SearchMO');
+        $responseMO = APIMiddleware($dataMO, 'SearchSysUser');
 
         return $responseMO;
     }
@@ -37,7 +40,9 @@ class SppaController extends Controller
 
     public function getlistcurrency(){
          $dataCurrency = array(
-            'Currency' => ''
+            'Currency' => '',
+            'UserName' => session('ID'),
+            'Password' => session('Password')
         );
         $responseCurrency = APIMiddleware($dataCurrency, 'SearchCurrency');
 
@@ -46,7 +51,9 @@ class SppaController extends Controller
 
     public function getlistprofile(){
        $dataProfile = array(
-            'OwnerID' => session('ID')
+            'OwnerID' => session('ID'),
+            'UserName' => session('ID'),
+            'Password' => session('Password')
         );
         $responseProfile = APIMiddleware($dataProfile, 'SearchProfile');
 
@@ -65,7 +72,9 @@ class SppaController extends Controller
 
     public function getlistct(){
         $dataCT = array(
-            'CT' => ''
+            'CT' => '',
+            'UserName' => session('ID'),
+            'Password' => session('Password')
         );
         $responseCT = APIMiddleware($dataCT, 'SearchCT');
 
@@ -74,7 +83,9 @@ class SppaController extends Controller
 
     public function getlistagent(){
         $dataAgent = array(
-            'ID' => ''
+            'ID' => '',
+            'UserName' => session('ID'),
+            'Password' => session('Password')
         );
         $responseAgent = APIMiddleware($dataAgent, 'SearchAgentProfile');
 
@@ -83,16 +94,20 @@ class SppaController extends Controller
 
     public function getlistproduct(){
         $dataProduct = array(
-            'ProductID' => ''
+            'ASource' => session('ASource'),
+            'UserName' => session('ID'),
+            'Password' => session('Password')
         );
-        $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
+        $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTABByAsource');
 
         return $responseProduct;
     }
 
     public function getlistcoverage(){
         $dataCoverage = array(
-            'CoverageID' => ''
+            'ASource' => session('ASource'),
+            'UserName' => session('ID'),
+            'Password' => session('Password')
         );
         $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
 
@@ -101,7 +116,9 @@ class SppaController extends Controller
 
     public function getlistgendtab(){
         $dataProductgendtab = array(
-            'ProductID' => ''
+            'Asource' => session('ASource'),
+            'UserName' => session('ID'),
+            'Password' => session('Password')
         );
         $fixarrProduct = APIMiddleware($dataProductgendtab, 'SearchGENDTABByProduct');
 
@@ -675,143 +692,6 @@ class SppaController extends Controller
         }
     }
 
-    public function getPolicyDoc(Request $request){
-        // dd($request);
-        $requestGet = $request->get('data');
-        
-        $PID = $requestGet['PID'];
-        
-        $dataPolicy = array(
-            'PID' => $PID
-        ); 
-
-        // dd($dataPolicy);
-        
-        $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
-        $NotApplyRateLoadingF = $responsePolicy['Data'][0]['NotApplyRateLoadingF'];
-
-        // dd($NotApplyRateLoadingF);
-        
-        // return $responsePolicy;
-        $dateInception = tgl_indo($responsePolicy['Data'][0]['InceptionDate']);
-        $dateExpiry = tgl_indo($responsePolicy['Data'][0]['ExpiryDate']);
-        $dateNow = tgl_indo(date("m/d/Y"));
-        $dateExpiryDocument=date_create(date("Y-m-d"));
-        date_add($dateExpiryDocument,date_interval_create_from_date_string("14 days"));
-        $dateExpiryDocument = date_format($dateExpiryDocument,"d F Y");
-
-        if ($responsePolicy['code'] == '200'){
-            //Data
-            $data = array (
-                'ID' => $responsePolicy['Data'][0]['InsuredID'],
-                'OwnerID' => $requestGet['ID'],
-            );
-            $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
-
-            $dataProduct = array(
-                'ProductID' => $responsePolicy['Data'][0]['ProductID']
-            );
-
-            $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
-
-            $dataCoverage = array(
-                'CoverageID' => $responsePolicy['Data'][0]['CoverageID']
-            );
-            $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
-
-            // dd($responseCoverage);
-
-            $responsePremiumSimulation = $this->PremiumSimulationDoc($responsePolicy['Data'], $responseProduct);
-            // dd($responsePremiumSimulation);
-
-            $startdate = date_create($responsePolicy['Data'][0]['InceptionDate']);
-            $endenddate = date_create($responsePolicy['Data'][0]['ExpiryDate']);
-            $period_days = date_diff($startdate,$endenddate);
-
-            $payload = array(
-                'img' => $requestGet['imagettd'],
-                'nama' => $requestGet['name'],
-                'option_sengketa' => $requestGet['option_sengketa'],
-                'kondisi_kendaraan' => $requestGet['kondisi_kendaraan'],
-                'tempat_survey' => $requestGet['tempat_survey'],
-                'dateInception' => $dateInception,
-                'dateExpiry' => $dateExpiry,
-                'dateNow' => $dateNow,
-                'dateExpiryDocument' => $dateExpiryDocument,
-                'PID' => $responsePolicy['Data'][0]['PID'],
-                'ProductDesc' => $responsePolicy['Data'][0]['ProductDesc'],
-                'RefNo' => $responsePolicy['Data'][0]['RefNo'],
-                'CoverageDesc' => $responsePolicy['Data'][0]['CoverageDesc'],
-                'InsuredName' => $responsePolicy['Data'][0]['InsuredName'],
-                'Address_1' => $responseSearchProfile['Data'][0]['Address_1'],
-                'Address_2' => $responseSearchProfile['Data'][0]['Address_2'],
-                'Address_3' => $responseSearchProfile['Data'][0]['Address_3'],
-                'Currency' => $responsePolicy['Data'][0]['Currency'],
-                'Premium' => $responsePolicy['Data'][0]['Premium'],
-                'ADMFee' => $responsePolicy['Data'][0]['ADMFee'],
-                'StampDuty' => $responsePolicy['Data'][0]['StampDuty'],
-                'AID' => $responsePolicy['Data'][0]['AID'],
-                'SubmitDateF' => $responsePolicy['Data'][0]['SubmitDateF'],
-                'periodDays' => $period_days->format('%a'),
-                'CoverageID' => $responsePolicy['Data'][0]['CoverageID'],
-                'ProductID' => $responsePolicy['Data'][0]['ProductID']
-
-            );
-            for ($i = 1; $i <= 30; $i++) {
-               $payload['FLDTAG'.$i] = $responseProduct['Data'][0]['FLDTAG'.($i)];
-               $payload['ValueDesc'.$i] = $responsePolicy['Data'][0]['ValueDesc'.($i)];
-            }
-
-            //Coverage Detail
-            $CoverageDetail = array();
-            $TempCoverageDetail = array();
-            foreach ($responseCoverage['Data'][0]['CoverageDetail'] as $risk){
-                $TempCoverageDetail['Description'] = $risk['Description'];
-                $CoverageDetail[] = $TempCoverageDetail;
-            }
-            $payload['CoverageDetail'] = $CoverageDetail;
-
-            //Coverage Deductible
-            $CoverageDeductible = array();
-            $TempCoverageDeductible = array();
-            foreach ($responseCoverage['Data'][0]['CoverageDeductible'] as $deductible){
-                if ($NotApplyRateLoadingF == $deductible['NotApplyRateLoadingF']){
-                    $TempCoverageDeductible['Description'] = $deductible['Description'];
-                    $CoverageDeductible[] = $TempCoverageDeductible;
-                }
-            }
-            $payload['CoverageDeductible'] = $CoverageDeductible;
-
-            // dd($payload);
-
-            //Premium Simulation
-            $PremiumSimulation = array();
-            $TempPremiumSimulation = array();
-            foreach ($responsePremiumSimulation['Data'] as $premi){
-                $TempPremiumSimulation['Risk'] = $premi['Risk'];
-                $TempPremiumSimulation['SPremium'] = $premi['SPremium'];
-                $TempPremiumSimulation['Premium'] = $premi['Premium'];
-                $PremiumSimulation[] = $TempPremiumSimulation;
-            }
-            $payload['PremiumSimulation'] = $PremiumSimulation;
-            // dd($payload);
-
-            return view('Transaction.PolicyDocSppa')
-            ->with([
-                'payload' => $payload
-                // 'Policy' => $responsePolicy,
-                // 'Profile' => $responseSearchProfile,
-                // 'Product' => $responseProduct,
-                // 'Coverage' => $responseCoverage,
-                // 'PremiumSimulation' => $responsePremiumSimulation,
-                // 'datasign' => $datasign,
-                // 'arraydate' => $arraydate,
-            ]);
-        }else{
-            return abort(404);
-        }
-    }
-
     public function SubmitPolicyDocSPPA(Request $request){
         // dd($request);
         $payload = $request->input('payload');
@@ -903,13 +783,159 @@ class SppaController extends Controller
         return view('Transaction.backupdocsppa')->with(['Policy'=>$responsePolicy['Data']]);
     }
 
+    public function getPolicyDoc(Request $request){
+        // dd($request);
+        $requestGet = $request->get('data');
+        
+        $PID = $requestGet['PID'];
+        
+        $payload = $this->create_payload(session('ID'), $PID, false);
+
+        return view('Transaction.PolicyDocSppa')
+        ->with([
+            'payload' => $payload
+        ]);
+
+        // $dataPolicy = array(
+        //     'PID' => $PID
+        // );
+
+        // // dd($dataPolicy);
+        
+        // $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
+        // $NotApplyRateLoadingF = $responsePolicy['Data'][0]['NotApplyRateLoadingF'];
+
+        // // dd($NotApplyRateLoadingF);
+        
+        // // return $responsePolicy;
+        // $dateInception = tgl_indo($responsePolicy['Data'][0]['InceptionDate']);
+        // $dateExpiry = tgl_indo($responsePolicy['Data'][0]['ExpiryDate']);
+        // $dateNow = tgl_indo(date("m/d/Y"));
+        // $dateExpiryDocument=date_create(date("Y-m-d"));
+        // date_add($dateExpiryDocument,date_interval_create_from_date_string("14 days"));
+        // $dateExpiryDocument = date_format($dateExpiryDocument,"d F Y");
+
+        // if ($responsePolicy['code'] == '200'){
+        //     //Data
+        //     $data = array (
+        //         'ID' => $responsePolicy['Data'][0]['InsuredID'],
+        //         'OwnerID' => $requestGet['ID'],
+        //     );
+        //     $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
+
+        //     $dataProduct = array(
+        //         'ProductID' => $responsePolicy['Data'][0]['ProductID']
+        //     );
+
+        //     $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
+
+        //     $dataCoverage = array(
+        //         'CoverageID' => $responsePolicy['Data'][0]['CoverageID']
+        //     );
+        //     $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
+
+        //     // dd($responseCoverage);
+
+        //     $responsePremiumSimulation = $this->PremiumSimulationDoc($responsePolicy['Data'], $responseProduct);
+        //     // dd($responsePremiumSimulation);
+
+        //     $startdate = date_create($responsePolicy['Data'][0]['InceptionDate']);
+        //     $endenddate = date_create($responsePolicy['Data'][0]['ExpiryDate']);
+        //     $period_days = date_diff($startdate,$endenddate);
+
+        //     $payload = array(
+        //         'img' => $requestGet['imagettd'],
+        //         'nama' => $requestGet['name'],
+        //         'option_sengketa' => $requestGet['option_sengketa'],
+        //         'kondisi_kendaraan' => $requestGet['kondisi_kendaraan'],
+        //         'tempat_survey' => $requestGet['tempat_survey'],
+        //         'dateInception' => $dateInception,
+        //         'dateExpiry' => $dateExpiry,
+        //         'dateNow' => $dateNow,
+        //         'dateExpiryDocument' => $dateExpiryDocument,
+        //         'PID' => $responsePolicy['Data'][0]['PID'],
+        //         'ProductDesc' => $responsePolicy['Data'][0]['ProductDesc'],
+        //         'RefNo' => $responsePolicy['Data'][0]['RefNo'],
+        //         'CoverageDesc' => $responsePolicy['Data'][0]['CoverageDesc'],
+        //         'InsuredName' => $responsePolicy['Data'][0]['InsuredName'],
+        //         'Address_1' => $responseSearchProfile['Data'][0]['Address_1'],
+        //         'Address_2' => $responseSearchProfile['Data'][0]['Address_2'],
+        //         'Address_3' => $responseSearchProfile['Data'][0]['Address_3'],
+        //         'Currency' => $responsePolicy['Data'][0]['Currency'],
+        //         'Premium' => $responsePolicy['Data'][0]['Premium'],
+        //         'ADMFee' => $responsePolicy['Data'][0]['ADMFee'],
+        //         'StampDuty' => $responsePolicy['Data'][0]['StampDuty'],
+        //         'AID' => $responsePolicy['Data'][0]['AID'],
+        //         'SubmitDateF' => $responsePolicy['Data'][0]['SubmitDateF'],
+        //         'periodDays' => $period_days->format('%a'),
+        //         'CoverageID' => $responsePolicy['Data'][0]['CoverageID'],
+        //         'ProductID' => $responsePolicy['Data'][0]['ProductID']
+
+        //     );
+        //     for ($i = 1; $i <= 30; $i++) {
+        //        $payload['FLDTAG'.$i] = $responseProduct['Data'][0]['FLDTAG'.($i)];
+        //        $payload['ValueDesc'.$i] = $responsePolicy['Data'][0]['ValueDesc'.($i)];
+        //     }
+
+        //     $SPREADRISKBYYEARF = config('app.SPREADRISKBYYEAR');
+
+        //     //Coverage Detail
+        //     $CoverageDetail = array();
+        //     $TempCoverageDetail = array();
+        //     foreach ($responseCoverage['Data'][0]['CoverageDetail'] as $risk){
+        //        if (!$SPREADRISKBYYEARF){
+        //            if ($risk['PolicyYear'] == 1){
+        //                $TempCoverageDetail['Description'] = $risk['Description'];
+        //                $CoverageDetail[] = $TempCoverageDetail;   
+        //            }
+        //        }else{
+        //            $TempCoverageDetail['Description'] = $risk['Description'];
+        //            $CoverageDetail[] = $TempCoverageDetail;
+        //        }
+        //     }
+        //     $payload['CoverageDetail'] = $CoverageDetail;
+
+        //     //Coverage Deductible
+        //     $CoverageDeductible = array();
+        //     $TempCoverageDeductible = array();
+        //     foreach ($responseCoverage['Data'][0]['CoverageDeductible'] as $deductible){
+        //         if ($NotApplyRateLoadingF == $deductible['NotApplyRateLoadingF']){
+        //             $TempCoverageDeductible['Description'] = $deductible['Description'];
+        //             $CoverageDeductible[] = $TempCoverageDeductible;
+        //         }
+        //     }
+        //     $payload['CoverageDeductible'] = $CoverageDeductible;
+
+        //     // dd($payload);
+
+        //     //Premium Simulation
+        //     $PremiumSimulation = array();
+        //     $TempPremiumSimulation = array();
+        //     foreach ($responsePremiumSimulation['Data'] as $premi){
+        //         $TempPremiumSimulation['Risk'] = $premi['Risk'];
+        //         $TempPremiumSimulation['SPremium'] = $premi['SPremium'];
+        //         $TempPremiumSimulation['Premium'] = $premi['Premium'];
+        //         $PremiumSimulation[] = $TempPremiumSimulation;
+        //     }
+        //     $payload['PremiumSimulation'] = $PremiumSimulation;
+        //     // dd($payload);
+
+        //     return view('Transaction.PolicyDocSppa')
+        //     ->with([
+        //         'payload' => $payload
+        //     ]);
+        // }else{
+        //     return abort(404);
+        // }
+    }
+
     public function getDocumentPreview(Request $request){
         $PID = $request->input('PID');
         $refno = $request->input('RefNo');
         $document = $request->input('Document');
 
         if ($document == 'sppa'){
-            $payload = $this->create_payload(session('ID'), $PID);
+            $payload = $this->create_payload(session('ID'), $PID, true);
 
             // return $payload;
     
@@ -939,7 +965,7 @@ class SppaController extends Controller
         }
     }
 
-    function create_payload($userid, $PID){   
+    function create_payload($userid, $PID, $previewF){   
         $dataPolicy = array(
             'PID' => $PID
         ); 
@@ -979,6 +1005,13 @@ class SppaController extends Controller
 
         $responsePremiumSimulation = $this->PremiumSimulationDoc($responsePolicy['Data'], $responseProduct);
 
+        // dump($responsePremiumSimulation);
+
+        // $arraySortPremiumSimulation = collect($responsePremiumSimulation['Data'])->sortBy(['PolicyYear'])->values()->all();
+
+        // dump($arraySortPremiumSimulation);
+        // die();
+
         $startdate = date_create($responsePolicy['Data'][0]['InceptionDate']);
         $endenddate = date_create($responsePolicy['Data'][0]['ExpiryDate']);
         $period_days = date_diff($startdate,$endenddate);
@@ -986,7 +1019,7 @@ class SppaController extends Controller
         $payload = array(
             'img' => '',
             'nama' => '',
-            'option_sengketa' => '-',
+            'option_sengketa' => ($previewF) ? '-' : '',
             'kondisi_kendaraan' => '',
             'tempat_survey' => '',
             'dateInception' => $dateInception,
@@ -1014,12 +1047,21 @@ class SppaController extends Controller
            $payload['ValueDesc'.$i] = $responsePolicy['Data'][0]['ValueDesc'.($i)];
         }
 
+        $SPREADRISKBYYEARF = config('app.SPREADRISKBYYEAR');
+
         //Coverage Detail
         $CoverageDetail = array();
         $TempCoverageDetail = array();
         foreach ($responseCoverage['Data'][0]['CoverageDetail'] as $risk){
-            $TempCoverageDetail['Description'] = $risk['Description'];
-            $CoverageDetail[] = $TempCoverageDetail;
+            if (!$SPREADRISKBYYEARF){
+                if ($risk['PolicyYear'] <= 1){
+                    $TempCoverageDetail['Description'] = $risk['Description'];
+                    $CoverageDetail[] = $TempCoverageDetail;   
+                }
+            }else{
+                $TempCoverageDetail['Description'] = $risk['Description'];
+                $CoverageDetail[] = $TempCoverageDetail;
+            }
         }
         $payload['CoverageDetail'] = $CoverageDetail;
 
@@ -1043,6 +1085,10 @@ class SppaController extends Controller
             $TempPremiumSimulation['Risk'] = $premi['Risk'];
             $TempPremiumSimulation['SPremium'] = $premi['SPremium'];
             $TempPremiumSimulation['Premium'] = $premi['Premium'];
+            $TempPremiumSimulation['PolicyYear'] = ($premi['PolicyYear'] == 0) ? 'Full' : $premi['PolicyYear'];
+            $TempPremiumSimulation['SI'] = $premi['SI'];
+            $TempPremiumSimulation['Rate'] = $premi['Rate'];
+            $TempPremiumSimulation['SProrata'] = $premi['SProrata'];
             $PremiumSimulation[] = $TempPremiumSimulation;
         }
         $payload['PremiumSimulation'] = $PremiumSimulation;
@@ -1132,17 +1178,27 @@ class SppaController extends Controller
             $data[$i] = $data2;
         }
 
-        return view('Transaction.modalInstallment',array('data' => $data));;
+        return view('Transaction.modalInstallment',array('data' => $data));
     }
 
     public function simulasifunction(){
         try {
-            // dd($asdasd);
+            dd(config('app.SPREADRISKBYYEAR'));
         } catch (Throwable $e) {
             report($e);
     
             return false;
         }
+    }
+
+    public function showModalRisk(Request $request){
+        $data = array(
+            'risk' => $request->get('risk'),
+            'remarks' => $request->get('remarks'),
+            'orderno' => $request->get('orderno'),
+            'policyyear' => $request->get('policyyear')
+        );
+        return view('Transaction.modalDetailRisk',array('data' => $data));
     }
 
 }

@@ -12,70 +12,28 @@
     </section>
     <!-- Main content -->
     <section class="content">
-        <main>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Survey</h2>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <div class="tab-content">
-                                    <div class="card-body">
-                                        <table id="ListSurvey" class="table table-striped dt-responsive nowrap" cellspacing="0" style="width:100%" >
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Survey</h2>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="card-body">
+                                    <table id="ListSurvey" class="table table-striped dt-responsive nowrap" cellspacing="0" style="width:100%" >
 
-                                        </table>
-                                    </div>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-    </section>
-</div>
-<!-- Modal Survey -->
-<div class="card">
-    <div class="card-body">
-        <div class="modal fade" id="modal-survey" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div id="div-overlay"></div>
-                    <div class="modal-header">
-                        <label class="modal-title">Schedule Survey</label>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="survey">
-                        <div class="form-group">
-                        <input type="hidden" id="PID"/>
-                        <label for="TxtName" class="col-sm-4 col-form-label">Set Survey Date</label>
-                        <div class="input-group date col-sm-6" id="TxtSurveyDate" data-target-input="nearest">
-                            <input type="text" id="SurveyDate" data-format="yyyy-MM-dd hh:mm:ss" name="TxtSurveyDate" class="form-control datetimepicker-input" data-target="#TxtSurveyDate" required />
-                            <div class="input-group-append" data-target="#TxtSurveyDate" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="col-sm-4">
-                            <button type="button" onclick="SubmitSurvey()" id="btn_send" class="btn btn-block btn-outline-primary">Send Survey</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
-</div>
-
-
-
-<!-- Modal Loading-->
+        <!-- Modal Loading-->
 <div class="modal" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" data-backdrop="static" data-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <!-- <div class="modal-content"> -->
@@ -87,16 +45,37 @@
         <!-- </div> -->
     </div>
 </div>
-
-
-    <!-- /.Modal Survey -->
-    <!-- /.content-wrapper -->
-    <!-- Control Sidebar -->
-    <!-- <aside class="control-sidebar control-sidebar-dark"> -->
-        <!-- Control sidebar content goes here -->
-    <!-- </aside> -->
-    <!-- /.control-sidebar -->
-<!-- </div> -->
+<!-- Modal Survey -->
+<div class="modal fade" id="modal-survey" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div id="div-overlay"></div>
+            <div class="modal-header">
+                <label class="modal-title">Entry Form Survey</label>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="survey">
+                <div class="form-group row">
+                  <input type="hidden" id="PID"/>
+                  <label for="TxtName" class="col-sm-4 col-form-label">Survey Schedule</label>
+                  <div class="input-group date col-sm-6" id="TxtSurveyDate" data-target-input="nearest">
+                      <input type="text" id="SurveyDate" data-format="yyyy-MM-dd hh:mm:ss" name="TxtSurveyDate" class="form-control datetimepicker-input" data-target="#TxtSurveyDate" required />
+                      <div class="input-group-append" data-target="#TxtSurveyDate" data-toggle="datetimepicker">
+                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" onclick="SubmitSurvey()" id="btn_send" class="btn btn-block btn-outline-primary">Send Survey</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+</div>
 @endsection
 
 @section('scriptpage')

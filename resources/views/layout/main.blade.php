@@ -129,22 +129,16 @@
               </p>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a href="Inquiry" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
-              <p>
-                Inquiry SPPA
-              </p>
-            </a>
-          </li> -->
-          <li class="{{ Session::get('sidebar') == 'survey' ? 'nav-link menu-open' : 'nav-link' }}">
-            <a href="survey" class="{{ Session::get('sidebar') == 'survey' ? 'nav-link active' : 'nav-link' }}">
-              <i class="nav-icon fas fa-tree"></i>
-              <p>
-                Survey
-              </p>
-            </a>
-          </li>
+          @if (session('Role') == 'MARKETING OFFICER')
+            <li class="{{ Session::get('sidebar') == 'survey' ? 'nav-link menu-open' : 'nav-link' }}">
+              <a href="survey" class="{{ Session::get('sidebar') == 'survey' ? 'nav-link active' : 'nav-link' }}">
+                <i class="nav-icon fas fa-tree"></i>
+                <p>
+                  Survey
+                </p>
+              </a>
+            </li>
+          @endif
           <!-- <li class="{{ Session::get('sidebar') == 'report' ? 'nav-link menu-open' : 'nav-link' }}">
             <a href="#" class="{{ Session::get('sidebar') == 'report' ? 'nav-link active' : 'nav-link' }}">
               <i class="nav-icon fas fa-edit"></i>
@@ -190,17 +184,6 @@
     </div>
   </div>
 
-  <!-- <div class="modal-img" id="myModal" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" data-backdrop="static" data-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-      <span class="close-img">&times;</span>
-      <div class="modal-body text-center">
-        <img class="modal-img-content" id="img01">
-        <div id="caption"></div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <!-- The Modal -->
   <div id="myModal" class="modal" role="dialog">
     <span class="close-img">&times;</span>
@@ -209,15 +192,6 @@
       <div id="caption"></div>
     <!-- </div> -->
   </div>
-  <!-- <div class="modal" id="myModal">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-    <span class="close-img">&times;</span>
-      <div class="modal-body text-center">
-        <img class="modal-img-content" id="img01">
-        <div id="caption"></div>
-      </div>
-    </div>
-  </div> -->
 
     @yield('maincontent')
 
@@ -286,8 +260,15 @@
 
 <!-- General For Web Portal MW -->
 <script src="{{asset('dist/js/pages/webportal.js')}}"></script>
-
 @yield('scriptpage')
+<script>
+  console.log("{{ session('Role') }}");
+  if ("{{session('Role')}}" == 'MARKETING OFFICER'){
+    console.log('true');
+  }else{
+    console.log('false');
+  }
+</script>
 
 </body>
 </html>
