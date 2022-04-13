@@ -29,6 +29,9 @@ Route::group(['middleware' => 'CekLogin'], function(){
     // widget dashboard
     Route::get('/dashboard/widget', 'IndexController@modalWidget')->name('Dashboard.Widget');
     Route::get('/dashboard/detailpolicy/{pid}', 'IndexController@modalDetailPolicy')->name('Dashboard.ModalDetPolicy');
+    Route::get('/dashboard/getdatagwp', 'IndexController@getDataGWP')->name('Dashboard.getGWP');
+    Route::get('/dashboard/getdatalossratio', 'IndexController@getDataLossRatio')->name('Dashboard.getLossRatio');
+    Route::get('/dashboard/getstoreddata', 'IndexController@refreshStoredData')->name('Dashboard.getStoredData');
 
     // Index Profile
     Route::get('/profile', 'ProfileController@index')->name('profile');

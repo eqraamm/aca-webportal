@@ -111,8 +111,16 @@
                 <div class="tab-pane fade" id="policy">
                   <div class="overlay-wrapper">
                     <div class="overlay" id="div-overlay" style="display : none;">
-                      <i class="fas fa-3x fa-sync-alt fa-spin"></i>
-                      <div class="text-bold pt-2">Loading...</div>
+                      <div id="div-loading">
+                        <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+                        <div class="text-bold pt-2">Loading...</div>
+                      </div>
+                      <div id="div-failed-loading" style="display:none">
+                        <button id="btn-refresh-master" type="button" class="btn btn-block btn-default">
+                          <i class="fas fa-sync-alt"></i>
+                          Refresh
+                        </button>
+                      </div>
                     </div>
                     <form id="form-policy" class="needs-validation" onSubmit="return false" novalidate>
                       @csrf
@@ -1069,7 +1077,7 @@
   
   async function main(){
     getMasterDataF = true;
-    masterDataF = true;
+    // masterDataF = true;
     console.time('main');
     const resArray = await Promise.all([
       getDataMaster('{{ route("listproduct") }}'),
@@ -1290,11 +1298,12 @@
       { "defaultContent": "",
         render: function(data, type, row) {
           // console.log(row);
-          // if (row['PStatus'] == 'P'){
-          //   return row['PolicyJob']['PolicyNo'];
-          // }else{
+          if (row['PStatus'] == 'P'){
+            // return row['PolicyJob']['PolicyNo'];
+            return row['Job_PolicyNo'];
+          }else{
             return row['PolicyNo'];
-          // }
+          }
         } 
       },
       { "defaultContent": "",
@@ -3875,62 +3884,54 @@
   
   //function akan jalan ketika tab di ubah
   $('a[data-toggle="tab"]').on('shown.bs.tab', async function (e) {
-    // console.log('status master data : ' + getMasterDataF)
-    var tabid = e.target.id;
-    if (tabid == 'tabpolicy'){
-      if (!masterDataF){
-        showOverlayTab(true);
-        await main();
-        if (callback_PID != ''  && callback_PID != undefined){
-          // viewDetailF = true;
-          var url = "{{ route('policy.getdetail') }}?PID=" + callback_PID
-          var res = await getData(url)
-          if (res.code == '200'){
-            viewDetail(res.Data);
-          }
-          toastMessage(res.code,res.message);
-          callback_PID = '';
-          // viewDetailF = false;
-        }
-        showOverlayTab(false);
-      }else if(!getMasterDataF && (callback_PID != ''  && callback_PID != undefined)){
-        // viewDetailF = true;
-        showOverlayTab(true);
-
-        var url = "{{ route('policy.getdetail') }}?PID=" + callback_PID
-          var res = await getData(url)
-          if (res.code == '200'){
-            viewDetail(res.Data);
-          }
-          toastMessage(res.code,res.message);
-          showOverlayTab(false)
-          callback_PID = '';
-          // viewDetailF = false;
-      }
-      // else{
-      //   var url = "{{ route('policy.getdetail') }}?PID=" + PID
-
-      //   showOverlayTab(true);
-
-      //   $.ajax({
-      //     type: "GET",
-      //     url: url, 
-      //   }).done(function( response ) {
-      //     console.log(response);
-      //     if (response.code == '200'){
-      //       viewDetail(response.Data);
-      //     }
-      //     showOverlayTab(false);
-      //     toastMessage(response.code,response.message);
-      //   }).fail(function(xhr, status, error){
-      //       showOverlayTab(false);
-      //       toastMessage('400',error);
-      //   });
-      // }
-    }else{
-      tblInquiry.columns.adjust().draw();
-    }
+    refreshTabMasterData(e.target.id);
   })
+
+  async function refreshTabMasterData(tabid){
+    try{
+      // console.log('status master data : ' + getMasterDataF)
+      // var tabid = e.target.id;
+      console.log(masterDataF);
+      console.log(getMasterDataF);
+      if (tabid == 'tabpolicy'){
+        if (!masterDataF){
+          showOverlayTab(true);
+          await main();
+          if (callback_PID != ''  && callback_PID != undefined){
+            // viewDetailF = true;
+            var url = "{{ route('policy.getdetail') }}?PID=" + callback_PID
+            var res = await getData(url)
+            if (res.code == '200'){
+              viewDetail(res.Data);
+            }
+            toastMessage(res.code,res.message);
+            callback_PID = '';
+            // viewDetailF = false;
+          }
+          showOverlayTab(false);
+        }else if(!getMasterDataF && (callback_PID != ''  && callback_PID != undefined)){
+          // viewDetailF = true;
+          showOverlayTab(true);
+
+          var url = "{{ route('policy.getdetail') }}?PID=" + callback_PID
+            var res = await getData(url)
+            if (res.code == '200'){
+              viewDetail(res.Data);
+            }
+            toastMessage(res.code,res.message);
+            showOverlayTab(false)
+            callback_PID = '';
+            // viewDetailF = false;
+        }
+      }else{
+        tblInquiry.columns.adjust().draw();
+      } 
+    } catch(err) {
+      toastMessage('400','Failed Retreive Data');
+      $('#div-failed-loading').removeAttr('style');
+      $('#div-loading').css('display','none');
+    }
+  }
   
   function showOverlayTab(status){
     if (status){
@@ -3985,5 +3986,12 @@
       }
     })
   }
+
+  $('#btn-refresh-master').on('click',function(event){
+    console.log('refresh bos');
+    $('#div-failed-loading').css('display','none');
+    $('#div-loading').removeAttr('style');
+    refreshTabMasterData('tabpolicy');
+  });
 </script>
 @endsection

@@ -246,5 +246,6 @@ return [
     'DETAILADDRESSF' => env('DETAILADDRESSF', true),
     'SENDCONFIRMATIONF' => env('SENDCONFIRMATIONF', true),
     'FLDID' => env('FLDID', ''),
-
+    'VALUEID' => env('VALUEID', ''),
+    'COMPANYNAME' => env('COMPANYNAME', 'Portal'),
 ];

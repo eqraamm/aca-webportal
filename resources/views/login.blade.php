@@ -17,7 +17,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>ACA</b>Insurance</a>
+    <a href="#"><b>{{config('app.COMPANYNAME')}}</b>Insurance</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
