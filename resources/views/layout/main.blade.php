@@ -80,7 +80,8 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="{{asset('dist/img/company_logo.png')}}" alt="Company Logo" class="brand-image" style="opacity: .8">
-      <span class="brand-text font-weight-dark">{{config('app.COMPANYNAME')}}</span>
+      <!-- <span class="brand-text font-weight-dark">{{config('app.COMPANYNAME')}}</span> -->
+      <span class="brand-text font-weight-dark">ACA INSURANCE</span>
     </a>
 
     <!-- Sidebar -->

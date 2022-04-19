@@ -39,5 +39,36 @@ class SurveyController extends Controller
         
         return response()->json(['code' => $responseSendSurvey['code'],'message'=>$responseSendSurvey['message'],'data' => $responseSendSurvey['Data']]);
     }
+
+    public function SurveyOnline(){
+        return view('Survey.VideoCall');
+    }
+
+    public function SaveSurveyDocument(Request $request){
+        // dd($request);
+        $policypic[] = $request->input('PolicyPIC');
+
+        $datapic = array(
+            'PID'=> $request->input('PID'),
+            'PolicyPIC'=> $policypic
+        );
+
+        $responseSavePolicyDocument = APIMiddleware($datapic, 'SavePolicyDocument');
+
+        // dd($responseSavePolicyDocument);
+    }
+
+    public function FinishSurvey(Request $request){
+        dd($request);
+
+        $survey = array(
+            'PID'=> $request->input('PID'),
+            'ActualDate'=> $request->input('ActualDate'),
+
+        );
+
+        $responseSavePolicyDocument = APIMiddleware($datapic, 'SavePolicyDocument');
+
+    }
 }
 

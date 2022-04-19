@@ -109,7 +109,7 @@ class SppaController extends Controller
             'UserName' => session('ID'),
             'Password' => session('Password')
         );
-        $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
+        $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverageByASource');
 
         return $responseCoverage;
     }
@@ -118,7 +118,9 @@ class SppaController extends Controller
         $dataProductgendtab = array(
             'Asource' => session('ASource'),
             'UserName' => session('ID'),
-            'Password' => session('Password')
+            'Password' => session('Password'),
+            'FLDID' => config('app.FLDID'),
+            'ValueID' => config('app.ValueID')
         );
         $fixarrProduct = APIMiddleware($dataProductgendtab, 'SearchGENDTABByProduct');
 
@@ -129,6 +131,8 @@ class SppaController extends Controller
     {
         // dd($request);
         $dataPremiumSimulation = array(
+            'UserName' => session('ID'),
+            'Password' => session('Password'),
             'ProductID' => ($request->input('LstProduct') == null) ? '' : $request->input('LstProduct'),
             'CoverageID' => ($request->input('LstCoverage') == null) ? '' : $request->input('LstCoverage'),
             'IncludeExtCovF' => true,
@@ -140,6 +144,8 @@ class SppaController extends Controller
         );
         //Object Info
         $dataProduct = array(
+            'UserName' => session('ID'),
+            'Password' => session('Password'),
             'ProductID' => ($request->input('LstProduct') == null) ? '' : $request->input('LstProduct')
         );
         $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
@@ -368,6 +374,8 @@ class SppaController extends Controller
         }
 
         $dataProduct = array(
+            'UserName' => session('ID'),
+            'Password' => session('Password'),
             'ProductID' => ($request->input('LstProduct') == null) ? '' : $request->input('LstProduct')
         );
         //Object Info
@@ -449,6 +457,8 @@ class SppaController extends Controller
 
         if ($responsePolicy['code'] == '200'){
             $dataPolicy = array(
+                'UserName' => session('ID'),
+                'Password' => session('Password'),
                 'PID' => $responsePolicy['Data'][0]['PID']
             );
             
@@ -545,6 +555,8 @@ class SppaController extends Controller
     public function PremiumSimulationDoc($dataPolicy){
         // dd($dataPolicy);
         $dataPremiumSimulation = array(
+            'UserName' => session('ID'),
+            'Password' => session('Password'),
             'ProductID' => $dataPolicy[0]['ProductID'],
             'CoverageID' => $dataPolicy[0]['CoverageID'],
             'IncludeExtCovF' => true,
@@ -664,6 +676,7 @@ class SppaController extends Controller
         // $url = route('sppadoc', ['data' => $encryptParam]);
 
         // return $url;
+        dd($url);
 
         $datapolicy = array(
             "PID" => ($PID == null) ? '' : $PID,
@@ -714,7 +727,7 @@ class SppaController extends Controller
         }else{
             $payload['SubmitDateF'] = false;
         }
-        // dd($payload);
+        dd($payload);
         $html = view('Transaction.PolicyDocSppaPDF')
             ->with([
                 'payload' => $payload
@@ -790,6 +803,8 @@ class SppaController extends Controller
         $PID = $requestGet['PID'];
         
         $payload = $this->create_payload(session('ID'), $PID, false);
+
+        // dd($payload);
 
         return view('Transaction.PolicyDocSppa')
         ->with([
@@ -991,6 +1006,8 @@ class SppaController extends Controller
         $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
 
         $dataProduct = array(
+            'UserName' => session('ID'),
+            'Password' => session('Password'),
             'ProductID' => $responsePolicy['Data'][0]['ProductID']
         );
 
@@ -1002,6 +1019,7 @@ class SppaController extends Controller
         $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
 
         // return $responseCoverage;
+        // dd($responsePolicy['Data']);
 
         $responsePremiumSimulation = $this->PremiumSimulationDoc($responsePolicy['Data'], $responseProduct);
 
@@ -1203,79 +1221,3 @@ class SppaController extends Controller
 
 }
 
-
-
-// backup
-// public function showFormPolicy(){
-    //     // $dataPolicy = array(
-    //     //     'ID' => session('ID'),
-    //     //     'RefNo' => '',
-    //     //     'PStatus' => '',
-    //     //     'Insured' => '',
-    //     // );   
-    //     // $dataProduct = array(
-    //     //     'ProductID' => ''
-    //     // );
-    //     // $dataCoverage = array(
-    //     //     'CoverageID' => ''
-    //     // );
-    //     // $dataMO = array(
-    //     //     'ID' => ''
-    //     // );
-    //     // $dataBranch = array(
-    //     //     'Branch' => ''
-    //     // );
-    //     // $dataCurrency = array(
-    //     //     'Currency' => ''
-    //     // );
-    //     // $dataProfile = array(
-    //     //     'OwnerID' => session('ID')
-    //     // );
-    //     // $dataSegment = array(
-    //     //     'Segment' => ''
-    //     // );
-    //     // $dataCT = array(
-    //     //     'CT' => ''
-    //     // );
-    //     // $dataAgent = array(
-    //     //     'ID' => ''
-    //     // );
-
-    //     // $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
-    //     // dd($responseProduct);
-    //     // $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicy');
-    //     // dd($responsePolicy);
-    //     // $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
-    //     // $dataProduct = $responseProduct['Data'];
-
-    //     // $dataProductgendtab = array(
-    //     //     'ProductID' => ''
-    //     // );
-    //     // $fixarrProduct = APIMiddleware($dataProductgendtab, 'SearchGENDTABByProduct');
-
-    //     // $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
-    //     // $responseMO = APIMiddleware($dataMO, 'SearchMO');
-    //     // $responseBranch = APIMiddleware($dataBranch, 'SearchBranch');
-    //     // $responseCurrency = APIMiddleware($dataCurrency, 'SearchCurrency');
-    //     // $responseProfile = APIMiddleware($dataProfile, 'SearchProfile');
-    //     // $responseSegment = APIMiddleware($dataSegment, 'SearchSegment');
-    //     // $responseCT = APIMiddleware($dataSegment, 'SearchCT');
-    //     // $responseAgent = APIMiddleware($dataAgent, 'SearchAgentProfile');
-
-    //     session(['sidebar' => 'sppa']);
-
-    //     return view('Transaction.policy')
-    //         ->with([
-    //             // 'Policy' => $responsePolicy,
-    //             // 'product' => $responseProduct,
-    //             // 'coverage' => $responseCoverage,
-    //             // 'mo' => $responseMO,
-    //             // 'branch' => $responseBranch,
-    //             // 'currency' => $responseCurrency,
-    //             // 'profile' => $responseProfile,
-    //             // 'gendtab' => $fixarrProduct,
-    //             // 'segment' => $responseSegment,
-    //             // 'ct' => $responseCT,
-    //             // 'BusinessSource' => $responseAgent,
-    //         ]);
-    // }

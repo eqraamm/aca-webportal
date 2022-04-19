@@ -236,7 +236,7 @@ return [
     'SHOWBILLINGBYPOLICYYEAR' => env('SHOWBILLINGBYPOLICYYEAR', true),
     'MANDATORYBRANCH' => env('MANDATORYBRANCH', false),
     'MANDATORYSEGMENT' => env('MANDATORYSEGMENT', false),
-    'URLSURVEY' => env('URLSURVEY', 'https://uat2.care.co.id:9096/RTCSurvey/'),
+    'URLSURVEY' => env('URLSURVEY', 'https://172.16.88.53:4000/'),
     'SHOWNOTAPPLYRATELOADING' => env('SHOWNOTAPPLYRATELOADING', true),
     'SHOWIMMEDIATEINFORCE' => env('SHOWIMMEDIATEINFORCE', true),
     'SPREADRISKBYYEAR' => env('SPREADRISKBYYEAR', true),
@@ -246,6 +246,6 @@ return [
     'DETAILADDRESSF' => env('DETAILADDRESSF', true),
     'SENDCONFIRMATIONF' => env('SENDCONFIRMATIONF', true),
     'FLDID' => env('FLDID', ''),
-    'VALUEID' => env('VALUEID', ''),
+    'ValueID' => env('ValueID', ''),
     'COMPANYNAME' => env('COMPANYNAME', 'Portal'),
 ];

@@ -1162,6 +1162,7 @@
       var listbox = document.getElementById("AID_1");
       addOptionItem(listbox, resArray[9].Data,'ID','Name',true);
     }
+    masterDataF = true;
     
     console.timeEnd('main')
     // console.log(callback_PID);
@@ -1179,6 +1180,7 @@
     console.log(SENDCONFIRMATIONF);
     if (!SENDCONFIRMATIONF) {
       $('#img-btn-send').attr('style','display:none');
+      $('#img-btn-revise').attr('style','display:none');
       $('#div-esign').attr('style','display:none');
     }
     if (Role == 'MARKETING OFFICER'){
@@ -2934,20 +2936,6 @@
             }else{
               reject(new Error(response.message));
             }
-            // var policyno;
-            // if (response.code == '200'){
-            //   tblInquiry.clear().rows.add(response.listpolicy.Data).draw();
-            //   $('#PolicyNo').val(response.data[0]['PolicyNO']);
-            //   policyno = response.data[0]['PolicyNO'];
-            //   $('#PStatus').val('Process');
-            //   refreshButton(false);
-            //   disableAll();
-            // }
-            // $("#loadMe").modal("hide");
-            // toastMessage(response.code,response.message);
-            // resolve({
-            //   policyno: policyno
-            // });
           }).fail(function(xhr, status, error){
             var message = xhr.responseJSON['message'];
             reject(new Error(message));
@@ -3007,7 +2995,6 @@
               }
 
               var policyno = jobPolicy[0].POLICYNO;
-              console.log('polis no : ' + policyno);
               if (policyno == ''){
                 policyno = '-';
               }
@@ -3988,7 +3975,6 @@
   }
 
   $('#btn-refresh-master').on('click',function(event){
-    console.log('refresh bos');
     $('#div-failed-loading').css('display','none');
     $('#div-loading').removeAttr('style');
     refreshTabMasterData('tabpolicy');

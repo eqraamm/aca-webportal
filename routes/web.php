@@ -138,4 +138,5 @@ Route::POST('/submitsppadoc', 'SppaController@SubmitPolicyDocSPPA')->name('submi
 // Route::view('/sppadoc', 'Transaction.PolicyDocSPPA');
 Route::get('/sppadocold/{data}', 'SppaController@getPolicyDoc')->name('sppadocold');
 // Route::view('/sppadocold', 'Transaction.backupdocsppa');
-
+Route::get('/survey', 'SurveyController@SurveyOnline')->name('survey');
+Route::POST('/survey/SaveSurveyDocument', 'SurveyController@SaveSurveyDocument')->name('SaveSurveyDocument');
