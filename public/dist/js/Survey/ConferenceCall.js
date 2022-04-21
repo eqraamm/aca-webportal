@@ -1,5 +1,5 @@
-let socket = io.connect('https://192.168.1.3:4000', {transports: ['websocket']});
-let _token   = $('meta[name="csrf-token"]').attr('content');
+let socket = io.connect(webSockets, {transports: ['websocket']});
+let _token = $('meta[name="csrf-token"]').attr('content');
 // let socket = io();
 let width = 720; // We will scale the photo width to this
 let height = 720;
@@ -78,7 +78,7 @@ let iceServers = {
         }
     ],
 };
-if (user == null || user == '') {
+if (user == null) {
     // divRecordPlayer.style.display = "none";
     // divIconRecording.style.display = "none";
     divIconScreenshot.style.display = "none";
@@ -142,8 +142,13 @@ function takeScreenshot() {
 }
 
 function Preview() {
-    $("#modal-Datatable").modal('show');
-    console.log(data);
+    if (user == null || user == "") {
+        alert('Thanks for your participant');
+        window.location.href = "https://www.aca.co.id/home";
+    } else {
+        $("#modal-Datatable").modal('show');
+        console.log(data);
+    }
 }
 
 function PreviewVideo() {
@@ -188,7 +193,7 @@ socket.on("created", function () {
                 }
             }
         }
-    }else{
+    } else {
         media = {
             audio: true,
             video: {
@@ -228,7 +233,7 @@ socket.on("joined", function () {
                 }
             }
         }
-    }else{
+    } else {
         media = {
             audio: true,
             video: {
@@ -311,49 +316,74 @@ socket.on("answer", function (answer) {
     rtcPeerConnection.setRemoteDescription(answer);
 });
 
-function LoadFunction() {
+function FinishSurvey() {
+    console.log(urlSurvey);
     let ActualDate = date
     let StartTimeSurvey = todaytime
     let time = new Date();
     let FinishTimeSurvey = ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2) + ":" + ("0" + time.getSeconds()).slice(-2);
-    var hit = {
-        "JSON": "{'PID': '" + id + "',  'ActualDate': '" + ActualDate + "','StartTimeSurvey': '" + StartTimeSurvey + "','EndTimeSurvey': '" + FinishTimeSurvey + "'}",
-        "XPrivate": get('API.PrivateKey')
-    };
+    // var hit = {
+    //     "JSON": "{'PID': '" + id + "',  'ActualDate': '" + ActualDate + "','StartTimeSurvey': '" + StartTimeSurvey + "','EndTimeSurvey': '" + FinishTimeSurvey + "'}",
+    //     "XPrivate": get('API.PrivateKey')
+    // };
     $.ajax({
         type: "POST",
-        url: "https://uat2.care.co.id:9096/ACA/WEBAPI2/MiddlewareAPI/Encrypt",
-        data: hit,
-        dataType: "JSON",
-        crossDomain: true,
-        success: function (data) {
-            var enc = {
-                "Data": data.data,
-                "XPublic": "GE8I19241CVO15TB"
-            }
-            $.ajax({
-                type: "POST",
-                url: "https://uat2.care.co.id:9096/ACA/WEBAPI2/MiddlewareAPI/FinishSurvey",
-                data: enc,
-                dataType: "JSON",
-                crossDomain: true,
-                success: function (data) {
-                    //alert(data.message);
-                    $("#loadMe").hide();
-                    alert('Thanks for your participant');
-                    window.location.href = "https://www.aca.co.id/home";
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    $("#loadMe").hide();
-                    alert(textStatus + " " + xhr.responseText);
-                }
-            });
+        url: urlSurvey,
+        data: {
+            PID: id,
+            ActualDate: ActualDate,
+            StartTimeSurvey: StartTimeSurvey,
+            EndTimeSurvey: FinishTimeSurvey,
+            _token: _token
         },
-        error: function (xhr, textStatus, errorThrown) {
-            $("#loadMe").hide();
-            alert(textStatus + " " + xhr.responseText);
+        //crossDomain: true,
+    }).done(function (response) {
+        console.log(response);
+        // resolve();
+        if (response.code == '200') {
+            alert('Thanks for your participant');
+            window.location.href = Survey;
+        } else {
+            alert('Failed : ' + response.message);
         }
+    }).fail(function (xhr, status, error) {
+        var message = xhr.responseJSON['message'];
+        alert('Failed : ' + message);
+        // toastMessage('400',error);
     });
+    //     type: "POST",
+    //     url: "https://uat2.care.co.id:9096/ACA/WEBAPI2/MiddlewareAPI/Encrypt",
+    //     data: hit,
+    //     dataType: "JSON",
+    //     crossDomain: true,
+    //     success: function (data) {
+    //         var enc = {
+    //             "Data": data.data,
+    //             "XPublic": "GE8I19241CVO15TB"
+    //         }
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "https://uat2.care.co.id:9096/ACA/WEBAPI2/MiddlewareAPI/FinishSurvey",
+    //             data: enc,
+    //             dataType: "JSON",
+    //             crossDomain: true,
+    //             success: function (data) {
+    //                 //alert(data.message);
+    //                 $("#loadMe").hide();
+    //                 alert('Thanks for your participant');
+    //                 window.location.href = "https://www.aca.co.id/home";
+    //             },
+    //             error: function (xhr, textStatus, errorThrown) {
+    //                 $("#loadMe").hide();
+    //                 alert(textStatus + " " + xhr.responseText);
+    //             }
+    //         });
+    //     },
+    //     error: function (xhr, textStatus, errorThrown) {
+    //         $("#loadMe").hide();
+    //         alert(textStatus + " " + xhr.responseText);
+    //     }
+
 }
 
 cancelSurvey.addEventListener("click", function () {
@@ -384,7 +414,6 @@ cancelSurvey.addEventListener("click", function () {
 });
 
 leaveButton.addEventListener("click", function () {
-    console.log(urlDocument);
     if (confirm('Are you sure you want to finish this Survey?')) {
         if (user !== null && user !== '') {
             // let TC = document.getElementById("type-capture").value;
@@ -418,21 +447,21 @@ leaveButton.addEventListener("click", function () {
             }
             $.ajax({
                 type: "POST",
-                url: urlDocument, 
+                url: urlDocument,
                 data: {
                     PID: id,
                     PolicyPIC: PolPic,
                     _token: _token
-                  },
-              }).done(function( response ) {
+                },
+            }).done(function (response) {
                 console.log(response);
                 // resolve();
-                if (response.code == '200'){
-                  alert('Success');
-                }else{
-                  alert('Failed : ' + response.message);
+                if (response.code == '200') {
+                    FinishSurvey();
+                } else {
+                    alert('Failed : ' + response.message);
                 }
-              }).fail(function(xhr, status, error){
+            }).fail(function (xhr, status, error) {
                 var message = xhr.responseJSON['message'];
                 alert('Failed : ' + message);
                 // toastMessage('400',error);
@@ -473,7 +502,7 @@ leaveButton.addEventListener("click", function () {
             //         console.log(textStatus + " " + xhr.responseText);
             //     }
             // });
-            
+
             // socket.emit("leave", roomName);
 
             // // divVideoChat.style = "display:none";
@@ -495,29 +524,29 @@ leaveButton.addEventListener("click", function () {
             //     rtcPeerConnection.close();
             //     rtcPeerConnection = null;
             // }
-        // } else {
-        //     alert('Thanks for your participant');
-        //     socket.emit("leave", roomName);
-        //     // divVideoChat.style = "display:none";
-        //     // divButtonGroup.style = "display:none";
-        //     body.style = "display:none";
+            // } else {
+            //     alert('Thanks for your participant');
+            //     socket.emit("leave", roomName);
+            //     // divVideoChat.style = "display:none";
+            //     // divButtonGroup.style = "display:none";
+            //     body.style = "display:none";
 
-        //     if (userVideo.srcObject) {
-        //         userVideo.srcObject.getTracks()[0].stop();
-        //         userVideo.srcObject.getTracks()[1].stop();
-        //     }
-        //     if (peerVideo.srcObject) {
-        //         peerVideo.srcObject.getTracks()[0].stop();
-        //         peerVideo.srcObject.getTracks()[1].stop();
-        //     }
+            //     if (userVideo.srcObject) {
+            //         userVideo.srcObject.getTracks()[0].stop();
+            //         userVideo.srcObject.getTracks()[1].stop();
+            //     }
+            //     if (peerVideo.srcObject) {
+            //         peerVideo.srcObject.getTracks()[0].stop();
+            //         peerVideo.srcObject.getTracks()[1].stop();
+            //     }
 
-        //     if (rtcPeerConnection) {
-        //         rtcPeerConnection.ontrack = null;
-        //         rtcPeerConnection.onicecandidate = null;
-        //         rtcPeerConnection.close();
-        //         rtcPeerConnection = null;
-        //     }
-        //     window.location.href = "https://www.aca.co.id/home";
+            //     if (rtcPeerConnection) {
+            //         rtcPeerConnection.ontrack = null;
+            //         rtcPeerConnection.onicecandidate = null;
+            //         rtcPeerConnection.close();
+            //         rtcPeerConnection = null;
+            //     }
+            //     window.location.href = "https://www.aca.co.id/home";
         }
     } else {
         // Do nothing!

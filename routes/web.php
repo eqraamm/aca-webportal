@@ -29,7 +29,7 @@ Route::group(['middleware' => 'CekLogin'], function(){
     // widget dashboard
     Route::get('/dashboard/widget', 'IndexController@modalWidget')->name('Dashboard.Widget');
     Route::get('/dashboard/detailpolicy/{pid}', 'IndexController@modalDetailPolicy')->name('Dashboard.ModalDetPolicy');
-    Route::get('/dashboard/getdatagwp', 'IndexController@getDataGWP')->name('Dashboard.getGWP');
+    //Route::get('/dashboard/getdatagwp', 'IndexController@getDataGWP')->name('Dashboard.getGWP');
     Route::get('/dashboard/getdatalossratio', 'IndexController@getDataLossRatio')->name('Dashboard.getLossRatio');
     Route::get('/dashboard/getstoreddata', 'IndexController@refreshStoredData')->name('Dashboard.getStoredData');
 
@@ -118,11 +118,6 @@ Route::group(['middleware' => 'CekLogin'], function(){
     Route::get('/userinfo', 'UserInfoController@Index');
 
     Route::get('/modalrisk', 'SppaController@showModalRisk')->name('policy.modalrisk');
-
-    //demo gaude chart
-    // Route::get('/gauge', function () {
-    //     return view('gaugechartdemo');
-    // });
 });
 
 //demo gaude chart
@@ -139,5 +134,7 @@ Route::POST('/submitsppadoc', 'SppaController@SubmitPolicyDocSPPA')->name('submi
 // Route::view('/sppadoc', 'Transaction.PolicyDocSPPA');
 Route::get('/sppadocold/{data}', 'SppaController@getPolicyDoc')->name('sppadocold');
 // Route::view('/sppadocold', 'Transaction.backupdocsppa');
-Route::get('/onlinesurvey', 'SurveyController@SurveyOnline')->name('survey');
+
+Route::get('/onlinesurvey', 'SurveyController@SurveyOnline')->name('VideoSurvey');
 Route::POST('/onlinesurvey/SaveSurveyDocument', 'SurveyController@SaveSurveyDocument')->name('SaveSurveyDocument');
+Route::POST('/onlinesurvey/FinishSurvey', 'SurveyController@FinishSurvey')->name('FinishSurvey');

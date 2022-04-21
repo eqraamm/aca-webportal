@@ -427,10 +427,12 @@
 <!-- <script src="plugins/sweetalert2/sweetalert2.min.js"></script> -->
 <!-- <script src="sweetalert2.all.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{asset('dist/js/Survey/ConferenceCall.js')}}"></script>
 <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
 <script>
-  var urlDocument = "{{ route('SaveSurveyDocument') }}";  
+  var webSockets = "{{config('app.URLWEBSOCKETS')}}";
+  var Survey = "{{ route('survey') }}";
+  var urlDocument = "{{ route('SaveSurveyDocument') }}";
+  var urlSurvey = "{{ route('FinishSurvey') }}";   
   (function () {
     var params = {},
       r = /([^&=]+)=?([^&]*)/g;
@@ -472,6 +474,5 @@
     });
   }
 </script>
-
-
+<script src="{{asset('dist/js/Survey/ConferenceCall.js')}}"></script>
 </html>

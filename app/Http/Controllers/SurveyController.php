@@ -45,8 +45,8 @@ class SurveyController extends Controller
     }
 
     public function SaveSurveyDocument(Request $request){
-        // dd($request);
-        $policypic[] = $request->input('PolicyPIC');
+        //dd($request);
+        $policypic = $request->input('PolicyPIC');
 
         $datapic = array(
             'PID'=> $request->input('PID'),
@@ -54,20 +54,19 @@ class SurveyController extends Controller
         );
 
         $responseSavePolicyDocument = APIMiddleware($datapic, 'SavePolicyDocument');
-
-        // dd($responseSavePolicyDocument);
+        return response()->json(['code' => $responseSavePolicyDocument['code'],'message'=>$responseSavePolicyDocument['message']]);
     }
 
     public function FinishSurvey(Request $request){
-        dd($request);
-
-        $survey = array(
+        $datasurvey = array(
             'PID'=> $request->input('PID'),
             'ActualDate'=> $request->input('ActualDate'),
-
+            'StartTimeSurvey'=> $request->input('StartTimeSurvey'),
+            'EndTimeSurvey'=> $request->input('EndTimeSurvey')
         );
-
-        $responseSavePolicyDocument = APIMiddleware($datapic, 'SavePolicyDocument');
+        $responseFinishSurvey = APIMiddleware($datasurvey, 'FinishSurvey');
+        //dd($responseFinishSurvey);
+        return response()->json(['code' => $responseFinishSurvey['code'],'message'=>$responseFinishSurvey['message'],'data' => $responseFinishSurvey['Data']]);
 
     }
 }
