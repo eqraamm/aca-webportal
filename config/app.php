@@ -247,5 +247,6 @@ return [
     'SENDCONFIRMATIONF' => env('SENDCONFIRMATIONF', true),
     'FLDID' => env('FLDID', ''),
     'ValueID' => env('ValueID', ''),
+    'URLWEBSOCKETS' => env('URLWEBSOCKETS', ''),
     'COMPANYNAME' => env('COMPANYNAME', 'Portal'),
 ];

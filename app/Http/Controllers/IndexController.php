@@ -25,15 +25,15 @@ class IndexController extends Controller
         $data = array(
             'ID' => session('ID')
         );
-        $responseSearchStoredData_GWP = APIMiddleware($data, 'SearchStoredData_GWP');
-        $responseSearchStoredData_LossRatio = APIMiddleware($data, 'SearchStoredData_LossRatio');
+        //$responseSearchStoredData_GWP = APIMiddleware($data, 'SearchStoredData_GWP');
+        //$responseSearchStoredData_LossRatio = APIMiddleware($data, 'SearchStoredData_LossRatio');
         // dd($responseSearchStoredData_GWP);
-
-        if (session('Role') == 'AGENT'){
-            return view('dashboard.dashboardAgent')->with(array('data_gwp' => $responseSearchStoredData_GWP,'data_lossratio' => $responseSearchStoredData_LossRatio)); 
-        }else{
-            return view('dashboard')->with('data', $responseSearchPolicy); 
-        }
+        return view('dashboard')->with('data', $responseSearchPolicy); 
+        // if (session('Role') == 'AGENT'){
+        //     return view('dashboard.dashboardAgent')->with(array('data_gwp' => $responseSearchStoredData_GWP,'data_lossratio' => $responseSearchStoredData_LossRatio)); 
+        // }else{
+        //     return view('dashboard')->with('data', $responseSearchPolicy); 
+        // }
     }
 
     public function modalWidget(Request $request){

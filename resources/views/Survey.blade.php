@@ -290,7 +290,7 @@
 
     function joinSurvey(PID){
         event.preventDefault();
-        var URL = '{{ config("app.URLSURVEY") }}' + '?id=' + PID + '&userid=mo';
+        var URL = '{{ route("VideoSurvey") }}' + '?id=' + PID + '&userid=mo';
         // console.log(URL);
         openInNewTab(URL);
     }
