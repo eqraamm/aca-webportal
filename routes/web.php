@@ -124,6 +124,7 @@ Route::group(['middleware' => 'CekLogin'], function(){
     //     return view('gaugechartdemo');
     // });
 });
+
 //demo gaude chart
 Route::get('/gauge', function () {
     return view('gaugechartdemo');
@@ -138,5 +139,5 @@ Route::POST('/submitsppadoc', 'SppaController@SubmitPolicyDocSPPA')->name('submi
 // Route::view('/sppadoc', 'Transaction.PolicyDocSPPA');
 Route::get('/sppadocold/{data}', 'SppaController@getPolicyDoc')->name('sppadocold');
 // Route::view('/sppadocold', 'Transaction.backupdocsppa');
-Route::get('/survey', 'SurveyController@SurveyOnline')->name('survey');
-Route::POST('/survey/SaveSurveyDocument', 'SurveyController@SaveSurveyDocument')->name('SaveSurveyDocument');
+Route::get('/onlinesurvey', 'SurveyController@SurveyOnline')->name('survey');
+Route::POST('/onlinesurvey/SaveSurveyDocument', 'SurveyController@SaveSurveyDocument')->name('SaveSurveyDocument');

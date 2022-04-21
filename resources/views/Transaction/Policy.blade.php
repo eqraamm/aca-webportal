@@ -1836,8 +1836,8 @@
   function detailRisk(risk,remarks,orderno){
     event.preventDefault();
 
-    var sdate = new Date($('#InceptionDate').val());
-    var edate = new Date($('#ExpiryDate').val());
+    var sdate = new Date($('#InceptionDate').val()); //2022-04-19
+    var edate = new Date($('#ExpiryDate').val()); //2022-08-19
 
     var policyYear = (edate > dateAdd('year',dateDiff('year',sdate,edate),sdate)) ? dateDiff('year',sdate,edate) + 1 : dateDiff('year',sdate,edate);
 
