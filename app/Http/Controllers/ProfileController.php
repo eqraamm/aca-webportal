@@ -196,6 +196,8 @@ class ProfileController extends Controller
 
                 if ($dataprofile['CorporateF'] == "1"){
                     $payload = array(
+                        'UserName' => session('ID'),
+                        'Password' => session('Password'),
                         'TaxID' => $dataprofile['TaxID']
                     );
                     // dd($payload);
@@ -246,6 +248,8 @@ class ProfileController extends Controller
                     }
                 }else{
                     $payload = array(
+                        'UserName' => session('ID'),
+                        'Password' => session('Password'),
                         'ID_NO' => $dataprofile['ID_No']
                     );
                     $responseSearchRefProfile = APIMiddleware($payload, 'SearchRefProfile');
@@ -308,6 +312,8 @@ class ProfileController extends Controller
 
     public function listRefProfile(Request $request){
         $data = array(
+            'UserName' => session('ID'),
+            'Password' => session('Password'),
             'ID' => ($request->input('ID') == null) ? '' : $request->input('ID'),
             'Name' => ($request->input('Name') == null) ? '' : $request->input('Name'),
             'Email' => ($request->input('Email') == null) ? '' : $request->input('Email'),

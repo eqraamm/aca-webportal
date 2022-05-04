@@ -29,7 +29,7 @@ Route::group(['middleware' => 'CekLogin'], function(){
     // widget dashboard
     Route::get('/dashboard/widget', 'IndexController@modalWidget')->name('Dashboard.Widget');
     Route::get('/dashboard/detailpolicy/{pid}', 'IndexController@modalDetailPolicy')->name('Dashboard.ModalDetPolicy');
-    //Route::get('/dashboard/getdatagwp', 'IndexController@getDataGWP')->name('Dashboard.getGWP');
+    Route::get('/dashboard/getdatagwp', 'IndexController@getDataGWP')->name('Dashboard.getGWP');
     Route::get('/dashboard/getdatalossratio', 'IndexController@getDataLossRatio')->name('Dashboard.getLossRatio');
     Route::get('/dashboard/getstoreddata', 'IndexController@refreshStoredData')->name('Dashboard.getStoredData');
 
@@ -118,6 +118,8 @@ Route::group(['middleware' => 'CekLogin'], function(){
     Route::get('/userinfo', 'UserInfoController@Index');
 
     Route::get('/modalrisk', 'SppaController@showModalRisk')->name('policy.modalrisk');
+    Route::get('/modaldeductible', 'SppaController@showModalDeductible')->name('policy.modaldeductible');
+    Route::get('/getdeductibleremarks', 'SppaController@getDeductibleRemarks')->name('policy.getDeductibleRemarks');
 });
 
 //demo gaude chart

@@ -230,7 +230,7 @@
                                   </div> -->
                                 </div>
                                 <div class="form-group row">
-                                  <label for="SType" class="col-sm-2 col-form-label">Policy Status  </label>
+                                  <label for="SType" class="col-sm-2 col-form-label">Policy Type</label>
                                   <div class="col-sm-3">
                                     <select class="form-control select2bs4" id="SType" name="LstSType">
                                       <!-- <option value="" selected></option> -->
@@ -248,7 +248,7 @@
                               <h2 class="card-header">Policy Data</h2>
                               <div class="card-body">
                                 <div class="form-group row">
-                                  <p for="PStatus" class="col-sm-3 col-form-label">Policy Status  </p>
+                                  <p for="PStatus" class="col-sm-3 col-form-label">Policy Status</p>
                                   <div class="col-sm-2">
                                     <input class="form-control" id="PStatus" type="text" name="TxtPStatus" readonly>
                                   </div>
@@ -755,6 +755,7 @@
                                         <option value="" selected></option>
                                         <option value="A">Agent</option>
                                         <option value="B">Brokerage</option>
+                                        <option value="D">Direct</option>
                                         <option value="O">Others</option>
                                       </select>
                                     </div>
@@ -891,6 +892,7 @@
                                 <table id="tbl_covDeductible" class="table table-condensed responsive table-striped">
 
                                 </table>
+                                <div id="div-deductible"></div>
                               </div>
                             </div>
                             <div class="card">
@@ -1160,7 +1162,7 @@
       // const faAgent = resArray[9].Data.filter(base => base.Restrictedf === false);
       // console.log(faAgent);
       var listbox = document.getElementById("AID_1");
-      addOptionItem(listbox, resArray[9].Data,'ID','Name',true);
+      addOptionItem(listbox, resArray[9].Data,'ID','Name',true,true);
     }
     masterDataF = true;
     
@@ -1177,7 +1179,6 @@
 
   $( document ).ready(function() {
     var SENDCONFIRMATIONF = "{{ config('app.SENDCONFIRMATIONF') }}";
-    console.log(SENDCONFIRMATIONF);
     if (!SENDCONFIRMATIONF) {
       $('#img-btn-send').attr('style','display:none');
       $('#img-btn-revise').attr('style','display:none');
@@ -1666,49 +1667,59 @@
               "data": "OrderNo"
             },
             {
+              "defaultContent": "",
               "title": "Deductible Remarks",
-              "data": "Description"
-            },
-            {
-              "title": "By Amount",
-              "defaultContent": "0",
-              "data": "FixedMin"
-            },
-            {
-              "title": "By % of TSI",
-              "defaultContent": "0",
-              "data": "PCTTSI"
-            },
-            {
-              "title": "By % of Claim",
-              "defaultContent": "0",
-              "data": "PCTCL"
-            }
-          ],
-          "columnDefs": [{
-              targets: [2],
-              data: "OrderNo",
-              render: function(data, type, row) {
-                var readonly = (row['EditableF']) ? '' : 'readonly';
-                return '<input class="form-control TxtFixedMin num-format" id="Deductible' + row['OrderNo'] + '" name="FixedMin' + row['OrderNo'] + '" type="text" value = "'+ number_format(row['FixedMin']) +'" onkeyup="onhange_number_format($(this));" '+ readonly +'>';
+              render: function(data,type,row){
+                return '<span id="deductible-remarks' + row['OrderNo'] + '">'+ row['Description'] +'</span>';
               }
             },
+            // {
+            //   "title": "By Amount",
+            //   "defaultContent": "0",
+            //   "data": "FixedMin"
+            // },
+            // {
+            //   "title": "By % of TSI",
+            //   "defaultContent": "0",
+            //   "data": "PCTTSI"
+            // },
+            // {
+            //   "title": "By % of Claim",
+            //   "defaultContent": "0",
+            //   "data": "PCTCL"
+            // },
             {
-              targets: [3],
-              data: "OrderNo",
-              render: function(data, type, row) {
-                var readonly = (row['EditableF']) ? '' : 'readonly';
-                return '<input class="form-control TxtDEDPCTTSI" id="DEDPCTTSI' + row['OrderNo'] + '" name="DEDPCTTSI' + row['OrderNo'] + '" type="text" value = "'+ row['PCTTSI'] +'" '+ readonly +'>';
-              }
-            }, {
-              targets: [4],
-              data: "OrderNo",
-              render: function(data, type, row) {
-                var readonly = (row['EditableF']) ? '' : 'readonly';
-                return '<input class="form-control TxtDEDPCTCL" id="DEDPCTCL' + row['OrderNo'] + '" name="DEDPCTCL' + row['OrderNo'] + '" type="text" value = "'+ row['PCTCL'] +'" '+ readonly +'>';
+              "defaultContent":"",
+              render: function(data,type,row){
+                var fn = "detailDeductible('"+ row['RefCode'] +"','"+ row['Description'] +"','"+ row['OrderNo'] +"','"+ row['EditableF'] +"','"+ row['FixedMin'] +"','"+ row['PCTTSI'] +"','"+ row['PCTCL'] +"','"+ row['FixedMax'] +"')"
+                return '<img src="{{asset("dist/img/edit.svg")}}" width="30" height="30" type="button" value="detail" onclick="'+ fn +'">'
               }
             }
           ],
+          // "columnDefs": [{
+          //     targets: [2],
+          //     data: "OrderNo",
+          //     render: function(data, type, row) {
+          //       var readonly = (row['EditableF']) ? '' : 'readonly';
+          //       return '<input class="form-control TxtFixedMin num-format" id="Deductible' + row['OrderNo'] + '" name="FixedMin' + row['OrderNo'] + '" type="text" value = "'+ number_format(row['FixedMin']) +'" onkeyup="onhange_number_format($(this));" '+ readonly +'>';
+          //     }
+          //   },
+          //   {
+          //     targets: [3],
+          //     data: "OrderNo",
+          //     render: function(data, type, row) {
+          //       var readonly = (row['EditableF']) ? '' : 'readonly';
+          //       return '<input class="form-control TxtDEDPCTTSI" id="DEDPCTTSI' + row['OrderNo'] + '" name="DEDPCTTSI' + row['OrderNo'] + '" type="text" value = "'+ row['PCTTSI'] +'" '+ readonly +'>';
+          //     }
+          //   }, {
+          //     targets: [4],
+          //     data: "OrderNo",
+          //     render: function(data, type, row) {
+          //       var readonly = (row['EditableF']) ? '' : 'readonly';
+          //       return '<input class="form-control TxtDEDPCTCL" id="DEDPCTCL' + row['OrderNo'] + '" name="DEDPCTCL' + row['OrderNo'] + '" type="text" value = "'+ row['PCTCL'] +'" '+ readonly +'>';
+          //     }
+          //   }
+          // ],
           "pageLength": 5,
           "lengthMenu": [
             [5, 10, -1],
@@ -1831,39 +1842,95 @@
       }
     }
     refreshTableRisk();
+    refreshTableDeductible();
   }
 
-  function detailRisk(risk,remarks,orderno){
-    event.preventDefault();
+  async function refreshTableDeductible(){
+    var Coverage = $('#CoverageID').val();
+    var dsCoverage = arrCoverage['Data'].filter(dscoverage => dscoverage.CoverageID == Coverage);
+    var NotApplyRateLoadingF = document.getElementById('NotApplyRateLoadingF');
+    var dsDeductible = dsCoverage[0]['CoverageDeductible'].filter(deductible => deductible.NotApplyRateLoadingF === NotApplyRateLoadingF.checked)
+    $('#div-deductible').empty();
+    var divGroupDeductible = document.getElementById('div-deductible');
+    for(i=0; i < dsDeductible.length; i++){
+      if (dsDeductible[i]['EditableF'] === true){
+        var orderno = dsDeductible[i]['OrderNo'];
+        //fixedmin
+        var fixedmin = document.createElement('INPUT');
+        fixedmin.setAttribute("id","Deductible" + orderno);
+        fixedmin.setAttribute("name","FixedMin" + orderno);
+        fixedmin.setAttribute("type","hidden");
+        fixedmin.value = dsDeductible[i]['FixedMin'];
 
-    var sdate = new Date($('#InceptionDate').val()); //2022-04-19
-    var edate = new Date($('#ExpiryDate').val()); //2022-08-19
+        //PCTTSI
+        var pcttsi = document.createElement('INPUT');
+        pcttsi.setAttribute("id","DEDPCTTSI" + orderno);
+        pcttsi.setAttribute("name","DEDPCTTSI" + orderno);
+        pcttsi.setAttribute("type","hidden");
+        pcttsi.value = dsDeductible[i]['PCTTSI'];
 
-    var policyYear = (edate > dateAdd('year',dateDiff('year',sdate,edate),sdate)) ? dateDiff('year',sdate,edate) + 1 : dateDiff('year',sdate,edate);
+        //PCTCL
+        var pctcl = document.createElement('INPUT');
+        pctcl.setAttribute("id","DEDPCTCL" + orderno);
+        pctcl.setAttribute("name","DEDPCTCL" + orderno);
+        pctcl.setAttribute("type","hidden");
+        pctcl.value = dsDeductible[i]['PCTCL'];
 
-    $('#class-modal-dialog').attr('class','modal-dialog modal-md');
-    
-    $('#modaltitle').text('Risk Coverage');
-    
-    $('#modalbody').empty();
+        divGroupDeductible.appendChild(fixedmin);
+        divGroupDeductible.appendChild(pcttsi);
+        divGroupDeductible.appendChild(pctcl);
 
-    $('#modalfooter').empty();
+        //set Deductible value
+        if (arrPolicy.length > 0){
+          // Default Settingan
+          var defFixedMin = dsDeductible[i]['FixedMin'];
+          var defPCTTSI = dsDeductible[i]['PCTTSI'];
+          var defPCTCL = dsDeductible[i]['PCTCL'];
+          var defFixedMax = dsDeductible[i]['FixedMax'];
 
-    var url = "{{ route('policy.modalrisk') }}?risk=" + risk + "&remarks=" + remarks + "&orderno=" + orderno + "&policyyear=" + policyYear;
+          $('#Deductible' + orderno).val(arrPolicy[0]['Deductible' + orderno]);
+          $('#DEDPCTTSI' + orderno).val(arrPolicy[0]['DEDPCTTSI' + orderno]);
+          $('#DEDPCTCL' + orderno).val(arrPolicy[0]['DEDPCTCL' + orderno]);
+          
+          var FixedMin = $('#Deductible' + orderno).val();
+          var PCTTSI = $('#DEDPCTTSI' + orderno).val();
+          var PCTCL = $('#DEDPCTCL' + orderno).val();
+          if (defFixedMin != FixedMin || defPCTTSI != PCTTSI || defPCTCL != PCTCL){
+            var url = "{{ route('policy.getDeductibleRemarks') }}?topro=" + $('#CoverageID').val() + "&dcode=" + dsDeductible[i]['RefCode'] + "&fixedmin=" + FixedMin + "&pcttsi=" + PCTTSI + "&pctcl=" + PCTCL + "&fixedmax=" + defFixedMax;
+            var response = await getData(url);
+            if (response.code == '200'){
+              $('#deductible-remarks' + orderno).html(response.Data[0]['Deductibles']);
+            }
+          }
+        }
+      }
+    }
+  }
 
-    $.ajax({
-    type: "GET",
-    url: url,
-    dataType: 'html'
-    }).done(function( response ) {
-        // $('#loadMe').modal('hide');
-        $('#modalbody').html(response);
-        $('#modal-general').modal({
-          keyboard: false,
-          backdrop: 'static',
-          show: true
-        })
-    });
+  function refreshDeductibleRemarks(){
+    var Coverage = $('#CoverageID').val();
+    var dsCoverage = arrCoverage['Data'].filter(dscoverage => dscoverage.CoverageID == Coverage);
+    var NotApplyRateLoadingF = document.getElementById('NotApplyRateLoadingF');
+    var dsDeductible = dsCoverage[0]['CoverageDeductible'].filter(deductible => deductible.NotApplyRateLoadingF === NotApplyRateLoadingF.checked);
+
+    for(i=0; i < dsDeductible.length; i++){
+      if (dsDeductible[i]['EditableF'] === true){
+        // Default Settingan
+        var defFixedMin = dsDeductible[i]['FixedMin'];
+        var defPCTTSI = dsDeductible[i]['PCTTSI'];
+        var defPCTCL = dsDeductible[i]['PCTCL'];
+        var defFixedMax = dsDeductible[i]['FixedMax'];
+
+        // Per Policy
+        var FixedMin = $('#Deductible' + dsDeductible[i]['OrderNo']).val();
+        var PCTTSI = $('#PCTTSI' + dsDeductible[i]['OrderNo']).val();
+        var PCTCL = $('#PCTCL' + dsDeductible[i]['OrderNo']).val();
+        if (defFixedMin != FixedMin || defPCTTSI != PCTTSI || defPCTCL != PCTCL){
+          var url = "{{ route('policy.getDeductibleRemarks') }}?topro=" + $('#CoverageID').val() + "&dcode=" + dsDeductible[i]['RefCode'] + "&fixedmin=" + FixedMin + "&pcttsi=" + PCTTSI + "&pctcl=" + PCTCL + "&fixedmax=" + defFixedMax;
+          console.log(url);
+        }
+      }
+    }
   }
 
   function refreshTableRisk(){
@@ -2635,7 +2702,7 @@
             }
             $('#Premium').val(number_format(premium,2,',','.'));
             premium = $('#Premium').val().replace(/\,/g,'');
-            console.log(premium); 
+            // console.log(premium); 
             if ($('#DiscPCT').val() != 0){
               var discount = (premium * $('#DiscPCT').val() / 100);
               $('#Discount').val(number_format(discount,2,',','.'));
@@ -2644,8 +2711,8 @@
               var totalpremium = premium + response.data[0]['AdmFee'] + response.data[0]['StampDuty'];
             }
             // console.log(totalpremium);
-            $('#AdmFee').val(response.data[0]['AdmFee']);
-            $('#StampDuty').val(response.data[0]['StampDuty']);
+            $('#AdmFee').val(number_format(response.data[0]['AdmFee'],2));
+            $('#StampDuty').val(number_format(response.data[0]['StampDuty'],2));
             $('#TxtTotalPremium').val(number_format(totalpremium,2,',','.'));
             $('#SPremium').val(spremium);
             // if (holdmessage != ''){
@@ -2834,7 +2901,7 @@
       // console.log('haha');
       $("#loadMe").modal('show');
 
-      var asd = document.getElementById('InforceF');
+      // var asd = document.getElementById('InforceF');
 
       // $('#InforceF').removeAttr('disabled');
       if (validateRequired()){
@@ -2844,7 +2911,7 @@
       var deductible = tblDeductible.$('input, select').serialize();
       var clausula = tblClausula.$('input').serialize();
       var full = $("#form-policy").serialize() + '&' + deductible + '&' + clausula;
-      // console.log($("#form-policy").serialize());
+      // console.log(full);
       
       $.ajax({
         type: "POST",
@@ -2962,6 +3029,8 @@
               var url = "{{ route('policy.getdetail') }}?PID=" + $('#PID').val()
               var Policy;
               var jobPolicy;
+              var timeout = "{{ config('app.TimeOutSearchJob') }}";
+              console.log(timeout);
               for (i=0; i < 5; i++){
                 // console.log('loop - ' + i);
                 var res = await getData(url);
@@ -2972,7 +3041,7 @@
                   // console.log(jobPolicy);
                   break;
                 }
-                await sleep(4);
+                await sleep(timeout);
                 // console.log('after sleep');
               }
 
@@ -3104,6 +3173,8 @@
             type: "POST",
             url: "{{ route('docpreview') }}", 
             data: {
+              ID: "{{ session('ID') }}",
+              Password: "{{ session('Password') }}",
               PID: PID,
               RefNo: refno,
               Document: value,
@@ -3141,7 +3212,6 @@
     let pdfWindow = window.open("");
 
     var baseurl = "<iframe width='100%' height='100%' src='data:application/pdf;base64,"+ url +"'></iframe>";
-    console.log(baseurl);
     pdfWindow.document.write(baseurl, '_blank');
     // var win = window.open(url, '_blank');
     // win.focus();
@@ -3765,7 +3835,9 @@
     const CovDeducFil = CovDeduc.filter(CovDeduc => CovDeduc.NotApplyRateLoadingF == NotApplyRateLoadingF.checked);
     tblDeductible.clear().draw();
     tblDeductible.rows.add(CovDeducFil).draw(); // Add new data
-    console.log(CovDeducFil);
+    refreshTableDeductible();
+    // refreshDeductibleRemarks();
+    // console.log(CovDeducFil);
   }
 
   function format_date(date_string){
@@ -3876,10 +3948,6 @@
 
   async function refreshTabMasterData(tabid){
     try{
-      // console.log('status master data : ' + getMasterDataF)
-      // var tabid = e.target.id;
-      console.log(masterDataF);
-      console.log(getMasterDataF);
       if (tabid == 'tabpolicy'){
         if (!masterDataF){
           showOverlayTab(true);
@@ -3901,19 +3969,21 @@
           showOverlayTab(true);
 
           var url = "{{ route('policy.getdetail') }}?PID=" + callback_PID
-            var res = await getData(url)
-            if (res.code == '200'){
-              viewDetail(res.Data);
-            }
-            toastMessage(res.code,res.message);
-            showOverlayTab(false)
-            callback_PID = '';
-            // viewDetailF = false;
+          var res = await getData(url)
+          // console.log(res);
+          if (res.code == '200'){
+            viewDetail(res.Data);
+          }
+          toastMessage(res.code,res.message);
+          showOverlayTab(false)
+          callback_PID = '';
+          // viewDetailF = false;
         }
       }else{
         tblInquiry.columns.adjust().draw();
       } 
     } catch(err) {
+      console.log(err);
       toastMessage('400','Failed Retreive Data');
       $('#div-failed-loading').removeAttr('style');
       $('#div-loading').css('display','none');
@@ -3974,10 +4044,84 @@
     })
   }
 
+  function detailRisk(risk,remarks,orderno){
+    event.preventDefault();
+
+    var sdate = new Date($('#InceptionDate').val()); //2022-04-19
+    var edate = new Date($('#ExpiryDate').val()); //2022-08-19
+
+    var policyYear = (edate > dateAdd('year',dateDiff('year',sdate,edate),sdate)) ? dateDiff('year',sdate,edate) + 1 : dateDiff('year',sdate,edate);
+
+    $('#class-modal-dialog').attr('class','modal-dialog modal-md');
+    
+    $('#modaltitle').text('Risk Coverage');
+    
+    $('#modalbody').empty();
+
+    $('#modalfooter').empty();
+
+    var url = "{{ route('policy.modalrisk') }}?risk=" + risk + "&remarks=" + remarks + "&orderno=" + orderno + "&policyyear=" + policyYear;
+
+    $.ajax({
+    type: "GET",
+    url: url,
+    dataType: 'html'
+    }).done(function( response ) {
+        // $('#loadMe').modal('hide');
+        $('#modalbody').html(response);
+        $('#modal-general').modal({
+          keyboard: false,
+          backdrop: 'static',
+          show: true
+        })
+    });
+  }
+
   $('#btn-refresh-master').on('click',function(event){
     $('#div-failed-loading').css('display','none');
     $('#div-loading').removeAttr('style');
     refreshTabMasterData('tabpolicy');
   });
+
+  async function detailDeductible(dcode,remarks,orderno,editableF, fixedmin, pcttsi, pctcl, fixedmax){
+    event.preventDefault();
+
+    // var sdate = new Date($('#InceptionDate').val()); //2022-04-19
+    // var edate = new Date($('#ExpiryDate').val()); //2022-08-19
+
+    // var policyYear = (edate > dateAdd('year',dateDiff('year',sdate,edate),sdate)) ? dateDiff('year',sdate,edate) + 1 : dateDiff('year',sdate,edate);
+
+    $('#class-modal-dialog').attr('class','modal-dialog modal-md');
+    
+    $('#modaltitle').text('Deductible');
+    
+    $('#modalbody').empty();
+
+    $('#modalfooter').empty();
+
+    var url = "{{ route('policy.modaldeductible') }}?dcode=" + dcode + "&remarks=" + remarks + "&orderno=" + orderno + "&editableF=" + editableF + "&fixedmin=" + fixedmin + "&pcttsi=" + pcttsi + "&pctcl=" + pctcl + "&fixedmax=" + fixedmax;
+    var response = await getModalView(url);
+
+    $('#modalbody').html(response);
+      $('#modal-general').modal({
+        keyboard: false,
+        backdrop: 'static',
+        show: true
+      })
+
+    // $.ajax({
+    // type: "GET",
+    // url: url,
+    // dataType: 'html'
+    // }).done(function( response ) {
+    //     // $('#loadMe').modal('hide');
+    //     $('#modalbody').html(response);
+    //     $('#modal-general').modal({
+    //       keyboard: false,
+    //       backdrop: 'static',
+    //       show: true
+    //     })
+    // });
+  }
 </script>
 @endsection

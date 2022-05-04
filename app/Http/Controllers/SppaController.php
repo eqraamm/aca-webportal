@@ -449,6 +449,12 @@ class SppaController extends Controller
             // }
         }
 
+        //CalculateF & ValidateF
+        $CalculateF = config('app.CALCULATEF');
+        $ValidateF = config('app.VALIDATEF');
+        $datapolicy['CalculateF'] = $CalculateF;
+        $datapolicy['ValidateF'] = $ValidateF;
+
         // dd($datapolicy);
 
         $responsePolicy = APIMiddleware($datapolicy, 'SavePolicy');
@@ -456,16 +462,18 @@ class SppaController extends Controller
         // dd($responsePolicy);
 
         if ($responsePolicy['code'] == '200'){
-            $dataPolicy = array(
-                'UserName' => session('ID'),
-                'Password' => session('Password'),
-                'PID' => $responsePolicy['Data'][0]['PID']
-            );
-            
-            $responseValidate = APIMiddleware($dataPolicy, 'ValidatePolicy');
-            // dd($responseValidate);
-            if ($responseValidate['code'] == '400'){
-                return response()->json(['code' => $responseValidate['code'],'message'=>$responseValidate['message'],'data' => []]);
+            if (!$ValidateF){
+                $dataPolicy = array(
+                    'UserName' => session('ID'),
+                    'Password' => session('Password'),
+                    'PID' => $responsePolicy['Data'][0]['PID']
+                );
+                
+                $responseValidate = APIMiddleware($dataPolicy, 'ValidatePolicy');
+                // dd($responseValidate);
+                if ($responseValidate['code'] == '400'){
+                    return response()->json(['code' => $responseValidate['code'],'message'=>$responseValidate['message'],'data' => []]);
+                }
             }
             
             $listpolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
@@ -552,11 +560,11 @@ class SppaController extends Controller
         return $responsePolicy;
     }
 
-    public function PremiumSimulationDoc($dataPolicy){
+    public function PremiumSimulationDoc($userid,$password,$dataPolicy){
         // dd($dataPolicy);
         $dataPremiumSimulation = array(
-            'UserName' => session('ID'),
-            'Password' => session('Password'),
+            'UserName' => $userid,
+            'Password' => $password,
             'ProductID' => $dataPolicy[0]['ProductID'],
             'CoverageID' => $dataPolicy[0]['CoverageID'],
             'IncludeExtCovF' => true,
@@ -660,6 +668,7 @@ class SppaController extends Controller
         $PID = $request->input('PID');
         $parameters = array(
             'ID' => session('ID'),
+            'Password' => session('Password') == null ? '' : session('Password'),
             'RefNo' => ($request->input('RefNo') == null) ? '' : $request->input('RefNo'),
             'PID' => ($PID == null ? '' : $PID),
             'imagettd' => '',
@@ -676,7 +685,7 @@ class SppaController extends Controller
         // $url = route('sppadoc', ['data' => $encryptParam]);
 
         // return $url;
-        dd($url);
+        // dd($url);
 
         $datapolicy = array(
             "PID" => ($PID == null) ? '' : $PID,
@@ -727,7 +736,7 @@ class SppaController extends Controller
         }else{
             $payload['SubmitDateF'] = false;
         }
-        dd($payload);
+        // dd($payload);
         $html = view('Transaction.PolicyDocSppaPDF')
             ->with([
                 'payload' => $payload
@@ -800,9 +809,9 @@ class SppaController extends Controller
         // dd($request);
         $requestGet = $request->get('data');
         
-        $PID = $requestGet['PID'];
+        // $PID = $requestGet['PID'];
         
-        $payload = $this->create_payload(session('ID'), $PID, false);
+        $payload = $this->create_payload($requestGet, false);
 
         // dd($payload);
 
@@ -810,147 +819,23 @@ class SppaController extends Controller
         ->with([
             'payload' => $payload
         ]);
-
-        // $dataPolicy = array(
-        //     'PID' => $PID
-        // );
-
-        // // dd($dataPolicy);
-        
-        // $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
-        // $NotApplyRateLoadingF = $responsePolicy['Data'][0]['NotApplyRateLoadingF'];
-
-        // // dd($NotApplyRateLoadingF);
-        
-        // // return $responsePolicy;
-        // $dateInception = tgl_indo($responsePolicy['Data'][0]['InceptionDate']);
-        // $dateExpiry = tgl_indo($responsePolicy['Data'][0]['ExpiryDate']);
-        // $dateNow = tgl_indo(date("m/d/Y"));
-        // $dateExpiryDocument=date_create(date("Y-m-d"));
-        // date_add($dateExpiryDocument,date_interval_create_from_date_string("14 days"));
-        // $dateExpiryDocument = date_format($dateExpiryDocument,"d F Y");
-
-        // if ($responsePolicy['code'] == '200'){
-        //     //Data
-        //     $data = array (
-        //         'ID' => $responsePolicy['Data'][0]['InsuredID'],
-        //         'OwnerID' => $requestGet['ID'],
-        //     );
-        //     $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
-
-        //     $dataProduct = array(
-        //         'ProductID' => $responsePolicy['Data'][0]['ProductID']
-        //     );
-
-        //     $responseProduct = APIMiddleware($dataProduct, 'ProductGENHTAB');
-
-        //     $dataCoverage = array(
-        //         'CoverageID' => $responsePolicy['Data'][0]['CoverageID']
-        //     );
-        //     $responseCoverage = APIMiddleware($dataCoverage, 'SearchCoverage');
-
-        //     // dd($responseCoverage);
-
-        //     $responsePremiumSimulation = $this->PremiumSimulationDoc($responsePolicy['Data'], $responseProduct);
-        //     // dd($responsePremiumSimulation);
-
-        //     $startdate = date_create($responsePolicy['Data'][0]['InceptionDate']);
-        //     $endenddate = date_create($responsePolicy['Data'][0]['ExpiryDate']);
-        //     $period_days = date_diff($startdate,$endenddate);
-
-        //     $payload = array(
-        //         'img' => $requestGet['imagettd'],
-        //         'nama' => $requestGet['name'],
-        //         'option_sengketa' => $requestGet['option_sengketa'],
-        //         'kondisi_kendaraan' => $requestGet['kondisi_kendaraan'],
-        //         'tempat_survey' => $requestGet['tempat_survey'],
-        //         'dateInception' => $dateInception,
-        //         'dateExpiry' => $dateExpiry,
-        //         'dateNow' => $dateNow,
-        //         'dateExpiryDocument' => $dateExpiryDocument,
-        //         'PID' => $responsePolicy['Data'][0]['PID'],
-        //         'ProductDesc' => $responsePolicy['Data'][0]['ProductDesc'],
-        //         'RefNo' => $responsePolicy['Data'][0]['RefNo'],
-        //         'CoverageDesc' => $responsePolicy['Data'][0]['CoverageDesc'],
-        //         'InsuredName' => $responsePolicy['Data'][0]['InsuredName'],
-        //         'Address_1' => $responseSearchProfile['Data'][0]['Address_1'],
-        //         'Address_2' => $responseSearchProfile['Data'][0]['Address_2'],
-        //         'Address_3' => $responseSearchProfile['Data'][0]['Address_3'],
-        //         'Currency' => $responsePolicy['Data'][0]['Currency'],
-        //         'Premium' => $responsePolicy['Data'][0]['Premium'],
-        //         'ADMFee' => $responsePolicy['Data'][0]['ADMFee'],
-        //         'StampDuty' => $responsePolicy['Data'][0]['StampDuty'],
-        //         'AID' => $responsePolicy['Data'][0]['AID'],
-        //         'SubmitDateF' => $responsePolicy['Data'][0]['SubmitDateF'],
-        //         'periodDays' => $period_days->format('%a'),
-        //         'CoverageID' => $responsePolicy['Data'][0]['CoverageID'],
-        //         'ProductID' => $responsePolicy['Data'][0]['ProductID']
-
-        //     );
-        //     for ($i = 1; $i <= 30; $i++) {
-        //        $payload['FLDTAG'.$i] = $responseProduct['Data'][0]['FLDTAG'.($i)];
-        //        $payload['ValueDesc'.$i] = $responsePolicy['Data'][0]['ValueDesc'.($i)];
-        //     }
-
-        //     $SPREADRISKBYYEARF = config('app.SPREADRISKBYYEAR');
-
-        //     //Coverage Detail
-        //     $CoverageDetail = array();
-        //     $TempCoverageDetail = array();
-        //     foreach ($responseCoverage['Data'][0]['CoverageDetail'] as $risk){
-        //        if (!$SPREADRISKBYYEARF){
-        //            if ($risk['PolicyYear'] == 1){
-        //                $TempCoverageDetail['Description'] = $risk['Description'];
-        //                $CoverageDetail[] = $TempCoverageDetail;   
-        //            }
-        //        }else{
-        //            $TempCoverageDetail['Description'] = $risk['Description'];
-        //            $CoverageDetail[] = $TempCoverageDetail;
-        //        }
-        //     }
-        //     $payload['CoverageDetail'] = $CoverageDetail;
-
-        //     //Coverage Deductible
-        //     $CoverageDeductible = array();
-        //     $TempCoverageDeductible = array();
-        //     foreach ($responseCoverage['Data'][0]['CoverageDeductible'] as $deductible){
-        //         if ($NotApplyRateLoadingF == $deductible['NotApplyRateLoadingF']){
-        //             $TempCoverageDeductible['Description'] = $deductible['Description'];
-        //             $CoverageDeductible[] = $TempCoverageDeductible;
-        //         }
-        //     }
-        //     $payload['CoverageDeductible'] = $CoverageDeductible;
-
-        //     // dd($payload);
-
-        //     //Premium Simulation
-        //     $PremiumSimulation = array();
-        //     $TempPremiumSimulation = array();
-        //     foreach ($responsePremiumSimulation['Data'] as $premi){
-        //         $TempPremiumSimulation['Risk'] = $premi['Risk'];
-        //         $TempPremiumSimulation['SPremium'] = $premi['SPremium'];
-        //         $TempPremiumSimulation['Premium'] = $premi['Premium'];
-        //         $PremiumSimulation[] = $TempPremiumSimulation;
-        //     }
-        //     $payload['PremiumSimulation'] = $PremiumSimulation;
-        //     // dd($payload);
-
-        //     return view('Transaction.PolicyDocSppa')
-        //     ->with([
-        //         'payload' => $payload
-        //     ]);
-        // }else{
-        //     return abort(404);
-        // }
     }
 
     public function getDocumentPreview(Request $request){
-        $PID = $request->input('PID');
-        $refno = $request->input('RefNo');
-        $document = $request->input('Document');
+        // dd($request);
+        
+        $parameters = array(
+            'ID' => $request->input('ID'),
+            'Password' => $request->input('Password'),
+            'PID' => $request->input('PID'),
+            'RefNo' => $request->input('RefNo'),
+            'document' => $request->input('Document')
+        );
 
-        if ($document == 'sppa'){
-            $payload = $this->create_payload(session('ID'), $PID, true);
+        // return $parameters;
+
+        if ($parameters['document'] == 'sppa'){
+            $payload = $this->create_payload($parameters, true);
 
             // return $payload;
     
@@ -961,8 +846,8 @@ class SppaController extends Controller
             // return $html;
     
             $dataPrintSPPA = array(
-                'PID' => $PID,
-                'DocumentType' => $document,
+                'PID' => $parameters['PID'],
+                'DocumentType' => $parameters['document'],
                 'URLDoc' => $html,
                 'isLandScape' => false,
                 'MarginLeft' => 10,
@@ -980,9 +865,9 @@ class SppaController extends Controller
         }
     }
 
-    function create_payload($userid, $PID, $previewF){   
+    function create_payload($request, $previewF){   
         $dataPolicy = array(
-            'PID' => $PID
+            'PID' => $request['PID']
         ); 
         
         $responsePolicy = APIMiddleware($dataPolicy, 'SearchPolicyByPID');
@@ -999,15 +884,15 @@ class SppaController extends Controller
 
         $data = array (
             'ID' => $responsePolicy['Data'][0]['InsuredID'],
-            'OwnerID' => $userid,
+            'OwnerID' => $request['ID'],
             // 'OwnerID' => session('ID'),
         );
         
         $responseSearchProfile = APIMiddleware($data, 'SearchProfile');
 
         $dataProduct = array(
-            'UserName' => session('ID'),
-            'Password' => session('Password'),
+            'UserName' => $request['ID'],
+            'Password' => $request['Password'],
             'ProductID' => $responsePolicy['Data'][0]['ProductID']
         );
 
@@ -1021,7 +906,7 @@ class SppaController extends Controller
         // return $responseCoverage;
         // dd($responsePolicy['Data']);
 
-        $responsePremiumSimulation = $this->PremiumSimulationDoc($responsePolicy['Data'], $responseProduct);
+        $responsePremiumSimulation = $this->PremiumSimulationDoc($request['ID'], $request['Password'], $responsePolicy['Data'], $responseProduct);
 
         // dump($responsePremiumSimulation);
 
@@ -1088,8 +973,27 @@ class SppaController extends Controller
         $TempCoverageDeductible = array();
         foreach ($responseCoverage['Data'][0]['CoverageDeductible'] as $deductible){
             if ($NotApplyRateLoadingF == $deductible['NotApplyRateLoadingF']){
-                $TempCoverageDeductible['Description'] = $deductible['Description'];
-                $CoverageDeductible[] = $TempCoverageDeductible;
+                if ($deductible['EditableF']){
+                    $data = array(
+                        'UserName' => $request['ID'],
+                        'Password' => $request['Password'],
+                        'TOPRO' => $deductible['CoverageID'],
+                        'DCODE' => $deductible['RefCode'],
+                        'PCTTSI' => $responsePolicy['Data'][0]['DEDPCTTSI'.$deductible['OrderNo']],
+                        'PCTCL' => $responsePolicy['Data'][0]['DEDPCTCL'.$deductible['OrderNo']],
+                        'FixedMin' => $responsePolicy['Data'][0]['Deductible'.$deductible['OrderNo']],
+                        'FixedMax' => $deductible['FixedMax']
+                    );
+            
+                    $responseDeductibleRemarks = APIMIddleware($data,'SearchDeductibleRemarks');
+                    if ($responseDeductibleRemarks['code'] == '200'){
+                        $TempCoverageDeductible['Description'] = $responseDeductibleRemarks['Data'][0]['Deductibles'];
+                        $CoverageDeductible[] = $TempCoverageDeductible;       
+                    }
+                }else{
+                    $TempCoverageDeductible['Description'] = $deductible['Description'];
+                    $CoverageDeductible[] = $TempCoverageDeductible;   
+                }
             }
         }
         $payload['CoverageDeductible'] = $CoverageDeductible;
@@ -1217,6 +1121,39 @@ class SppaController extends Controller
             'policyyear' => $request->get('policyyear')
         );
         return view('Transaction.modalDetailRisk',array('data' => $data));
+    }
+
+    public function showModalDeductible(Request $request){
+        $data = array(
+            'dcode' => $request->get('dcode'),
+            'remarks' => $request->get('remarks'),
+            'orderno' => $request->get('orderno'),
+            'editableF' => $request->get('editableF'),
+            'fixedmin' => $request->get('fixedmin'),
+            'pcttsi' => $request->get('pcttsi'),
+            'pctcl' => $request->get('pctcl'),
+            'fixedmax' => $request->get('fixedmax')
+        );
+        return view('Transaction.modalDetailDeductible', array('data' => $data));
+    }
+
+    public function getDeductibleRemarks(Request $request){
+        // dd($request);
+        $data = array(
+            'UserName' => session('ID'),
+            'Password' => session('Password'),
+            'TOPRO' => $request->get('topro'),
+            'DCODE' => $request->get('dcode'),
+            'PCTTSI' => $request->get('pcttsi'),
+            'PCTCL' => $request->get('pctcl'),
+            'FixedMin' => $request->get('fixedmin'),
+            'FixedMax' => $request->get('fixedmax')
+        );
+
+        $responseDeductibleRemarks = APIMIddleware($data,'SearchDeductibleRemarks');
+
+        return response()->json($responseDeductibleRemarks);
+        // dd($responseDeductibleRemarks);
     }
 
 }

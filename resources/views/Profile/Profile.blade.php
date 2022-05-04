@@ -66,7 +66,7 @@
                         <thead>
                           <tr>
                             <th>No</th>
-                            <th>Profile ID</th>
+                            <th>Client ID</th>
                             <th>Reference Profile ID</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -234,7 +234,7 @@
                       </div> -->
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Profile ID</label>
+                      <label class="col-sm-3 col-form-label">Client ID</label>
                       <div class="col-sm-6">
                         <input class="form-control" id="ID" type="text" name="ProfileID" readonly>
                       </div>
@@ -343,15 +343,15 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-2">
-                          <p for="RT">RT</p>
+                          <label for="RT">RT</label>
                           <input class="form-control" id="SOI" name="SOI" type="text" required>
                         </div>
                         <div class="col-sm-2">
-                          <p for="RW">RW</p>
+                          <label for="RW">RW</label>
                           <input class="form-control" id="MOO" name="MOO" type="text" required>
                         </div>
                         <div class="col-sm-2">
-                          <p for="Province">Province</p>
+                          <label for="Province">Province</label>
                           <select class="form-control select2bs4" id="Province" name="Province" required> 
                           </select>
                         </div>
@@ -359,17 +359,17 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-2">
-                          <p for="District">District</p>
+                          <label for="District">District</label>
                           <select class="form-control select2bs4" id="District" name="District" required> 
                           </select>
                         </div>
                         <div class="col-sm-2">
-                          <p for="SubDistrict">Sub District</p>
+                          <label for="SubDistrict">Sub District</label>
                           <select class="form-control select2bs4" id="SubDistrict" name="SubDistrict" required>
                           </select>
                         </div>
                         <div class="col-sm-2">
-                          <p for="Village">Village</p>
+                          <label for="Village">Village</label>
                           <select class="form-control select2bs4" id="Village" name="Village" required>
                           </select>
                         </div>
@@ -391,7 +391,7 @@
                         <input class="form-control" id="Address_3" name="Address3" type="text">
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                       <p class="col-sm-3 col-form-label">Country / City</p>
                       <div class="col-sm-3">
                         <select class="form-control select2bs4" id="Country" name="Country"> 
@@ -400,16 +400,23 @@
                       <div class="col-sm-3">
                         <input class="form-control" id="City" name="City" style="text-transform:uppercase" type="text">
                       </div>
+                    </div> -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Country</label>
+                      <div class="col-sm-3">
+                        <select class="form-control select2bs4" id="Country" name="Country" required> 
+                        </select>
+                      </div>
                     </div>
                     <div class="form-group row">
-                      <p class="col-sm-3 col-form-label">Profile Type</p>
+                      <label class="col-sm-3 col-form-label">Profile Type</label>
                       <div class="col-sm-3">
-                        <select class="form-control select2bs4" id="PType" name="PType"> 
+                        <select class="form-control select2bs4" id="PType" name="PType" required> 
                           <option value="" selected></option>
                           <option value="C">Captive</option>
                           <option value="D">Direct Business</option>
                           <option value="I">Inward Business</option>
-                          <option value="M">Intermediaries</option>
+                          <!-- <option value="M">Intermediaries</option> -->
                           <option value="O">Outward Business</option>
                           <option value="T">Others</option>
                         </select>
@@ -592,7 +599,7 @@
                                         <p class="col-form-label" id="LblIDType">ID Type</p>
                                       </div>
                                       <div class="col-sm-3">
-                                        <select class="form-control select2bs4" id="ID_Type" name="IDType" onchange="LstIDType_Change()">
+                                        <select class="form-control select2bs4" id="ID_Type" name="IDType" onchange="LstIDType_Change()" required>
                                           <option value="" selected></option> 
                                           <option value="Driving License">Driving License</option>
                                           <option value="ID Card">ID Card</option>
@@ -605,7 +612,7 @@
                                         </select>
                                       </div>
                                       <div class="col-sm-3">
-                                        <p class="col-form-label" id="LblBirthDate">Birth Place</p>
+                                        <p class="col-form-label" id="LblBirthPlace">Birth Place</p>
                                       </div>
                                       <div class="col-sm-3">
                                         <input class="form-control" id="BirthPlace" name="BirthPlace" style="text-transform:uppercase" type="text" >
@@ -1086,6 +1093,7 @@
 
   function corporateF_chekcked() {
     var cbxCorporate = document.getElementById("Corporatef");
+    console.log(cbxCorporate.checked);
     if (cbxCorporate.checked == true) {
       // tidak wajib
       $('#LblIDType').css('font-weight','normal');
@@ -1094,8 +1102,9 @@
       $('#ID_No').removeAttr('required');
       $('#LblID_Name').css('font-weight','normal');
       $('#ID_Name').removeAttr('required');
-      $('#LblBirthDate').css('font-weight','normal');
+      $('#LblBirthPlace').css('font-weight','normal');
       $('#BirthPlace').removeAttr('required');
+      $('#LblBirthDate').css('font-weight','normal');
       $('#BirthDate').removeAttr('required');
       $('#LblID_Name').css('font-weight','normal');
       $('#ID_Name').removeAttr('required');
@@ -1120,18 +1129,19 @@
     } else {
       // wajib
       $('#LblIDType').css('font-weight','bold');
-      $('#ID_Type').attr('required');
+      $('#ID_Type').attr('required','required');
       $('#LblID_Number').css('font-weight','bold');
-      $('#ID_No').attr('required');
+      $('#ID_No').attr('required','required');
       $('#LblID_Name').css('font-weight','bold');
-      $('#ID_Name').attr('required');
+      $('#ID_Name').attr('required','required');
+      $('#LblBirthPlace').css('font-weight','bold');
+      $('#BirthPlace').attr('required','required');
       $('#LblBirthDate').css('font-weight','bold');
-      $('#BirthPlace').attr('required');
-      $('#BirthDate').attr('required');
+      $('#BirthDate').attr('required','required');
       $('#LblID_Name').css('font-weight','bold');
-      $('#ID_Name').attr('required');
+      $('#ID_Name').attr('required','required');
       $('#LblGender').css('font-weight','bold');
-      $('#Gender').attr('required');
+      $('#Gender').attr('required','required');
 
       // tidak wajib
       $('#LblTaxID').css('font-weight','normal');
@@ -1170,6 +1180,8 @@
     var form = event.currentTarget.form;
     var inputs = form.querySelectorAll('input');
     var selects = form.querySelectorAll('select');
+    var checkboxs = form.querySelectorAll('input[type="checkbox"]');
+    // console.log(checkbox);
     inputs.forEach(function(input, index) {
       if (input.type != 'checkbox') {
         if (input.name != 'UserOwner' && input.name != '_token') {
@@ -1182,6 +1194,9 @@
 
     selects.forEach(function(selects, index) {
       selects.value = null;
+    });
+    checkboxs.forEach(function(checkbox, index) {
+      checkbox.checked = false;
     });
     $('.select2bs4').trigger('change');
     corporateF_chekcked();
@@ -1226,15 +1241,13 @@
     // $('#WNIF').attr('checked','checked');
     for (var key in filterarray[0]){
       if($('#' + key).attr('type') == 'checkbox'){
-        // console.log ('Key : ' + key + ' Value : ' + filterarray[0][key]);
-        if (filterarray[0][key] === true){
-          // console.log ('Masuk True - Key : ' + key + ' Value : ' + filterarray[0][key]);
-          $('#' + key).attr('checked','checked');
-          // console.log($('#' + key));
-        }else{
-          // console.log ('Masuk else - Key : ' + key + ' Value : ' + filterarray[0][key]);
-          $('#' + key).removeAttr('checked');
-        }
+        var cbx = document.getElementById(key);
+        cbx.checked = filterarray[0][key];
+        // if (filterarray[0][key] === true){
+        //   $('#' + key).attr('checked','checked');
+        // }else{
+        //   $('#' + key).removeAttr('checked');
+        // }
       }else{
         $('#' + key).val(filterarray[0][key]);
         // console.log ('Key : ' + key + ' Value : ' + filterarray[0][key]);

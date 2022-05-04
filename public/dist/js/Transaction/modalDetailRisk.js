@@ -58,11 +58,11 @@ function changeRateByPolicyYear(policyYear){
         inputElement.id = 'risk-pctindemnity';
         inputElement.name = 'risk-pctindemnity';
         inputElement.type = "text";
-        inputElement.setAttribute('data-regex','^100(\\.0{0,2})? *%?$|^\\d{1,2}(\\.\\d{1,2})? *%?$');
+        inputElement.setAttribute('data-regex','^0$|^10$|^100$');
         //div invalid feedback
         var divFeedback = document.createElement('div');
         divFeedback.className = 'invalid-feedback'
-        divFeedback.innerHTML = "Percentage can't be greater than 100";
+        divFeedback.innerHTML = "Percentage can only be 10 or 100";
 
         //div col-sm-3
         var divColumn = document.createElement('div')

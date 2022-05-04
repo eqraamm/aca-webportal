@@ -169,7 +169,8 @@
   <div class="modal fade" id="modal-general" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div id="class-modal-dialog" class="modal-dialog">
       <div class="modal-content">
-        <div id="div-overlay-modal">
+        <div id="div-overlay-modal" style="display:none">
+          <div style="position:absolute; top:0.1%; left:0.1%;" class="overlay"><i style="position:absolute; left:50%; top:50%; margin-top:-25px; margin-left:-25px;" class="fas fa-2x fa-sync fa-spin"></i></div>
         </div>
         <div class="modal-header">
           <h4 class="modal-title" id="modaltitle"></h4>
@@ -262,14 +263,5 @@
 <!-- General For Web Portal MW -->
 <script src="{{asset('dist/js/pages/webportal.js')}}"></script>
 @yield('scriptpage')
-<script>
-  console.log("{{ session('Role') }}");
-  if ("{{session('Role')}}" == 'MARKETING OFFICER'){
-    console.log('true');
-  }else{
-    console.log('false');
-  }
-</script>
-
 </body>
 </html>

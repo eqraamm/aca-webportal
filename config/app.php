@@ -249,4 +249,7 @@ return [
     'ValueID' => env('ValueID', ''),
     'URLWEBSOCKETS' => env('URLWEBSOCKETS', ''),
     'COMPANYNAME' => env('COMPANYNAME', 'Portal'),
+    'TimeOutSearchJob' => env('TimeOutSearchJob', 5),
+    'CALCULATEF' => env('CALCULATEF', false),
+    'VALIDATEF' => env('VALIDATEF', false),
 ];

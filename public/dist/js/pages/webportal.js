@@ -117,13 +117,25 @@ function getModalView(url){
     });
 }
 
-function getDataNew(ajaxurl) { 
+function getDataNew(ajaxurl,modalF = false) {
     return $.ajax({
         url: ajaxurl,
         type: 'GET',
         contentType: "application/json; charset=utf-8",
-        beforeSend: function() { $('#loadMe').modal('show'); },
-        complete: function() { $('#loadMe').modal('hide'); }
+        beforeSend: function() { 
+            if (modalF){
+                $('#div-overlay-modal').removeAttr('style');
+            }else{
+                $('#loadMe').modal('show'); 
+            }
+        },
+        complete: function() { 
+            if (modalF){
+                $('#div-overlay-modal').css('display','none');
+            }else{
+                $('#loadMe').modal('hide'); 
+            }
+        }
     });
 };
 
